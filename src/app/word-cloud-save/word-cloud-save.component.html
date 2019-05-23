@@ -1,3 +1,117 @@
-<p>
-  word-cloud-save works!
-</p>
+<div class="">
+  <div class="modal-lg modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Word Cloud Filter</h5>
+        <button type="button" class="close" (click)="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="row modal-body">
+        <div class="col-sm-6">
+          <form #filterForm="ngForm">
+            <div class="form-group">
+              <label>Filter Name</label>
+              <input class="form-control" name="name" #name="ngModel" [(ngModel)]="filter.name" />
+            </div>
+            <div class="form-group">
+              <label>Language</label>
+              <input class="form-control" name="language" #language="ngModel" [(ngModel)]="filter.language" />
+            </div>
+            <div class="form-group">
+              <label for="exampleTextarea">Note:</label>
+              <textarea class="form-control" id="exampleTextarea" rows="7"></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="col-sm-6">
+          <!--Heading-->
+          <div class="row heading bg-primary text-gray-100 nopadding">
+            <div class="col-sm-1 nopadding">
+            </div>
+            <div class="col-sm-5">
+              Word
+            </div>
+            <div class="col-sm-3 d-flex justify-content-center">
+              Include
+            </div>
+            <div class="col-sm-3 d-flex justify-content-center">
+              Exclude
+            </div>
+
+          </div>
+          <!--Row-->
+          <div class="listItem scrollbar-primary">
+            <div *ngIf="words.length == 0" class="d-flex justify-content-center">
+              <h4>Filter word list is empty</h4>
+            </div>
+            <div class="row rowpadding" *ngFor="let word of words; let i = index">
+              <div class="col-sm-1 nopadding d-flex flex-row-reverse">
+                <i class="fa fa-trash d-flex justify-content-center"
+                  style="font-size: 17px; padding-top: 2px; padding-right: 15px; padding-bottom: 2px" aria-hidden="true"
+                  (click)="removeWord(i)"></i>
+              </div>
+              <div class="col-sm-5">
+                {{word.name}}
+              </div>
+              <div class="col-sm-3 d-flex justify-content-center">
+                <span *ngIf="!word.isExclude">v</span>
+              </div>
+              <div class="col-sm-3 d-flex justify-content-center">
+                  <span *ngIf="word.isExclude">v</span>
+              </div>
+            </div>
+
+
+          </div>
+          <form #wordForm="ngForm" autocomplete="off">
+
+            <div class="row">
+              <div class="col-sm-7">
+                <div class="form-group">
+                  <label>Word</label>
+                  <input type="text" class="form-control" name="word" #word="ngModel" [(ngModel)]="currentWord.name"
+                    required />
+                </div>
+              </div>
+              <div class="col-sm-5" style="margin:auto">
+                <div class="form-check">
+                  <label class="form-check-label ">
+                    <input type="radio" class="form-check-input" name="isExclude" #include="ngModel"
+                      [(ngModel)]="currentWord.isExclude" [value]="false" required>
+                    Include
+                  </label>
+                </div>
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input type="radio" class="form-check-input" name="isExclude" #exclude="ngModel"
+                      [(ngModel)]="currentWord.isExclude" [value]="true" required>
+                    Exclude
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex justify-content-center">
+              <button type="button" class="btn btn-info" (click)="addWordToList()" [disabled]="!wordForm.form.valid">Add
+                word to list</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="col-sm-6">
+          <h4><span class="badge badge-pill badge-success" *ngIf="requestStatus == 200">Success</span></h4>
+          <h4><span class="badge badge-pill badge-danger" *ngIf="requestStatus == 400">Fail</span></h4>
+        </div>
+        <div class="col-sm-6 d-flex justify-content-end" style="padding: 0px">
+          <button type="button" class="btn btn-success" (click)="add()" [disabled]="(requestStatus ==1)">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
+              *ngIf="requestStatus == 1"></span>
+            <span *ngIf="requestStatus == 0">Submit</span>
+            <span *ngIf="requestStatus == 200">New Import</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

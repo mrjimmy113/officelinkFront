@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiEndPoint: "http://localhost:8080/officelink"
+  apiEndPoint: "http://localhost:8080"
 };
 
 /*
