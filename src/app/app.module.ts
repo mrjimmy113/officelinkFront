@@ -7,13 +7,15 @@ import { WordCloudListComponent } from "./word-cloud-list/word-cloud-list.compon
 import { WordCloudSaveComponent } from "./word-cloud-save/word-cloud-save.component";
 import { FormsModule } from "@angular/forms";
 import { AppRoutingModule } from "./app-routing.module";
+import { NewDemoComponent } from './new-demo/new-demo.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     WordCloudListComponent,
-    WordCloudSaveComponent
+    WordCloudSaveComponent,
+    NewDemoComponent
   ],
   imports: [BrowserModule, HttpClientModule, FormsModule, AppRoutingModule],
   entryComponents: [],
