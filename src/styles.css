@@ -11302,7 +11302,7 @@ a:focus {
     display: block;
     width: 100%;
     text-align: left;
-    padding: 1rem;
+    padding-left: 1rem;
     width: 14rem;
   }
   .sidebar .nav-item .nav-link i {
@@ -11897,10 +11897,10 @@ form.user .btn-user {
   background: #f8f9fc;
   overflow: hidden;
   clip: rect(0, 900px, 0, 0);
-  animation: noise-anim 2s infinite linear alternate-reverse;
+  /* animation: noise-anim 1s infinite linear alternate-reverse; */
 }
 
-@-webkit-keyframes noise-anim-2 {
+/* @-webkit-keyframes noise-anim-2 {
   0% {
     clip: rect(10px, 9999px, 29px, 0);
   }
@@ -12030,7 +12030,7 @@ form.user .btn-user {
   100% {
     clip: rect(45px, 9999px, 51px, 0);
   }
-}
+} */
 
 .error:before {
   content: attr(data-text);
@@ -12059,3 +12059,5 @@ footer.sticky-footer .copyright {
 body.sidebar-toggled footer.sticky-footer {
   width: 100%;
 }
+
+

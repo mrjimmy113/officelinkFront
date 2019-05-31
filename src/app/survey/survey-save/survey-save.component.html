@@ -1,0 +1,24 @@
+<div class="modal-lg modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="col-sm-10 noPadding" >
+        <input type="text" placeholder="Survey Title" class="form-control"/>
+      </div>
+      <div class="col-sm-2 d-flex justify-content-end noPadding">
+        <button class="btn btn-success">Save</button>
+      </div>
+    </div>
+    <div class="">
+      <div *ngFor="let question of questionList; let i = index">
+        <app-question [question]="question" [index]="i" (updateEditMode)="updateEditMode()"
+        (giveClassToParent)="getChildInfor($event)" (copyQ)="copyQ($event)" (deleteQ)="deleteQ($event)">
+      </app-question>
+
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" (click)="addQuestion()">Add Question</button>
+    </div>
+  </div>
+</div>

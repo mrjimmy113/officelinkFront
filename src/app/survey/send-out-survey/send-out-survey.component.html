@@ -1,0 +1,63 @@
+<div class="">
+  <div class="modal-lg modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Send out Survey</h5>
+        <button type="button" class="close" (click)="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!--Choose-->
+        <div class="row form-group">
+          <div class="col-sm-4">
+            <select class="form-control">
+              <option>Choose Location</option>
+            </select>
+          </div>
+          <div class="col-sm-4">
+            <select class="form-control">
+              <option>Choose Department</option>
+            </select>
+          </div>
+          <div class="col-sm-4">
+            <select class="form-control">
+              <option>Choose Team</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label>Searched Employees</label>
+              <select multiple class="form-control" size="10">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+              </select>
+            </div>
+            <button class="btn btn-primary">Choose all</button>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label>Choosen Employees</label>
+              <select multiple class="form-control" size="10">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+              </select>
+            </div>
+            <button class="btn btn-danger">Unchoose all</button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-success">Send</button>
+      </div>
+    </div>
+  </div>
+</div>
