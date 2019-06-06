@@ -41,6 +41,7 @@ import { TeamSaveComponent } from './team-save/team-save.component';
     SendOutSurveyComponent,
     ConfirmRegisterComponent,
     ConfirmInvitationComponent,
+    InvitationComponent,
     TeamComponent,
     TeamSaveComponent
   ],

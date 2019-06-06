@@ -28,10 +28,11 @@ const routes: Routes = [
   { path: "login", component: LoginComponent},
   { path: "q", component: SendOutSurveyComponent},
   { path: "memInvite", component:InvitationComponent},
-  { path:"take", component:SurveyTakeComponent},
+  { path: "take", component:SurveyTakeComponent},
+  { path: "team", component:TeamComponent},
+  { path: "team/create", component:TeamSaveComponent},
   { path: "**", redirectTo: "404" },
-  {path: "team", component:TeamComponent},
-  {path: "team/create", component:TeamSaveComponent}
+  
 ];
 
 @NgModule({
