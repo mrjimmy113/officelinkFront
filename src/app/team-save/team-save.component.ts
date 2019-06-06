@@ -21,12 +21,13 @@ export class TeamSaveComponent implements OnInit {
   }
 
   init() {
-    if (this.inputs.lenght == 0) {
+    if (this.inputs.length == 0) {
       this.team = new Team();
     }else {
       this.team = this.inputs;
       this.isEdit = true;
     }
+
     this.requestStatus = 0;
   }
 
@@ -35,7 +36,9 @@ export class TeamSaveComponent implements OnInit {
   }
 
   add() {
-    console.log(this.team);
+    if (this.isEdit == false) {
+      this.team.id = 0;
+    }
     this.ser.create(this.team).subscribe(result => console.log(result));
   }
 }
