@@ -14,6 +14,8 @@ import { RouterModule, Routes } from "@angular/router";
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { NotFoundComponent } from './others/not-found/not-found.component';
+import { TeamComponent } from './team/team.component';
+import { TeamSaveComponent } from './team-save/team-save.component';
 const routes: Routes = [
   { path: "", component:HomeComponent},
   { path: "home", component:HomeComponent},
@@ -26,9 +28,11 @@ const routes: Routes = [
   { path: "login", component: LoginComponent},
   { path: "q", component: SendOutSurveyComponent},
   { path: "memInvite", component:InvitationComponent},
-  { path:"take", component:SurveyTakeComponent},
+  { path: "take", component:SurveyTakeComponent},
+  { path: "team", component:TeamComponent},
+  { path: "team/create", component:TeamSaveComponent},
   { path: "**", redirectTo: "404" },
-
+  
 ];
 
 @NgModule({
