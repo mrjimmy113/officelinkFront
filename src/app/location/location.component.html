@@ -1,6 +1,6 @@
 <h2>Location</h2>
 
-<button class="btn btn-success" (click)="openCreate()">Create Location</button>
+<button class="btn btn-success" (click)="create()">Create Location</button>
 <div class="d-flex justify-content-end">
   <div class="form-inline">
     <div class="input-group mb-3">
@@ -49,7 +49,7 @@
           <div class="w3-dropdown-hover">
             <i class="fas fa-pen "></i>
             <div class="w3-dropdown-content w3-bar-block">
-              <button href="#" class="w3-bar-item btn btn-info" (click)="openEdit(item)">Edit</button>
+              <button href="#" class="w3-bar-item btn btn-info" (click)="edit(item)">Edit</button>
               <button href="#" class="w3-bar-item btn btn-danger" (click)="delete(item.id)">Delete</button>
             </div>
           </div>

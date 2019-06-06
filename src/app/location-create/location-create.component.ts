@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
+import { Location } from '../model/location';
 import { ModalService } from '../service/modal.service';
 import { LocationService } from '../service/location.service';
 
@@ -9,10 +10,11 @@ import { LocationService } from '../service/location.service';
 })
 export class LocationCreateComponent implements OnInit {
 
-  @Input() input;
+  @Input() inputs;
+  @Output() outputs;
   location:Location;
   requestStatus:Number;
-  isEdit:boolean;
+  isEdit = false;
 
   constructor(private modalService:ModalService, private service:LocationService) { }
 
@@ -21,13 +23,14 @@ export class LocationCreateComponent implements OnInit {
   }
 
   init() {
-    if(this.input.length == 0) {
+    if(this.inputs.length == 0) {
       this.location = new Location();
     } else {
-      this.location = this.input;
+      this.location = this.inputs;
       this.isEdit = true;
     }
     this.requestStatus = 0;
+    console.log(this.requestStatus);
   }
 
   close() {
@@ -35,6 +38,40 @@ export class LocationCreateComponent implements OnInit {
   }
 
   add() {
-    this.service.create(this.location);
+    if (this.isEdit == false) {
+      this.location.id = 0;
+    }
+    this.service.create(this.location).subscribe(result => {
+      this.requestStatus = result;
+      if (this.requestStatus == 201) {
+        this.close();
+      } 
+      this.outputs();
+    },
+    error => {
+      console.log(error);
+      if (error.status == 409){
+        alert("Address cannot be duplicated");
+      } else if (error.status = 404) {
+        alert("Bad request");
+      }
+      this.close();
+      this.outputs();
+    }
+    );
+  }
+
+  update() {
+    this.service.update(this.location).subscribe(result => {
+      this.requestStatus = result;
+      if (this.requestStatus == 200) this.close();
+      this.outputs();
+    });
+  }
+
+  save() {
+    this.requestStatus = 1;
+    if (this.isEdit) this.update();
+    else this.add();
   }
 }

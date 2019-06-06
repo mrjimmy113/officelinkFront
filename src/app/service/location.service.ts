@@ -3,13 +3,14 @@ import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { PageSearch } from '../model/page-search';
 import { HttpClient } from '@angular/common/http';
+import { Location } from '../model/location';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LocationService {
 
-  private api = environment.apiEndPoint + "/team";
+  private api = environment.apiEndPoint + "/location";
 
   constructor(private http:HttpClient) { }
 
