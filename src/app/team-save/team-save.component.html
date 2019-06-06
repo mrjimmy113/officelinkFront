@@ -1,0 +1,34 @@
+<div class="">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Team</h5>
+        <button type="button" class="close" (click)="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #teamForm="ngForm">
+          <div class="form-group">
+            <label>Team Name</label>
+            <input class="form-control" name="name" #name="ngModel" [(ngModel)]="team.name" />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <div class="col-sm-6">
+          <h4><span class="badge badge-pill badge-success" *ngIf="requestStatus == 200">Success</span></h4>
+          <h4><span class="badge badge-pill badge-danger" *ngIf="requestStatus == 400">Fail</span></h4>
+        </div>
+        <div class="col-sm-6 d-flex justify-content-end" style="padding: 0px">
+          <button type="button" class="btn btn-success" (click)="save()" [disabled]="(requestStatus ==1)">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
+              *ngIf="requestStatus == 1"></span>
+            <span *ngIf="requestStatus == 0">Submit</span>
+            <span *ngIf="requestStatus == 200">New Import</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

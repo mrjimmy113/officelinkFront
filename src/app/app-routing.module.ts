@@ -14,7 +14,12 @@ import { RouterModule, Routes } from "@angular/router";
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { NotFoundComponent } from './others/not-found/not-found.component';
+<<<<<<< HEAD
 import { LocationComponent } from "./location/location.component";
+=======
+import { TeamComponent } from './team/team.component';
+import { TeamSaveComponent } from './team-save/team-save.component';
+>>>>>>> Team-management
 const routes: Routes = [
   { path: "", component:HomeComponent},
   { path: "home", component:HomeComponent},
@@ -27,8 +32,14 @@ const routes: Routes = [
   { path: "login", component: LoginComponent},
   { path: "q", component: SendOutSurveyComponent},
   { path: "memInvite", component:InvitationComponent},
+<<<<<<< HEAD
   { path:"take", component:SurveyTakeComponent},
   { path: "location", component: LocationComponent },
+=======
+  { path: "take", component:SurveyTakeComponent},
+  { path: "team", component:TeamComponent},
+  { path: "team/create", component:TeamSaveComponent},
+>>>>>>> Team-management
   { path: "**", redirectTo: "404" },
   
 ];

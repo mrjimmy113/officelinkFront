@@ -20,8 +20,13 @@ import { SendOutSurveyComponent } from './survey/send-out-survey/send-out-survey
 import { ConfirmRegisterComponent } from './others/confirm-register/confirm-register.component';
 import { ConfirmInvitationComponent } from './confirm-invitation/confirm-invitation.component';
 import { InvitationComponent } from './account/invitation/invitation.component';
+<<<<<<< HEAD
 import { LocationComponent } from './location/location.component';
 import { LocationCreateComponent } from './location-create/location-create.component';
+=======
+import { TeamComponent } from './team/team.component';
+import { TeamSaveComponent } from './team-save/team-save.component';
+>>>>>>> Team-management
 
 @NgModule({
   declarations: [
@@ -42,8 +47,13 @@ import { LocationCreateComponent } from './location-create/location-create.compo
     ConfirmRegisterComponent,
     ConfirmInvitationComponent,
     InvitationComponent,
+<<<<<<< HEAD
     LocationComponent,
     LocationCreateComponent
+=======
+    TeamComponent,
+    TeamSaveComponent
+>>>>>>> Team-management
   ],
   imports: [BrowserModule, HttpClientModule, FormsModule, AppRoutingModule],
   entryComponents: [],
