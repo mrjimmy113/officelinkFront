@@ -16,6 +16,9 @@ import { CommonModule } from "@angular/common";
 import { NotFoundComponent } from './others/not-found/not-found.component';
 import { TeamComponent } from './team/team.component';
 import { TeamSaveComponent } from './team-save/team-save.component';
+import { DepartmentComponent } from './department/department.component';
+import { DepartmentSaveComponent } from './department-save/department-save.component';
+
 const routes: Routes = [
   { path: "", component:HomeComponent},
   { path: "home", component:HomeComponent},
@@ -30,7 +33,9 @@ const routes: Routes = [
   { path: "memInvite", component:InvitationComponent},
   { path: "take", component:SurveyTakeComponent},
   { path: "team", component:TeamComponent},
-  { path: "team/create", component:TeamSaveComponent},
+  { path: "team/save", component:TeamSaveComponent},
+  { path: "department", component:DepartmentComponent},
+  { path: "department/save", component:DepartmentSaveComponent},
   { path: "**", redirectTo: "404" },
   
 ];

@@ -22,6 +22,8 @@ import { ConfirmInvitationComponent } from './confirm-invitation/confirm-invitat
 import { InvitationComponent } from './account/invitation/invitation.component';
 import { TeamComponent } from './team/team.component';
 import { TeamSaveComponent } from './team-save/team-save.component';
+import { DepartmentComponent } from './department/department.component';
+import { DepartmentSaveComponent } from './department-save/department-save.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,9 @@ import { TeamSaveComponent } from './team-save/team-save.component';
     ConfirmInvitationComponent,
     InvitationComponent,
     TeamComponent,
-    TeamSaveComponent
+    TeamSaveComponent,
+    DepartmentComponent,
+    DepartmentSaveComponent
   ],
   imports: [BrowserModule, HttpClientModule, FormsModule, AppRoutingModule],
   entryComponents: [],

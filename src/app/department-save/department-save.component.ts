@@ -1,21 +1,21 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Team } from '../model/team';
+import { Component, OnInit, Input, Output } from '@angular/core';
+import { Department } from '../model/department';
 import { ModalService } from '../service/modal.service';
-import { TeamService } from '../service/team.service';
+import { DepartmentService } from '../service/department.service';
 
 @Component({
-  selector: 'app-team-save',
-  templateUrl: './team-save.component.html',
-  styleUrls: ['./team-save.component.css']
+  selector: 'app-department-save',
+  templateUrl: './department-save.component.html',
+  styleUrls: ['./department-save.component.css']
 })
-export class TeamSaveComponent implements OnInit {
+export class DepartmentSaveComponent implements OnInit {
   @Input() inputs;
   @Output() outputs;
-  team:Team;
+  department:Department;
   requestStatus:Number;
   isEdit = false;
-
-  constructor(private modalSer:ModalService, private ser:TeamService) { }
+  
+  constructor(private modalSer:ModalService, private ser:DepartmentService) { }
 
   ngOnInit() {
     this.init();
@@ -23,9 +23,9 @@ export class TeamSaveComponent implements OnInit {
 
   init() {
     if (this.inputs.length == 0) {
-      this.team = new Team();
+      this.department = new Department();
     }else {
-      this.team = this.inputs;
+      this.department = this.inputs;
       this.isEdit = true;
     }
     this.requestStatus = 0;
@@ -37,9 +37,9 @@ export class TeamSaveComponent implements OnInit {
 
   add() {
     if (this.isEdit == false) {
-      this.team.id = 0;
+      this.department.id = 0;
     }
-    this.ser.create(this.team).subscribe(result => {
+    this.ser.create(this.department).subscribe(result => {
       this.requestStatus = result;
       if (this.requestStatus == 201) {
         this.closeModal();
@@ -60,7 +60,7 @@ export class TeamSaveComponent implements OnInit {
   }
 
   update() {
-    this.ser.update(this.team).subscribe(result => {
+    this.ser.update(this.department).subscribe(result => {
       this.requestStatus = result;
       if (this.requestStatus == 200) this.closeModal();
       this.outputs();

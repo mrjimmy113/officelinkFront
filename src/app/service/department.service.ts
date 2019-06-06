@@ -1,24 +1,24 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Department } from '../model/department';
 import { PageSearch } from '../model/page-search';
-import { Team } from '../model/team';
-import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TeamService {
-  private api = environment.apiEndPoint + "/team";
+export class DepartmentService {
+  private api = environment.apiEndPoint + "/department";
 
   constructor(private http:HttpClient) { }
 
-  search(term):Observable<PageSearch<Team>> {
-    return this.http.get<PageSearch<Team>>(this.api + `?term=${term}`);
+  search(term):Observable<PageSearch<Department>> {
+    return this.http.get<PageSearch<Department>>(this.api + `?term=${term}`);
   }
 
-  getPage(term, page):Observable<PageSearch<Team>> {
-    return this.http.get<PageSearch<Team>>(this.api + `?term=${term}&page=${page}`);
+  getPage(term, page):Observable<PageSearch<Department>> {
+    return this.http.get<PageSearch<Department>>(this.api + `?term=${term}&page=${page}`);
   }
 
   create(obj):Observable<Number> {
