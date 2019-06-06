@@ -47,8 +47,8 @@
             </div>
             <div class="row rowpadding" *ngFor="let word of words; let i = index">
               <div class="col-sm-1 nopadding d-flex flex-row-reverse">
-                <i class="fa fa-trash d-flex justify-content-center"
-                  style="font-size: 17px; padding-top: 2px; padding-right: 15px; padding-bottom: 2px" aria-hidden="true"
+                <i class="fa fa-trash"
+                  style="padding-top: 2px;" aria-hidden="true"
                   (click)="removeWord(i)"></i>
               </div>
               <div class="col-sm-5">
@@ -100,15 +100,16 @@
       </div>
       <div class="modal-footer">
         <div class="col-sm-6">
-          <h4><span class="badge badge-pill badge-success" *ngIf="requestStatus == 200">Success</span></h4>
+          <h4><span class="badge badge-pill badge-success" *ngIf="requestStatus == 201">Success</span></h4>
           <h4><span class="badge badge-pill badge-danger" *ngIf="requestStatus == 400">Fail</span></h4>
         </div>
         <div class="col-sm-6 d-flex justify-content-end" style="padding: 0px">
-          <button type="button" class="btn btn-success" (click)="add()" [disabled]="(requestStatus ==1)">
+          <button type="button" class="btn btn-success" (click)="save()" [disabled]="(requestStatus ==1)">
             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
               *ngIf="requestStatus == 1"></span>
-            <span *ngIf="requestStatus == 0">Submit</span>
-            <span *ngIf="requestStatus == 200">New Import</span>
+
+            <span *ngIf="requestStatus == 0 && !isEdit">Add</span>
+            <span *ngIf="requestStatus == 0 && isEdit">Modify</span>
           </button>
         </div>
       </div>

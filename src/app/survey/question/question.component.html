@@ -1,0 +1,35 @@
+<div (click)="enableEditMode()" [ngClass]="{'shadow': isEditMode}" class="modal-body">
+  <!--Question + Types-->
+  <div class="row row-padding-bot">
+    <div class="col-sm-9">
+      <input class="form-control" placeholder="Question" />
+    </div>
+    <div class="col-sm-3">
+      <select class="form-control">
+        <option>Multiple Choice</option>
+      </select>
+    </div>
+  </div>
+  <!--Option-->
+  <div class="form-check" *ngFor="let option of options; let i = index">
+    <div class="row row-padding-bot">
+      <div class="col-sm-1 row align-content-center d-flex justify-content-center">
+        <input type="radio" class="radio-big" disabled />
+      </div>
+      <div class="col-sm-10 option">
+        <input type="text" class="form-control" placeholder="Option {{i + 1}}" [value]="options[i]" />
+      </div>
+      <div class="col-sm-1 row align-content-center d-flex justify-content-center" *ngIf="isEditMode">
+        <button class="btn btn-danger" (click)="deleteOption(i)"><i class="fas fa-times"></i></button>
+      </div>
+    </div>
+  </div>
+  <div class="form-group add-btn" *ngIf="isEditMode">
+    <button class="btn btn-primary" (click)="addOption()">Add More Option</button>
+  </div>
+
+  <div class="modal-footer" *ngIf="isEditMode">
+    <button class="btn btn-primary" (click)="copyQuestion()"><i class="fas fa-copy"></i></button>
+    <button class="btn btn-danger" (click)="deleteQuestion()"><i class="fas fa-trash"></i></button>
+  </div>
+</div>

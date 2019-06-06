@@ -1,0 +1,30 @@
+<div class="modal-lg modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header bg-success" style="color: white">
+      <div class="col-sm-10 noPadding" >
+        <h5>Feedback: {{survey.name}}</h5>
+      </div>
+    </div>
+    <div class="modal-body" style="padding-left: 24px">
+      <div *ngFor="let q of survey.questions">
+          <b><i class="far fa-question-circle"></i> {{q.question}}</b>
+          <div style="padding-left: 12px">Answer:</div>
+        <div class="form-check" *ngFor="let option of q.options; let i = index">
+          <div class="row row-padding-bot">
+            <div class="col-sm-1 row align-content-center d-flex justify-content-center">
+              <input type="radio" class="radio-big" />
+            </div>
+            <div class="col-sm-10 option">
+              {{option}}
+            </div>
+
+          </div>
+        </div>
+        <hr>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-success" (click)="addQuestion()">Done</button>
+    </div>
+  </div>
+</div>

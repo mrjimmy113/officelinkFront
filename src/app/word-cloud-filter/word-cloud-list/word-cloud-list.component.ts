@@ -1,8 +1,7 @@
-import { WordCloudService } from './../service/word-cloud.service';
+import { WordCloudService } from '../../service/word-cloud.service';
 import { WordCloudSaveComponent } from './../word-cloud-save/word-cloud-save.component';
-import { ModalService } from './../service/modal.service';
+import { ModalService } from '../../service/modal.service';
 import { Component, OnInit } from '@angular/core';
-import { serializePath } from '@angular/router/src/url_tree';
 
 @Component({
   selector: 'app-word-cloud-list',

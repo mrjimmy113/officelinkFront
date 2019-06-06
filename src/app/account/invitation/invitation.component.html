@@ -1,0 +1,30 @@
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">Employee Invitation</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="row form-group">
+        <div class="col-sm-10">
+          <input placeholder="Email Invitation" class="form-control" name="email" #email="ngModel" [(ngModel)]="newEmail" />
+        </div>
+        <div class="col-sm-2">
+          <button class="btn btn-success" (click)="addNewEmail()">Add</button>
+        </div>
+      </div>
+      <label>Invitation List</label>
+      <div class="invitation-box">
+        <span class="badge badge-primary" *ngFor="let email of listEmail; let i = index">
+          {{email}} <button class="btn-primary borderless" ><i class="fas fa-times" (click)="removeEmail(i)"></i></button>
+        </span>
+
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary">Send</button>
+    </div>
+  </div>
+</div>
