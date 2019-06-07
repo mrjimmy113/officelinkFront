@@ -17,7 +17,6 @@ export class SurveyTakeComponent implements OnInit {
     this.survey.questions = new Array<Question>();
     let q = new Question();
     q.question = "How you rate the services ?";
-    q.options = ["Wonderful", "Good", " Not Bad", "Bad", "Unacceptable"]
     this.survey.questions.push(q);
     this.survey.questions.push(q);
     this.survey.questions.push(q);
