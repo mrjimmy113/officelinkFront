@@ -13,19 +13,27 @@
             <label>Team Name</label>
             <input class="form-control" name="name" #name="ngModel" [(ngModel)]="team.name" />
           </div>
+          <div class="form-group">
+            <label>Department Name</label>
+            <select class="form-control" name="department" [ngModel]="depList" (ngModelChange)="selectDepartment($event)">
+                <option [attr.selected]="true">-- Choose Department --</option>
+                <option *ngFor="let dep of depList" [value]="dep.id"
+                [attr.selected]="dep.id == team.department.id ? 'selected' : null">{{dep.name}}</option>
+           </select>
+          </div>
         </form>
       </div>
       <div class="modal-footer">
         <div class="col-sm-6">
-          <h4><span class="badge badge-pill badge-success" *ngIf="requestStatus == 200">Success</span></h4>
+          <h4><span class="badge badge-pill badge-success" *ngIf="requestStatus == 200 || requestStatus == 201">Success</span></h4>
           <h4><span class="badge badge-pill badge-danger" *ngIf="requestStatus == 400">Fail</span></h4>
         </div>
         <div class="col-sm-6 d-flex justify-content-end" style="padding: 0px">
-          <button type="button" class="btn btn-success" (click)="save()" [disabled]="(requestStatus ==1)">
+          <button type="button" class="btn btn-success" (click)="save()" >
             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
               *ngIf="requestStatus == 1"></span>
-            <span *ngIf="requestStatus == 0">Submit</span>
-            <span *ngIf="requestStatus == 200">New Import</span>
+            <span *ngIf="isEdit == false && requestStatus != 1">Create</span>
+            <span *ngIf="isEdit == true && requestStatus != 1">Save</span>
           </button>
         </div>
       </div>

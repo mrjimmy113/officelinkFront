@@ -23,6 +23,9 @@
         <div class="col-sm-7 d-flex align-items-center clickable" (click)="sort('name')">
           Team Name <i class="fas fa-sort icon"></i>
         </div>
+        <div class="col-sm-5 d-flex align-items-center clickable" (click)="sort('name')">
+          Department Name <i class="fas fa-sort icon"></i>
+        </div>
       </div>
 
       <div class="col-sm-2 d-flex align-items-center justify-content-center">
@@ -39,6 +42,9 @@
 
           <div class="col-sm-7 d-flex align-items-center">
             {{item.name}}
+          </div>
+          <div class="col-sm-5 d-flex align-items-center">
+            {{item.department.name}}
           </div>
         </div>
 

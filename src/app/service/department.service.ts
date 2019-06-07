@@ -13,6 +13,10 @@ export class DepartmentService {
 
   constructor(private http:HttpClient) { }
 
+  getAll():Observable<Array<Department>> {
+    return this.http.get<Array<Department>>(this.api + `/getAll`);
+  }
+
   search(term):Observable<PageSearch<Department>> {
     return this.http.get<PageSearch<Department>>(this.api + `?term=${term}`);
   }
