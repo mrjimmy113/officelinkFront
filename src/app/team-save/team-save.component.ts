@@ -1,14 +1,14 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Team } from '../model/team';
-import { Department } from '../model/department';
-import { ModalService } from '../service/modal.service';
-import { TeamService } from '../service/team.service';
-import { DepartmentService } from '../service/department.service';
+import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
+import { Team } from "../model/team";
+import { Department } from "../model/department";
+import { ModalService } from "../service/modal.service";
+import { TeamService } from "../service/team.service";
+import { DepartmentService } from "../service/department.service";
 
 @Component({
-  selector: 'app-team-save',
-  templateUrl: './team-save.component.html',
-  styleUrls: ['./team-save.component.css']
+  selector: "app-team-save",
+  templateUrl: "./team-save.component.html",
+  styleUrls: ["./team-save.component.css"]
 })
 export class TeamSaveComponent implements OnInit {
   @Input() inputs;
@@ -17,8 +17,13 @@ export class TeamSaveComponent implements OnInit {
   depList: Array<Department>;
   requestStatus: Number; // 0: no request, 1: requesting, 2: requested
   isEdit = false;
+  choosenDepId: Number = 0;
 
-  constructor(private modalSer: ModalService, private teamSer: TeamService, private depSer: DepartmentService) { }
+  constructor(
+    private modalSer: ModalService,
+    private teamSer: TeamService,
+    private depSer: DepartmentService
+  ) {}
 
   ngOnInit() {
     this.init();
@@ -29,8 +34,10 @@ export class TeamSaveComponent implements OnInit {
     if (this.inputs.length == 0) {
       this.team = new Team();
       this.getListDepartment();
-    } else { // edit init modal
+    } else {
+      // edit init modal
       this.team = this.inputs;
+      this.choosenDepId = this.team.department.id;
       this.getListDepartment();
       this.isEdit = true;
     }
@@ -48,25 +55,19 @@ export class TeamSaveComponent implements OnInit {
     });
   }
 
-  selectDepartment(depId) {
-    var dep = this.depList.find(function (el) {
-      return el.id == depId
-    })
-
-    this.team.department = dep;
-  }
-
   add() {
-    this.teamSer.create(this.team).subscribe(result => {
-      this.requestStatus = result;
-      alert("Create Successful");
-      this.closeModal();
-      this.outputs();
-    },
+    this.getDepartment();
+    this.teamSer.create(this.team).subscribe(
+      result => {
+        this.requestStatus = result;
+        alert("Create Successful");
+        this.closeModal();
+        this.outputs();
+      },
       error => {
         if (error.status == 409) {
           alert("Name cannot be duplicated");
-        } else if (error.status = 404) {
+        } else if ((error.status = 404)) {
           alert("Bad request");
         }
         this.outputs();
@@ -75,20 +76,29 @@ export class TeamSaveComponent implements OnInit {
   }
 
   update() {
-    this.teamSer.update(this.team).subscribe(result => {
-      this.requestStatus = result;
-      alert("Update Successful");
-      this.closeModal();
-      this.outputs();
-    },
+    this.getDepartment();
+    this.teamSer.update(this.team).subscribe(
+      result => {
+        this.requestStatus = result;
+        alert("Update Successful");
+        this.closeModal();
+        this.outputs();
+      },
       error => {
         if (this.requestStatus == 400) alert("Some Error happened");
-      });
+      }
+    );
   }
 
   save() {
     this.requestStatus = 1;
     if (this.isEdit) this.update();
     else this.add();
+  }
+
+  getDepartment() {
+    this.depList.forEach(e => {
+      if (e.id == this.choosenDepId) this.team.department = e;
+    });
   }
 }
