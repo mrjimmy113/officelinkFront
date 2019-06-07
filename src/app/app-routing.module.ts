@@ -1,3 +1,4 @@
+import { SurveyReportComponent } from './survey/survey-report/survey-report.component';
 import { SurveyTakeComponent } from './survey/survey-take/survey-take.component';
 import { InvitationComponent } from './account/invitation/invitation.component';
 import { SendOutSurveyComponent } from './survey/send-out-survey/send-out-survey.component';
@@ -51,7 +52,7 @@ const routes: Routes = [
   { path: "404",  component: NotFoundComponent },
   { path: "forget", component: ForgetPasswordComponent},
   { path: "login", component: LoginComponent},
-  { path: "q", component: SendOutSurveyComponent},
+  { path: "q", component: SurveySaveComponent},
   { path: "memInvite", component:InvitationComponent},
   { path: "take", component:SurveyTakeComponent},
   { path: "team", component:TeamComponent},
@@ -63,6 +64,7 @@ const routes: Routes = [
   { path: "location/create", component: LocationCreateComponent },
   { path: "workplace", component:WorkplaceComponent},
   { path: "workplace/save", component:WorkplaceSaveComponent},
+  { path:"report", component:SurveyReportComponent},
   { path: "**", redirectTo: "404" },
   
 ];

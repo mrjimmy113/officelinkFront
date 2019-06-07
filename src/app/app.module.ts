@@ -19,6 +19,10 @@ import { RegisterComponent } from './others/register/register.component';
 import { SendOutSurveyComponent } from './survey/send-out-survey/send-out-survey.component';
 import { ConfirmInvitationComponent } from './confirm-invitation/confirm-invitation.component';
 import { InvitationComponent } from './account/invitation/invitation.component';
+import { ChartsModule } from 'ng2-charts';
+import { GoogleChartsModule } from 'angular-google-charts';
+import { SurveyReportComponent } from './survey/survey-report/survey-report.component';
+import { SurveyCompareComponent } from './survey/survey-compare/survey-compare.component';
 import { TeamComponent } from './team/team.component';
 import { TeamSaveComponent } from './team-save/team-save.component';
 import { DepartmentComponent } from './department/department.component';
@@ -55,6 +59,8 @@ import {Login2Component} from './others/login2/login2.component'
     RegisterComponent,
     SendOutSurveyComponent,
     ConfirmInvitationComponent,
+    SurveyReportComponent,
+    SurveyCompareComponent
     InvitationComponent,
     TeamComponent,
     TeamSaveComponent,
@@ -72,8 +78,8 @@ import {Login2Component} from './others/login2/login2.component'
 
 
   ],
-  imports: [BrowserModule, HttpClientModule, FormsModule, AppRoutingModule],
-  entryComponents: [],
+  imports: [BrowserModule, HttpClientModule, FormsModule, AppRoutingModule, ChartsModule, GoogleChartsModule],
+  entryComponents: [SurveyCompareComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

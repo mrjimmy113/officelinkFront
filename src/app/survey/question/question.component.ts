@@ -1,3 +1,4 @@
+import { AnswerOption } from './../../model/answerOption';
 import { Question } from './../../model/question';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
@@ -13,22 +14,21 @@ export class QuestionComponent implements OnInit {
   @Output() giveClassToParent = new EventEmitter();
   @Output() copyQ = new EventEmitter();
   @Output() deleteQ = new EventEmitter();
-  options: String[];
   isEditMode = false;
   constructor() { }
 
   ngOnInit() {
-    this.options = new Array<String>();
+    this.question.options = new Array<AnswerOption>();
     console.log(this.updateEditMode);
     this.classToParent();
   }
 
   addOption() {
-    this.options.push(new String());
+    this.question.options.push(new AnswerOption());
   }
 
   deleteOption(index) {
-    this.options.splice(index,1);
+    this.question.options.splice(index,1);
   }
   enableEditMode() {
     this.updateEditMode.emit();
