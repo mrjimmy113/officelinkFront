@@ -16,8 +16,7 @@ import { CommonModule } from "@angular/common";
 import { NotFoundComponent } from './others/not-found/not-found.component';
 import { LocationComponent } from "./location/location.component";
 import { LocationCreateComponent } from "./location-create/location-create.component";
-import { TeamComponent } from './team/team.component';
-import { TeamSaveComponent } from './team-save/team-save.component';
+
 const routes: Routes = [
   { path: "", component:HomeComponent},
   { path: "home", component:HomeComponent},
@@ -33,8 +32,6 @@ const routes: Routes = [
   { path:"take", component:SurveyTakeComponent},
   { path: "location", component: LocationComponent },
   { path: "location/create", component: LocationCreateComponent },
-  { path: "team", component:TeamComponent},
-  { path: "team/create", component:TeamSaveComponent},
   { path: "**", redirectTo: "404" },
   
 ];
