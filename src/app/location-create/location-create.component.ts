@@ -50,7 +50,7 @@ export class LocationCreateComponent implements OnInit {
     error => {
       console.log(error);
       if (error.status == 409){
-        alert("County cannot be duplicated");
+        alert("Address cannot be duplicated");
       } else if (error.status = 404) {
         alert("Bad request");
       }
