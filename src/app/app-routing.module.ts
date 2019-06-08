@@ -18,6 +18,8 @@ import { TeamComponent } from './team/team.component';
 import { TeamSaveComponent } from './team-save/team-save.component';
 import { DepartmentComponent } from './department/department.component';
 import { DepartmentSaveComponent } from './department-save/department-save.component';
+import { LocationComponent } from "./location/location.component";
+import { LocationCreateComponent } from "./location-create/location-create.component";
 
 const routes: Routes = [
   { path: "", component:HomeComponent},
@@ -36,6 +38,9 @@ const routes: Routes = [
   { path: "team/save", component:TeamSaveComponent},
   { path: "department", component:DepartmentComponent},
   { path: "department/save", component:DepartmentSaveComponent},
+  { path:"take", component:SurveyTakeComponent},
+  { path: "location", component: LocationComponent },
+  { path: "location/create", component: LocationCreateComponent },
   { path: "**", redirectTo: "404" },
   
 ];

@@ -24,6 +24,8 @@ import { TeamComponent } from './team/team.component';
 import { TeamSaveComponent } from './team-save/team-save.component';
 import { DepartmentComponent } from './department/department.component';
 import { DepartmentSaveComponent } from './department-save/department-save.component';
+import { LocationComponent } from './location/location.component';
+import { LocationCreateComponent } from './location-create/location-create.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +50,8 @@ import { DepartmentSaveComponent } from './department-save/department-save.compo
     TeamSaveComponent,
     DepartmentComponent,
     DepartmentSaveComponent
+    LocationComponent,
+    LocationCreateComponent,
   ],
   imports: [BrowserModule, HttpClientModule, FormsModule, AppRoutingModule],
   entryComponents: [],
