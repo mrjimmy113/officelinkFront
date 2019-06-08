@@ -63,7 +63,7 @@ export class LocationCreateComponent implements OnInit {
   update() {
     this.service.update(this.location).subscribe(result => {
       this.requestStatus = result;
-      if (this.requestStatus == 200) this.close();
+      if (this.requestStatus == 201) this.close();
       this.outputs();
     });
   }
