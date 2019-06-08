@@ -38,7 +38,6 @@ export class LocationComponent implements OnInit {
   }
 
   delete(id) {
-    console.log(id);
     this.service.delete(id).subscribe(result => {
       this.requestStatus = result;
       if (this.requestStatus == 200){

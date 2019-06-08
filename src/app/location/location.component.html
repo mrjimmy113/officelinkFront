@@ -20,13 +20,13 @@
     <div class="row">
       <div class="row col-sm-10">
 
-        <div class="col-sm-7 d-flex align-items-center clickable" (click)="sort('name')">
-          Address <i class="fas fa-sort icon"></i>
+        <div class="col-sm-7 d-flex align-items-center clickable" (click)="sort('county')">
+          County <i class="fas fa-sort icon"></i>
         </div>
       </div>
 
       <div class="col-sm-2 d-flex align-items-center justify-content-center">
-        City
+        Action
       </div>
     </div>
   </div>
@@ -38,11 +38,11 @@
         <div class="row col-sm-10">
 
           <div class="col-sm-7 d-flex align-items-center">
-            {{item.address}}
+            {{item.county}}
           </div>
-          <div class="col-sm-5 d-flex align-items-center">
+          <!-- <div class="col-sm-5 d-flex align-items-center">
             {{item.city}}
-          </div>
+          </div> -->
         </div>
 
         <div class="col-sm-2 d-flex align-items-center justify-content-center">

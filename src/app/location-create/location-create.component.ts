@@ -30,7 +30,6 @@ export class LocationCreateComponent implements OnInit {
       this.isEdit = true;
     }
     this.requestStatus = 0;
-    console.log(this.requestStatus);
   }
 
   close() {
