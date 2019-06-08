@@ -21,11 +21,11 @@
           <h4><span class="badge badge-pill badge-danger" *ngIf="requestStatus == 400">Fail</span></h4>
         </div>
         <div class="col-sm-6 d-flex justify-content-end" style="padding: 0px">
-          <button type="button" class="btn btn-success" (click)="save()" [disabled]="(requestStatus ==1)">
+          <button type="button" class="btn btn-success" (click)="save()">
             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
               *ngIf="requestStatus == 1"></span>
-            <span *ngIf="requestStatus == 0">Submit</span>
-            <span *ngIf="requestStatus == 200">New Import</span>
+            <span *ngIf="isEdit == false && requestStatus != 1">Create</span>
+            <span *ngIf="isEdit == true && requestStatus != 1">Save</span>
           </button>
         </div>
       </div>

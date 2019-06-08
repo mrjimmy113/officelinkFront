@@ -23,7 +23,7 @@ export class TeamSaveComponent implements OnInit {
     private modalSer: ModalService,
     private teamSer: TeamService,
     private depSer: DepartmentService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.init();
@@ -70,6 +70,7 @@ export class TeamSaveComponent implements OnInit {
         } else if ((error.status = 404)) {
           alert("Bad request");
         }
+        this.requestStatus = 0;
         this.outputs();
       }
     );
@@ -80,12 +81,15 @@ export class TeamSaveComponent implements OnInit {
     this.teamSer.update(this.team).subscribe(
       result => {
         this.requestStatus = result;
-        alert("Update Successful");
-        this.closeModal();
+        if (this.requestStatus == 200) {
+          alert("Update Successful");
+          this.closeModal();
+        }
         this.outputs();
       },
       error => {
         if (this.requestStatus == 400) alert("Some Error happened");
+        this.requestStatus = 0;
       }
     );
   }

@@ -13,37 +13,36 @@ export class TeamComponent implements OnInit {
   currentPage = 1;
   maxPage;
   searchTerm = "";
-  requestStatus:Number;
+  requestStatus: Number;
 
-  constructor(private modalSer:ModalService, private ser:TeamService) { }
+  constructor(private modalSer: ModalService, private ser: TeamService) { }
 
   ngOnInit() {
-    this.search();
+    this.search("");
   }
 
-  search() {
-    this.ser.search("").subscribe(result => {
+  search(value) {
+    this.ser.search(value).subscribe(result => {
       this.maxPage = result.maxPage;
       this.itemList = result.objList;
     })
   }
 
   openCreate() {
-    this.modalSer.init(TeamSaveComponent,[],() => this.search());
+    this.modalSer.init(TeamSaveComponent, [], () => this.search(""));
   }
 
   openEdit(item) {
-    this.modalSer.init(TeamSaveComponent,item,() => this.search());
+    this.modalSer.init(TeamSaveComponent, item, () => this.search(""));
   }
 
   delete(id) {
-    console.log(id);
     this.ser.delete(id).subscribe(result => {
       this.requestStatus = result;
-      if (this.requestStatus == 200){
-        this.search();
+      if (this.requestStatus == 200) {
+        alert("success");
+        this.search("");
       }
-      alert("success");
     });
   }
 }

@@ -11,11 +11,11 @@ import { DepartmentService } from '../service/department.service';
 export class DepartmentSaveComponent implements OnInit {
   @Input() inputs;
   @Output() outputs;
-  department:Department;
-  requestStatus:Number;
+  department: Department;
+  requestStatus: Number;
   isEdit = false;
-  
-  constructor(private modalSer:ModalService, private ser:DepartmentService) { }
+
+  constructor(private modalSer: ModalService, private ser: DepartmentService) { }
 
   ngOnInit() {
     this.init();
@@ -24,7 +24,7 @@ export class DepartmentSaveComponent implements OnInit {
   init() {
     if (this.inputs.length == 0) {
       this.department = new Department();
-    }else {
+    } else {
       this.department = this.inputs;
       this.isEdit = true;
     }
@@ -36,35 +36,41 @@ export class DepartmentSaveComponent implements OnInit {
   }
 
   add() {
-    if (this.isEdit == false) {
-      this.department.id = 0;
-    }
-    this.ser.create(this.department).subscribe(result => {
-      this.requestStatus = result;
-      if (this.requestStatus == 201) {
+    this.ser.create(this.department).subscribe(
+      result => {
+        this.requestStatus = result;
+        if (this.requestStatus == 201) {
+          alert("Create Successful");
+          this.closeModal();
+        }
+        this.outputs();
+      },
+      error => {
+        if (error.status == 409) {
+          alert("Name cannot be duplicated");
+        } else if (error.status = 400) {
+          alert("Bad request");
+        }
         this.closeModal();
-      } 
-      this.outputs();
-    },
-    error => {
-      console.log(error);
-      if (error.status == 409){
-        alert("Name cannot be duplicated");
-      } else if (error.status = 404) {
-        alert("Bad request");
+        this.outputs();
       }
-      this.closeModal();
-      this.outputs();
-    }
     );
   }
 
   update() {
-    this.ser.update(this.department).subscribe(result => {
-      this.requestStatus = result;
-      if (this.requestStatus == 200) this.closeModal();
-      this.outputs();
-    });
+    this.ser.update(this.department).subscribe(
+      result => {
+        this.requestStatus = result;
+        if (this.requestStatus == 200) {
+          alert("Update Successful");
+          this.closeModal();
+        }
+        this.outputs();
+      },
+      error => {
+        if (this.requestStatus == 400) alert("Bad request");
+        this.requestStatus = 0;
+      });
   }
 
   save() {
