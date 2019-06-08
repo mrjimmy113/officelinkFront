@@ -1,3 +1,5 @@
+import { TeamSaveComponent } from './team-save/team-save.component';
+import { TeamComponent } from './team/team.component';
 import { SurveyTakeComponent } from './survey/survey-take/survey-take.component';
 import { InvitationComponent } from './account/invitation/invitation.component';
 import { SendOutSurveyComponent } from './survey/send-out-survey/send-out-survey.component';
@@ -30,10 +32,12 @@ const routes: Routes = [
   { path: "q", component: SendOutSurveyComponent},
   { path: "memInvite", component:InvitationComponent},
   { path:"take", component:SurveyTakeComponent},
+  { path: "team", component:TeamComponent},
+  { path: "team/save", component:TeamSaveComponent},
   { path: "location", component: LocationComponent },
   { path: "location/create", component: LocationCreateComponent },
   { path: "**", redirectTo: "404" },
-  
+
 ];
 
 @NgModule({

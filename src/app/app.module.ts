@@ -1,3 +1,5 @@
+import { TeamSaveComponent } from './team-save/team-save.component';
+import { TeamComponent } from './team/team.component';
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { HttpClientModule } from "@angular/common/http";
@@ -42,6 +44,8 @@ import { LocationCreateComponent } from './location-create/location-create.compo
     ConfirmRegisterComponent,
     ConfirmInvitationComponent,
     InvitationComponent,
+    TeamComponent,
+    TeamSaveComponent,
     LocationComponent,
     LocationCreateComponent,
   ],
