@@ -17,6 +17,8 @@ import { CommonModule } from "@angular/common";
 import { NotFoundComponent } from './others/not-found/not-found.component';
 import { LocationComponent } from "./location/location.component";
 import { LocationCreateComponent } from "./location-create/location-create.component";
+import { TeamComponent } from './team/team.component';
+import { TeamSaveComponent } from './team-save/team-save.component';
 
 const routes: Routes = [
   { path: "", component:HomeComponent},
