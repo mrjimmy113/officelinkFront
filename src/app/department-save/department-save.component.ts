@@ -26,6 +26,7 @@ export class DepartmentSaveComponent implements OnInit {
       this.department = new Department();
     } else {
       this.department = this.inputs;
+      this.getDepartment(this.department.id);
       this.isEdit = true;
     }
     this.requestStatus = 0;
@@ -77,5 +78,17 @@ export class DepartmentSaveComponent implements OnInit {
     this.requestStatus = 1;
     if (this.isEdit) this.update();
     else this.add();
+  }
+
+  getDepartment(depId) {
+    this.ser.getDepartmentWithTeams(depId).subscribe(
+      result => {
+        this.department = result;
+        console.log(this.department);
+      },
+      error => {
+        alert("Something went wrong. Try again later.");
+        this.closeModal();
+      });
   }
 }

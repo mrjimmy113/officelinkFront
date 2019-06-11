@@ -49,7 +49,7 @@ import { LocationCreateComponent } from './location-create/location-create.compo
     TeamComponent,
     TeamSaveComponent,
     DepartmentComponent,
-    DepartmentSaveComponent
+    DepartmentSaveComponent,
     LocationComponent,
     LocationCreateComponent,
   ],

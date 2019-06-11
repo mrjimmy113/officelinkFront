@@ -36,6 +36,15 @@ export class TeamComponent implements OnInit {
     this.modalSer.init(TeamSaveComponent, item, () => this.search(""));
   }
 
+  filter() {
+    let newSearchTerm = this.searchTerm;
+    setTimeout(() => {
+      if (newSearchTerm == this.searchTerm) {
+        this.search(this.searchTerm);
+      }
+    }, 300);
+  }
+
   delete(id) {
     this.ser.delete(id).subscribe(result => {
       this.requestStatus = result;

@@ -8,10 +8,16 @@
         </button>
       </div>
       <div class="modal-body">
-        <form #teamForm="ngForm">
+        <form #depForm="ngForm">
           <div class="form-group">
             <label>Department Name</label>
-            <input class="form-control" name="name" #name="ngModel" [(ngModel)]="department.name" />
+            <input class="form-control" name="name" #name="ngModel" [(ngModel)]="department.name"
+              [ngClass]="{'is-invalid' : (name.invalid && (name.dirty || name.touched))}" required />
+            <div *ngIf="name.invalid && (name.dirty || name.touched)" class="text-danger">
+              <div *ngIf="name.errors.required">
+                Name required
+              </div>
+            </div>
           </div>
         </form>
       </div>
@@ -21,7 +27,8 @@
           <h4><span class="badge badge-pill badge-danger" *ngIf="requestStatus == 400">Fail</span></h4>
         </div>
         <div class="col-sm-6 d-flex justify-content-end" style="padding: 0px">
-          <button type="button" class="btn btn-success" (click)="save()">
+          <button type="button" class="btn btn-success" (click)="save()" 
+          [disabled]="(requestStatus==1) || depForm.invalid">
             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
               *ngIf="requestStatus == 1"></span>
             <span *ngIf="isEdit == false && requestStatus != 1">Create</span>

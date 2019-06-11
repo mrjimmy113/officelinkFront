@@ -13,6 +13,10 @@ export class DepartmentService {
 
   constructor(private http:HttpClient) { }
 
+  getDepartmentWithTeams(depId):Observable<Department> {
+    return this.http.get<Department>(this.api + `/getDep` + `?depId=${depId}`);
+  }
+
   getAll():Observable<Array<Department>> {
     return this.http.get<Array<Department>>(this.api + `/getAll`);
   }

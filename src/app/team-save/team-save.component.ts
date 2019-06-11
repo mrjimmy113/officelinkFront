@@ -88,8 +88,13 @@ export class TeamSaveComponent implements OnInit {
         this.outputs();
       },
       error => {
-        if (this.requestStatus == 400) alert("Some Error happened");
+        if (error.status == 409) {
+          alert("Name cannot be duplicated");
+        } else if ((error.status = 404)) {
+          alert("Bad request");
+        }
         this.requestStatus = 0;
+        this.outputs();
       }
     );
   }
@@ -101,8 +106,12 @@ export class TeamSaveComponent implements OnInit {
   }
 
   getDepartment() {
-    this.depList.forEach(e => {
-      if (e.id == this.choosenDepId) this.team.department = e;
-    });
+    if (this.choosenDepId == 0) {
+      this.team.department = null;
+    } else {
+      this.depList.forEach(e => {
+        if (e.id == this.choosenDepId) this.team.department = e;
+      });
+    }
   }
 }
