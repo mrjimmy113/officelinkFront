@@ -1,36 +1,46 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Team } from '../model/team';
-import { ModalService } from '../service/modal.service';
-import { TeamService } from '../service/team.service';
-import { refreshDescendantViews } from '@angular/core/src/render3/instructions';
+import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
+import { Team } from "../model/team";
+import { Department } from "../model/department";
+import { ModalService } from "../service/modal.service";
+import { TeamService } from "../service/team.service";
+import { DepartmentService } from "../service/department.service";
 
 @Component({
-  selector: 'app-team-save',
-  templateUrl: './team-save.component.html',
-  styleUrls: ['./team-save.component.css']
+  selector: "app-team-save",
+  templateUrl: "./team-save.component.html",
+  styleUrls: ["./team-save.component.css"]
 })
 export class TeamSaveComponent implements OnInit {
   @Input() inputs;
-  @Output() outputs
-  team:Team;
-  requestStatus:Number;
+  @Output() outputs;
+  team: Team;
+  depList: Array<Department>;
+  requestStatus: Number; // 0: no request, 1: requesting, 2: requested
   isEdit = false;
+  choosenDepId: Number = 0;
 
-  constructor(private modalSer:ModalService, private ser:TeamService) { }
+  constructor(
+    private modalSer: ModalService,
+    private teamSer: TeamService,
+    private depSer: DepartmentService
+  ) { }
 
   ngOnInit() {
-    console.log(this.outputs);
     this.init();
   }
 
   init() {
+    // create new init modal
     if (this.inputs.length == 0) {
       this.team = new Team();
-    }else {
+      this.getListDepartment();
+    } else {
+      // edit init modal
       this.team = this.inputs;
+      this.choosenDepId = this.team.department.id;
+      this.getListDepartment();
       this.isEdit = true;
     }
-
     this.requestStatus = 0;
   }
 
@@ -38,41 +48,70 @@ export class TeamSaveComponent implements OnInit {
     this.modalSer.destroy();
   }
 
+  // get list department and store in depList
+  getListDepartment() {
+    this.depSer.getAll().subscribe(result => {
+      this.depList = result;
+    });
+  }
+
   add() {
-    if (this.isEdit == false) {
-      this.team.id = 0;
-    }
-    this.ser.create(this.team).subscribe(result => {
-      this.requestStatus = result;
-      if (this.requestStatus == 201) {
+    this.getDepartment();
+    this.teamSer.create(this.team).subscribe(
+      result => {
+        this.requestStatus = result;
+        alert("Create Successful");
         this.closeModal();
-      } 
-      this.outputs();
-    },
-    error => {
-      console.log(error);
-      if (error.status == 409){
-        alert("Name cannot be duplicated");
-      } else if (error.status = 404) {
-        alert("Bad request");
+        this.outputs();
+      },
+      error => {
+        if (error.status == 409) {
+          alert("Name cannot be duplicated");
+        } else if ((error.status = 404)) {
+          alert("Bad request");
+        }
+        this.requestStatus = 0;
+        this.outputs();
       }
-      this.closeModal();
-      this.outputs();
-    }
     );
   }
 
   update() {
-    this.ser.update(this.team).subscribe(result => {
-      this.requestStatus = result;
-      if (this.requestStatus == 200) this.closeModal();
-      this.outputs();
-    });
+    this.getDepartment();
+    this.teamSer.update(this.team).subscribe(
+      result => {
+        this.requestStatus = result;
+        if (this.requestStatus == 200) {
+          alert("Update Successful");
+          this.closeModal();
+        }
+        this.outputs();
+      },
+      error => {
+        if (error.status == 409) {
+          alert("Name cannot be duplicated");
+        } else if ((error.status = 404)) {
+          alert("Bad request");
+        }
+        this.requestStatus = 0;
+        this.outputs();
+      }
+    );
   }
 
   save() {
     this.requestStatus = 1;
     if (this.isEdit) this.update();
     else this.add();
+  }
+
+  getDepartment() {
+    if (this.choosenDepId == 0) {
+      this.team.department = null;
+    } else {
+      this.depList.forEach(e => {
+        if (e.id == this.choosenDepId) this.team.department = e;
+      });
+    }
   }
 }
