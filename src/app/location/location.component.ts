@@ -19,31 +19,40 @@ export class LocationComponent implements OnInit {
   constructor(private modalService: ModalService, private service: LocationService) { }
 
   ngOnInit() {
-    this.search();
+    this.search("");
   }
 
-  search() {
-    this.service.search("").subscribe(result => {
+  search(value) {
+    this.service.search(value).subscribe(result => {
       this.maxPage = result.maxPage;
       this.itemList = result.objList;
     })
   }
 
+  filter() {
+    let newSearchTerm = this.searchTerm;
+    setTimeout(() => {
+      if (newSearchTerm == this.searchTerm) {
+        this.search(this.searchTerm);
+      }
+    }, 300);
+  }
+
   create() {
-    this.modalService.init(LocationCreateComponent,[],() => this.search());
+    this.modalService.init(LocationCreateComponent,[],() => this.search(""));
   }
 
   edit(item) {
-    this.modalService.init(LocationCreateComponent,item,() => this.search());
+    this.modalService.init(LocationCreateComponent,item,() => this.search(""));
   }
 
   delete(id) {
     this.service.delete(id).subscribe(result => {
       this.requestStatus = result;
       if (this.requestStatus == 200){
-        this.search();
+        alert("success");
+        this.search("");
       }
-      alert("success");
     });
   }
 }
