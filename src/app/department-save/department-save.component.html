@@ -18,11 +18,17 @@
                 Name required
               </div>
             </div>
-            <h6>Locations:</h6>
-            <label>Add Location</label>
-            <select class="form-control" name="location" (ngModel)="addLocation(loc.id)">
-              <option *ngFor="let loc of notSelectedLocations" [value]="loc.id">{{loc.address}} | {{loc.city}} | {{loc.county}}</option>
-            </select>
+            <div class="row add-location">
+              <div class="col-4">Locations:</div>
+              <div class="row col-8 ">
+                <label class="col-sm-6 text-right">Add Location:</label>
+                <select class="form-control col-sm-6" name="location" [ngModel]="notSelectedLocations"
+                  (ngModelChange)="addLocation($event)">
+                  <option *ngFor="let loc of notSelectedLocations" [value]="loc.id">{{loc.address}} | {{loc.city}} |
+                    {{loc.county}}</option>
+                </select>
+              </div>
+            </div>
             <table class="table table-hover table-sm table-bordered text-center">
               <thead>
                 <tr>
@@ -37,7 +43,8 @@
                   <td>{{loc.address}}</td>
                   <td>{{loc.city}}</td>
                   <td>{{loc.county}}</td>
-                  <td><button href="#" class="btn btn-danger btn-sm" (click)="removeLocation(loc.id)">Remove</button></td>
+                  <td><button href="#" class="btn btn-danger btn-sm" (click)="removeLocation(loc.id)">Remove</button>
+                  </td>
                 </tr>
               </tbody>
             </table>

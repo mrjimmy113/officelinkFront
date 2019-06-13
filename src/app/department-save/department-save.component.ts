@@ -3,6 +3,7 @@ import { Department } from '../model/department';
 import { ModalService } from '../service/modal.service';
 import { DepartmentService } from '../service/department.service';
 import { Location } from '../model/location';
+import { LocationService } from '../service/location.service';
 
 @Component({
   selector: 'app-department-save',
@@ -17,7 +18,7 @@ export class DepartmentSaveComponent implements OnInit {
   requestStatus: Number;
   isEdit = false;
 
-  constructor(private modalSer: ModalService, private ser: DepartmentService) { }
+  constructor(private modalSer: ModalService, private depSer: DepartmentService, private locSer: LocationService) { }
 
   ngOnInit() {
     this.notSelectedLocations = this.generateLocation(6);
@@ -27,6 +28,7 @@ export class DepartmentSaveComponent implements OnInit {
   init() {
     if (this.inputs.length == 0) {
       this.department = new Department();
+      this.department.locations = new Array<Location>();
     } else {
       this.department = this.inputs;
       this.getDepartment(this.department.id);
@@ -40,7 +42,7 @@ export class DepartmentSaveComponent implements OnInit {
   }
 
   add() {
-    this.ser.create(this.department).subscribe(
+    this.depSer.create(this.department).subscribe(
       result => {
         this.requestStatus = result;
         if (this.requestStatus == 201) {
@@ -62,7 +64,7 @@ export class DepartmentSaveComponent implements OnInit {
   }
 
   update() {
-    this.ser.update(this.department).subscribe(
+    this.depSer.update(this.department).subscribe(
       result => {
         this.requestStatus = result;
         if (this.requestStatus == 200) {
@@ -84,7 +86,7 @@ export class DepartmentSaveComponent implements OnInit {
   }
 
   getDepartment(depId) {
-    this.ser.getDepartmentWithTeams(depId).subscribe(
+    this.depSer.getDepartmentWithTeams(depId).subscribe(
       result => {
         this.department = result;
         this.department.locations = this.generateLocation(1);
@@ -115,8 +117,15 @@ export class DepartmentSaveComponent implements OnInit {
     // end test
   }
 
-  addLocation(location) {
-
+  addLocation(locId) {
+    console.log(locId);
+    var loc = this.notSelectedLocations.find(function (el) {
+      return el.id == locId;
+    })
+    console.log(loc);
+    var index = this.notSelectedLocations.indexOf(loc);
+    this.notSelectedLocations.splice(index, 1);
+    this.department.locations.push(loc);
   }
 
   removeLocation(locId) {
@@ -125,5 +134,6 @@ export class DepartmentSaveComponent implements OnInit {
     })
     var index = this.department.locations.indexOf(loc);
     this.department.locations.splice(index, 1);
+    this.notSelectedLocations.push(loc);
   }
 }
