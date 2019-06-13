@@ -18,8 +18,33 @@
                 Name required
               </div>
             </div>
+            <h6>Locations:</h6>
+            <label>Add Location</label>
+            <select class="form-control" name="location" (ngModel)="addLocation(loc.id)">
+              <option *ngFor="let loc of notSelectedLocations" [value]="loc.id">{{loc.address}} | {{loc.city}} | {{loc.county}}</option>
+            </select>
+            <table class="table table-hover table-sm table-bordered text-center">
+              <thead>
+                <tr>
+                  <th>Address</th>
+                  <th>City</th>
+                  <th>County</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let loc of department.locations">
+                  <td>{{loc.address}}</td>
+                  <td>{{loc.city}}</td>
+                  <td>{{loc.county}}</td>
+                  <td><button href="#" class="btn btn-danger btn-sm" (click)="removeLocation(loc.id)">Remove</button></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </form>
+
+
       </div>
       <div class="modal-footer">
         <div class="col-sm-6">
@@ -27,12 +52,12 @@
           <h4><span class="badge badge-pill badge-danger" *ngIf="requestStatus == 400">Fail</span></h4>
         </div>
         <div class="col-sm-6 d-flex justify-content-end" style="padding: 0px">
-          <button type="button" class="btn btn-success" (click)="save()" 
-          [disabled]="(requestStatus==1) || depForm.invalid">
+          <button type="button" class="btn btn-success" (click)="save()"
+            [disabled]="(requestStatus==1) || depForm.invalid">
             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
               *ngIf="requestStatus == 1"></span>
-            <span *ngIf="isEdit == false && requestStatus != 1">Create</span>
-            <span *ngIf="isEdit == true && requestStatus != 1">Save</span>
+            <span *ngIf="isEdit == false && requestStatus != 1">Create Department</span>
+            <span *ngIf="isEdit == true && requestStatus != 1">Save Department</span>
           </button>
         </div>
       </div>
