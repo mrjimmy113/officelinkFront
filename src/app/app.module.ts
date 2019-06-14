@@ -22,9 +22,10 @@ import { SendOutSurveyComponent } from './survey/send-out-survey/send-out-survey
 import { ConfirmRegisterComponent } from './others/confirm-register/confirm-register.component';
 import { ConfirmInvitationComponent } from './confirm-invitation/confirm-invitation.component';
 import { InvitationComponent } from './account/invitation/invitation.component';
-import { LocationComponent } from './location/location.component';
-import { LocationCreateComponent } from './location-create/location-create.component';
-
+import { ChartsModule } from 'ng2-charts';
+import { GoogleChartsModule } from 'angular-google-charts';
+import { SurveyReportComponent } from './survey/survey-report/survey-report.component';
+import { SurveyCompareComponent } from './survey/survey-compare/survey-compare.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,14 +44,16 @@ import { LocationCreateComponent } from './location-create/location-create.compo
     SendOutSurveyComponent,
     ConfirmRegisterComponent,
     ConfirmInvitationComponent,
+    SurveyReportComponent,
+    SurveyCompareComponent
     InvitationComponent,
     TeamComponent,
     TeamSaveComponent,
     LocationComponent,
     LocationCreateComponent,
   ],
-  imports: [BrowserModule, HttpClientModule, FormsModule, AppRoutingModule],
-  entryComponents: [],
+  imports: [BrowserModule, HttpClientModule, FormsModule, AppRoutingModule, ChartsModule, GoogleChartsModule],
+  entryComponents: [SurveyCompareComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

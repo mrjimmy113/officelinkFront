@@ -11,13 +11,13 @@
     </div>
   </div>
   <!--Option-->
-  <div class="form-check" *ngFor="let option of options; let i = index">
+  <div class="form-check" *ngFor="let option of question.options; let i = index">
     <div class="row row-padding-bot">
       <div class="col-sm-1 row align-content-center d-flex justify-content-center">
         <input type="radio" class="radio-big" disabled />
       </div>
       <div class="col-sm-10 option">
-        <input type="text" class="form-control" placeholder="Option {{i + 1}}" [value]="options[i]" />
+        <input type="text" class="form-control" placeholder="Option {{i + 1}}" [value]="options[i].answerText" />
       </div>
       <div class="col-sm-1 row align-content-center d-flex justify-content-center" *ngIf="isEditMode">
         <button class="btn btn-danger" (click)="deleteOption(i)"><i class="fas fa-times"></i></button>
