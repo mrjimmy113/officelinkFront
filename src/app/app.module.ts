@@ -1,5 +1,7 @@
 import { TeamSaveComponent } from './team-save/team-save.component';
 import { TeamComponent } from './team/team.component';
+import { LocationCreateComponent } from './location/location-create/location-create.component';
+import { LocationComponent } from './location/location-main/location.component';
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { HttpClientModule } from "@angular/common/http";
@@ -45,7 +47,7 @@ import { SurveyCompareComponent } from './survey/survey-compare/survey-compare.c
     ConfirmRegisterComponent,
     ConfirmInvitationComponent,
     SurveyReportComponent,
-    SurveyCompareComponent
+    SurveyCompareComponent,
     InvitationComponent,
     TeamComponent,
     TeamSaveComponent,

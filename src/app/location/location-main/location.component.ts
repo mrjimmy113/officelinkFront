@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalService } from '../service/modal.service';
-import { LocationService } from '../service/location.service';
+import { ModalService } from '../../service/modal.service';
+import { LocationService } from '../../service/location.service';
 import { LocationCreateComponent } from '../location-create/location-create.component';
 
 

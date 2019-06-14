@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output } from '@angular/core';
-import { Location } from '../model/location';
-import { ModalService } from '../service/modal.service';
-import { LocationService } from '../service/location.service';
+import { Location } from '../../model/location';
+import { ModalService } from '../../service/modal.service';
+import { LocationService } from '../../service/location.service';
 
 @Component({
   selector: 'app-location-create',

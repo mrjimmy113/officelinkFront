@@ -15,8 +15,8 @@ import { RouterModule, Routes } from "@angular/router";
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { NotFoundComponent } from './others/not-found/not-found.component';
-import { LocationComponent } from "./location/location.component";
-import { LocationCreateComponent } from "./location-create/location-create.component";
+import { LocationComponent } from "./location/location-main/location.component";
+import { LocationCreateComponent } from "./location/location-create/location-create.component";
 import { TeamComponent } from './team/team.component';
 import { TeamSaveComponent } from './team-save/team-save.component';
 
