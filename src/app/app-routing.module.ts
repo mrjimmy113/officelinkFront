@@ -19,6 +19,8 @@ import { LocationComponent } from "./location/location-main/location.component";
 import { LocationCreateComponent } from "./location/location-create/location-create.component";
 import { TeamComponent } from './team/team.component';
 import { TeamSaveComponent } from './team-save/team-save.component';
+import { NewsMainComponent } from "./news/news-main/news-main.component";
+import { NewsCreateComponent } from "./news/news-create/news-create.component";
 
 const routes: Routes = [
   { path: "", component:HomeComponent},
@@ -37,6 +39,8 @@ const routes: Routes = [
   { path: "team/save", component:TeamSaveComponent},
   { path: "location", component: LocationComponent },
   { path: "location/create", component: LocationCreateComponent },
+  { path: "news", component: NewsMainComponent },
+  { path: "news/create", component: NewsCreateComponent },
   { path:"report", component:SurveyReportComponent},
   { path: "**", redirectTo: "404" },
 
