@@ -28,6 +28,8 @@ import { ChartsModule } from 'ng2-charts';
 import { GoogleChartsModule } from 'angular-google-charts';
 import { SurveyReportComponent } from './survey/survey-report/survey-report.component';
 import { SurveyCompareComponent } from './survey/survey-compare/survey-compare.component';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,8 +55,6 @@ import { SurveyCompareComponent } from './survey/survey-compare/survey-compare.c
     TeamSaveComponent,
     LocationComponent,
     LocationCreateComponent,
-    NewsCreateComponent,
-    NewsMainComponent,
   ],
   imports: [BrowserModule, HttpClientModule, FormsModule, AppRoutingModule, ChartsModule, GoogleChartsModule],
   entryComponents: [SurveyCompareComponent],
