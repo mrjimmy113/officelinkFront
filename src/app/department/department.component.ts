@@ -44,15 +44,17 @@ export class DepartmentComponent implements OnInit {
       }
     }, 300);
   }
-  
+
   delete(id) {
-    this.ser.delete(id).subscribe(result => {
-      this.requestStatus = result;
-      if (this.requestStatus == 200) {
-        alert("Success");
-        this.search("");
-      }
-    });
+    if (confirm("Do you want to delete this")) {
+      this.ser.delete(id).subscribe(result => {
+        this.requestStatus = result;
+        if (this.requestStatus == 200) {
+          alert("Success");
+          this.search("");
+        }
+      });
+    }
   }
 
   loadPage(pageNumber) {

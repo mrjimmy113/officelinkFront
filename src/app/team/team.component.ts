@@ -46,13 +46,15 @@ export class TeamComponent implements OnInit {
   }
 
   delete(id) {
-    this.ser.delete(id).subscribe(result => {
-      this.requestStatus = result;
-      if (this.requestStatus == 200) {
-        alert("success");
-        this.search("");
-      }
-    });
+    if (confirm("Do you want to delete this")) {
+      this.ser.delete(id).subscribe(result => {
+        this.requestStatus = result;
+        if (this.requestStatus == 200) {
+          alert("success");
+          this.search("");
+        }
+      });
+    }
   }
 
   loadPage(pageNumber) {

@@ -19,7 +19,7 @@
                 Name required
               </div>
               <div *ngIf="name.errors.pattern">
-                Invalid character(s)
+                Department Name can't contain special character except "_-."
               </div>
               <div *ngIf="name.errors.minlength || name.errors.maxlength">
                 Name must be 2-20 characters
