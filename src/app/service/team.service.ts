@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { PageSearch } from '../model/page-search';
 import { Team } from '../model/team';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,7 @@ export class TeamService {
   }
 
   getPage(term, page):Observable<PageSearch<Team>> {
-    return this.http.get<PageSearch<Team>>(this.api + `?term=${term}&page=${page}`);
+    return this.http.get<PageSearch<Team>>(this.api + `/getPage?term=${term}&page=${page}`);
   }
 
   create(obj):Observable<Number> {

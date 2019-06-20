@@ -2,16 +2,16 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Team</h5>
+        <h5 class="modal-title">Department</h5>
         <button type="button" class="close" (click)="closeModal()">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form #teamForm="ngForm">
+        <form #depForm="ngForm">
           <div class="form-group">
-            <label>Team Name</label>
-            <input class="form-control" name="name" #name="ngModel" [(ngModel)]="team.name"
+            <label>Workplace Name</label>
+            <input class="form-control" name="name" #name="ngModel" [(ngModel)]="workplace.name"
               [ngClass]="{'is-invalid' : (name.invalid && (name.dirty || name.touched))}" required
               pattern="^[a-zA-Z0-9._-\s]*$" minlength="2" maxlength="20" />
             <div *ngIf="name.invalid && (name.dirty || name.touched)" class="text-danger">
@@ -19,36 +19,27 @@
                 Name required
               </div>
               <div *ngIf="name.errors.pattern">
-                Team Name can't contain special character except "_-."
+                Workplace Name can't contain special character except "_-."
               </div>
               <div *ngIf="name.errors.minlength || name.errors.maxlength">
                 Name must be 2-20 characters
               </div>
             </div>
           </div>
-          <div class="form-group">
-            <label>Department Name</label>
-            <select class="form-control" name="department" #department="ngModel" [(ngModel)]="choosenDepId"
-              [ngClass]="{'is-invalid' : (department.invalid && (department.dirty || department.touched))}" required>
-              <option [value]="0">--- Choose a department ---</option>
-              <option *ngFor="let dep of depList" [value]="dep.id">{{dep.name}}</option>
-            </select>
-          </div>
         </form>
       </div>
       <div class="modal-footer">
         <div class="col-sm-6">
-          <h4><span class="badge badge-pill badge-success"
-              *ngIf="requestStatus == 200 || requestStatus == 201">Success</span></h4>
+          <h4><span class="badge badge-pill badge-success" *ngIf="requestStatus == 200">Success</span></h4>
           <h4><span class="badge badge-pill badge-danger" *ngIf="requestStatus == 400">Fail</span></h4>
         </div>
         <div class="col-sm-6 d-flex justify-content-end" style="padding: 0px">
           <button type="button" class="btn btn-success" (click)="save()"
-            [disabled]="(requestStatus==1) || teamForm.invalid || (choosenDepId==0)">
+            [disabled]="(requestStatus==1) || depForm.invalid">
             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
               *ngIf="requestStatus == 1"></span>
-            <span *ngIf="isEdit == false && requestStatus != 1">Create</span>
-            <span *ngIf="isEdit == true && requestStatus != 1">Save</span>
+            <span *ngIf="isEdit == false && requestStatus != 1">Create Department</span>
+            <span *ngIf="isEdit == true && requestStatus != 1">Save Department</span>
           </button>
         </div>
       </div>

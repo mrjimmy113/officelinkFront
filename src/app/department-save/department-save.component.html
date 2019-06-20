@@ -1,0 +1,80 @@
+<div class="">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Department</h5>
+        <button type="button" class="close" (click)="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #depForm="ngForm">
+          <div class="form-group">
+            <label>Department Name</label>
+            <input class="form-control" name="name" #name="ngModel" [(ngModel)]="department.name"
+              [ngClass]="{'is-invalid' : (name.invalid && (name.dirty || name.touched))}" required
+              pattern="^[a-zA-Z0-9._-\s]*$" minlength="2" maxlength="20" />
+            <div *ngIf="name.invalid && (name.dirty || name.touched)" class="text-danger">
+              <div *ngIf="name.errors.required">
+                Name required
+              </div>
+              <div *ngIf="name.errors.pattern">
+                Department Name can't contain special character except "_-."
+              </div>
+              <div *ngIf="name.errors.minlength || name.errors.maxlength">
+                Name must be 2-20 characters
+              </div>
+            </div>
+            <!-- <div class="row add-location">
+              <div class="col-4">Locations:</div>
+              <div class="row col-8 ">
+                <label class="col-sm-6 text-right">Add Location:</label>
+                <select class="form-control col-sm-6" name="location" [ngModel]="notSelectedLocations"
+                  (ngModelChange)="addLocation($event)">
+                  <option *ngFor="let loc of notSelectedLocations" [value]="loc.id">{{loc.address}} | {{loc.county}} | 
+                      {{loc.city}}</option>
+                </select>
+              </div>
+            </div>
+            <table class="table table-hover table-sm table-bordered text-center">
+              <thead>
+                <tr>
+                  <th>Address</th>
+                  <th>County</th>
+                  <th>City</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let loc of department.locations">
+                  <td>{{loc.address}}</td>
+                  <td>{{loc.county}}</td>
+                  <td>{{loc.city}}</td>
+                  <td><button href="#" class="btn btn-danger btn-sm" (click)="removeLocation(loc.id)">Remove</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table> -->
+          </div>
+        </form>
+
+
+      </div>
+      <div class="modal-footer">
+        <div class="col-sm-6">
+          <h4><span class="badge badge-pill badge-success" *ngIf="requestStatus == 200">Success</span></h4>
+          <h4><span class="badge badge-pill badge-danger" *ngIf="requestStatus == 400">Fail</span></h4>
+        </div>
+        <div class="col-sm-6 d-flex justify-content-end" style="padding: 0px">
+          <button type="button" class="btn btn-success" (click)="save()"
+            [disabled]="(requestStatus==1) || depForm.invalid">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
+              *ngIf="requestStatus == 1"></span>
+            <span *ngIf="isEdit == false && requestStatus != 1">Create Department</span>
+            <span *ngIf="isEdit == true && requestStatus != 1">Save Department</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

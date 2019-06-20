@@ -8,22 +8,28 @@
         </button>
       </div>
       <div class="modal-body">
-        <form #teamForm="ngForm">
+        <form #locationForm="ngForm">
           <div class="form-group">
             <label>Address</label>
-            <input class="form-control" name="address" #name="ngModel" [(ngModel)]="location.address" />
+            <input class="form-control" name="address" #name="ngModel" [(ngModel)]="location.address"
+              [ngClass]="{'is-invalid' : (name.invalid && (name.dirty || name.touched))}" required />
+            <div *ngIf="name.invalid && (name.dirty || name.touched)" class="text-danger">
+              <div *ngIf="name.errors.required">
+                Address required
+              </div>
+            </div>
           </div>
         </form>
-        <form #teamForm="ngForm">
+        <form #locationForm="ngForm">
           <div class="form-group">
             <label>County</label>
-            <input class="form-control" name="county" #name="ngModel" [(ngModel)]="location.county" />
+            <input class="form-control" name="county" #name="ngModel" [(ngModel)]="location.county"/>
           </div>
         </form>
-        <form #teamForm="ngForm">
+        <form #locationForm="ngForm">
           <div class="form-group">
             <label>City</label>
-            <input class="form-control" name="city" #name="ngModel" [(ngModel)]="location.city" />
+            <input class="form-control" name="city" #name="ngModel" [(ngModel)]="location.city"/>
           </div>
         </form>
       </div>
@@ -36,8 +42,8 @@
           <button type="button" class="btn btn-success" (click)="save()" [disabled]="(requestStatus ==1)">
             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
               *ngIf="requestStatus == 1"></span>
-            <span *ngIf="requestStatus == 0">Submit</span>
-            <span *ngIf="requestStatus == 200">New Import</span>
+            <span *ngIf="isEdit == false && requestStatus != 1">Create</span>
+            <span *ngIf="isEdit == true && requestStatus != 1">Save</span>
           </button>
         </div>
       </div>

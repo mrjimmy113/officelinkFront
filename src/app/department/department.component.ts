@@ -1,21 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalService } from '../service/modal.service';
-import { TeamService } from '../service/team.service';
-import { TeamSaveComponent } from '../team-save/team-save.component';
+import { DepartmentService } from '../service/department.service';
+import { DepartmentSaveComponent } from '../department-save/department-save.component';
 
 @Component({
-  selector: 'app-team',
-  templateUrl: './team.component.html',
-  styleUrls: ['./team.component.css']
+  selector: 'app-department',
+  templateUrl: './department.component.html',
+  styleUrls: ['./department.component.css']
 })
-export class TeamComponent implements OnInit {
+export class DepartmentComponent implements OnInit {
   itemList;
   currentPage = 1;
   maxPage;
   searchTerm = "";
   requestStatus: Number;
 
-  constructor(private modalSer: ModalService, private ser: TeamService) { }
+  constructor(private modalSer: ModalService, private ser: DepartmentService) { }
 
   ngOnInit() {
     this.search("");
@@ -29,11 +29,11 @@ export class TeamComponent implements OnInit {
   }
 
   openCreate() {
-    this.modalSer.init(TeamSaveComponent, [], () => this.search(""));
+    this.modalSer.init(DepartmentSaveComponent, [], () => this.search(""));
   }
 
   openEdit(item) {
-    this.modalSer.init(TeamSaveComponent, item, () => this.search(""));
+    this.modalSer.init(DepartmentSaveComponent, item, () => this.search(""));
   }
 
   filter() {
@@ -50,7 +50,7 @@ export class TeamComponent implements OnInit {
       this.ser.delete(id).subscribe(result => {
         this.requestStatus = result;
         if (this.requestStatus == 200) {
-          alert("success");
+          alert("Success");
           this.search("");
         }
       });

@@ -1,28 +1,23 @@
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
-import { Team } from "../model/team";
-import { Department } from "../model/department";
 import { ModalService } from "../service/modal.service";
-import { TeamService } from "../service/team.service";
-import { DepartmentService } from "../service/department.service";
+import { WorkplaceService } from "../service/workplace.service";
+import { Workplace } from "../model/workplace";
 
 @Component({
-  selector: "app-team-save",
-  templateUrl: "./team-save.component.html",
-  styleUrls: ["./team-save.component.css"]
+  selector: "app-workplace-save",
+  templateUrl: "./workplace-save.component.html",
+  styleUrls: ["./workplace-save.component.css"]
 })
-export class TeamSaveComponent implements OnInit {
+export class WorkplaceSaveComponent implements OnInit {
   @Input() inputs;
   @Output() outputs;
-  team: Team;
-  depList: Array<Department>;
+  workplace: Workplace;
   requestStatus: Number; // 0: no request, 1: requesting, 2: requested
   isEdit = false;
-  choosenDepId: Number = 0;
 
   constructor(
     private modalSer: ModalService,
-    private teamSer: TeamService,
-    private depSer: DepartmentService
+    private workpSer: WorkplaceService,
   ) { }
 
   ngOnInit() {
@@ -32,13 +27,10 @@ export class TeamSaveComponent implements OnInit {
   init() {
     // create new init modal
     if (this.inputs.length == 0) {
-      this.team = new Team();
-      this.getListDepartment();
+      this.workplace = new Workplace();
     } else {
       // edit init modal
-      this.team = this.inputs;
-      this.choosenDepId = this.team.department.id;
-      this.getListDepartment();
+      this.workplace = this.inputs;
       this.isEdit = true;
     }
     this.requestStatus = 0;
@@ -48,17 +40,9 @@ export class TeamSaveComponent implements OnInit {
     this.modalSer.destroy();
   }
 
-  // get list department and store in depList
-  getListDepartment() {
-    this.depSer.getAll().subscribe(result => {
-      this.depList = result;
-    });
-  }
 
   add() {
-    this.getDepartment();
-    console.log(this.team);
-    this.teamSer.create(this.team).subscribe(
+    this.workpSer.create(this.workplace).subscribe(
       result => {
         this.requestStatus = result;
         alert("Create Successful");
@@ -78,8 +62,7 @@ export class TeamSaveComponent implements OnInit {
   }
 
   update() {
-    this.getDepartment();
-    this.teamSer.update(this.team).subscribe(
+    this.workpSer.update(this.workplace).subscribe(
       result => {
         this.requestStatus = result;
         if (this.requestStatus == 200) {
@@ -106,13 +89,4 @@ export class TeamSaveComponent implements OnInit {
     else this.add();
   }
 
-  getDepartment() {
-    if (this.choosenDepId == 0) {
-      this.team.department = null;
-    } else {
-      this.depList.forEach(e => {
-        if (e.id == this.choosenDepId) this.team.department = e;
-      });
-    }
-  }
 }

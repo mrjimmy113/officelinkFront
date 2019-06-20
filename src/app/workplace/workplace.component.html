@@ -1,12 +1,12 @@
-<h2>Location</h2>
+<h2>Workplace</h2>
 
-<button class="btn btn-success" (click)="create()">Create Location</button>
+<!-- <button class="btn btn-success" (click)="openCreate()">New Workplace</button> -->
 <div class="d-flex justify-content-end">
   <div class="form-inline">
     <div class="input-group mb-3">
       <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchTerm" (input)="filter()">
       <div class="input-group-append">
-        <button class="btn btn-info" >
+        <button class="btn btn-info">
           <i class="fas fa-search"></i>
         </button>
       </div>
@@ -20,45 +20,33 @@
     <div class="row">
       <div class="row col-sm-10">
 
-        <div class="col-sm-5 d-flex align-items-center clickable" (click)="sort('address')">
-          Address <i class="fas fa-sort icon"></i>
-        </div>
-        <div class="col-sm-2 d-flex align-items-center clickable" (click)="sort('county')">
-          County <i class="fas fa-sort icon"></i>
-        </div>
-        <div class="col-sm-2 d-flex align-items-center clickable" (click)="sort('city')">
-          City <i class="fas fa-sort icon"></i>
+        <div class="col-sm-7 d-flex align-items-center clickable" (click)="sort('name')">
+          Workplace Name <i class="fas fa-sort icon"></i>
         </div>
       </div>
 
       <div class="col-sm-2 d-flex align-items-center justify-content-center">
-        Action
+        Operation
       </div>
     </div>
   </div>
   <!--Row-->
   <div class="card" *ngFor="let item of itemList; let i = index">
     <div class="list-group-item w3-hover-blue " [ngClass]="{'w3-light-grey': ((i % 2) == 1)}"
-      [ngClass]="{'w3-white': ((i % 2) == 0)}" style="border:none">
+      [ngClass]="{'w3-white': ((i % 2) == 0)}" style="border:none" >
       <div class="row">
-        <div class="row col-sm-10">
+          <div class="row col-sm-10">
 
-          <div class="col-sm-5 d-flex align-items-center">
-            {{item.address}}
-          </div>
-          <div class="col-sm-2 d-flex align-items-center">
-            {{item.county}}
-          </div>
-          <div class="col-sm-2 d-flex align-items-center">
-            {{item.city}}
-          </div>
-        </div>
+              <div class="col-sm-7 d-flex align-items-center">
+                {{item.name}}
+              </div>
+            </div>
 
         <div class="col-sm-2 d-flex align-items-center justify-content-center">
           <div class="w3-dropdown-hover">
             <i class="fas fa-pen "></i>
             <div class="w3-dropdown-content w3-bar-block">
-              <button href="#" class="w3-bar-item btn btn-info" (click)="edit(item)">Edit</button>
+              <button href="#" class="w3-bar-item btn btn-info" (click)="openEdit(item)">Edit</button>
               <button href="#" class="w3-bar-item btn btn-danger" (click)="delete(item.id)">Delete</button>
             </div>
           </div>

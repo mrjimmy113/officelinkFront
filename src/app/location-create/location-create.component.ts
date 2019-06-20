@@ -12,18 +12,18 @@ export class LocationCreateComponent implements OnInit {
 
   @Input() inputs;
   @Output() outputs;
-  location:Location;
-  requestStatus:Number;
+  location: Location;
+  requestStatus: Number;
   isEdit = false;
 
-  constructor(private modalService:ModalService, private service:LocationService) { }
+  constructor(private modalService: ModalService, private service: LocationService) { }
 
   ngOnInit() {
     this.init();
   }
 
   init() {
-    if(this.inputs.length == 0) {
+    if (this.inputs.length == 0) {
       this.location = new Location();
     } else {
       this.location = this.inputs;
@@ -37,33 +37,33 @@ export class LocationCreateComponent implements OnInit {
   }
 
   add() {
-    if (this.isEdit == false) {
-      this.location.id = 0;
-    }
     this.service.create(this.location).subscribe(result => {
       this.requestStatus = result;
       if (this.requestStatus == 201) {
+        alert("Create Successful");
         this.close();
-      } 
+      }
       this.outputs();
     },
-    error => {
-      console.log(error);
-      if (error.status == 409){
-        alert("Address cannot be duplicated");
-      } else if (error.status = 404) {
-        alert("Bad request");
+      error => {
+        if (error.status == 409) {
+          alert("Address cannot be duplicated");
+        } else if (error.status = 404) {
+          alert("Bad request");
+        }
+        this.close();
+        this.outputs();
       }
-      this.close();
-      this.outputs();
-    }
     );
   }
 
   update() {
     this.service.update(this.location).subscribe(result => {
       this.requestStatus = result;
-      if (this.requestStatus == 201) this.close();
+      if (this.requestStatus == 200) {
+        alert("Update Successful");
+        this.close();
+      }
       this.outputs();
     });
   }

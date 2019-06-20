@@ -1,5 +1,3 @@
-import { TeamSaveComponent } from './team-save/team-save.component';
-import { TeamComponent } from './team/team.component';
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { HttpClientModule } from "@angular/common/http";
@@ -22,8 +20,14 @@ import { SendOutSurveyComponent } from './survey/send-out-survey/send-out-survey
 import { ConfirmRegisterComponent } from './others/confirm-register/confirm-register.component';
 import { ConfirmInvitationComponent } from './confirm-invitation/confirm-invitation.component';
 import { InvitationComponent } from './account/invitation/invitation.component';
+import { TeamComponent } from './team/team.component';
+import { TeamSaveComponent } from './team-save/team-save.component';
+import { DepartmentComponent } from './department/department.component';
+import { DepartmentSaveComponent } from './department-save/department-save.component';
 import { LocationComponent } from './location/location.component';
 import { LocationCreateComponent } from './location-create/location-create.component';
+import { WorkplaceComponent } from './workplace/workplace.component';
+import { WorkplaceSaveComponent } from './workplace-save/workplace-save.component';
 
 @NgModule({
   declarations: [
@@ -46,8 +50,12 @@ import { LocationCreateComponent } from './location-create/location-create.compo
     InvitationComponent,
     TeamComponent,
     TeamSaveComponent,
+    DepartmentComponent,
+    DepartmentSaveComponent,
     LocationComponent,
     LocationCreateComponent,
+    WorkplaceComponent,
+    WorkplaceSaveComponent,
   ],
   imports: [BrowserModule, HttpClientModule, FormsModule, AppRoutingModule],
   entryComponents: [],
