@@ -1,0 +1,82 @@
+<div class="">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Create News</h5>
+        </div>
+        <div class="modal-body">
+          <form #newsForm="ngForm" (ngSubmit)="onSubmit(newsForm)">
+            <div class="form-group">
+              <label>Title</label>
+              <input type="text" class="form-control" placeholder="Fill in title" name="title"
+                [(ngModel)]="news.title" #title='ngModel' required
+                [ngClass]="{'is-invalid': (title.invalid && (title.dirty || title.touched))}">
+              <div *ngIf="title.invalid && (title.dirty || title.touched)" class="text-danger">
+                <div *ngIf="title.errors.required">
+                  Please fill in title
+                </div>
+              </div>
+  
+            </div>
+            <div class="form-group">
+                <label>Content</label>
+                <input type="text" class="form-control" placeholder="Fill in content" name="content"
+                  [(ngModel)]="news.content" #content='ngModel' required
+                  [ngClass]="{'is-invalid': (content.invalid && (content.dirty || content.touched))}">
+                <div *ngIf="content.invalid && (content.dirty || content.touched)" class="text-danger">
+                  <div *ngIf="content.errors.required">
+                    Please fill in content
+                  </div>
+                </div>
+    
+              </div>
+            <div class="form-group">
+              <div class="row">
+                <div class="col-sm-9">
+                  <label>Image</label> <br>
+                  <input type="file" (change)="onFileChange($event)" name="image" [(ngModel)]="dump" #imageH='ngModel'
+                    required pattern="([^\s]+(\.)(jpg|png|gif|bmp)$)">
+                  <div *ngIf="imageH.invalid && (imageH.dirty || imageH.touched)" class="text-danger">
+                    <div *ngIf="imageH.errors.required">
+                      Image is required
+                    </div>
+                    <div *ngIf="imageH.errors.pattern">
+                      This file is not an image
+                    </div>
+  
+                  </div>
+                  <div *ngIf="isOverSize" class="text-danger">
+                    This file is too large
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <label>Preview</label> <br>
+                  <img [src]="previewImage || 'http://placehold.it/180'" width="75px" height="75px" />
+                </div>
+  
+  
+              </div>
+            </div>
+  
+  
+          </form>
+        </div>
+        <div class="modal-footer">
+          <div class="col-sm-6">
+            <h4><span class="badge badge-pill badge-success" *ngIf="requestStatus == 201">success</span></h4>
+            <h4><span class="badge badge-pill badge-danger" *ngIf="requestStatus == 500">fail</span></h4>
+          </div>
+          <div class="col-sm-6 d-flex justify-content-end" style="padding: 0px">
+            <button type="button" class="btn btn-success" (click)="onSubmit(flowerForm)"
+              [disabled]="!newsForm.form.valid || (requestStatus ==1) || isOverSize">
+              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
+                *ngIf="requestStatus == 1"></span>
+              <span *ngIf="requestStatus == 0">Add</span>
+              <span *ngIf="requestStatus == 201">Continue</span>
+            </button>
+            <button type="button" class="btn btn-danger" (click)="closeModal()">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

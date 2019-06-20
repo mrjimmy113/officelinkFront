@@ -1,12 +1,12 @@
-<h2>News</h2>
+<h2>Location</h2>
 
-<button class="btn btn-success" (click)="create()">Create News</button>
+<button class="btn btn-success" (click)="create()">Create Location</button>
 <div class="d-flex justify-content-end">
   <div class="form-inline">
     <div class="input-group mb-3">
       <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchTerm" (input)="filter()">
       <div class="input-group-append">
-        <button class="btn btn-info">
+        <button class="btn btn-info" >
           <i class="fas fa-search"></i>
         </button>
       </div>
@@ -20,11 +20,14 @@
     <div class="row">
       <div class="row col-sm-10">
 
-        <div class="col-sm-4 d-flex align-items-center clickable">
-          Image <i class="fas fa-sort icon"></i>
+        <div class="col-sm-5 d-flex align-items-center clickable" (click)="sort('address')">
+          Address <i class="fas fa-sort icon"></i>
         </div>
-        <div class="col-sm-2 d-flex align-items-center clickable" (click)="sort('title')">
-          Title <i class="fas fa-sort icon"></i>
+        <div class="col-sm-2 d-flex align-items-center clickable" (click)="sort('county')">
+          County <i class="fas fa-sort icon"></i>
+        </div>
+        <div class="col-sm-2 d-flex align-items-center clickable" (click)="sort('city')">
+          City <i class="fas fa-sort icon"></i>
         </div>
       </div>
 
@@ -40,13 +43,15 @@
       <div class="row">
         <div class="row col-sm-10">
 
-          <div class="col-sm-4 d-flex align-items-center">
-            <img [src]="doms('data:image/jpeg;charset=utf-8;base64,' + item.byte_image)" width="200px" height="100px" />
-          </div>
           <div class="col-sm-5 d-flex align-items-center">
-            {{item.title}}
+            {{item.address}}
           </div>
-
+          <div class="col-sm-2 d-flex align-items-center">
+            {{item.county}}
+          </div>
+          <div class="col-sm-2 d-flex align-items-center">
+            {{item.city}}
+          </div>
         </div>
 
         <div class="col-sm-2 d-flex align-items-center justify-content-center">

@@ -7,4 +7,5 @@ export class News {
     dateCreated: Date;
     dateModified: Date;
     isDeleted: false;
+    byte_image: any;
 }

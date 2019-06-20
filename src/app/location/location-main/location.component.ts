@@ -1,23 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalService } from 'src/app/service/modal.service';
-import { NewsService } from 'src/app/service/news.service';
-import { NewsCreateComponent } from '../news-create/news-create.component';
-import { DomSanitizer } from '@angular/platform-browser';
+import { ModalService } from '../../service/modal.service';
+import { LocationService } from '../../service/location.service';
+import { LocationCreateComponent } from '../location-create/location-create.component';
+
 
 @Component({
-  selector: 'app-news-main',
-  templateUrl: './news-main.component.html',
-  styleUrls: ['./news-main.component.css']
+  selector: 'app-location',
+  templateUrl: './location.component.html',
+  styleUrls: ['./location.component.css']
 })
-export class NewsMainComponent implements OnInit {
-
+export class LocationComponent implements OnInit {
   itemList;
   currentPage = 1;
   maxPage;
   searchTerm = "";
   requestStatus:Number;
 
-  constructor(private modalService: ModalService, private service: NewsService, private dom: DomSanitizer) { }
+  constructor(private modalService: ModalService, private service: LocationService) { }
 
   ngOnInit() {
     this.search("");
@@ -40,24 +39,20 @@ export class NewsMainComponent implements OnInit {
   }
 
   create() {
-    this.modalService.init(NewsCreateComponent,[],() => this.search(""));
+    this.modalService.init(LocationCreateComponent,[],() => this.search(""));
   }
 
   edit(item) {
-    this.modalService.init(NewsCreateComponent,item,() => this.search(""));
+    this.modalService.init(LocationCreateComponent,item,() => this.search(""));
   }
 
   delete(id) {
     this.service.delete(id).subscribe(result => {
       this.requestStatus = result;
       if (this.requestStatus == 200){
+        alert("success");
         this.search("");
       }
     });
   }
-
-  doms(s) {
-    return this.dom.bypassSecurityTrustUrl(s);
-  }
 }
-

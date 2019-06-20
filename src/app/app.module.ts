@@ -30,6 +30,8 @@ import { SurveyReportComponent } from './survey/survey-report/survey-report.comp
 import { SurveyCompareComponent } from './survey/survey-compare/survey-compare.component';
 import { NewsCreateComponent } from './news/news-create/news-create.component';
 import { NewsMainComponent } from './news/news-main/news-main.component';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,7 +60,7 @@ import { NewsMainComponent } from './news/news-main/news-main.component';
     NewsCreateComponent,
     NewsMainComponent,
   ],
-  imports: [BrowserModule, HttpClientModule, FormsModule, AppRoutingModule, ChartsModule, GoogleChartsModule],
+  imports: [BrowserModule, HttpClientModule, FormsModule, AppRoutingModule,  CKEditorModule, ChartsModule, GoogleChartsModule],
   entryComponents: [SurveyCompareComponent],
   providers: [],
   bootstrap: [AppComponent]
