@@ -57,6 +57,7 @@ export class TeamSaveComponent implements OnInit {
 
   add() {
     this.getDepartment();
+    console.log(this.team);
     this.teamSer.create(this.team).subscribe(
       result => {
         this.requestStatus = result;

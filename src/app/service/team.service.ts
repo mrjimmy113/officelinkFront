@@ -18,7 +18,7 @@ export class TeamService {
   }
 
   getPage(term, page):Observable<PageSearch<Team>> {
-    return this.http.get<PageSearch<Team>>(this.api + `?term=${term}&page=${page}`);
+    return this.http.get<PageSearch<Team>>(this.api + `/getPage?term=${term}&page=${page}`);
   }
 
   create(obj):Observable<Number> {

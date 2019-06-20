@@ -22,7 +22,7 @@ export class WorkplaceService {
   }
 
   getPage(term, page):Observable<PageSearch<Workplace>> {
-    return this.http.get<PageSearch<Workplace>>(this.api + `?term=${term}&page=${page}`);
+    return this.http.get<PageSearch<Workplace>>(this.api + `/getPage?term=${term}&page=${page}`);
   }
 
   create(obj):Observable<Number> {

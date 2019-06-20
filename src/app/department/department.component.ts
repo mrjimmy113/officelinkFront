@@ -44,7 +44,7 @@ export class DepartmentComponent implements OnInit {
       }
     }, 300);
   }
-
+  
   delete(id) {
     this.ser.delete(id).subscribe(result => {
       this.requestStatus = result;
@@ -53,5 +53,13 @@ export class DepartmentComponent implements OnInit {
         this.search("");
       }
     });
+  }
+
+  loadPage(pageNumber) {
+    this.currentPage = pageNumber;
+    this.ser.getPage(this.searchTerm, pageNumber).subscribe(result => {
+      this.maxPage = result.maxPage;
+      this.itemList = result.objList;
+    })
   }
 }
