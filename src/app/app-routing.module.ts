@@ -1,7 +1,6 @@
 import { SurveyTakeComponent } from './survey/survey-take/survey-take.component';
 import { InvitationComponent } from './account/invitation/invitation.component';
 import { SendOutSurveyComponent } from './survey/send-out-survey/send-out-survey.component';
-import { ConfirmRegisterComponent } from './others/confirm-register/confirm-register.component';
 import { RegisterComponent } from './others/register/register.component';
 import { HomeComponent } from './others/home/home.component';
 import { SurveySaveComponent } from './survey/survey-save/survey-save.component';
@@ -23,13 +22,32 @@ import { LocationCreateComponent } from "./location-create/location-create.compo
 import { WorkplaceComponent } from './workplace/workplace.component';
 import { WorkplaceSaveComponent } from './workplace-save/workplace-save.component';
 
+import { AccountListComponent } from './account/account-list/account-list.component';
+import { AccountSaveComponent } from './account/account-save/account-save.component';
+import { AccountDeleteComponent } from './account/account-delete/account-delete.component';
+import { JoinComponent } from './others/join/join.component'
+
+
+import { from } from 'rxjs';
+import { Login2Component } from './others/login2/login2.component';
+
 const routes: Routes = [
   { path: "", component:HomeComponent},
   { path: "home", component:HomeComponent},
+
   { path: "register", component:RegisterComponent},
-  { path: "confirmReg", component: ConfirmRegisterComponent},
   { path: "admin/wordCloud", component: WordCloudListComponent },
   { path: "admin/create", component: WordCloudSaveComponent },
+
+
+  { path: "join" , component: JoinComponent},
+  { path: "admin/account", component:AccountListComponent},
+  { path: "admin/account/create" , component:AccountSaveComponent},
+  { path: "admin/account/delete", component:AccountDeleteComponent},
+  { path:"login" , component: Login2Component,  },
+  { path: "login-form/:emailToken", component: LoginComponent, },
+  
+
   { path: "404",  component: NotFoundComponent },
   { path: "forget", component: ForgetPasswordComponent},
   { path: "login", component: LoginComponent},
