@@ -24,8 +24,9 @@ export class LoginComponent implements OnInit {
       this.emailParam =  this._route.snapshot.paramMap.get('emailToken');
 
       this.account.email = this.emailParam;
+      
     
-        this.accountSer.getAccountByEmail(this.emailParam).subscribe(res => {
+        this.accountSer.getAccountByEmail(this.account.email).subscribe(res => {
           this.account = res;
           
     })

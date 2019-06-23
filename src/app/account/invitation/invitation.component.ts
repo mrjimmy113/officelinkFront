@@ -48,18 +48,23 @@ export class InvitationComponent implements OnInit {
 
   sendMail(){
     
-    
-    this.accountSer.sendMail(this.listEmail , "employee").subscribe(res => {
+    if(this.newEmail == null){
+      alert("Input not null. Try again")
+    }else{
+      this.accountSer.sendMail(this.listEmail , "employee").subscribe(res => {
       
-      alert("Send Mail Success")
-    },
-    error => {
-      if(error.status == 400){
-        alert("Error , try again")
+        alert("Send Mail Success")
+      },
+      error => {
+        if(error.status == 400){
+          alert("Error , try again")
+        }
       }
+      )
     }
-    )
-  }
-
+  
+    }
+    
+    
 
 }
