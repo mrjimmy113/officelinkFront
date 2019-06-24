@@ -62,17 +62,17 @@ export class InvitationComponent implements OnInit {
       }
       )
     }
-<<<<<<< HEAD
+
   }
 
   closeModal(){
     this.modalSer.destroy();
   }
-=======
+
   
     }
->>>>>>> 21559e73a2013f77bda3cbeb420c1d29b0324dfe
+
     
     
 
-}
+
