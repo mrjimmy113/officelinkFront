@@ -1,21 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalService } from '../service/modal.service';
-import { DepartmentService } from '../service/department.service';
-import { DepartmentSaveComponent } from '../department-save/department-save.component';
+import { WorkplaceService } from '../service/workplace.service';
+import { WorkplaceSaveComponent } from '../workplace-save/workplace-save.component';
 
 @Component({
-  selector: 'app-department',
-  templateUrl: './department.component.html',
-  styleUrls: ['./department.component.css']
+  selector: 'app-workplace',
+  templateUrl: './workplace.component.html',
+  styleUrls: ['./workplace.component.css']
 })
-export class DepartmentComponent implements OnInit {
+export class WorkplaceComponent implements OnInit {
   itemList;
   currentPage = 1;
   maxPage;
   searchTerm = "";
   requestStatus: Number;
 
-  constructor(private modalSer: ModalService, private ser: DepartmentService) { }
+  constructor(private modalSer: ModalService, private ser: WorkplaceService) { }
 
   ngOnInit() {
     this.search("");
@@ -29,11 +29,11 @@ export class DepartmentComponent implements OnInit {
   }
 
   openCreate() {
-    this.modalSer.init(DepartmentSaveComponent, [], () => this.search(""));
+    this.modalSer.init(WorkplaceSaveComponent, [], () => this.search(""));
   }
 
   openEdit(item) {
-    this.modalSer.init(DepartmentSaveComponent, item, () => this.search(""));
+    this.modalSer.init(WorkplaceSaveComponent, item, () => this.search(""));
   }
 
   filter() {

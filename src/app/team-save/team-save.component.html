@@ -12,10 +12,17 @@
           <div class="form-group">
             <label>Team Name</label>
             <input class="form-control" name="name" #name="ngModel" [(ngModel)]="team.name"
-              [ngClass]="{'is-invalid' : (name.invalid && (name.dirty || name.touched))}" required />
+              [ngClass]="{'is-invalid' : (name.invalid && (name.dirty || name.touched))}" required
+              pattern="^[a-zA-Z0-9._-\s]*$" minlength="2" maxlength="20" />
             <div *ngIf="name.invalid && (name.dirty || name.touched)" class="text-danger">
               <div *ngIf="name.errors.required">
                 Name required
+              </div>
+              <div *ngIf="name.errors.pattern">
+                Team Name can't contain special character except "_-."
+              </div>
+              <div *ngIf="name.errors.minlength || name.errors.maxlength">
+                Name must be 2-20 characters
               </div>
             </div>
           </div>
