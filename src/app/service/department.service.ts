@@ -26,7 +26,7 @@ export class DepartmentService {
   }
 
   getPage(term, page):Observable<PageSearch<Department>> {
-    return this.http.get<PageSearch<Department>>(this.api + `?term=${term}&page=${page}`);
+    return this.http.get<PageSearch<Department>>(this.api + `/getPage?term=${term}&page=${page}`);
   }
 
   create(obj):Observable<Number> {

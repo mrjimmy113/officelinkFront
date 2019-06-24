@@ -10,8 +10,8 @@
       <div class="modal-body">
         <form #depForm="ngForm">
           <div class="form-group">
-            <label>Department Name</label>
-            <input class="form-control" name="name" #name="ngModel" [(ngModel)]="department.name"
+            <label>Workplace Name</label>
+            <input class="form-control" name="name" #name="ngModel" [(ngModel)]="workplace.name"
               [ngClass]="{'is-invalid' : (name.invalid && (name.dirty || name.touched))}" required
               pattern="^[a-zA-Z0-9._-\s]*$" minlength="2" maxlength="20" />
             <div *ngIf="name.invalid && (name.dirty || name.touched)" class="text-danger">
@@ -19,46 +19,14 @@
                 Name required
               </div>
               <div *ngIf="name.errors.pattern">
-                Department Name can't contain special character except "_-."
+                Workplace Name can't contain special character except "_-."
               </div>
               <div *ngIf="name.errors.minlength || name.errors.maxlength">
                 Name must be 2-20 characters
               </div>
             </div>
-            <!-- <div class="row add-location">
-              <div class="col-4">Locations:</div>
-              <div class="row col-8 ">
-                <label class="col-sm-6 text-right">Add Location:</label>
-                <select class="form-control col-sm-6" name="location" [ngModel]="notSelectedLocations"
-                  (ngModelChange)="addLocation($event)">
-                  <option *ngFor="let loc of notSelectedLocations" [value]="loc.id">{{loc.address}} | {{loc.county}} | 
-                      {{loc.city}}</option>
-                </select>
-              </div>
-            </div>
-            <table class="table table-hover table-sm table-bordered text-center">
-              <thead>
-                <tr>
-                  <th>Address</th>
-                  <th>County</th>
-                  <th>City</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let loc of department.locations">
-                  <td>{{loc.address}}</td>
-                  <td>{{loc.county}}</td>
-                  <td>{{loc.city}}</td>
-                  <td><button href="#" class="btn btn-danger btn-sm" (click)="removeLocation(loc.id)">Remove</button>
-                  </td>
-                </tr>
-              </tbody>
-            </table> -->
           </div>
         </form>
-
-
       </div>
       <div class="modal-footer">
         <div class="col-sm-6">
