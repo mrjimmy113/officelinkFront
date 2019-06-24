@@ -17,7 +17,6 @@ import { SurveyTakeComponent } from './survey/survey-take/survey-take.component'
 import { HomeComponent } from './others/home/home.component';
 import { RegisterComponent } from './others/register/register.component';
 import { SendOutSurveyComponent } from './survey/send-out-survey/send-out-survey.component';
-import { ConfirmRegisterComponent } from './others/confirm-register/confirm-register.component';
 import { ConfirmInvitationComponent } from './confirm-invitation/confirm-invitation.component';
 import { InvitationComponent } from './account/invitation/invitation.component';
 import { TeamComponent } from './team/team.component';
@@ -28,6 +27,16 @@ import { LocationComponent } from './location/location.component';
 import { LocationCreateComponent } from './location-create/location-create.component';
 import { WorkplaceComponent } from './workplace/workplace.component';
 import { WorkplaceSaveComponent } from './workplace-save/workplace-save.component';
+
+
+import { RouterModule, Routes } from "@angular/router";
+import { CommonModule } from "@angular/common";
+import { AccountListComponent } from './account/account-list/account-list.component';
+import { AccountSaveComponent } from './account/account-save/account-save.component';
+import { AccountDeleteComponent } from './account/account-delete/account-delete.component';
+import { JoinComponent } from './others/join/join.component'
+import {Login2Component} from './others/login2/login2.component'
+
 
 @NgModule({
   declarations: [
@@ -45,7 +54,6 @@ import { WorkplaceSaveComponent } from './workplace-save/workplace-save.componen
     HomeComponent,
     RegisterComponent,
     SendOutSurveyComponent,
-    ConfirmRegisterComponent,
     ConfirmInvitationComponent,
     InvitationComponent,
     TeamComponent,
@@ -56,6 +64,13 @@ import { WorkplaceSaveComponent } from './workplace-save/workplace-save.componen
     LocationCreateComponent,
     WorkplaceComponent,
     WorkplaceSaveComponent,
+    AccountListComponent,
+    AccountSaveComponent,
+    AccountDeleteComponent,
+    JoinComponent,
+    Login2Component
+
+
   ],
   imports: [BrowserModule, HttpClientModule, FormsModule, AppRoutingModule],
   entryComponents: [],
