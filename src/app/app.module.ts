@@ -1,3 +1,5 @@
+import { TeamSaveComponent } from './team-save/team-save.component';
+import { TeamComponent } from './team/team.component';
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { HttpClientModule } from "@angular/common/http";
@@ -23,6 +25,10 @@ import { ChartsModule } from 'ng2-charts';
 import { GoogleChartsModule } from 'angular-google-charts';
 import { SurveyReportComponent } from './survey/survey-report/survey-report.component';
 import { SurveyCompareComponent } from './survey/survey-compare/survey-compare.component';
+import { QuestionListComponent } from './question/question-list/question-list.component';
+import { QuestionSaveComponent } from './question/question-save/question-save.component';
+import { ChooseQuestionComponent } from './survey/choose-question/choose-question.component';
+import { SurveyListComponent } from './survey/survey-list/survey-list.component';
 import { TeamComponent } from './team/team.component';
 import { TeamSaveComponent } from './team-save/team-save.component';
 import { DepartmentComponent } from './department/department.component';
@@ -60,7 +66,7 @@ import {Login2Component} from './others/login2/login2.component'
     SendOutSurveyComponent,
     ConfirmInvitationComponent,
     SurveyReportComponent,
-    SurveyCompareComponent
+    SurveyCompareComponent,
     InvitationComponent,
     TeamComponent,
     TeamSaveComponent,
@@ -77,9 +83,13 @@ import {Login2Component} from './others/login2/login2.component'
     Login2Component
 
 
+    QuestionListComponent,
+    QuestionSaveComponent,
+    ChooseQuestionComponent,
+    SurveyListComponent,
   ],
   imports: [BrowserModule, HttpClientModule, FormsModule, AppRoutingModule, ChartsModule, GoogleChartsModule],
-  entryComponents: [SurveyCompareComponent],
+  entryComponents: [SurveyCompareComponent,QuestionSaveComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

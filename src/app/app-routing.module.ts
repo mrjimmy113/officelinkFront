@@ -1,3 +1,6 @@
+import { SurveyListComponent } from './survey/survey-list/survey-list.component';
+import { ChooseQuestionComponent } from './survey/choose-question/choose-question.component';
+import { QuestionListComponent } from './question/question-list/question-list.component';
 import { SurveyReportComponent } from './survey/survey-report/survey-report.component';
 import { SurveyTakeComponent } from './survey/survey-take/survey-take.component';
 import { InvitationComponent } from './account/invitation/invitation.component';
@@ -67,6 +70,10 @@ const routes: Routes = [
   { path: "workplace", component:WorkplaceComponent},
   { path: "workplace/save", component:WorkplaceSaveComponent},
   { path:"report", component:SurveyReportComponent},
+  { path:"question",component: QuestionListComponent},
+  { path:"survey", component: SurveySaveComponent},
+  { path:"choose", component: ChooseQuestionComponent},
+  { path: "survey/list",component:SurveyListComponent},
   { path: "**", redirectTo: "404" },
   
 ];

@@ -1,7 +1,8 @@
+import { TypeQuestion } from './typeQuestion';
 import { AnswerOption } from './answerOption';
 export class Question {
   id:Number;
   question:String;
-  typeId:Number;
+  type:TypeQuestion;
   options: Array<AnswerOption>;
 }
