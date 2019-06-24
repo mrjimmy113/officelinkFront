@@ -5,6 +5,7 @@ import {AccountSaveComponent} from '../account-save/account-save.component'
 import {Account} from '../../model/account';
 import {AccountService} from '../../service/account.service';
 import { AccountDeleteComponent } from '../account-delete/account-delete.component';
+import { InvitationComponent } from '../invitation/invitation.component';
 @Component({
   selector: 'app-account-list',
   templateUrl: './account-list.component.html',
@@ -54,6 +55,10 @@ export class AccountListComponent implements OnInit {
 
   edit(item){
     this.modalSer.init(AccountSaveComponent, item , () => this.search(""));
+  }
+
+  openCreate(){
+    this.modalSer.init(InvitationComponent, [] , () => this.search(""));
   }
 
   
