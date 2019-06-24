@@ -1,10 +1,7 @@
-<<<<<<< HEAD
 import { TeamSaveComponent } from './team-save/team-save.component';
 import { TeamComponent } from './team/team.component';
 import { LocationCreateComponent } from './location/location-create/location-create.component';
 import { LocationComponent } from './location/location-main/location.component';
-=======
->>>>>>> master
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { HttpClientModule } from "@angular/common/http";
@@ -27,7 +24,6 @@ import { SendOutSurveyComponent } from './survey/send-out-survey/send-out-survey
 import { ConfirmRegisterComponent } from './others/confirm-register/confirm-register.component';
 import { ConfirmInvitationComponent } from './confirm-invitation/confirm-invitation.component';
 import { InvitationComponent } from './account/invitation/invitation.component';
-<<<<<<< HEAD
 import { ChartsModule } from 'ng2-charts';
 import { GoogleChartsModule } from 'angular-google-charts';
 import { SurveyReportComponent } from './survey/survey-report/survey-report.component';
@@ -35,16 +31,10 @@ import { SurveyCompareComponent } from './survey/survey-compare/survey-compare.c
 import { NewsCreateComponent } from './news/news-create/news-create.component';
 import { NewsMainComponent } from './news/news-main/news-main.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
-=======
-import { TeamComponent } from './team/team.component';
-import { TeamSaveComponent } from './team-save/team-save.component';
 import { DepartmentComponent } from './department/department.component';
 import { DepartmentSaveComponent } from './department-save/department-save.component';
-import { LocationComponent } from './location/location.component';
-import { LocationCreateComponent } from './location-create/location-create.component';
 import { WorkplaceComponent } from './workplace/workplace.component';
 import { WorkplaceSaveComponent } from './workplace-save/workplace-save.component';
->>>>>>> master
 
 @NgModule({
   declarations: [
@@ -64,7 +54,6 @@ import { WorkplaceSaveComponent } from './workplace-save/workplace-save.componen
     SendOutSurveyComponent,
     ConfirmRegisterComponent,
     ConfirmInvitationComponent,
-<<<<<<< HEAD
     SurveyReportComponent,
     SurveyCompareComponent,
     InvitationComponent,
@@ -77,7 +66,6 @@ import { WorkplaceSaveComponent } from './workplace-save/workplace-save.componen
   ],
   imports: [BrowserModule, HttpClientModule, FormsModule, AppRoutingModule,  CKEditorModule, ChartsModule, GoogleChartsModule],
   entryComponents: [SurveyCompareComponent],
-=======
     InvitationComponent,
     TeamComponent,
     TeamSaveComponent,
@@ -88,9 +76,7 @@ import { WorkplaceSaveComponent } from './workplace-save/workplace-save.componen
     WorkplaceComponent,
     WorkplaceSaveComponent,
   ],
-  imports: [BrowserModule, HttpClientModule, FormsModule, AppRoutingModule],
-  entryComponents: [],
->>>>>>> master
+
   providers: [],
   bootstrap: [AppComponent]
 })
