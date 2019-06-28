@@ -9,7 +9,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 @Component({
   selector: 'app-news-create',
   templateUrl: './news-create.component.html',
-  styleUrls: ['./news-create.component.css']
+  styleUrls: ['./news-create.component.css'],
 })
 export class NewsCreateComponent implements OnInit {
 
@@ -61,10 +61,9 @@ export class NewsCreateComponent implements OnInit {
     } else {
       this.requestStatus = 1;
       const fd = new FormData();
+      this.news.content = this.ngModel;
       fd.append("file", this.tmp);
       fd.append("dto", JSON.stringify(this.news));
-      console.log("haha", this.tmp);
-      console.log("hihi", JSON.stringify(this.news));
       this.newsSer.create(fd).subscribe(result => {
         this.requestStatus = result;
         if (this.requestStatus == 201) {
@@ -109,9 +108,9 @@ export class NewsCreateComponent implements OnInit {
     } else {
       this.requestStatus = 1;
       const fd = new FormData();
+      this.news.content = this.ngModel;
+      this.news.byte_image = null;
       fd.append("file", this.tmp);
-      console.log("haha", this.tmp);
-      console.log("hihi", JSON.stringify(this.news));
       fd.append("dto", JSON.stringify(this.news));
       this.newsSer.update(fd).subscribe(result => {
         this.requestStatus = result;

@@ -25,6 +25,7 @@ import { DepartmentComponent } from './department/department.component';
 import { DepartmentSaveComponent } from './department-save/department-save.component';
 import { WorkplaceComponent } from './workplace/workplace.component';
 import { WorkplaceSaveComponent } from './workplace-save/workplace-save.component';
+import { NewsDetailComponent } from './news/news-detail/news-detail.component';
 
 const routes: Routes = [
   { path: "", component:HomeComponent},
@@ -51,6 +52,7 @@ const routes: Routes = [
   { path: "location/create", component: LocationCreateComponent },
   { path: "workplace", component:WorkplaceComponent},
   { path: "workplace/save", component:WorkplaceSaveComponent},
+  { path: "news/:id/detail", component:NewsDetailComponent},
   { path: "**", redirectTo: "404" },
   
 ];

@@ -35,6 +35,7 @@ import { DepartmentComponent } from './department/department.component';
 import { DepartmentSaveComponent } from './department-save/department-save.component';
 import { WorkplaceComponent } from './workplace/workplace.component';
 import { WorkplaceSaveComponent } from './workplace-save/workplace-save.component';
+import { NewsDetailComponent } from './news/news-detail/news-detail.component';
 
 @NgModule({
   declarations: [
@@ -63,19 +64,14 @@ import { WorkplaceSaveComponent } from './workplace-save/workplace-save.componen
     LocationCreateComponent,
     NewsCreateComponent,
     NewsMainComponent,
-  ],
-  imports: [BrowserModule, HttpClientModule, FormsModule, AppRoutingModule,  CKEditorModule, ChartsModule, GoogleChartsModule],
-  entryComponents: [SurveyCompareComponent],
-    InvitationComponent,
-    TeamComponent,
-    TeamSaveComponent,
     DepartmentComponent,
     DepartmentSaveComponent,
-    LocationComponent,
-    LocationCreateComponent,
     WorkplaceComponent,
     WorkplaceSaveComponent,
+    NewsDetailComponent,
   ],
+  imports: [BrowserModule, HttpClientModule, FormsModule, AppRoutingModule, CKEditorModule, ChartsModule, GoogleChartsModule],
+  entryComponents: [SurveyCompareComponent],
 
   providers: [],
   bootstrap: [AppComponent]

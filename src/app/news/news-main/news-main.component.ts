@@ -20,11 +20,17 @@ export class NewsMainComponent implements OnInit {
   constructor(private modalService: ModalService, private service: NewsService, private dom: DomSanitizer) { }
 
   ngOnInit() {
-    this.search("");
+    this.searchByTitle("");
   }
 
-  search(value) {
-    this.service.search(value).subscribe(result => {
+  searchById(value) {
+    this.service.searchById(value).subscribe(result => {
+      this.itemList = result;
+    })
+  }
+
+  searchByTitle(value) {
+    this.service.searchByTitle(value).subscribe(result => {
       this.maxPage = result.maxPage;
       this.itemList = result.objList;
     })
@@ -34,24 +40,24 @@ export class NewsMainComponent implements OnInit {
     let newSearchTerm = this.searchTerm;
     setTimeout(() => {
       if (newSearchTerm == this.searchTerm) {
-        this.search(this.searchTerm);
+        this.searchByTitle(this.searchTerm);
       }
     }, 300);
   }
 
   create() {
-    this.modalService.init(NewsCreateComponent,[],() => this.search(""));
+    this.modalService.init(NewsCreateComponent,[],() => this.searchByTitle(""));
   }
 
   edit(item) {
-    this.modalService.init(NewsCreateComponent,item,() => this.search(""));
+    this.modalService.init(NewsCreateComponent,item,() => this.searchByTitle(""));
   }
 
   delete(id) {
     this.service.delete(id).subscribe(result => {
       this.requestStatus = result;
       if (this.requestStatus == 200){
-        this.search("");
+        this.searchByTitle("");
       }
     });
   }
@@ -59,5 +65,6 @@ export class NewsMainComponent implements OnInit {
   doms(s) {
     return this.dom.bypassSecurityTrustUrl(s);
   }
+
 }
 

@@ -14,7 +14,11 @@ export class NewsService {
 
   constructor(private http:HttpClient) { }
 
-  search(term):Observable<PageSearch<News>>{
+  searchById(id):Observable<News>{
+    return this.http.get<News>(this.api + `/getId?id=${id}`);
+  }
+
+  searchByTitle(term):Observable<PageSearch<News>>{
     return this.http.get<PageSearch<News>>(this.api + `?term=${term}`);
   }
 
