@@ -24,6 +24,7 @@ export class SurveySaveComponent implements OnInit {
   ngOnInit() {
     this.survey = this.inputs;
     this.qComponentList = new Array<QuestionComponent>();
+    if(this.survey.id != undefined) this.isEdit = true;
   }
 
   updateEditMode() {

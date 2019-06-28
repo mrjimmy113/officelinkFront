@@ -30,4 +30,13 @@ export class SurveyService {
   getDetail(id):Observable<Question[]> {
     return this.http.get<Question[]>(this.api + `/detail?id=${id}`)
   }
+  getTakeSurvey(token):Observable<Survey> {
+    return this.http.get<Survey>(this.api + `/take?token=${token}`)
+  }
+  sendOutSurvey(id):Observable<Number> {
+    return this.http.get<Number>(this.api + `/sendOut?id=${id}`)
+  }
+  sendAnswer(answers):Observable<Number>{
+    return this.http.post<Number>(this.api + `/answer`,answers);
+  }
 }

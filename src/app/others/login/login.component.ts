@@ -1,3 +1,4 @@
+import { AuthenticationService } from './../../service/authentication.service';
 import { Component, OnInit } from '@angular/core';
 import {AccountService} from '../../service/account.service'
 import { from } from 'rxjs';
@@ -10,29 +11,20 @@ import {Router , ActivatedRoute} from '@angular/router'
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  account : Account;
-  emailParam : String;
-  errorStatus : Number;
-  requestStatus : Number;
-
-
-
-  constructor(private _router : Router , private _route : ActivatedRoute ,private accountSer : AccountService) { }
-
+  constructor(private authSer:AuthenticationService){}
+  account:Account;
   ngOnInit() {
-      this.account = new Account();
-      this.emailParam =  this._route.snapshot.paramMap.get('emailToken');
+    this.account = new Account();
+  }
 
-      this.account.email = this.emailParam;
-      
-    
-        this.accountSer.getAccountByEmail(this.account.email).subscribe(res => {
-          this.account = res;
-          
+  login() {
+    this.authSer.login(this.account).subscribe(result => {
+      console.log(result);
     })
-      
-      
-    
+  }
+
+
+
 
 
 
@@ -40,4 +32,3 @@ export class LoginComponent implements OnInit {
 
 
 
-}

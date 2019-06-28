@@ -1,3 +1,5 @@
+import { SendOutSurveyComponent } from './../send-out-survey/send-out-survey.component';
+import { ModalService } from './../../service/modal.service';
 import { Question } from './../../model/question';
 import { Survey } from "./../../model/survey";
 import { SurveySaveComponent } from "./../survey-save/survey-save.component";
@@ -23,7 +25,8 @@ export class SurveyListComponent implements OnInit {
   constructor(
     private surveySer: SurveyService,
     private dyLoadSer: DynamicLoadService,
-    private ultisSer: UltisService
+    private ultisSer: UltisService,
+    private modalSer:ModalService
   ) {}
 
   ngOnInit() {
@@ -43,7 +46,6 @@ export class SurveyListComponent implements OnInit {
   }
   openEdit(choosen: Survey) {
     this.surveySer.getDetail(choosen.id).subscribe(result => {
-      console.log(result);
       this.isHide = true;
       choosen.questions = result;
       this.saveComponentRef = this.dyLoadSer.init(
@@ -79,6 +81,10 @@ export class SurveyListComponent implements OnInit {
         this.search();
       });
     }
+  }
+
+  sendOut(id) {
+    this.modalSer.init(SendOutSurveyComponent,id,[]);
   }
 
   offSave() {

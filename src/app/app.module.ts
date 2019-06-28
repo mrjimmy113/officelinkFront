@@ -1,5 +1,3 @@
-import { TeamSaveComponent } from './team-save/team-save.component';
-import { TeamComponent } from './team/team.component';
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { HttpClientModule } from "@angular/common/http";
@@ -37,7 +35,7 @@ import { LocationComponent } from './location/location.component';
 import { LocationCreateComponent } from './location-create/location-create.component';
 import { WorkplaceComponent } from './workplace/workplace.component';
 import { WorkplaceSaveComponent } from './workplace-save/workplace-save.component';
-
+import { TagCloudModule } from 'angular-tag-cloud-module';
 
 import { RouterModule, Routes } from "@angular/router";
 import { CommonModule } from "@angular/common";
@@ -80,16 +78,14 @@ import {Login2Component} from './others/login2/login2.component'
     AccountSaveComponent,
     AccountDeleteComponent,
     JoinComponent,
-    Login2Component
-
-
+    Login2Component,
     QuestionListComponent,
     QuestionSaveComponent,
     ChooseQuestionComponent,
     SurveyListComponent,
   ],
-  imports: [BrowserModule, HttpClientModule, FormsModule, AppRoutingModule, ChartsModule, GoogleChartsModule],
-  entryComponents: [SurveyCompareComponent,QuestionSaveComponent],
+  imports: [BrowserModule, HttpClientModule, FormsModule, AppRoutingModule, ChartsModule, GoogleChartsModule, TagCloudModule],
+  entryComponents: [SurveyCompareComponent,QuestionSaveComponent, SendOutSurveyComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

@@ -5,4 +5,5 @@ export class Question {
   question:String;
   type:TypeQuestion;
   options: Array<AnswerOption>;
+  questionIdentity:Number;
 }

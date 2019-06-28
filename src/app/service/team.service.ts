@@ -21,6 +21,10 @@ export class TeamService {
     return this.http.get<PageSearch<Team>>(this.api + `/getPage?term=${term}&page=${page}`);
   }
 
+  getTeamByDepId(id):Observable<Team[]> {
+    return this.http.get<Team[]>(this.api + `/dep?id=${id}`)
+  }
+
   create(obj):Observable<Number> {
     return this.http.post<Number>(this.api, obj);
   }
