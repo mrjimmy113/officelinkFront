@@ -12,8 +12,6 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class NewsDetailComponent implements OnInit {
 
   news;
-  public start: Date = new Date("10/07/2017");
-  public end: Date = new Date("11/25/2017");
 
   constructor(
     private route: ActivatedRoute,
