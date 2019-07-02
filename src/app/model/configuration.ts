@@ -1,8 +1,7 @@
-import { Workplace } from "./workplace";
 
 export class Configuration {
     id:Number;
     scheduleTime:String;
-    workplace:Workplace;
+    workplaceId:Number;
     // locations:Array<Location>;
 }

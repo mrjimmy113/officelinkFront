@@ -60,6 +60,8 @@ export class ConfigurationSaveComponent implements OnInit {
 
   add() {
     this.configuration.scheduleTime = this.constructCronExpression();
+    this.configuration.workplaceId = 1;
+    console.log(this.configuration);
     this.configSer.create(this.configuration).subscribe(
       result => {
         this.requestStatus = result;
@@ -83,6 +85,7 @@ export class ConfigurationSaveComponent implements OnInit {
 
   update() {
     this.configuration.scheduleTime = this.constructCronExpression();
+    console.log(this.configuration);
     this.configSer.update(this.configuration).subscribe(
       result => {
         this.requestStatus = result;
@@ -130,7 +133,6 @@ export class ConfigurationSaveComponent implements OnInit {
     } else {
       this.dayOfWeeks.push(wDay);
     }
-    console.log(this.dayOfWeeks);
   }
 
   constructCronExpression() {
@@ -142,7 +144,6 @@ export class ConfigurationSaveComponent implements OnInit {
     let dayOfWeeks = this.dayOfWeeks == null ? "*" : this.dayOfWeeks;
 
     let result = this.second + " " + this.minute + " " + this.hour + " " + this.dayOfMonth + " " + this.month + " " + dayOfWeeks
-    console.log(result);
     return result;
   }
 }
