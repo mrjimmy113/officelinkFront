@@ -36,7 +36,6 @@ export class DepartmentSaveComponent implements OnInit {
       //   });
     } else {
       this.department = this.inputs;
-      this.getDepartment(this.department.id);
 
       // this.locSer.getLocationByDepartmnetId(this.department.id).subscribe(
       //   result => {
@@ -105,18 +104,6 @@ export class DepartmentSaveComponent implements OnInit {
     this.requestStatus = 1;
     if (this.isEdit) this.update();
     else this.add();
-  }
-
-  getDepartment(depId) {
-    this.depSer.getDepartmentWithTeams(depId).subscribe(
-      result => {
-        this.department = result;
-        // this.department.locations = this.generateLocation(1);
-      },
-      error => {
-        alert("Something went wrong. Try again later.");
-        this.closeModal();
-      });
   }
 
   // generateLocation(startId) {

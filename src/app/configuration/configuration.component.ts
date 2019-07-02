@@ -3,6 +3,7 @@ import { ModalService } from '../service/modal.service';
 import { Configuration } from '../model/configuration';
 import { ConfigurationService } from '../service/configuration.service';
 import { ConfigurationSaveComponent } from '../configuration-save/configuration-save.component';
+import { Workplace } from '../model/workplace';
 
 @Component({
   selector: 'app-configuration',
@@ -15,6 +16,7 @@ export class ConfigurationComponent implements OnInit {
   maxPage;
   searchTerm = "";
   requestStatus: Number;
+  workplace: Workplace;
 
   constructor(private modalSer: ModalService, private ser: ConfigurationService) { }
 
@@ -23,7 +25,7 @@ export class ConfigurationComponent implements OnInit {
   }
 
   init() {
-    this.ser.getAllByWorkplace(1, 1).subscribe(result => {
+    this.ser.getAllByWorkplace(1).subscribe(result => {
       this.maxPage = result.maxPage;
       this.itemList = result.objList;
     });

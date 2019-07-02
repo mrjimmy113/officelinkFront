@@ -44,10 +44,10 @@
 
         <div class="col-sm-2 d-flex align-items-center justify-content-center">
           <div class="w3-dropdown-hover">
-            <i class="fas fa-pen "></i>
-            <div class="w3-dropdown-content w3-bar-block">
-              <button href="#" class="w3-bar-item btn btn-info" (click)="openEdit(item)">Edit</button>
-              <button href="#" class="w3-bar-item btn btn-danger" (click)="delete(item.id)">Delete</button>
+            <div class="d-flex align-items-center justify-content-center">
+              <button class="btn btn-info" (click)="openEdit(item)"><i class="fas fa-pen-alt"></i></button>
+              <span> | </span>
+              <button class="btn btn-danger" (click)="delete(item.id)"><i class="fas fa-trash-alt"></i></button>
             </div>
           </div>
         </div>

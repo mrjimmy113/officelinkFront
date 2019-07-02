@@ -60,8 +60,7 @@ export class ConfigurationSaveComponent implements OnInit {
 
   add() {
     this.configuration.scheduleTime = this.constructCronExpression();
-    this.configuration.workplaceId = 1;
-    console.log(this.configuration);
+    
     this.configSer.create(this.configuration).subscribe(
       result => {
         this.requestStatus = result;
@@ -85,7 +84,6 @@ export class ConfigurationSaveComponent implements OnInit {
 
   update() {
     this.configuration.scheduleTime = this.constructCronExpression();
-    console.log(this.configuration);
     this.configSer.update(this.configuration).subscribe(
       result => {
         this.requestStatus = result;
