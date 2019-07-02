@@ -26,6 +26,7 @@ import { DepartmentSaveComponent } from './department-save/department-save.compo
 import { WorkplaceComponent } from './workplace/workplace.component';
 import { WorkplaceSaveComponent } from './workplace-save/workplace-save.component';
 import { NewsDetailComponent } from './news/news-detail/news-detail.component';
+import { NewsEditComponent } from './news/news-edit/news-edit.component';
 
 const routes: Routes = [
   { path: "", component:HomeComponent},
@@ -38,6 +39,7 @@ const routes: Routes = [
   { path: "forget", component: ForgetPasswordComponent},
   { path: "login", component: LoginComponent},
   { path: "news", component: NewsMainComponent },
+  { path: "news/:id/edit", component: NewsEditComponent },
   { path: "news/create", component: NewsCreateComponent },
   { path:"report", component:SurveyReportComponent},
   { path: "q", component: SendOutSurveyComponent},

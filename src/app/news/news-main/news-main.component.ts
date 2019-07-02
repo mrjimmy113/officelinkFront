@@ -3,6 +3,8 @@ import { ModalService } from 'src/app/service/modal.service';
 import { NewsService } from 'src/app/service/news.service';
 import { NewsCreateComponent } from '../news-create/news-create.component';
 import { DomSanitizer } from '@angular/platform-browser';
+import { NewsEditComponent } from '../news-edit/news-edit.component';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-news-main',
@@ -15,18 +17,17 @@ export class NewsMainComponent implements OnInit {
   currentPage = 1;
   maxPage;
   searchTerm = "";
-  requestStatus:Number;
+  requestStatus: Number;
 
-  constructor(private modalService: ModalService, private service: NewsService, private dom: DomSanitizer) { }
+  constructor(
+    private modalService: ModalService, 
+    private service: NewsService, 
+    private dom: DomSanitizer,
+    private datePipe: DatePipe,
+    ) { }
 
   ngOnInit() {
     this.searchByTitle("");
-  }
-
-  searchById(value) {
-    this.service.searchById(value).subscribe(result => {
-      this.itemList = result;
-    })
   }
 
   searchByTitle(value) {
@@ -44,22 +45,17 @@ export class NewsMainComponent implements OnInit {
       }
     }, 300);
   }
-
-  create() {
-    this.modalService.init(NewsCreateComponent,[],() => this.searchByTitle(""));
-  }
-
-  edit(item) {
-    this.modalService.init(NewsCreateComponent,item,() => this.searchByTitle(""));
-  }
-
+  
   delete(id) {
-    this.service.delete(id).subscribe(result => {
-      this.requestStatus = result;
-      if (this.requestStatus == 200){
-        this.searchByTitle("");
-      }
-    });
+    if (confirm("Are you sure to detele?")) {
+      this.service.delete(id).subscribe(result => {
+        this.requestStatus = result;
+        if (this.requestStatus == 200) {
+          this.searchByTitle("");
+        }
+      });
+    }
+
   }
 
   doms(s) {

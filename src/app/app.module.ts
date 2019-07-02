@@ -5,6 +5,7 @@ import { LocationComponent } from './location/location-main/location.component';
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { HttpClientModule } from "@angular/common/http";
+import { DateRangePickerModule } from '@syncfusion/ej2-angular-calendars';
 import { AppComponent } from "./app.component";
 import { HeaderComponent } from "./others/header/header.component";
 import { WordCloudListComponent } from "./word-cloud-filter/word-cloud-list/word-cloud-list.component";
@@ -36,6 +37,9 @@ import { DepartmentSaveComponent } from './department-save/department-save.compo
 import { WorkplaceComponent } from './workplace/workplace.component';
 import { WorkplaceSaveComponent } from './workplace-save/workplace-save.component';
 import { NewsDetailComponent } from './news/news-detail/news-detail.component';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { DatePipe } from '@angular/common';
+import { NewsEditComponent } from './news/news-edit/news-edit.component';
 
 @NgModule({
   declarations: [
@@ -69,11 +73,12 @@ import { NewsDetailComponent } from './news/news-detail/news-detail.component';
     WorkplaceComponent,
     WorkplaceSaveComponent,
     NewsDetailComponent,
+    NewsEditComponent,
   ],
-  imports: [BrowserModule, HttpClientModule, FormsModule, AppRoutingModule, CKEditorModule, ChartsModule, GoogleChartsModule],
+  imports: [BrowserModule, HttpClientModule, FormsModule, AppRoutingModule, ScrollingModule, DateRangePickerModule, CKEditorModule, ChartsModule, GoogleChartsModule],
   entryComponents: [SurveyCompareComponent],
 
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
