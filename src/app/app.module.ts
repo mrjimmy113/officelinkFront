@@ -44,6 +44,8 @@ import { AccountDeleteComponent } from './account/account-delete/account-delete.
 import { JoinComponent } from './others/join/join.component'
 import {Login2Component} from './others/login2/login2.component'
 
+import { ConfigurationComponent } from './configuration/configuration.component';
+import { ConfigurationSaveComponent } from './configuration-save/configuration-save.component';
 
 @NgModule({
   declarations: [
@@ -82,6 +84,8 @@ import {Login2Component} from './others/login2/login2.component'
     QuestionSaveComponent,
     ChooseQuestionComponent,
     SurveyListComponent,
+    ConfigurationComponent,
+    ConfigurationSaveComponent,
   ],
   imports: [BrowserModule, HttpClientModule, FormsModule, AppRoutingModule, ChartsModule, GoogleChartsModule, TagCloudModule],
   entryComponents: [SurveyCompareComponent,QuestionSaveComponent, SendOutSurveyComponent],

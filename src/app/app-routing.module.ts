@@ -25,6 +25,8 @@ import { TeamComponent } from './team/team.component';
 import { TeamSaveComponent } from './team-save/team-save.component';
 import { WorkplaceComponent } from './workplace/workplace.component';
 import { WorkplaceSaveComponent } from './workplace-save/workplace-save.component';
+import { ConfigurationSaveComponent } from './configuration-save/configuration-save.component';
+import { ConfigurationComponent } from './configuration/configuration.component';
 
 import { AccountListComponent } from './account/account-list/account-list.component';
 import { AccountSaveComponent } from './account/account-save/account-save.component';
@@ -70,6 +72,8 @@ const routes: Routes = [
   { path:"survey/save", component: SurveySaveComponent},
   { path:"choose", component: ChooseQuestionComponent},
   { path: "survey",component:SurveyListComponent},
+  { path: "configuration", component:ConfigurationComponent},
+  { path: "configuration/save", component:ConfigurationSaveComponent},
   { path: "**", redirectTo: "404" },
 
 ];
