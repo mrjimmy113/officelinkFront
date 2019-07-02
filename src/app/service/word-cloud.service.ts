@@ -29,4 +29,11 @@ export class WordCloudService {
   update(obj): Observable<Number> {
     return this.http.put<Number>(this.api, obj);
   }
+
+  delete(id):Observable<Number> {
+    return this.http.delete<Number>(this.api + `?id=${id}`);
+  }
+  isExisted(name,language):Observable<boolean>{
+    return this.http.get<boolean>(this.api + `/existed?name=${name}&language=${language}`);
+  }
 }

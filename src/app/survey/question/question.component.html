@@ -1,35 +1,61 @@
 <div (click)="enableEditMode()" [ngClass]="{'shadow': isEditMode}" class="modal-body">
-  <!--Question + Types-->
-  <div class="row row-padding-bot">
-    <div class="col-sm-9">
-      <input class="form-control" placeholder="Question" />
-    </div>
-    <div class="col-sm-3">
-      <select class="form-control">
-        <option>Multiple Choice</option>
-      </select>
-    </div>
-  </div>
-  <!--Option-->
-  <div class="form-check" *ngFor="let option of options; let i = index">
+  <form #createForm="ngForm">
+    <!--Question + Types-->
     <div class="row row-padding-bot">
-      <div class="col-sm-1 row align-content-center d-flex justify-content-center">
-        <input type="radio" class="radio-big" disabled />
+      <div class="col-sm-9">
+        <input class="form-control" placeholder="Question" name="question" #question="ngModel"
+          [(ngModel)]="quest.question" required [disabled]="!isNew"
+          [ngClass]="{'is-invalid': (question.invalid && (question.dirty || question.touched))}" />
+        <div *ngIf="question.invalid && (question.dirty || question.touched)" class="text-danger">
+          <div *ngIf="question.errors.required">
+            Please input your question
+          </div>
+
+        </div>
       </div>
-      <div class="col-sm-10 option">
-        <input type="text" class="form-control" placeholder="Option {{i + 1}}" [value]="options[i]" />
-      </div>
-      <div class="col-sm-1 row align-content-center d-flex justify-content-center" *ngIf="isEditMode">
-        <button class="btn btn-danger" (click)="deleteOption(i)"><i class="fas fa-times"></i></button>
+      <div class="col-sm-3">
+        <select class="form-control" [(ngModel)]="quest.type" name="type" >
+          <option *ngFor="let type of typeList" [ngValue]="type" [selected]="quest.type.id == type.id">{{typeEnum[type.type]}}</option>
+        </select>
       </div>
     </div>
-  </div>
-  <div class="form-group add-btn" *ngIf="isEditMode">
-    <button class="btn btn-primary" (click)="addOption()">Add More Option</button>
-  </div>
+    <!--Answer-->
+    <div *ngIf="quest.type != undefined">
+      <!--Multiple Choice-->
+      <div *ngIf="quest.type.type == 'MULTIPLE' || quest.type.type == 'SINGLE'">
+        <div class="form-check" *ngFor="let option of quest.options; let i = index">
+          <div class="row row-padding-bot">
+            <div class="col-sm-1 row align-content-center d-flex justify-content-center">
+              <input type="radio" class="radio-big" disabled *ngIf="quest.type.type == 'SINGLE'"/>
+              <input type="checkbox" class="radio-big" disabled *ngIf="quest.type.type == 'MULTIPLE'"/>
+            </div>
+            <div class="col-sm-10 option">
+              <input type="text" class="form-control" placeholder="Option {{i + 1}}" [disabled]="!isNew"
+                [(ngModel)]="quest.options[i].answerText" name="option{{i}}" #option{{i}}="ngModel" required />
+            </div>
+            <div class="col-sm-1 row align-content-center d-flex justify-content-center" *ngIf="isEditMode">
+              <button class="btn btn-danger" (click)="deleteOption(i)" *ngIf="isNew"><i class="fas fa-times"></i></button>
+            </div>
+          </div>
+        </div>
+        <div class="form-group add-btn" *ngIf="isEditMode">
+          <button class="btn btn-primary" (click)="addOption()" *ngIf="isNew">Add More Option</button>
+        </div>
+      </div>
+      <!--Free Text-->
+      <div *ngIf="quest.type.type == 'TEXT'" class="form-group">
+        <div class="row">
+          <label class="col-sm-2" style="text-align: center ">Answer: </label>
+          <input placeholder="Free Text Answer" class="form-control col-sm-9" readonly />
+        </div>
+      </div>
+    </div>
+
+
+  </form>
 
   <div class="modal-footer" *ngIf="isEditMode">
-    <button class="btn btn-primary" (click)="copyQuestion()"><i class="fas fa-copy"></i></button>
+    <button class="btn btn-primary" (click)="copyQuestion()" *ngIf="isNew"><i class="fas fa-copy"></i></button>
     <button class="btn btn-danger" (click)="deleteQuestion()"><i class="fas fa-trash"></i></button>
   </div>
 </div>

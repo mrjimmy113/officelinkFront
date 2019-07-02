@@ -1,5 +1,5 @@
 .listItem {
-  height: 250px;
+  height: 200px;
   overflow-y: auto;
   overflow-x: hidden;
   margin-bottom: 20px;
@@ -14,5 +14,10 @@
 .heading{
   padding-top: 10px;
   padding-bottom: 10px;
-
+}
+.center {
+  margin:auto;
+}
+.badge {
+  font-size: 90%;
 }

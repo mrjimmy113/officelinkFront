@@ -1,3 +1,6 @@
+import { ActivatedRoute } from '@angular/router';
+import { Answer } from './../../model/answer';
+import { SurveyService } from './../../service/survey.service';
 import { Question } from './../../model/question';
 import { Component, OnInit } from '@angular/core';
 import { Survey } from 'src/app/model/survey';
@@ -9,19 +12,30 @@ import { Survey } from 'src/app/model/survey';
 })
 export class SurveyTakeComponent implements OnInit {
   survey : Survey;
-  constructor() { }
+  answers : Array<Answer>;
+  token;
+  constructor(private surveySer:SurveyService, private route:ActivatedRoute) { }
 
   ngOnInit() {
     this.survey = new Survey();
-    this.survey.name = "Experience of the new Cafeteria";
-    this.survey.questions = new Array<Question>();
-    let q = new Question();
-    q.question = "How you rate the services ?";
-    q.options = ["Wonderful", "Good", " Not Bad", "Bad", "Unacceptable"]
-    this.survey.questions.push(q);
-    this.survey.questions.push(q);
-    this.survey.questions.push(q);
-    this.survey.questions.push(q);
+    this.answers = new Array<Answer>();
+    this.route.params.subscribe(params => {
+      this.token = params["token"];
+      this.surveySer.getTakeSurvey(this.token).subscribe(result => {
+        this.survey = result;
+        this.survey.questions.forEach(element => {
+          let answer = new Answer();
+          answer.questionIdentity = element.questionIdentity;
+          this.answers.push(answer);
+        });
+      })
+    })
+
+  }
+  saveAnswer() {
+    this.surveySer.sendAnswer(this.answers).subscribe(result => {
+      console.log(result);
+    })
   }
 
 }

@@ -1,0 +1,75 @@
+<h4>
+  <button class="btn-circle btn-primary">
+    <i class="fas fa-arrow-left"></i>
+  </button>
+  Cafeteria Experience Feedback
+</h4>
+<div class="row form-group d-flex justify-content-end">
+  <div class="col-sm-4 row align-content-center d-flex justify-content-end" style="margin: 0px; padding-right: 24px">
+    <b class="row ">Filtered by:</b>
+  </div>
+  <select class="form-control col-sm-2">
+    <option>All Team</option>
+  </select>
+  <select class="form-control col-sm-2">
+    <option>All Department</option>
+  </select>
+  <select class="form-control col-sm-2">
+    <option>All Location</option>
+  </select>
+  <div class="col-sm-1">
+    <button class="btn btn-success">Apply</button>
+  </div>
+</div>
+<div class="modal-content form-group" *ngFor="let q of survey.questions; let i = index">
+  <div class="modal-body row">
+    <div class="col-sm-4">
+      <b><i class="far fa-question-circle"></i> {{q.question}}</b>
+      <div style="padding-left: 12px">
+        <b>Option:</b>
+      </div>
+      <div class="form-check" *ngFor="let option of q.options; let i = index">
+        <div class="row row-padding-bot">
+          <div class="col-sm-10 option">
+            {{i + 1}}. {{option}}
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-7">
+      <div style="display: block">
+        <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType">
+        </canvas>
+      </div>
+    </div>
+    <div class="col-sm-1 d-flex justify-content-center">
+
+      <button class="btn-circle btn-primary" title="Compare with other survey" (click)="openCompare()">
+        <i class="fas fa-file-medical-alt"></i>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="modal-content form-group">
+    <div class="modal-body row">
+      <div class="col-sm-4">
+        <b><i class="far fa-question-circle"></i>Text Question</b>
+      </div>
+      <div class="col-sm-7">
+          <angular-tag-cloud
+          [data]="data"
+          [width]="options.width"
+          [height]="options.height"
+          [overflow]="options.overflow">
+        </angular-tag-cloud>
+      </div>
+      <div class="col-sm-1 d-flex justify-content-center">
+
+        <button class="btn-circle btn-primary" title="Compare with other survey" (click)="openCompare()">
+          <i class="fas fa-file-medical-alt"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+

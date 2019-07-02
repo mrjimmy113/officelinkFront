@@ -1,3 +1,7 @@
+import { SurveyListComponent } from './survey/survey-list/survey-list.component';
+import { ChooseQuestionComponent } from './survey/choose-question/choose-question.component';
+import { QuestionListComponent } from './question/question-list/question-list.component';
+import { SurveyReportComponent } from './survey/survey-report/survey-report.component';
 import { SurveyTakeComponent } from './survey/survey-take/survey-take.component';
 import { InvitationComponent } from './account/invitation/invitation.component';
 import { SendOutSurveyComponent } from './survey/send-out-survey/send-out-survey.component';
@@ -13,12 +17,12 @@ import { RouterModule, Routes } from "@angular/router";
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { NotFoundComponent } from './others/not-found/not-found.component';
-import { TeamComponent } from './team/team.component';
-import { TeamSaveComponent } from './team-save/team-save.component';
 import { DepartmentComponent } from './department/department.component';
 import { DepartmentSaveComponent } from './department-save/department-save.component';
 import { LocationComponent } from "./location/location.component";
 import { LocationCreateComponent } from "./location-create/location-create.component";
+import { TeamComponent } from './team/team.component';
+import { TeamSaveComponent } from './team-save/team-save.component';
 import { WorkplaceComponent } from './workplace/workplace.component';
 import { WorkplaceSaveComponent } from './workplace-save/workplace-save.component';
 
@@ -44,27 +48,30 @@ const routes: Routes = [
   { path: "admin/account", component:AccountListComponent},
   { path: "admin/account/create" , component:AccountSaveComponent},
   { path: "admin/account/delete", component:AccountDeleteComponent},
-  { path:"login" , component: Login2Component,  },
   { path: "login-form/:emailToken", component: LoginComponent, },
-  
+
 
   { path: "404",  component: NotFoundComponent },
   { path: "forget", component: ForgetPasswordComponent},
   { path: "login", component: LoginComponent},
-  { path: "q", component: SendOutSurveyComponent},
+  { path: "q", component: SurveySaveComponent},
   { path: "memInvite", component:InvitationComponent},
-  { path: "take", component:SurveyTakeComponent},
+  { path: "take/:token", component:SurveyTakeComponent},
   { path: "team", component:TeamComponent},
   { path: "team/save", component:TeamSaveComponent},
   { path: "department", component:DepartmentComponent},
   { path: "department/save", component:DepartmentSaveComponent},
-  { path:"take", component:SurveyTakeComponent},
   { path: "location", component: LocationComponent },
   { path: "location/create", component: LocationCreateComponent },
   { path: "workplace", component:WorkplaceComponent},
   { path: "workplace/save", component:WorkplaceSaveComponent},
+  { path:"report", component:SurveyReportComponent},
+  { path:"question",component: QuestionListComponent},
+  { path:"survey/save", component: SurveySaveComponent},
+  { path:"choose", component: ChooseQuestionComponent},
+  { path: "survey",component:SurveyListComponent},
   { path: "**", redirectTo: "404" },
-  
+
 ];
 
 @NgModule({

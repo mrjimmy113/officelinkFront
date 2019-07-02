@@ -1,3 +1,4 @@
+import { AuthenticationService } from './service/authentication.service';
 import { Component } from '@angular/core';
 
 @Component({
@@ -7,5 +8,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'officelinkFront';
-  isLogin = true;
+  isLogin = this.authSer.isLogin();
+  role = this.authSer.getRole();
+
+  constructor(private authSer:AuthenticationService) {}
 }
