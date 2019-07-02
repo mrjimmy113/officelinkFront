@@ -1,6 +1,7 @@
+import { TokenInterceptor } from './interceptor/tokenAuth.interceptor';
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { AppComponent } from "./app.component";
 import { HeaderComponent } from "./others/header/header.component";
 import { WordCloudListComponent } from "./word-cloud-filter/word-cloud-list/word-cloud-list.component";
@@ -37,8 +38,6 @@ import { WorkplaceComponent } from './workplace/workplace.component';
 import { WorkplaceSaveComponent } from './workplace-save/workplace-save.component';
 import { TagCloudModule } from 'angular-tag-cloud-module';
 
-import { RouterModule, Routes } from "@angular/router";
-import { CommonModule } from "@angular/common";
 import { AccountListComponent } from './account/account-list/account-list.component';
 import { AccountSaveComponent } from './account/account-save/account-save.component';
 import { AccountDeleteComponent } from './account/account-delete/account-delete.component';
@@ -86,7 +85,11 @@ import {Login2Component} from './others/login2/login2.component'
   ],
   imports: [BrowserModule, HttpClientModule, FormsModule, AppRoutingModule, ChartsModule, GoogleChartsModule, TagCloudModule],
   entryComponents: [SurveyCompareComponent,QuestionSaveComponent, SendOutSurveyComponent],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

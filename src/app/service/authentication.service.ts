@@ -25,4 +25,28 @@ export class AuthenticationService {
   getAuth():Auth {
     return JSON.parse(localStorage.getItem(this.itemName));
   }
+
+  getRole() {
+    if(this.isLogin())
+    return this.getAuth().role;
+  }
+
+  getToken() {
+    if(this.isLogin())
+    return this.getAuth().token;
+  }
+
+  isLogin() {
+    if(this.getAuth() != null) return true;
+    else return false;
+  }
+
+  getName() {
+    if(this.isLogin())
+    return this.getAuth().name;
+  }
+  logout() {
+    localStorage.removeItem(this.itemName);
+    window.location.pathname="/login";
+  }
 }

@@ -1,9 +1,9 @@
+import { TypeEnum } from './../../model/typeEnum';
 import { QuestionService } from './../../service/question.service';
 import { AnswerOption } from './../../model/answerOption';
 import { Question } from './../../model/question';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { TypeQuestion } from 'src/app/model/typeQuestion';
-import { Type } from '@angular/compiler';
 
 @Component({
   selector: 'app-question',
@@ -20,20 +20,24 @@ export class QuestionComponent implements OnInit {
   isEditMode = false;
   isNew = true;
   typeList: TypeQuestion[];
+  typeEnum = TypeEnum;
   constructor(private questSer:QuestionService) { }
 
   ngOnInit() {
+
     if(this.quest.id != undefined) this.isNew = false;
-    this.questSer.getAllType().subscribe(result => {
+    let sub = this.questSer.getAllType().subscribe(result => {
       this.typeList = result;
       if(this.isNew && this.typeList.length > 0) {
         this.quest.type = this.typeList[0];
       }
+      sub.unsubscribe();
     })
     if(this.isNew) {
       this.quest.options = new Array<AnswerOption>();
     }
     this.classToParent();
+
   }
 
   addOption() {
@@ -63,5 +67,4 @@ export class QuestionComponent implements OnInit {
   deleteQuestion() {
     this.deleteQ.emit(this.index);
   }
-
 }

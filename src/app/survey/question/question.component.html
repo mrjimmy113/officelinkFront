@@ -15,18 +15,19 @@
       </div>
       <div class="col-sm-3">
         <select class="form-control" [(ngModel)]="quest.type" name="type" >
-          <option *ngFor="let type of typeList" [ngValue]="type" [selected]="quest.type.id == type.id">{{type.type}}</option>
+          <option *ngFor="let type of typeList" [ngValue]="type" [selected]="quest.type.id == type.id">{{typeEnum[type.type]}}</option>
         </select>
       </div>
     </div>
     <!--Answer-->
     <div *ngIf="quest.type != undefined">
       <!--Multiple Choice-->
-      <div *ngIf="quest.type.type == 'Multiple Choice'">
+      <div *ngIf="quest.type.type == 'MULTIPLE' || quest.type.type == 'SINGLE'">
         <div class="form-check" *ngFor="let option of quest.options; let i = index">
           <div class="row row-padding-bot">
             <div class="col-sm-1 row align-content-center d-flex justify-content-center">
-              <input type="radio" class="radio-big" disabled />
+              <input type="radio" class="radio-big" disabled *ngIf="quest.type.type == 'SINGLE'"/>
+              <input type="checkbox" class="radio-big" disabled *ngIf="quest.type.type == 'MULTIPLE'"/>
             </div>
             <div class="col-sm-10 option">
               <input type="text" class="form-control" placeholder="Option {{i + 1}}" [disabled]="!isNew"
@@ -42,7 +43,7 @@
         </div>
       </div>
       <!--Free Text-->
-      <div *ngIf="quest.type.type == 'Free Text'" class="form-group">
+      <div *ngIf="quest.type.type == 'TEXT'" class="form-group">
         <div class="row">
           <label class="col-sm-2" style="text-align: center ">Answer: </label>
           <input placeholder="Free Text Answer" class="form-control col-sm-9" readonly />

@@ -1,3 +1,4 @@
+import { TypeEnum } from './../../model/typeEnum';
 import { DynamicLoadService } from './../../service/dynamic-load.service';
 import { SurveyService } from './../../service/survey.service';
 import { Survey } from './../../model/survey';
@@ -67,4 +68,6 @@ export class SurveySaveComponent implements OnInit {
   close() {
     this.outputs();
   }
+
+
 }

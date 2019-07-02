@@ -1,3 +1,4 @@
+import { AuthenticationService } from './../../service/authentication.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,10 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-
-  constructor() { }
+  name = this.authSer.getName();
+  isDisplay = false;
+  constructor(private authSer:AuthenticationService) { }
 
   ngOnInit() {
+  }
+
+  display() {
+    this.isDisplay = !this.isDisplay;
   }
 
 }

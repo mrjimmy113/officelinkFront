@@ -22,6 +22,9 @@
                   <div class="form-group">
                     <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password" name ="account.password" [(ngModel)]= "account.password">
                   </div>
+                  <div *ngIf="isError" class="text-danger form-group d-flex justify-content-center">
+                    Your email or password is not right
+                  </div>
                   <button class="btn btn-primary btn-user btn-block" (click) = "login()">
                     Login
                   </button>

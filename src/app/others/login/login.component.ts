@@ -13,13 +13,16 @@ import {Router , ActivatedRoute} from '@angular/router'
 export class LoginComponent implements OnInit {
   constructor(private authSer:AuthenticationService){}
   account:Account;
+  isError = false;
   ngOnInit() {
     this.account = new Account();
   }
 
   login() {
+    this.isError = false;
     this.authSer.login(this.account).subscribe(result => {
-      console.log(result);
+      if(result != null) this.authSer.setAuth(result);
+      else this.isError =true;
     })
   }
 
