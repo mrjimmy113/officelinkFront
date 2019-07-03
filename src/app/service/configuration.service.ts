@@ -17,8 +17,8 @@ export class ConfigurationService {
     return this.http.get<Configuration>(this.api + `/getConfig` + `?id=${configId}`);
   }
 
-  getAllByWorkplace(page):Observable<PageSearch<Configuration>> {
-    return this.http.get<PageSearch<Configuration>>(this.api + `/workplaceConfigs` + `?page=${page}`);
+  searchGetPage(term, page):Observable<PageSearch<Configuration>> {
+    return this.http.get<PageSearch<Configuration>>(this.api + `/searchGetPage` + `?term=${term}&page=${page}`);
   }
 
   create(obj):Observable<Number> {

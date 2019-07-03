@@ -10,7 +10,7 @@
       <div class="modal-body">
         <form #configForm="ngForm">
             <div class="form-group">
-                <label>Survey</label>
+                <label>Survey(*)</label>
                 <select class="form-control" name="survey" #survey="ngModel" [(ngModel)]="selectedSurveyId"
                 [ngClass]="{'is-invalid' : (survey.invalid && (survey.dirty || survey.touched))}" required>
                 <option [value]="0">Choose a survey</option>
@@ -18,13 +18,13 @@
               </select>
               </div>
           <div class="form-group">
-            <label>Schedule Time</label>
+            <label>Schedule Time(*)</label>
             <table class="table table-hover table-sm table-bordered text-center">
               <thead>
                 <tr>
-                  <th>Hour</th>
-                  <th>Minutes</th>
-                  <th>Day of Week</th>
+                  <th>Hour(*)</th>
+                  <th>Minutes(*)</th>
+                  <th>Day of Week(*)</th>
                 </tr>
               </thead>
               <tbody>
@@ -65,7 +65,8 @@
           <h4><span class="badge badge-pill badge-danger" *ngIf="requestStatus == 400">Fail</span></h4>
         </div>
         <div class="col-sm-6 d-flex justify-content-end" style="padding: 0px">
-          <button type="button" class="btn btn-success" (click)="save()" [disabled]="(requestStatus==1)">
+          <button type="button" class="btn btn-success" (click)="save()" 
+          [disabled]="(requestStatus==1) || configForm.invalid">
             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
               *ngIf="requestStatus == 1"></span>
             <span *ngIf="isEdit == false && requestStatus != 1">Create Configuration</span>

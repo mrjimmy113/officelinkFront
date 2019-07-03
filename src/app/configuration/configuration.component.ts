@@ -25,7 +25,7 @@ export class ConfigurationComponent implements OnInit {
   }
 
   init() {
-    this.ser.getAllByWorkplace(1).subscribe(result => {
+    this.ser.searchGetPage("", 1).subscribe(result => {
       this.maxPage = result.maxPage;
       this.itemList = result.objList;
     });
@@ -45,12 +45,12 @@ export class ConfigurationComponent implements OnInit {
     return result;
   }
 
-  // search(value) {
-  //   this.ser.search(value).subscribe(result => {
-  //     this.maxPage = result.maxPage;
-  //     this.itemList = result.objList;
-  //   })
-  // }
+  search(value) {
+    this.ser.searchGetPage(value, 1).subscribe(result => {
+      this.maxPage = result.maxPage;
+      this.itemList = result.objList;
+    })
+  }
 
   openCreate() {
     this.modalSer.init(ConfigurationSaveComponent, [], () => this.init());
@@ -60,14 +60,14 @@ export class ConfigurationComponent implements OnInit {
     this.modalSer.init(ConfigurationSaveComponent, item, () => this.init());
   }
 
-  // filter() {
-  //   let newSearchTerm = this.searchTerm;
-  //   setTimeout(() => {
-  //     if (newSearchTerm == this.searchTerm) {
-  //       this.search(this.searchTerm);
-  //     }
-  //   }, 300);
-  // }
+  filter() {
+    let newSearchTerm = this.searchTerm;
+    setTimeout(() => {
+      if (newSearchTerm == this.searchTerm) {
+        this.search(this.searchTerm);
+      }
+    }, 300);
+  }
 
   delete(id) {
     if (confirm("Do you want to delete this")) {
@@ -81,13 +81,13 @@ export class ConfigurationComponent implements OnInit {
     }
   }
 
-  // loadPage(pageNumber) {
-  //   this.currentPage = pageNumber;
-  //   this.ser.getPage(this.searchTerm, pageNumber).subscribe(result => {
-  //     this.maxPage = result.maxPage;
-  //     this.itemList = result.objList;
-  //   })
-  // }
+  loadPage(pageNumber) {
+    this.currentPage = pageNumber;
+    this.ser.searchGetPage(this.searchTerm, pageNumber).subscribe(result => {
+      this.maxPage = result.maxPage;
+      this.itemList = result.objList;
+    })
+  }
 
   changeActive(config: Configuration) {
     this.ser.update(config).subscribe(
