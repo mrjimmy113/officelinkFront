@@ -2,6 +2,8 @@ import { Component, OnInit, Input, Output } from '@angular/core';
 import { Configuration } from '../model/configuration';
 import { ModalService } from '../service/modal.service';
 import { ConfigurationService } from '../service/configuration.service';
+import { Survey } from '../model/survey';
+import { SurveyService } from '../service/survey.service';
 
 @Component({
   selector: 'app-configuration-save',
@@ -11,9 +13,11 @@ import { ConfigurationService } from '../service/configuration.service';
 export class ConfigurationSaveComponent implements OnInit {
   @Input() inputs;
   @Output() outputs;
-  configuration: Configuration;
   requestStatus: Number;
   isEdit = false;
+  configuration: Configuration;
+  surveys: Array<Survey>;
+  selectedSurveyId: Number = 0;
   second;
   minute;
   arrayOfMinutes = new Array<Number>();
@@ -24,7 +28,7 @@ export class ConfigurationSaveComponent implements OnInit {
   dayOfWeeks = new Array();
   arrayOfWeekDays;
 
-  constructor(private modalSer: ModalService, private configSer: ConfigurationService) { }
+  constructor(private modalSer: ModalService, private configSer: ConfigurationService, private surveySer: SurveyService) { }
 
   ngOnInit() {
     this.init();
@@ -32,11 +36,14 @@ export class ConfigurationSaveComponent implements OnInit {
 
   init() {
     this.generateMinuteAndWeekDays();
+    this.getWorkplaceSurveys();
     if (this.inputs.length == 0) {
       this.configuration = new Configuration();
+      this.configuration.survey = new Survey();
     } else {
       this.configuration = this.inputs;
       this.storeCronValue(this.configuration.scheduleTime);
+      this.selectedSurveyId = this.configuration.survey.id;
       this.isEdit = true;
     }
     this.requestStatus = 0;
@@ -54,13 +61,20 @@ export class ConfigurationSaveComponent implements OnInit {
     this.arrayOfWeekDays = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
   }
 
+  getWorkplaceSurveys() {
+    this.surveySer.getWorkplaceSurveys().subscribe(result => {
+      this.surveys = result;
+      console.log(this.surveys);
+    })
+  }
+
   closeModal() {
     this.modalSer.destroy();
   }
 
   add() {
     this.configuration.scheduleTime = this.constructCronExpression();
-    
+    this.configuration.survey.id = this.selectedSurveyId;
     this.configSer.create(this.configuration).subscribe(
       result => {
         this.requestStatus = result;
@@ -84,6 +98,7 @@ export class ConfigurationSaveComponent implements OnInit {
 
   update() {
     this.configuration.scheduleTime = this.constructCronExpression();
+    this.configuration.survey.id = this.selectedSurveyId;
     this.configSer.update(this.configuration).subscribe(
       result => {
         this.requestStatus = result;
@@ -100,6 +115,7 @@ export class ConfigurationSaveComponent implements OnInit {
   }
 
   save() {
+    console.log(this.selectedSurveyId);
     this.requestStatus = 1;
     if (this.isEdit) this.update();
     else this.add();

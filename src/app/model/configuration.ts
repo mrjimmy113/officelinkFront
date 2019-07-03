@@ -1,7 +1,9 @@
+import { Survey } from "./survey";
 
 export class Configuration {
     id:Number;
     scheduleTime:String;
+    isActive:Boolean;
     workplaceId:Number;
-    // locations:Array<Location>;
+    survey:Survey;
 }

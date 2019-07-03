@@ -39,4 +39,7 @@ export class SurveyService {
   sendAnswer(answers):Observable<Number>{
     return this.http.post<Number>(this.api + `/answer`,answers);
   }
+  getWorkplaceSurveys():Observable<Array<Survey>>{
+    return this.http.get<Array<Survey>>(this.api + `/getWorkplaceSurveys`);
+  }
 }
