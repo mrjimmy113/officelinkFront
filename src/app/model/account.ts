@@ -5,7 +5,7 @@ export class Account {
     firstname : String;
     lastname : String;
     address : String;
-    isDelete : boolean;
+    isDeleted  = false;
     role : String ;
     workspacename : String;
 

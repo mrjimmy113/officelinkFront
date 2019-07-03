@@ -12,7 +12,7 @@ import {Router , ActivatedRoute} from '@angular/router'
 export class RegisterConfirmComponent implements OnInit {
 
   account : Account;
-  emailParam : String;
+  accountToken : String;
   errorStatus : Number;
   requestStatus : Number;
 
@@ -22,17 +22,11 @@ export class RegisterConfirmComponent implements OnInit {
 
   ngOnInit() {
       this.account = new Account();
-      this.emailParam =  this._route.snapshot.paramMap.get('accountToken');
-
-      this.account.email = this.emailParam;
-      
-    
-        this.accountSer.getAccountByEmail(this.account.email).subscribe(res => {
+      this.accountToken =  this._route.snapshot.paramMap.get('accountToken');
+      this.accountSer.createAccountByToken(this.accountToken)
+      this.accountSer.getAccountByToken(this.accountToken).subscribe(res => {
           this.account = res;
-          
-    })
-      
-      
+      })
     
 
 

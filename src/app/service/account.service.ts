@@ -33,15 +33,24 @@ export class AccountService {
     return this.httpClient.post<Number>(this.api, obj);
   }
 
- getAccountByEmail(emailToken) : Observable<Account>{
-   return this.httpClient.get<Account>(this.api + `/getAccountByEmail` + `?emailToken=${emailToken}`);
- }
+//  getAccountByEmail(emailToken) : Observable<Account>{
+//    return this.httpClient.get<Account>(this.api + `/getAccountByEmail` + `?emailToken=${emailToken}`);
+//  }
+
+
+ getAccountByToken(accountToken) : Observable<Account>{
+  return this.httpClient.get<Account>(this.api + `/confirm` + `?accountToken=${accountToken}`);
+}
+
 
 
   sendMail(obj) : Observable<Number>{
     return this.httpClient.post<Number>(this.api + `/sendMail`, obj);
   }
 
+  createAccountByToken(accountToken) : Observable<Number>{
+    return this.httpClient.post<Number>(this.api + `/confirm`, accountToken);
+  }
 
   
 }
