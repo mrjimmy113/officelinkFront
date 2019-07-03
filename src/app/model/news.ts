@@ -6,6 +6,7 @@ export class News {
     content: String;
     dateCreated: Date;
     dateModified: Date;
+    dateDeleted: Date;
     isDeleted: false;
     byte_image: any;
 }

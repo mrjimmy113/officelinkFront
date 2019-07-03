@@ -14,7 +14,15 @@ export class NewsService {
 
   constructor(private http:HttpClient) { }
 
-  search(term):Observable<PageSearch<News>>{
+  searchByDate(startDate, endDate):Observable<Array<News>>{
+    return this.http.get<Array<News>>(this.api + `/getDate?startDate=${startDate}&endDate=${endDate}`);
+  }
+
+  searchById(id):Observable<News>{
+    return this.http.get<News>(this.api + `/getId?id=${id}`);
+  }
+
+  searchByTitle(term):Observable<PageSearch<News>>{
     return this.http.get<PageSearch<News>>(this.api + `?term=${term}`);
   }
 
@@ -28,6 +36,10 @@ export class NewsService {
 
   update(obj):Observable<Number>{
     return this.http.put<Number>(this.api, obj);
+  }
+
+  updateNotHasFile(obj):Observable<Number>{
+    return this.http.put<Number>(this.api + `/edit`, obj);
   }
 
   delete(id):Observable<Number>{

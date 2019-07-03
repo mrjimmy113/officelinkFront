@@ -1,6 +1,6 @@
 <h2>News</h2>
 
-<button class="btn btn-success" (click)="create()">Create News</button>
+<button class="btn btn-success" [routerLink]="['create']">Create News</button>
 <div class="d-flex justify-content-end">
   <div class="form-inline">
     <div class="input-group mb-3">
@@ -20,11 +20,14 @@
     <div class="row">
       <div class="row col-sm-10">
 
-        <div class="col-sm-4 d-flex align-items-center clickable">
+        <div class="col-sm-5 d-flex align-items-center clickable">
           Image <i class="fas fa-sort icon"></i>
         </div>
-        <div class="col-sm-2 d-flex align-items-center clickable" (click)="sort('title')">
+        <div class="col-sm-4 d-flex align-items-center clickable" (click)="sort('title')">
           Title <i class="fas fa-sort icon"></i>
+        </div>
+        <div class="col-sm-2 d-flex align-items-center clickable" (click)="sort('dateCreated')">
+          Date Created <i class="fas fa-sort icon"></i>
         </div>
       </div>
 
@@ -40,11 +43,14 @@
       <div class="row">
         <div class="row col-sm-10">
 
-          <div class="col-sm-4 d-flex  align-items-center">
-            <img [src]="doms('data:image/jpeg;charset=utf-8;base64,' + item.byte_image)" width="200px" height="100px" />
+          <div class="col-sm-3 d-flex align-items-center">
+            <img [src]="doms('data:image/jpeg;charset=utf-8;base64,' + item.byte_image)" width="200px" height="100px"/>
           </div>
-          <div class="col-sm-5 d-flex align-items-center">
-            {{item.title}}
+          <div class="col-sm-6 d-flex align-items-center">
+            <p>{{item.title}}</p>
+          </div>
+          <div class="col-sm-3 d-flex align-items-center">
+            <p>{{datePipe.transform(this.item.dateCreated, 'yyyy-MM-dd')}}</p>
           </div>
 
         </div>
@@ -53,7 +59,7 @@
           <div class="w3-dropdown-hover">
             <i class="fas fa-pen "></i>
             <div class="w3-dropdown-content w3-bar-block">
-              <button href="#" class="w3-bar-item btn btn-info" (click)="edit(item)">Edit</button>
+              <button href="#" class="w3-bar-item btn btn-info" [routerLink]="[item.id, 'edit']">Edit</button>
               <button href="#" class="w3-bar-item btn btn-danger" (click)="delete(item.id)">Delete</button>
             </div>
           </div>
