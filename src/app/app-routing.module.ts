@@ -39,7 +39,7 @@ import { JoinComponent } from './others/join/join.component'
 
 
 import { from } from 'rxjs';
-import { Login2Component } from './others/login2/login2.component';
+import { RegisterConfirmComponent } from './others/register-confirm/register-confirm.component';
 
 const routes: Routes = [
   { path: "", component:HomeComponent},
@@ -54,14 +54,10 @@ const routes: Routes = [
   { path: "admin/account", component:AccountListComponent},
   { path: "admin/account/create" , component:AccountSaveComponent},
   { path: "admin/account/delete", component:AccountDeleteComponent},
-  { path: "login-form/:emailToken", component: LoginComponent, },
-  { path: "location", component: LocationComponent },
-  { path: "location/create", component: LocationCreateComponent },
-  { path: "location/:id/edit", component: LocationEditComponent },
-  { path: "news", component: NewsMainComponent },
-  { path: "news/:id/edit", component: NewsEditComponent },
-  { path: "news/create", component: NewsCreateComponent },
-  { path: "news/:id/detail", component: NewsDetailComponent },
+  
+
+  { path: "confirm/:accountToken",  component: RegisterConfirmComponent},
+  
 
   { path: "404",  component: NotFoundComponent },
   { path: "forget", component: ForgetPasswordComponent},

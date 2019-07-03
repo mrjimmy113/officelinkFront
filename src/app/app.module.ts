@@ -52,8 +52,8 @@ import { TagCloudModule } from 'angular-tag-cloud-module';
 import { AccountListComponent } from './account/account-list/account-list.component';
 import { AccountSaveComponent } from './account/account-save/account-save.component';
 import { AccountDeleteComponent } from './account/account-delete/account-delete.component';
-import { JoinComponent } from './others/join/join.component'
-import { Login2Component } from './others/login2/login2.component'
+import { JoinComponent } from './others/join/join.component';
+import { RegisterConfirmComponent } from './others/register-confirm/register-confirm.component'
 
 import { ConfigurationComponent } from './configuration/configuration.component';
 import { ConfigurationSaveComponent } from './configuration-save/configuration-save.component';
@@ -95,13 +95,15 @@ import { ConfigurationSaveComponent } from './configuration-save/configuration-s
     AccountSaveComponent,
     AccountDeleteComponent,
     JoinComponent,
-    Login2Component,
     QuestionListComponent,
     QuestionSaveComponent,
     ChooseQuestionComponent,
     SurveyListComponent,
     ConfigurationComponent,
     ConfigurationSaveComponent,
+    RegisterConfirmComponent,
+
+
   ],
   imports: [
     BrowserModule,

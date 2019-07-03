@@ -28,7 +28,7 @@ export class RegisterComponent implements OnInit {
 
   init (){
       this.account = new Account();
-      
+      this.account.isDelete = false;
       
   }
   register(){
@@ -39,21 +39,11 @@ export class RegisterComponent implements OnInit {
          }
          if(this.account.password != this.confirmPassText){
            alert("Password and Confirm password not match. Try again");
-         }else{
-          this.accoutSer.create(this.account).subscribe(res =>
-            {        
-  
-              this.requestStatus = res;           
-              if(this.requestStatus == 200){
-                  
-                  this.accoutSer.sendMail(this.account.email, this.account.role).subscribe(res => {
-                  
-                    
+         }else{                         
+                  this.accoutSer.sendMail(this.account).subscribe(res => {               
                     alert("Successful registration of account information, please check your mail to complete the registration")
                   })
-              }
-              
-            },
+             ,
             error => {
               this.errorStatus = error.status;
               if(this.errorStatus == 409){
@@ -63,7 +53,7 @@ export class RegisterComponent implements OnInit {
                 alert("The system has failed, please try again")
               }
             }
-            )
+            
          }
 
         

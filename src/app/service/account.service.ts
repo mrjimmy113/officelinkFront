@@ -38,8 +38,8 @@ export class AccountService {
  }
 
 
-  sendMail(emailTo, role) : Observable<Number>{
-    return this.httpClient.get<Number>(this.api + `/sendMail` + `?emailTo=${emailTo}&role=${role}`);
+  sendMail(obj) : Observable<Number>{
+    return this.httpClient.post<Number>(this.api + `/sendMail`, obj);
   }
 
 
