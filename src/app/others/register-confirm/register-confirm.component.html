@@ -12,6 +12,7 @@
             </div>
             <form class="user">
                 <div class="form-group">
+                    <label >Workspace</label>
                     <input  class="form-control form-control-user" name = "workspacename"  #workspacename="ngModel" placeholder="Work space name" [(ngModel)] = "account.workspacename"
                     readonly
                     />
@@ -20,12 +21,14 @@
               <div class="form-group row">
                   
                 <div class="col-sm-6 mb-3 mb-sm-0">
+                    <label >First name</label>
                   <input type="text" class="form-control form-control-user" name = "firstname" #firstname = "ngModel" placeholder="First Name" [(ngModel)] = account.firstname 
                  readonly
                   />
                  
                 </div>
                 <div class="col-sm-6">
+                    <label >Last name</label>
                   <input type="text" class="form-control form-control-user" name="lastname" #lastname = "ngModel" placeholder="Last Name" [(ngModel)] = account.lastname
                   readonly
                   />
@@ -34,15 +37,14 @@
               </div>
               
               <div class="form-group">
+                  <label >Email</label>
                 <input type="email" class="form-control form-control-user"  name = "email" #email = "ngModel" placeholder="Email" [(ngModel)] = account.email
                 readonly
                 >
                
               </div>
-              
-         
-              
-              <a    class="btn btn-success btn-user btn-block">
+             
+              <a href="login" style="color: #FFF"    class="btn btn-success btn-user btn-block">
                 Confirm
               </a>
 

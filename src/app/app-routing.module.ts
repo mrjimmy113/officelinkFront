@@ -54,8 +54,7 @@ const routes: Routes = [
   { path: "admin/account", component:AccountListComponent},
   { path: "admin/account/create" , component:AccountSaveComponent},
   { path: "admin/account/delete", component:AccountDeleteComponent},
-  
-
+  { path: "login/", component: LoginComponent, },
   { path: "confirm/:accountToken",  component: RegisterConfirmComponent},
   
 

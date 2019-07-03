@@ -48,6 +48,13 @@ export class AccountService {
     return this.httpClient.post<Number>(this.api + `/sendMail`, obj);
   }
 
+
+  sendInvite(mailInvited) : Observable<Number>{
+    return this.httpClient.post<Number>(this.api + `/sendInvite`, mailInvited);
+  }
+
+  
+
   createAccountByToken(accountToken) : Observable<Number>{
     return this.httpClient.post<Number>(this.api + `/confirm`, accountToken);
   }
