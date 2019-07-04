@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalService } from '../../service/modal.service';
 import { LocationService } from '../../service/location.service';
-import { LocationCreateComponent } from '../location-create/location-create.component';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -14,16 +14,19 @@ export class LocationComponent implements OnInit {
   currentPage = 1;
   maxPage;
   searchTerm = "";
-  requestStatus:Number;
+  requestStatus: Number;
 
-  constructor(private modalService: ModalService, private service: LocationService) { }
+  constructor(
+    private service: LocationService,
+    private datePipe: DatePipe,
+  ) { }
 
   ngOnInit() {
-    this.search("");
+    this.searchByName("");
   }
 
-  search(value) {
-    this.service.search(value).subscribe(result => {
+  searchByName(value) {
+    this.service.searchByName(value).subscribe(result => {
       this.maxPage = result.maxPage;
       this.itemList = result.objList;
     })
@@ -33,26 +36,19 @@ export class LocationComponent implements OnInit {
     let newSearchTerm = this.searchTerm;
     setTimeout(() => {
       if (newSearchTerm == this.searchTerm) {
-        this.search(this.searchTerm);
+        this.searchByName(this.searchTerm);
       }
     }, 300);
   }
 
-  create() {
-    this.modalService.init(LocationCreateComponent,[],() => this.search(""));
-  }
-
-  edit(item) {
-    this.modalService.init(LocationCreateComponent,item,() => this.search(""));
-  }
-
   delete(id) {
-    this.service.delete(id).subscribe(result => {
-      this.requestStatus = result;
-      if (this.requestStatus == 200){
-        alert("success");
-        this.search("");
-      }
-    });
+    if (confirm("Are you sure to detele?")) {
+      this.service.delete(id).subscribe(result => {
+        this.requestStatus = result;
+        if (this.requestStatus == 200) {
+          this.searchByName("");
+        }
+      });
+    }
   }
 }

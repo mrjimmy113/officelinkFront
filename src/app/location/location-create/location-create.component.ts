@@ -1,7 +1,8 @@
-import { Component, OnInit, Input, Output } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, NgZone } from '@angular/core';
 import { Location } from '../../model/location';
-import { ModalService } from '../../service/modal.service';
 import { LocationService } from '../../service/location.service';
+import { NgForm } from '@angular/forms';
+import { MapsAPILoader } from '@agm/core';
 
 @Component({
   selector: 'app-location-create',
@@ -10,68 +11,99 @@ import { LocationService } from '../../service/location.service';
 })
 export class LocationCreateComponent implements OnInit {
 
-  @Input() inputs;
-  @Output() outputs;
   location: Location;
   requestStatus: Number;
-  isEdit = false;
+  zoom: number;
+  geoCoder;
+  address: string;
 
-  constructor(private modalService: ModalService, private service: LocationService) { }
+  @ViewChild('search')
+  public searchElementRef: ElementRef;
+
+  constructor(
+    private service: LocationService,
+    private mapsAPILoader: MapsAPILoader,
+    private ngZone: NgZone,
+    ) { }
 
   ngOnInit() {
-    this.init();
-  }
-
-  init() {
-    if (this.inputs.length == 0) {
-      this.location = new Location();
-    } else {
-      this.location = this.inputs;
-      this.isEdit = true;
-    }
+    this.location = new Location();
     this.requestStatus = 0;
+
+    //load Places Autocomplete
+    this.mapsAPILoader.load().then(() => {
+      this.setCurrentLocation();
+      this.geoCoder = new google.maps.Geocoder;
+ 
+      let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+        types: ["address"]
+      });
+      autocomplete.addListener("place_changed", () => {
+        this.ngZone.run(() => {
+          //get the place result
+          let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+          
+          //verify result
+          if (place.geometry === undefined || place.geometry === null) {
+            return;
+          }
+ 
+          //set latitude, longitude and zoom
+          this.location.latitude = place.geometry.location.lat();
+          this.location.longitude = place.geometry.location.lng();
+          this.location.address = place.formatted_address;
+          this.zoom = 15;
+        });
+      });
+    });
   }
 
-  close() {
-    this.modalService.destroy();
-  }
-
-  add() {
-    console.log("haha", this.location);
+  create(locationForm: NgForm) {
+    this.requestStatus = 1;
     this.service.create(this.location).subscribe(result => {
       this.requestStatus = result;
       if (this.requestStatus == 201) {
         alert("Create Successful");
-        this.close();
+        locationForm.resetForm();
+        this.ngOnInit();
       }
-      this.outputs();
     },
       error => {
         if (error.status == 409) {
-          alert("Address cannot be duplicated");
+          alert("Name or Address has been existed!");
+          this.requestStatus = 0;
         } else if (error.status = 404) {
           alert("Bad request");
+          this.requestStatus = 0;
         }
-        this.close();
-        this.outputs();
       }
     );
   }
 
-  update() {
-    this.service.update(this.location).subscribe(result => {
-      this.requestStatus = result;
-      if (this.requestStatus == 200) {
-        alert("Update Successful");
-        this.close();
-      }
-      this.outputs();
-    });
+  setCurrentLocation() {
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.location.latitude = position.coords.latitude;
+        this.location.longitude = position.coords.longitude;
+        this.zoom = 15;
+        this.getAddress(this.location.latitude, this.location.longitude);
+      });
+    }
   }
 
-  save() {
-    this.requestStatus = 1;
-    if (this.isEdit) this.update();
-    else this.add();
+  getAddress(latitude, longitude) {
+    this.geoCoder.geocode({ 'location': { lat: latitude, lng: longitude } }, (results, status) => {
+      if (status === 'OK') {
+        if (results[0]) {
+          this.zoom = 15;
+          this.address = results[0].formatted_address;
+        } else {
+          window.alert('No results found');
+        }
+      } else {
+        window.alert('Geocoder failed due to: ' + status);
+      }
+
+    });
   }
 }

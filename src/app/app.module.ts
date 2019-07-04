@@ -36,11 +36,12 @@ import { DepartmentComponent } from './department/department.component';
 import { DepartmentSaveComponent } from './department-save/department-save.component';
 import { WorkplaceComponent } from './workplace/workplace.component';
 import { WorkplaceSaveComponent } from './workplace-save/workplace-save.component';
-
 import { NewsDetailComponent } from './news/news-detail/news-detail.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { DatePipe } from '@angular/common';
 import { NewsEditComponent } from './news/news-edit/news-edit.component';
+import { LocationEditComponent } from './location/location-edit/location-edit.component';
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
   declarations: [
@@ -80,9 +81,23 @@ import { NewsEditComponent } from './news/news-edit/news-edit.component';
     WorkplaceSaveComponent,
     NewsDetailComponent,
     NewsEditComponent,
+    LocationEditComponent,
   ],
 
-  imports: [BrowserModule, HttpClientModule, FormsModule, AppRoutingModule, ScrollingModule, DateRangePickerModule, CKEditorModule, ChartsModule, GoogleChartsModule],
+  imports: [
+    BrowserModule, 
+    HttpClientModule, 
+    FormsModule, 
+    AppRoutingModule, 
+    ScrollingModule, 
+    DateRangePickerModule, 
+    CKEditorModule, 
+    ChartsModule, 
+    GoogleChartsModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyCdlgyq8ejq83BTKNpz2q2m1PrLp3D20JY',
+      libraries: ['places']
+    })],
   entryComponents: [SurveyCompareComponent],
 
   providers: [DatePipe],

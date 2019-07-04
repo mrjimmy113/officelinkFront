@@ -17,6 +17,7 @@ import { CommonModule } from "@angular/common";
 import { NotFoundComponent } from './others/not-found/not-found.component';
 import { LocationComponent } from "./location/location-main/location.component";
 import { LocationCreateComponent } from "./location/location-create/location-create.component";
+import { LocationEditComponent } from './location/location-edit/location-edit.component';
 import { TeamComponent } from './team/team.component';
 import { TeamSaveComponent } from './team-save/team-save.component';
 import { NewsMainComponent } from "./news/news-main/news-main.component";
@@ -45,6 +46,7 @@ const routes: Routes = [
   { path: "team/save", component: TeamSaveComponent },
   { path: "location", component: LocationComponent },
   { path: "location/create", component: LocationCreateComponent },
+  { path: "location/:id/edit", component: LocationEditComponent },
   { path: "news", component: NewsMainComponent },
   { path: "news/:id/edit", component: NewsEditComponent },
   { path: "news/create", component: NewsCreateComponent },

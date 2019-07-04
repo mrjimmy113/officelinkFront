@@ -1,9 +1,11 @@
 export class Location {
     id: Number;
-    county: String;
+    name: String;
     address: String;
-    city: String;
     dateCreated: Date;
     dateModified: Date;
+    dateDeleted: Date;
     isDeleted: false;
+    latitude: number;
+    longitude: number;
 }

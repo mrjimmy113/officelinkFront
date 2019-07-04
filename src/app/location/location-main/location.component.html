@@ -1,6 +1,6 @@
 <h2>Location</h2>
 
-<button class="btn btn-success" (click)="create()">Create Location</button>
+<button class="btn btn-success" [routerLink]="['create']">Create Location</button>
 <div class="d-flex justify-content-end">
   <div class="form-inline">
     <div class="input-group mb-3">
@@ -20,14 +20,14 @@
     <div class="row">
       <div class="row col-sm-10">
 
+        <div class="col-sm-4 d-flex align-items-center clickable" (click)="sort('name')">
+          Name <i class="fas fa-sort icon d-flex align-items-center"></i>
+        </div>
         <div class="col-sm-5 d-flex align-items-center clickable" (click)="sort('address')">
-          Address <i class="fas fa-sort icon"></i>
+          Address <i class="fas fa-sort icon d-flex align-items-center"></i>
         </div>
-        <div class="col-sm-2 d-flex align-items-center clickable" (click)="sort('county')">
-          County <i class="fas fa-sort icon"></i>
-        </div>
-        <div class="col-sm-2 d-flex align-items-center clickable" (click)="sort('city')">
-          City <i class="fas fa-sort icon"></i>
+        <div class="col-sm-3 d-flex align-items-center clickable" (click)="sort('dateCreated')">
+          Date Created <i class="fas fa-sort icon d-flex align-items-center"></i>
         </div>
       </div>
 
@@ -43,14 +43,14 @@
       <div class="row">
         <div class="row col-sm-10">
 
+          <div class="col-sm-4 d-flex align-items-center">
+            {{item.name}}
+          </div>
           <div class="col-sm-5 d-flex align-items-center">
             {{item.address}}
           </div>
-          <div class="col-sm-2 d-flex align-items-center">
-            {{item.county}}
-          </div>
-          <div class="col-sm-2 d-flex align-items-center">
-            {{item.city}}
+          <div class="col-sm-3 d-flex align-items-center">
+            {{datePipe.transform(this.item.dateCreated, 'yyyy-MM-dd')}}
           </div>
         </div>
 
@@ -58,7 +58,7 @@
           <div class="w3-dropdown-hover">
             <i class="fas fa-pen "></i>
             <div class="w3-dropdown-content w3-bar-block">
-              <button href="#" class="w3-bar-item btn btn-info" (click)="edit(item)">Edit</button>
+              <button href="#" class="w3-bar-item btn btn-info" [routerLink]="[item.id, 'edit']">Edit</button>
               <button href="#" class="w3-bar-item btn btn-danger" (click)="delete(item.id)">Delete</button>
             </div>
           </div>
