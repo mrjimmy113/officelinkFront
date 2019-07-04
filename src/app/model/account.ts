@@ -1,3 +1,4 @@
+import {Role} from './role'
 export class Account {
     id : Number;
     password : String;
@@ -6,11 +7,9 @@ export class Account {
     lastname : String;
     address : String;
     isDeleted  = false;
-    role : String ;
+    role_id : Number ;
     workspacename : String;
 
-
-    
-    
+    role : Role;
     
 }
