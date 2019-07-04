@@ -28,7 +28,7 @@ export class JoinComponent implements OnInit {
   }
 
   register(){
-    this.account.role = "employee";
+    this.account.role_id = 2;
     if(this.account.firstname == null || this.account.lastname == null || this.account.email == null || this.account.password == null
       || this.account.address == null ){
           alert("Input not empty. Try again")
