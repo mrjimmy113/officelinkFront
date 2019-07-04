@@ -1,0 +1,23 @@
+<div class="">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Delete</h5>
+        <button type="button" class="close" (click)="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #teamForm="ngForm">
+          <div class="form-group">
+            <label>Are your want remove?</label> 
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)=delete()   >Delete</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)=closeModal() >Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

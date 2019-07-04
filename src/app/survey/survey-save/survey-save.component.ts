@@ -1,6 +1,13 @@
+import { TypeEnum } from './../../model/typeEnum';
+import { DynamicLoadService } from './../../service/dynamic-load.service';
+import { SurveyService } from './../../service/survey.service';
+import { Survey } from './../../model/survey';
+import { ChooseQuestionComponent } from './../choose-question/choose-question.component';
+import { ModalService } from './../../service/modal.service';
 import { QuestionComponent } from './../question/question.component';
 import { Question } from './../../model/question';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
+import { listenToElementOutputs } from '@angular/core/src/view/element';
 
 @Component({
   selector: 'app-survey-save',
@@ -8,13 +15,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./survey-save.component.css']
 })
 export class SurveySaveComponent implements OnInit {
-  questionList: Question[];
+  @Input() inputs;
+  @Output() outputs;
+  survey: Survey;
   qComponentList: QuestionComponent[];
-  constructor() { }
+  isEdit= false;
+  constructor(private modalSer:ModalService, private surveySer:SurveyService, private dyLoadSer:DynamicLoadService) { }
 
   ngOnInit() {
-    this.questionList = new Array<Question>();
+    this.survey = this.inputs;
     this.qComponentList = new Array<QuestionComponent>();
+    if(this.survey.id != undefined) this.isEdit = true;
   }
 
   updateEditMode() {
@@ -27,15 +38,36 @@ export class SurveySaveComponent implements OnInit {
   }
 
   addQuestion() {
-    this.questionList.push(new Question());
+    this.survey.questions.push(new Question());
   }
 
   copyQ(index) {
-    let tmpQ = this.questionList[index];
-    this.questionList.push(tmpQ);
+    let tmpQ = this.survey.questions[index];
+    this.survey.questions.push(tmpQ);
   }
   deleteQ(index) {
-    this.questionList.splice(index,1);
+    this.survey.questions.splice(index,1);
     this.qComponentList.splice(index,1);
   }
+  openChooseQuestion() {
+    this.modalSer.init(ChooseQuestionComponent,this.survey.questions,[]);
+  }
+  save() {
+    if(!this.isEdit) {
+      this.surveySer.create(this.survey).subscribe(result => {
+        alert("Successfully Created");
+        this.close();
+      })
+    }else {
+      this.surveySer.update(this.survey).subscribe(result => {
+        alert("Successfully Updated");
+        this.close();
+      })
+    }
+  }
+  close() {
+    this.outputs();
+  }
+
+
 }

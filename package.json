@@ -25,6 +25,7 @@
     "@ckeditor/ckeditor5-build-classic": "^12.2.0",
     "@syncfusion/ej2-angular-calendars": "^17.1.51",
     "angular-google-charts": "^0.1.5",
+    "angular-tag-cloud-module": "^3.8.1",
     "chart.js": "^2.8.0",
     "core-js": "^2.5.4",
     "ng2-charts": "^2.2.3",

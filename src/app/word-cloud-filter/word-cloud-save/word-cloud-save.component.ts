@@ -1,9 +1,10 @@
-import { async } from '@angular/core/testing';
+import { async } from "@angular/core/testing";
 import { ModalService } from "../../service/modal.service";
 import { WordCloudService } from "../../service/word-cloud.service";
 import { WordCloudFilter } from "../../model/word-cloud-filter";
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, Output } from "@angular/core";
 import { Word } from "../../model/word";
+import { NgForm } from "@angular/forms";
 
 @Component({
   selector: "app-word-cloud-save",
@@ -12,11 +13,16 @@ import { Word } from "../../model/word";
 })
 export class WordCloudSaveComponent implements OnInit {
   @Input() inputs;
+  @Output() outputs;
   filter: WordCloudFilter;
   words: Array<Word>;
   currentWord: Word;
   requestStatus: Number;
   isEdit = false;
+  lang = ["English", "Vietnamese"];
+  isWordDuplicate = false;
+  isExisted = false;
+
   constructor(private ser: WordCloudService, private modalSer: ModalService) {}
 
   // Cái hàm này mỗi lần load component lên thì nó chạy
@@ -35,36 +41,37 @@ export class WordCloudSaveComponent implements OnInit {
       this.isEdit = true;
     }
     this.currentWord = new Word();
+    this.currentWord.isExclude = false;
     this.requestStatus = 0;
   }
 
   closeModal() {
+    this.outputs();
     this.modalSer.destroy();
   }
-  addWordToList() {
-    let isDuplicate = false;
-    this.words.every((element) => {
-      if(element.name == this.currentWord.name.toLowerCase()) {
-        isDuplicate =true;
-        return false;
-      }else return true;
-    });
-    if (!isDuplicate) {
-      this.currentWord.name = this.currentWord.name.toLowerCase();
-      this.words.push(this.currentWord);
-    }
+  addWordToList(form: NgForm) {
+    this.currentWord.name = this.currentWord.name.toLowerCase();
+    this.words.push(this.currentWord);
     this.currentWord = new Word();
+    this.currentWord.isExclude = false;
+    form.resetForm();
   }
   add() {
     this.ser.create(this.filter).subscribe(result => {
       this.requestStatus = result;
-      if (this.requestStatus == 201) this.closeModal();
+      if (this.requestStatus == 201) {
+        alert("Successfully Create");
+        this.closeModal();
+      }
     });
   }
   update() {
     this.ser.update(this.filter).subscribe(result => {
       this.requestStatus = result;
-      if (this.requestStatus == 200) this.closeModal();
+      if (this.requestStatus == 200) {
+        alert("Successfully Update");
+        this.closeModal();
+      }
     });
   }
   save() {
@@ -74,6 +81,50 @@ export class WordCloudSaveComponent implements OnInit {
     else this.add();
   }
   removeWord(index) {
-    this.words.splice(index, 1);
+    if (confirm("Do you want to delete this")) {
+      this.words.splice(index, 1);
+    }
+  }
+  closeDialog() {
+    if (confirm("Do you want to exit this dialog ?")) {
+      this.closeModal();
+    }
+  }
+
+  checkDuplicateWord() {
+    let oldWord = this.currentWord.name;
+    setTimeout(() => {
+      if (oldWord == this.currentWord.name) {
+        this.isWordDuplicate = false;
+        this.words.every(element => {
+          if (element.name == this.currentWord.name.toLowerCase()) {
+            this.isWordDuplicate = true;
+            return false;
+          } else return true;
+        });
+      }
+    }, 300);
+  }
+  includeExclude() {
+    this.currentWord.isExclude = !this.currentWord.isExclude;
+  }
+  checkIsExisted() {
+    if (
+      this.filter.name != undefined &&
+      this.filter.name.trim() != "" &&
+      this.filter.language != undefined &&
+      this.filter.language.trim() != ""
+    ) {
+      let oldName = this.filter.name;
+      setTimeout(() => {
+        if (oldName == this.filter.name) {
+          this.ser
+            .isExisted(this.filter.name, this.filter.language)
+            .subscribe(result => {
+              this.isExisted = result;
+            });
+        }
+      }, 300);
+    }
   }
 }

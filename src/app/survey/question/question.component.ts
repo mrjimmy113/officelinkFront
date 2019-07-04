@@ -1,6 +1,9 @@
+import { TypeEnum } from './../../model/typeEnum';
+import { QuestionService } from './../../service/question.service';
 import { AnswerOption } from './../../model/answerOption';
 import { Question } from './../../model/question';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { TypeQuestion } from 'src/app/model/typeQuestion';
 
 @Component({
   selector: 'app-question',
@@ -8,27 +11,41 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./question.component.css']
 })
 export class QuestionComponent implements OnInit {
-  @Input() question:Question;
+  @Input() quest:Question;
   @Input() index:Number;
   @Output() updateEditMode = new EventEmitter();
   @Output() giveClassToParent = new EventEmitter();
   @Output() copyQ = new EventEmitter();
   @Output() deleteQ = new EventEmitter();
   isEditMode = false;
-  constructor() { }
+  isNew = true;
+  typeList: TypeQuestion[];
+  typeEnum = TypeEnum;
+  constructor(private questSer:QuestionService) { }
 
   ngOnInit() {
-    this.question.options = new Array<AnswerOption>();
-    console.log(this.updateEditMode);
+
+    if(this.quest.id != undefined) this.isNew = false;
+    let sub = this.questSer.getAllType().subscribe(result => {
+      this.typeList = result;
+      if(this.isNew && this.typeList.length > 0) {
+        this.quest.type = this.typeList[0];
+      }
+      sub.unsubscribe();
+    })
+    if(this.isNew) {
+      this.quest.options = new Array<AnswerOption>();
+    }
     this.classToParent();
+
   }
 
   addOption() {
-    this.question.options.push(new AnswerOption());
+    this.quest.options.push(new AnswerOption());
   }
 
   deleteOption(index) {
-    this.question.options.splice(index,1);
+    this.quest.options.splice(index,1);
   }
   enableEditMode() {
     this.updateEditMode.emit();
@@ -43,11 +60,11 @@ export class QuestionComponent implements OnInit {
   }
 
   copyQuestion() {
+    console.log(this.quest);
     this.copyQ.emit(this.index);
   }
 
   deleteQuestion() {
     this.deleteQ.emit(this.index);
   }
-
 }

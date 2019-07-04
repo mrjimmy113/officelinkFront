@@ -1,62 +1,59 @@
 <div class="">
-  <div class="modal-lg modal-dialog" role="document">
+  <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Send out Survey</h5>
-        <button type="button" class="close" (click)="closeModal()">
+        <button type="button" class="close" (click)="close()">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
         <!--Choose-->
         <div class="row form-group">
-          <div class="col-sm-4">
-            <select class="form-control">
-              <option>Choose Location</option>
-            </select>
+          <div class="col-sm-10">
+            <div class="form-group">
+              <label >Location</label>
+              <select class="form-control" [(ngModel)]="currentLocation">
+                <option [ngValue]="undefined">All Location</option>
+                <option *ngFor="let location of locationList" [ngValue]="location">
+                  {{location.address + ' ' +location.city}}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Department</label>
+              <select class="form-control" [(ngModel)]="currentDepartment" (change)="loadTeam($event)">
+                <option [ngValue]="undefined">All Department</option>
+                <option *ngFor="let department of departmentList" [ngValue]="department">{{department.name}}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Team</label>
+              <select class="form-control" [disabled]="teamList.length == 0" [(ngModel)]="currentTeam">
+                <option *ngIf="teamList.length == 0" [ngValue]="undefined">Please choose department first</option>
+                <option [ngValue]="undefined" *ngIf="teamList.length != 0">All Team</option>
+                <option *ngFor="let team of teamList" [ngValue]="team">{{team.name}}</option>
+              </select>
+            </div>
+
           </div>
-          <div class="col-sm-4">
-            <select class="form-control">
-              <option>Choose Department</option>
-            </select>
+          <div class="col-sm-2 d-flex justify-content-center" style="margin: auto">
+            <button class="btn btn-primary" (click)="addInfor()"><i class="fas fa-plus"></i></button>
           </div>
-          <div class="col-sm-4">
-            <select class="form-control">
-              <option>Choose Team</option>
-            </select>
-          </div>
+
         </div>
-        <div class="row">
-          <div class="col-sm-6">
-            <div class="form-group">
-              <label>Searched Employees</label>
-              <select multiple class="form-control" size="10">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-              </select>
-            </div>
-            <button class="btn btn-primary">Choose all</button>
-          </div>
-          <div class="col-sm-6">
-            <div class="form-group">
-              <label>Choosen Employees</label>
-              <select multiple class="form-control" size="10">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-              </select>
-            </div>
-            <button class="btn btn-danger">Unchoose all</button>
-          </div>
+
+        <label>Choosen Target</label>
+        <div class="invitation-box">
+
+          <span class="badge badge-primary" *ngFor="let infor of displayInforList; let i = index">
+            {{infor}} <button class="btn-primary borderless"><i class="fas fa-times"
+                (click)="removeInfor(i)"></i></button>
+          </span>
+
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-success">Send</button>
+        <button class="btn btn-success" (click)="send()">Send</button>
       </div>
     </div>
   </div>

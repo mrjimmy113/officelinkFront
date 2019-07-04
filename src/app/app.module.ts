@@ -1,11 +1,10 @@
-import { TeamSaveComponent } from './team-save/team-save.component';
-import { TeamComponent } from './team/team.component';
 import { LocationCreateComponent } from './location/location-create/location-create.component';
 import { LocationComponent } from './location/location-main/location.component';
+import { DateRangePickerModule } from '@syncfusion/ej2-angular-calendars';
+import { TokenInterceptor } from './interceptor/tokenAuth.interceptor';
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
-import { HttpClientModule } from "@angular/common/http";
-import { DateRangePickerModule } from '@syncfusion/ej2-angular-calendars';
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { AppComponent } from "./app.component";
 import { HeaderComponent } from "./others/header/header.component";
 import { WordCloudListComponent } from "./word-cloud-filter/word-cloud-list/word-cloud-list.component";
@@ -22,7 +21,6 @@ import { SurveyTakeComponent } from './survey/survey-take/survey-take.component'
 import { HomeComponent } from './others/home/home.component';
 import { RegisterComponent } from './others/register/register.component';
 import { SendOutSurveyComponent } from './survey/send-out-survey/send-out-survey.component';
-import { ConfirmRegisterComponent } from './others/confirm-register/confirm-register.component';
 import { ConfirmInvitationComponent } from './confirm-invitation/confirm-invitation.component';
 import { InvitationComponent } from './account/invitation/invitation.component';
 import { ChartsModule } from 'ng2-charts';
@@ -32,6 +30,12 @@ import { SurveyCompareComponent } from './survey/survey-compare/survey-compare.c
 import { NewsCreateComponent } from './news/news-create/news-create.component';
 import { NewsMainComponent } from './news/news-main/news-main.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { QuestionListComponent } from './question/question-list/question-list.component';
+import { QuestionSaveComponent } from './question/question-save/question-save.component';
+import { ChooseQuestionComponent } from './survey/choose-question/choose-question.component';
+import { SurveyListComponent } from './survey/survey-list/survey-list.component';
+import { TeamComponent } from './team/team.component';
+import { TeamSaveComponent } from './team-save/team-save.component';
 import { DepartmentComponent } from './department/department.component';
 import { DepartmentSaveComponent } from './department-save/department-save.component';
 import { WorkplaceComponent } from './workplace/workplace.component';
@@ -42,6 +46,13 @@ import { DatePipe } from '@angular/common';
 import { NewsEditComponent } from './news/news-edit/news-edit.component';
 import { LocationEditComponent } from './location/location-edit/location-edit.component';
 import { AgmCoreModule } from '@agm/core';
+import { TagCloudModule } from 'angular-tag-cloud-module';
+import { AccountListComponent } from './account/account-list/account-list.component';
+import { AccountSaveComponent } from './account/account-save/account-save.component';
+import { AccountDeleteComponent } from './account/account-delete/account-delete.component';
+import { JoinComponent } from './others/join/join.component'
+import { Login2Component } from './others/login2/login2.component'
+
 
 @NgModule({
   declarations: [
@@ -59,9 +70,7 @@ import { AgmCoreModule } from '@agm/core';
     HomeComponent,
     RegisterComponent,
     SendOutSurveyComponent,
-    ConfirmRegisterComponent,
     ConfirmInvitationComponent,
-
     SurveyReportComponent,
     SurveyCompareComponent,
     InvitationComponent,
@@ -74,7 +83,6 @@ import { AgmCoreModule } from '@agm/core';
     InvitationComponent,
     TeamComponent,
     TeamSaveComponent,
-
     DepartmentComponent,
     DepartmentSaveComponent,
     WorkplaceComponent,
@@ -82,26 +90,41 @@ import { AgmCoreModule } from '@agm/core';
     NewsDetailComponent,
     NewsEditComponent,
     LocationEditComponent,
+    AccountListComponent,
+    AccountSaveComponent,
+    AccountDeleteComponent,
+    JoinComponent,
+    Login2Component,
+    QuestionListComponent,
+    QuestionSaveComponent,
+    ChooseQuestionComponent,
+    SurveyListComponent,
   ],
 
   imports: [
-    BrowserModule, 
-    HttpClientModule, 
-    FormsModule, 
-    AppRoutingModule, 
-    ScrollingModule, 
-    DateRangePickerModule, 
-    CKEditorModule, 
-    ChartsModule, 
+    BrowserModule,
+    HttpClientModule,
+    FormsModule,
+    AppRoutingModule,
+    ScrollingModule,
+    DateRangePickerModule,
+    CKEditorModule,
+    ChartsModule,
     GoogleChartsModule,
+    TagCloudModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyCdlgyq8ejq83BTKNpz2q2m1PrLp3D20JY',
       libraries: ['places']
     })],
-  entryComponents: [SurveyCompareComponent],
+  entryComponents: [SurveyCompareComponent, QuestionSaveComponent, SendOutSurveyComponent],
 
-  providers: [DatePipe],
-
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptor,
+    multi: true,
+  },
+  [DatePipe],
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
