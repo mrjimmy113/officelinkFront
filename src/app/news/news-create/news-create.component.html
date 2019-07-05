@@ -1,0 +1,88 @@
+<div class="">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" style="font-weight: bold">Create News</h5>
+    </div>
+    <div class="modal-body">
+      <form #newsForm="ngForm">
+        <div class="form-group">
+          <label style="font-weight: bold">Title</label>
+          <textarea class="form-control" placeholder="Fill in title" name="title" [(ngModel)]="news.title"
+            #title='ngModel' required
+            [ngClass]="{'is-invalid': (title.invalid && (title.dirty || title.touched))}"></textarea>
+          <div *ngIf="title.invalid && (title.dirty || title.touched)" class="text-danger">
+            <div *ngIf="title.errors.required">
+              Please fill in title
+            </div>
+          </div>
+
+        </div>
+        <div class="form-group">
+          <label style="font-weight: bold">Short Description</label>
+          <textarea class="form-control" placeholder="Fill in short description" name="shortDescription"
+            [(ngModel)]="news.shortDescription" #shortDescription='ngModel' required
+            [ngClass]="{'is-invalid': (shortDescription.invalid && (shortDescription.dirty || shortDescription.touched))}"></textarea>
+          <div *ngIf="shortDescription.invalid && (shortDescription.dirty || shortDescription.touched)"
+            class="text-danger">
+            <div *ngIf="shortDescription.errors.required">
+              Please fill in short description
+            </div>
+          </div>
+
+        </div>
+        <div class="form-group">
+          <label style="font-weight: bold">Content</label>
+          <ckeditor [editor]="Editor" name="content" [(ngModel)]="news.content" #content='ngModel' required
+            [ngClass]="{'is-invalid': (content.invalid && (content.dirty || content.touched))}"></ckeditor>
+          <div *ngIf="content.invalid && (content.dirty || content.touched)" class="text-danger">
+            <div *ngIf="content.errors.required">
+              Please fill in content
+            </div>
+          </div>
+
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-sm-4">
+              <label style="font-weight: bold">Image</label> <br>
+              <input type="file" (change)="onFileChange($event)" name="image" [(ngModel)]="news.image" #image='ngModel'
+                required pattern="([^\s]+(\.)(jpg|png|gif|bmp)$)">
+
+              <div *ngIf="image.invalid && (image.dirty || image.touched)" class="text-danger">
+                <div *ngIf="image.errors.required">
+                  Image is required
+                </div>
+                <div *ngIf="image.errors.pattern">
+                  This file is not an image
+                </div>
+              </div>
+              <div *ngIf="isOverSize" class="text-danger">
+                This file is too large
+              </div>
+
+            </div>
+            <div class="col-sm-7">
+              <label style="font-weight: bold">Preview</label> <br>
+              <img [src]="previewImage || 'http://placehold.it/180'" width="400px" height="200px" />
+            </div>
+
+
+          </div>
+        </div>
+
+
+      </form>
+    </div>
+    <div class="modal-footer">
+      <div class="col-sm-6 d-flex justify-content-end" style="padding: 0px">
+        <button type="button" class="btn btn-success" (click)="create(newsForm)"
+          [disabled]="!newsForm.form.valid || (requestStatus == 1) || isOverSize">
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
+            *ngIf="requestStatus == 1"></span>
+          <span *ngIf="requestStatus != 1">Create</span>
+        </button>
+        <button type="button" class="btn btn-danger" [routerLink]="['../']"><span>Cancel</span></button>
+      </div>
+    </div>
+  </div>
+</div>

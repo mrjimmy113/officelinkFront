@@ -1,0 +1,90 @@
+<h2>News</h2>
+
+<button class="btn btn-success" [routerLink]="['create']">Create News</button>
+<div class="d-flex justify-content-end">
+  <div class="form-inline">
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchTerm" (input)="filter()">
+      <div class="input-group-append">
+        <button class="btn btn-info">
+          <i class="fas fa-search"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="list-group">
+  <!--Heading-->
+  <div class="w3-indigo list-group-item">
+    <div class="row">
+      <div class="row col-sm-10">
+
+        <div class="col-sm-5 d-flex align-items-center clickable">
+          Image <i class="fas fa-sort icon"></i>
+        </div>
+        <div class="col-sm-4 d-flex align-items-center clickable" (click)="sort('title')">
+          Title <i class="fas fa-sort icon"></i>
+        </div>
+        <div class="col-sm-2 d-flex align-items-center clickable" (click)="sort('dateCreated')">
+          Date Created <i class="fas fa-sort icon"></i>
+        </div>
+      </div>
+
+      <div class="col-sm-2 d-flex align-items-center justify-content-center">
+        Action
+      </div>
+    </div>
+  </div>
+  <!--Row-->
+  <div class="card" *ngFor="let item of itemList; let i = index">
+    <div class="list-group-item w3-hover-blue " [ngClass]="{'w3-light-grey': ((i % 2) == 1)}"
+      [ngClass]="{'w3-white': ((i % 2) == 0)}" style="border:none">
+      <div class="row">
+        <div class="row col-sm-10">
+
+          <div class="col-sm-3 d-flex align-items-center">
+            <img [src]="doms('data:image/jpeg;charset=utf-8;base64,' + item.byte_image)" width="200px" height="100px" />
+          </div>
+          <div class="col-sm-6 d-flex align-items-center">
+            <p>{{item.title}}</p>
+          </div>
+          <div class="col-sm-3 d-flex align-items-center">
+            <p>{{datePipe.transform(this.item.dateCreated, 'yyyy-MM-dd')}}</p>
+          </div>
+
+        </div>
+
+        <div class="col-sm-2 d-flex align-items-center justify-content-center">
+          <div class="w3-dropdown-hover">
+            <div class="w3-dropdown-content w3-bar-block">
+              <div class="col-sm-2 d-flex align-items-center justify-content-center">
+                <button class="btn btn-primary" [routerLink]="[item.id, 'edit']"><i class="fas fa-pen-alt"></i></button>
+                <span> | </span>
+                <button class="btn btn-danger" (click)="delete(item.id)"><i class="fas fa-trash-alt"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div *ngIf="itemList.length == 0" class="d-flex justify-content-center">
+    <h4>No record found</h4>
+  </div>
+</div>
+<div class="d-flex justify-content-end">
+  <ul class="pagination ">
+    <li class="page-item " [ngClass]="{'disabled': currentPage == 1}">
+      <button class="page-link" (click)="loadPage(currentPage - 1)" style="font-size: 24px">&laquo;</button>
+    </li>
+    <li class="page-item d-flex align-content-center" *ngFor="let dummy of ' '.repeat(maxPage).split(''), let x = index"
+      [ngClass]="{'active': currentPage == (x+1), 'disabled': currentPage == (x+1)}">
+      <button class="page-link" (click)="loadPage(x + 1)" style="font-size: 16px">{{x + 1}}</button>
+    </li>
+    <li class="page-item" [ngClass]="{'disabled': maxPage == currentPage}">
+      <button class="page-link" (click)="loadPage(currentPage + 1)" style="font-size: 24px">&raquo;</button>
+    </li>
+  </ul>
+</div>
