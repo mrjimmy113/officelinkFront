@@ -1,0 +1,79 @@
+<div class="">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Configuration</h5>
+        <button type="button" class="close" (click)="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #configForm="ngForm">
+            <div class="form-group">
+                <label>Survey(*)</label>
+                <select class="form-control" name="survey" #survey="ngModel" [(ngModel)]="selectedSurveyId"
+                [ngClass]="{'is-invalid' : (survey.invalid && (survey.dirty || survey.touched))}" required>
+                <option [value]="0">Choose a survey</option>
+                <option *ngFor="let s of surveys" [value]="s.id">{{s.name}}</option>
+              </select>
+              </div>
+          <div class="form-group">
+            <label>Schedule Time(*)</label>
+            <table class="table table-hover table-sm table-bordered text-center">
+              <thead>
+                <tr>
+                  <th>Hour(*)</th>
+                  <th>Minutes(*)</th>
+                  <th>Day of Week(*)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <select class="form-control" name="time-hour" #timeHour="ngModel" [(ngModel)]="hour"
+                      [ngClass]="{'is-invalid' : (timeHour.invalid && (timeHour.dirty || timeHour.touched))}" required>
+                      <option *ngFor="let h of arrayOfHours" [value]="h">{{h}}</option>
+                    </select>
+                  </td>
+                  <td>
+                    <select class="form-control" name="time-minute" #timeMinute="ngModel" [(ngModel)]="minute"
+                      [ngClass]="{'is-invalid' : (timeMinute.invalid && (timeMinute.dirty || timeMinute.touched))}"
+                      required>
+                      <option *ngFor="let m of arrayOfMinutes" [value]="m">{{m}}</option>
+                    </select>
+                  </td>
+                  <td>
+                    <div class="checkbox" *ngFor="let wDay of arrayOfWeekDays">
+                      <label>
+                        <input type="checkbox" [attr.checked]="getIndex(wDay) >= 0 ? 'checked': null"
+                          (click)="changeWeekDays(wDay)">
+                        {{wDay}}
+                      </label>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </form>
+
+
+      </div>
+      <div class="modal-footer">
+        <div class="col-sm-6">
+          <h4><span class="badge badge-pill badge-success" *ngIf="requestStatus == 200">Success</span></h4>
+          <h4><span class="badge badge-pill badge-danger" *ngIf="requestStatus == 400">Fail</span></h4>
+        </div>
+        <div class="col-sm-6 d-flex justify-content-end" style="padding: 0px">
+          <button type="button" class="btn btn-success" (click)="save()" 
+          [disabled]="(requestStatus==1) || configForm.invalid">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
+              *ngIf="requestStatus == 1"></span>
+            <span *ngIf="isEdit == false && requestStatus != 1">Create Configuration</span>
+            <span *ngIf="isEdit == true && requestStatus != 1">Save Configuration</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

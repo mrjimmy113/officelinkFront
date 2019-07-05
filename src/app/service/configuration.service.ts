@@ -2,27 +2,23 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Department } from '../model/department';
 import { PageSearch } from '../model/page-search';
+import { Configuration } from '../model/configuration';
 
 @Injectable({
   providedIn: 'root'
 })
-export class DepartmentService {
-  private api = environment.apiEndPoint + "/department";
+export class ConfigurationService {
+  private api = environment.apiEndPoint + "/configuration";
 
   constructor(private http:HttpClient) { }
 
-  getAll():Observable<Array<Department>> {
-    return this.http.get<Array<Department>>(this.api + `/getAll`);
+  getConfig(configId):Observable<Configuration> {
+    return this.http.get<Configuration>(this.api + `/getConfig` + `?id=${configId}`);
   }
 
-  search(term):Observable<PageSearch<Department>> {
-    return this.http.get<PageSearch<Department>>(this.api + `?term=${term}`);
-  }
-
-  getPage(term, page):Observable<PageSearch<Department>> {
-    return this.http.get<PageSearch<Department>>(this.api + `/getPage?term=${term}&page=${page}`);
+  searchGetPage(term, page):Observable<PageSearch<Configuration>> {
+    return this.http.get<PageSearch<Configuration>>(this.api + `/searchGetPage` + `?term=${term}&page=${page}`);
   }
 
   create(obj):Observable<Number> {

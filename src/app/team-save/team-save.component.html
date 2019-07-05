@@ -10,7 +10,7 @@
       <div class="modal-body">
         <form #teamForm="ngForm">
           <div class="form-group">
-            <label>Team Name</label>
+            <label>Team Name(*)</label>
             <input class="form-control" name="name" #name="ngModel" [(ngModel)]="team.name"
               [ngClass]="{'is-invalid' : (name.invalid && (name.dirty || name.touched))}" required
               pattern="^[a-zA-Z0-9._-\s]*$" minlength="2" maxlength="20" />
@@ -27,7 +27,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label>Department Name</label>
+            <label>Department(*)</label>
             <select class="form-control" name="department" #department="ngModel" [(ngModel)]="choosenDepId"
               [ngClass]="{'is-invalid' : (department.invalid && (department.dirty || department.touched))}" required>
               <option [value]="0">--- Choose a department ---</option>
@@ -47,8 +47,8 @@
             [disabled]="(requestStatus==1) || teamForm.invalid || (choosenDepId==0)">
             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
               *ngIf="requestStatus == 1"></span>
-            <span *ngIf="isEdit == false && requestStatus != 1">Create</span>
-            <span *ngIf="isEdit == true && requestStatus != 1">Save</span>
+            <span *ngIf="isEdit == false && requestStatus != 1">Create Team</span>
+            <span *ngIf="isEdit == true && requestStatus != 1">Save Team</span>
           </button>
         </div>
       </div>
