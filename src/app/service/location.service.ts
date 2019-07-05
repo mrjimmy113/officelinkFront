@@ -14,6 +14,10 @@ export class LocationService {
 
   constructor(private http:HttpClient) { }
 
+  getAllLocation():Observable<Array<Location>>{
+    return this.http.get<Array<Location>>(this.api + `/getAll`);
+  }
+
   searchById(id):Observable<Location>{
     return this.http.get<Location>(this.api + `/getId?id=${id}`);
   }
