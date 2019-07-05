@@ -17,12 +17,8 @@ export class DepartmentService {
     return this.http.get<Array<Department>>(this.api + `/getAll`);
   }
 
-  search(term):Observable<PageSearch<Department>> {
-    return this.http.get<PageSearch<Department>>(this.api + `?term=${term}`);
-  }
-
-  getPage(term, page):Observable<PageSearch<Department>> {
-    return this.http.get<PageSearch<Department>>(this.api + `/getPage?term=${term}&page=${page}`);
+  searchGetPage(term, page):Observable<PageSearch<Department>> {
+    return this.http.get<PageSearch<Department>>(this.api + `?term=${term}&page=${page}`);
   }
 
   create(obj):Observable<Number> {
