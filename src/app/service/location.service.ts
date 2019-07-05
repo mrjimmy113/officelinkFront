@@ -15,14 +15,14 @@ export class LocationService {
   constructor(private http:HttpClient) { }
 
   getAllLocation():Observable<Array<Location>>{
-    return this.http.get<Array<Location>>(this.api + `/listAll`);
+    return this.http.get<Array<Location>>(this.api + `/getAll`);
   }
 
-  getLocationByDepartmnetId(depId):Observable<Array<Location>>{
-    return this.http.get<Array<Location>>(this.api + `/list?depId=${depId}`);
+  searchById(id):Observable<Location>{
+    return this.http.get<Location>(this.api + `/getId?id=${id}`);
   }
 
-  search(term):Observable<PageSearch<Location>>{
+  searchByName(term):Observable<PageSearch<Location>>{
     return this.http.get<PageSearch<Location>>(this.api + `?term=${term}`);
   }
 

@@ -1,0 +1,61 @@
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <div class="row">
+
+        <div class="col-lg-9">
+
+            <!-- News -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 border-left-primary">
+                    <label>{{news.dateCreated}}</label> <br />
+                    <label class="m-0 font-weight-bold text-primary"
+                        style="font-size: 30px; color: black; ">{{news.title}}</label>
+                </div>
+                <div class="card-body">
+                    <div class="form-group" style="height: 450px;">
+                        <img [src]="news.byte_image || 'http://placehold.it/180'" style="width: 100%; height: 90%;" />
+                    </div>
+                    <div class="form-group">
+                        <label
+                            style="font-size: 20px; font-weight: bold; color: black;">{{news.shortDescription}}</label>
+                    </div>
+                    <div class="form-group">
+                        <label style="font-size: 20px; color: black;" [innerHTML]="news.content"></label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- List News -->
+        <div class="col-lg-3">
+            <div class="card shadow mb-4 bg-gray-100">
+                <ejs-daterangepicker class="text-gray-900" strictMode='true' [minDays]='minDays' [maxDays]='maxDays'
+                    [endDate]='endDate' [startDate]='startDate' (change)="onChange($event)" #rangeObj>
+                </ejs-daterangepicker>
+            </div>
+
+            <ul class="card shadow mb-4">
+                <cdk-virtual-scroll-viewport style="height: 700px" itemSize="90">
+                    <ng-container *cdkVirtualFor="let item of itemList">
+                        <li>
+                            <div class="card shadow mb-5" style="cursor: pointer;" (click)="onClick(item)">
+                                <div class="card-header py-3">
+                                    <img [src]="doms('data:image/jpeg;charset=utf-8;base64,' + item.byte_image)"
+                                        style="width: 100%; height: 100px;" />
+                                </div>
+                                <div class="card-body" >
+                                    <a style="font-size: 15px; color: black; text-decoration: underline" 
+                                        >{{item.title}}</a>
+                                    <div class="my-2"></div>
+                                </div>
+                            </div>
+                        </li>
+                    </ng-container>
+                </cdk-virtual-scroll-viewport>
+            </ul>
+        </div>
+    </div>
+
+</div>

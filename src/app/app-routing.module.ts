@@ -19,15 +19,19 @@ import { CommonModule } from "@angular/common";
 import { NotFoundComponent } from './others/not-found/not-found.component';
 import { DepartmentComponent } from './department/department.component';
 import { DepartmentSaveComponent } from './department-save/department-save.component';
-import { LocationComponent } from "./location/location.component";
-import { LocationCreateComponent } from "./location-create/location-create.component";
 import { TeamComponent } from './team/team.component';
 import { TeamSaveComponent } from './team-save/team-save.component';
 import { WorkplaceComponent } from './workplace/workplace.component';
 import { WorkplaceSaveComponent } from './workplace-save/workplace-save.component';
 import { ConfigurationSaveComponent } from './configuration-save/configuration-save.component';
 import { ConfigurationComponent } from './configuration/configuration.component';
-
+import { LocationComponent } from "./location/location-main/location.component";
+import { LocationCreateComponent } from "./location/location-create/location-create.component";
+import { LocationEditComponent } from './location/location-edit/location-edit.component';
+import { NewsMainComponent } from "./news/news-main/news-main.component";
+import { NewsCreateComponent } from "./news/news-create/news-create.component";
+import { NewsDetailComponent } from './news/news-detail/news-detail.component';
+import { NewsEditComponent } from './news/news-edit/news-edit.component';
 import { AccountListComponent } from './account/account-list/account-list.component';
 import { AccountSaveComponent } from './account/account-save/account-save.component';
 import { AccountDeleteComponent } from './account/account-delete/account-delete.component';
@@ -51,7 +55,13 @@ const routes: Routes = [
   { path: "admin/account/create" , component:AccountSaveComponent},
   { path: "admin/account/delete", component:AccountDeleteComponent},
   { path: "login-form/:emailToken", component: LoginComponent, },
-
+  { path: "location", component: LocationComponent },
+  { path: "location/create", component: LocationCreateComponent },
+  { path: "location/:id/edit", component: LocationEditComponent },
+  { path: "news", component: NewsMainComponent },
+  { path: "news/:id/edit", component: NewsEditComponent },
+  { path: "news/create", component: NewsCreateComponent },
+  { path: "news/:id/detail", component: NewsDetailComponent },
 
   { path: "404",  component: NotFoundComponent },
   { path: "forget", component: ForgetPasswordComponent},
@@ -63,8 +73,6 @@ const routes: Routes = [
   { path: "team/save", component:TeamSaveComponent},
   { path: "department", component:DepartmentComponent},
   { path: "department/save", component:DepartmentSaveComponent},
-  { path: "location", component: LocationComponent },
-  { path: "location/create", component: LocationCreateComponent },
   { path: "workplace", component:WorkplaceComponent},
   { path: "workplace/save", component:WorkplaceSaveComponent},
   { path:"report", component:SurveyReportComponent},

@@ -32,8 +32,19 @@ import { TeamComponent } from './team/team.component';
 import { TeamSaveComponent } from './team-save/team-save.component';
 import { DepartmentComponent } from './department/department.component';
 import { DepartmentSaveComponent } from './department-save/department-save.component';
-import { LocationComponent } from './location/location.component';
-import { LocationCreateComponent } from './location-create/location-create.component';
+import { LocationCreateComponent } from './location/location-create/location-create.component';
+import { LocationComponent } from './location/location-main/location.component';
+import { LocationEditComponent } from './location/location-edit/location-edit.component';
+import { DateRangePickerModule } from '@syncfusion/ej2-angular-calendars';
+import { NewsCreateComponent } from './news/news-create/news-create.component';
+import { NewsMainComponent } from './news/news-main/news-main.component';
+import { NewsDetailComponent } from './news/news-detail/news-detail.component';
+import { NewsEditComponent } from './news/news-edit/news-edit.component';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { AgmCoreModule } from '@agm/core';
+import { DatePipe } from '@angular/common';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+
 import { WorkplaceComponent } from './workplace/workplace.component';
 import { WorkplaceSaveComponent } from './workplace-save/workplace-save.component';
 import { TagCloudModule } from 'angular-tag-cloud-module';
@@ -42,7 +53,7 @@ import { AccountListComponent } from './account/account-list/account-list.compon
 import { AccountSaveComponent } from './account/account-save/account-save.component';
 import { AccountDeleteComponent } from './account/account-delete/account-delete.component';
 import { JoinComponent } from './others/join/join.component'
-import {Login2Component} from './others/login2/login2.component'
+import { Login2Component } from './others/login2/login2.component'
 
 import { ConfigurationComponent } from './configuration/configuration.component';
 import { ConfigurationSaveComponent } from './configuration-save/configuration-save.component';
@@ -73,6 +84,11 @@ import { ConfigurationSaveComponent } from './configuration-save/configuration-s
     DepartmentSaveComponent,
     LocationComponent,
     LocationCreateComponent,
+    LocationEditComponent,
+    NewsCreateComponent,
+    NewsMainComponent,
+    NewsDetailComponent,
+    NewsEditComponent,
     WorkplaceComponent,
     WorkplaceSaveComponent,
     AccountListComponent,
@@ -87,13 +103,30 @@ import { ConfigurationSaveComponent } from './configuration-save/configuration-s
     ConfigurationComponent,
     ConfigurationSaveComponent,
   ],
-  imports: [BrowserModule, HttpClientModule, FormsModule, AppRoutingModule, ChartsModule, GoogleChartsModule, TagCloudModule],
-  entryComponents: [SurveyCompareComponent,QuestionSaveComponent, SendOutSurveyComponent],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    FormsModule,
+    AppRoutingModule,
+    ScrollingModule,
+    DateRangePickerModule,
+    CKEditorModule,
+    ChartsModule,
+    GoogleChartsModule,
+    TagCloudModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyCdlgyq8ejq83BTKNpz2q2m1PrLp3D20JY',
+      libraries: ['places']
+    })],
+  entryComponents: [SurveyCompareComponent, QuestionSaveComponent, SendOutSurveyComponent],
+
   providers: [{
     provide: HTTP_INTERCEPTORS,
     useClass: TokenInterceptor,
-    multi: true
-  }],
+    multi: true,
+  },
+  [DatePipe],
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
