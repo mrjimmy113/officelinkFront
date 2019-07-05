@@ -26,6 +26,7 @@ export class RegisterConfirmComponent implements OnInit {
       this.accountSer.createAccountByToken(this.accountToken)
       this.accountSer.getAccountByToken(this.accountToken).subscribe(res => {
           this.account = res;
+         
       })
     
 

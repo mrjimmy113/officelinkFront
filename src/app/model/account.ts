@@ -10,6 +10,6 @@ export class Account {
     role_id : Number ;
     workspacename : String;
 
-    role : Role;
+   
     
 }

@@ -41,7 +41,7 @@ export class RegisterComponent implements OnInit {
            alert("Password and Confirm password not match. Try again");
          }else{                         
                   this.accoutSer.sendMail(this.account).subscribe(res => {   
-                    alert(this.account.isDeleted)            
+                          
                     alert("Successful registration of account information, please check your mail to complete the registration")
                   })
              ,

@@ -23,7 +23,7 @@ export class AccountSaveComponent implements OnInit {
 
   ngOnInit() {
     this.init();
-    
+    this.role_id = 0;
 
   }
 
@@ -32,6 +32,7 @@ export class AccountSaveComponent implements OnInit {
         this.account = new Account();
       }
       this.account = this.inputs;
+      
     
   }
 
@@ -40,7 +41,7 @@ export class AccountSaveComponent implements OnInit {
   }
 
   edit(){ 
-      this.account.role_id == this.role_id;
+      this.account.role_id = this.role_id;
       
       this.accountSer.update(this.account).subscribe(res => {
           this.requestStatus = res;
