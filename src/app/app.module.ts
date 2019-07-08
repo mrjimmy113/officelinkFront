@@ -60,6 +60,7 @@ import { ConfigurationComponent } from './configuration/configuration.component'
 import { ConfigurationSaveComponent } from './configuration-save/configuration-save.component';
 
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { AuthHomeComponent } from './auth-home/auth-home.component';
 import { AssignAccountComponent } from './account/assign-account/assign-account.component';
 
 @NgModule({
@@ -105,6 +106,7 @@ import { AssignAccountComponent } from './account/assign-account/assign-account.
     SurveyListComponent,
     ConfigurationComponent,
     ConfigurationSaveComponent,
+    AuthHomeComponent,
     RegisterConfirmComponent,
     AssignAccountComponent,
 

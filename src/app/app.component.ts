@@ -1,5 +1,6 @@
 import { AuthenticationService } from './service/authentication.service';
 import { Component } from '@angular/core';
+import { DisplayService } from './service/display.service';
 
 @Component({
   selector: 'app-root',
@@ -8,8 +9,6 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'officelinkFront';
-  isLogin = this.authSer.isLogin();
-  role = this.authSer.getRole();
 
-  constructor(private authSer:AuthenticationService) {}
+  constructor(private authSer:AuthenticationService, private displaySer:DisplayService) {}
 }

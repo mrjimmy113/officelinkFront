@@ -1,0 +1,19 @@
+<div id="wrapper">
+  <app-side-menu ></app-side-menu>
+  <div id="content-wrapper" class="d-flex flex-column" >
+    <app-header ></app-header>
+    <!-- Main Content -->
+    <div id="content" style="max-height: 78vh; overflow-y:auto;">
+      <div style="padding-left: 12px; padding-right: 12px">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+    <footer class="sticky-footer bg-white">
+      <div class="container my-auto">
+        <div class="copyright text-center my-auto">
+          <span>Copyright &copy; Your Website 2019</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+</div>

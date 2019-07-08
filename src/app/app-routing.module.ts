@@ -1,3 +1,5 @@
+import { AuthGuard } from './guard/auth.guard';
+import { AuthHomeComponent } from './auth-home/auth-home.component';
 import { SurveyListComponent } from './survey/survey-list/survey-list.component';
 import { ChooseQuestionComponent } from './survey/choose-question/choose-question.component';
 import { QuestionListComponent } from './question/question-list/question-list.component';
@@ -37,31 +39,22 @@ import { AccountSaveComponent } from './account/account-save/account-save.compon
 import { AccountDeleteComponent } from './account/account-delete/account-delete.component';
 import { JoinComponent } from './others/join/join.component'
 
-
-import { from } from 'rxjs';
+const authRoutes: Routes = [
 import { RegisterConfirmComponent } from './others/register-confirm/register-confirm.component';
-import { AssignAccountComponent } from './account/assign-account/assign-account.component';
-
-const routes: Routes = [
-  { path: "", component:HomeComponent},
-  { path: "home", component:HomeComponent},
-
-  { path: "register", component:RegisterComponent},
   { path: "admin/wordCloud", component: WordCloudListComponent },
   { path: "admin/create", component: WordCloudSaveComponent },
-
-
-  { path: "join" , component: JoinComponent},
   { path: "admin/account", component:AccountListComponent},
   { path: "admin/account/create" , component:AccountSaveComponent},
   { path: "admin/account/delete", component:AccountDeleteComponent},
+  { path: "login-form/:emailToken", component: LoginComponent, },
+  { path: "location", component: LocationComponent },
+  { path: "location/create", component: LocationCreateComponent },
+  { path: "location/:id/edit", component: LocationEditComponent },
+  { path: "news", component: NewsMainComponent },
+  { path: "news/:id/edit", component: NewsEditComponent },
+  { path: "news/create", component: NewsCreateComponent },
+  { path: "news/:id/detail", component: NewsDetailComponent },
   { path: "confirm/:accountToken",  component: RegisterConfirmComponent},
-  { path: "admin/assign", component:AssignAccountComponent},
-  
-
-  { path: "404",  component: NotFoundComponent },
-  { path: "forget", component: ForgetPasswordComponent},
-  { path: "login", component: LoginComponent},
   { path: "q", component: SurveySaveComponent},
   { path: "memInvite", component:InvitationComponent},
   { path: "take/:token", component:SurveyTakeComponent},
@@ -78,9 +71,19 @@ const routes: Routes = [
   { path: "survey",component:SurveyListComponent},
   { path: "configuration", component:ConfigurationComponent},
   { path: "configuration/save", component:ConfigurationSaveComponent},
-  { path: "**", redirectTo: "404" },
-
 ];
+
+const routes: Routes = [
+  { path: "home", component:HomeComponent},
+  { path: "register", component:RegisterComponent},
+  { path: "404",  component: NotFoundComponent },
+  { path: "forget", component: ForgetPasswordComponent},
+  { path: "login", component: LoginComponent},
+  { path: "join" , component: JoinComponent},
+  { path: "", component:AuthHomeComponent, canActivate:[AuthGuard], canActivateChild: [AuthGuard], children : authRoutes},
+  { path: "**", redirectTo: "404" },
+];
+
 
 @NgModule({
   declarations: [],
