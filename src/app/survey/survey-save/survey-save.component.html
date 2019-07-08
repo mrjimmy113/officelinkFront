@@ -17,10 +17,11 @@
     </div>
     <div class="">
       <div *ngFor="let question of survey.questions; let i = index">
-        <app-question [quest]="question" [index]="i" (updateEditMode)="updateEditMode()"
-          (giveClassToParent)="getChildInfor($event)" (copyQ)="copyQ($event)" (deleteQ)="deleteQ($event)">
+        <app-question [quest]="question" [index]="i" [lastIndex]="survey.questions.length - 1" (updateEditMode)="updateEditMode()"
+          (giveClassToParent)="getChildInfor($event)" (copyQ)="copyQ($event)" (deleteQ)="deleteQ($event)"
+          (moveUpQ)="moveUpQ($event)" (moveDownQ)="moveDownQ($event)"
+          >
         </app-question>
-
       </div>
 
     </div>

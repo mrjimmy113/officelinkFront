@@ -1,3 +1,4 @@
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TokenInterceptor } from './interceptor/tokenAuth.interceptor';
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
@@ -58,6 +59,8 @@ import { Login2Component } from './others/login2/login2.component'
 import { ConfigurationComponent } from './configuration/configuration.component';
 import { ConfigurationSaveComponent } from './configuration-save/configuration-save.component';
 
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -114,6 +117,8 @@ import { ConfigurationSaveComponent } from './configuration-save/configuration-s
     ChartsModule,
     GoogleChartsModule,
     TagCloudModule,
+    NgxChartsModule,
+    BrowserAnimationsModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyCdlgyq8ejq83BTKNpz2q2m1PrLp3D20JY',
       libraries: ['places']

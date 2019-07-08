@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
 import { PageSearch } from '../model/page-search';
+import { SurveyReport } from '../model/surveyReport';
 
 @Injectable({
   providedIn: 'root'
@@ -41,5 +42,8 @@ export class SurveyService {
   }
   getWorkplaceSurveys():Observable<Array<Survey>>{
     return this.http.get<Array<Survey>>(this.api + `/getWorkplaceSurveys`);
+  }
+  getReportAll(id):Observable<SurveyReport> {
+    return this.http.get<SurveyReport>(this.api + `/report?id=${1}`);
   }
 }

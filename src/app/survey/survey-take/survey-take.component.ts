@@ -32,9 +32,27 @@ export class SurveyTakeComponent implements OnInit {
     })
 
   }
+
+  multipleAnswer(option : string, answerIndex) {
+    let answer:String = "";
+    if(!(this.answers[answerIndex].content == undefined)) {
+      answer= this.answers[answerIndex].content + "";
+    }
+    if(answer.includes(option)) {
+      answer.replace(option,"");
+    }else {
+      if(answer.trim().length == 0) {
+        answer = option;
+      }else {
+        answer = answer + "," + option;
+      }
+    }
+    this.answers[answerIndex].content = answer;
+  }
+
   saveAnswer() {
     this.surveySer.sendAnswer(this.answers).subscribe(result => {
-      console.log(result);
+      alert("Thank you for taking out this survey");
     })
   }
 

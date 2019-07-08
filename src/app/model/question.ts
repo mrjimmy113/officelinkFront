@@ -6,4 +6,5 @@ export class Question {
   type:TypeQuestion;
   options: Array<AnswerOption>;
   questionIdentity:Number;
+  questionIndex: number;
 }

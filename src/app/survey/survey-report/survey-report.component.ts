@@ -1,11 +1,11 @@
+import { AnswerOption } from './../../model/answerOption';
+import { SurveyReport } from './../../model/surveyReport';
+import { SurveyService } from './../../service/survey.service';
 import { SurveyCompareComponent } from './../survey-compare/survey-compare.component';
 import { ModalService } from './../../service/modal.service';
-import { Question } from './../../model/question';
 import { Component, OnInit } from '@angular/core';
-import { Survey } from 'src/app/model/survey';
-import { Label, MultiDataSet } from 'ng2-charts';
-import { ChartType } from 'chart.js';
 import { CloudOptions, CloudData } from 'angular-tag-cloud-module';
+import { AnswerReport } from 'src/app/model/answerReport';
 
 @Component({
   selector: 'app-survey-report',
@@ -13,58 +13,78 @@ import { CloudOptions, CloudData } from 'angular-tag-cloud-module';
   styleUrls: ['./survey-report.component.css']
 })
 export class SurveyReportComponent implements OnInit {
-  public doughnutChartLabels: Label[] = ["Wonderful", "Good", "Not Bad", "Bad", "Unacceptable"]
-  public doughnutChartData: MultiDataSet = [
-    [50, 20, 10,10,10],
-  ];
+  surveyReport:SurveyReport;
+  colorScheme = {
+    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
+  };
   options: CloudOptions = {
-    // if width is between 0 and 1 it will be set to the size of the upper element multiplied by the value
     width: 1,
     height: 200,
     overflow: false,
   };
+  reportData: Array<any>;
 
-  data: CloudData[] = [
-    {text: 'Good', weight: 8, color: "#"+((1<<24)*Math.random()|0).toString(16)},
-    {text: 'Wonderful', weight: 5, color: "#"+((1<<24)*Math.random()|0).toString(16)},
-    {text: 'Like', weight: 10, color: "#"+((1<<24)*Math.random()|0).toString(16)},
-    {text: 'Awful', weight: 2, color: "#"+((1<<24)*Math.random()|0).toString(16)},
-    {text: 'Well-done', weight: 6,  color: "#"+((1<<24)*Math.random()|0).toString(16)},
-    {text: 'Hell', weight: 1, color: "#"+((1<<24)*Math.random()|0).toString(16)},
-    {text: 'A', weight: 1,  color: "#"+((1<<24)*Math.random()|0).toString(16)},
-    {text: 'B', weight: 2,  color: "#"+((1<<24)*Math.random()|0).toString(16)},
-    {text: 'C', weight: 3,  color: "#"+((1<<24)*Math.random()|0).toString(16)},
-    {text: 'D', weight: 4,  color: "#"+((1<<24)*Math.random()|0).toString(16)},
-    {text: 'E', weight: 5,  color: "#"+((1<<24)*Math.random()|0).toString(16)},
-    {text: 'F', weight: 6,  color: "#"+((1<<24)*Math.random()|0).toString(16)},
-    {text: 'G', weight: 7,  color: "#"+((1<<24)*Math.random()|0).toString(16)},
-    {text: 'H', weight: 8,  color: "#"+((1<<24)*Math.random()|0).toString(16)},
-    {text: 'I', weight: 9,  color: "#"+((1<<24)*Math.random()|0).toString(16)},
-    {text: 'J', weight: 10,  color: "#"+((1<<24)*Math.random()|0).toString(16)},
-    {text: 'K', weight: 11,  color: "#"+((1<<24)*Math.random()|0).toString(16)},
-    {text: 'L', weight: 12,  color: "#"+((1<<24)*Math.random()|0).toString(16)},
-    {text: 'M', weight: 13,  color: "#"+((1<<24)*Math.random()|0).toString(16)},
-    {text: 'N', weight: 14,  color: "#"+((1<<24)*Math.random()|0).toString(16)},
-    {text: 'O', weight: 15,  color: "#"+((1<<24)*Math.random()|0).toString(16)},
-    {text: 'P', weight: 16,  color: "#"+((1<<24)*Math.random()|0).toString(16)},
 
-  ];
 
-  public doughnutChartType: ChartType = 'doughnut';
-  survey : Survey;
-  constructor(private modalSer:ModalService) { }
+  constructor(private modalSer:ModalService, private surveySer:SurveyService) { }
 
   ngOnInit() {
-    this.survey = new Survey();
-    this.survey.name = "Experience of the new Cafeteria";
-    this.survey.questions = new Array<Question>();
-    let q = new Question();
-    q.question = "How you rate the services ?";
-
-    this.survey.questions.push(q);
+    this.surveyReport = new SurveyReport();
+    this.reportData = new Array<any>();
+    this.surveySer.getReportAll(1).subscribe(result => {
+      this.surveyReport = result;
+      this.surveyReport.questions.forEach(element => {
+        if(element.question.type.type == 'TEXT') {
+          this.reportData.push(this.getWordCloud(element.answers));
+        }else {
+          this.reportData.push(this.getChartParam(element.answers, element.question.options));
+        }
+      });
+    })
   }
   openCompare() {
     this.modalSer.init(SurveyCompareComponent,[],[]);
   }
 
+  getWordCloud(answers : Array<AnswerReport>): CloudData[] {
+    let dataList = new Array<CloudData>();
+    answers.forEach(element => {
+      let data:CloudData = {
+        text: element.term.toString(),
+        weight: element.weight.valueOf(),
+        color:"#"+((1<<24)*Math.random()|0).toString(16)
+      }
+      dataList.push(data);
+    });
+    return dataList;
+  }
+
+  getChartParam(answers: AnswerReport[], answerTexts :AnswerOption[]): NgxChartParam[] {
+    let dataList = new Array<NgxChartParam>();
+    answerTexts.forEach(element => {
+      let data:NgxChartParam = {
+        name: element.answerText.toString(),
+        value: this.getOptionValue(element.id.valueOf(),answers),
+      }
+      dataList.push(data);
+    });
+    return dataList;
+  }
+
+  getOptionValue(id : number, answers: AnswerReport[]) : number {
+    for (let index = 0; index < answers.length; index++) {
+      if(Number(answers[index].term).valueOf() == id) {
+        return answers[index].weight.valueOf();
+      }
+    }
+
+    return 0;
+  }
+
+
 }
+interface NgxChartParam {
+  name:string;
+  value:number;
+}
+

@@ -21,27 +21,31 @@
     <button class="btn btn-success">Apply</button>
   </div>
 </div>
-<div class="modal-content form-group" *ngFor="let q of survey.questions; let i = index">
-  <div class="modal-body row">
+<div class="modal-content form-group" *ngFor="let q of surveyReport.questions; let i = index">
+  <div class="modal-body row" *ngIf="q.question.type.type == 'MULTIPLE' || q.question.type.type =='SINGLE'">
     <div class="col-sm-4">
-      <b><i class="far fa-question-circle"></i> {{q.question}}</b>
+      <b><i class="far fa-question-circle"></i> {{q.question.question}}</b>
       <div style="padding-left: 12px">
         <b>Option:</b>
       </div>
-      <div class="form-check" *ngFor="let option of q.options; let i = index">
+      <div class="form-check" *ngFor="let option of q.question.options; let i = index">
         <div class="row row-padding-bot">
           <div class="col-sm-10 option">
-            {{i + 1}}. {{option}}
+            {{i + 1}}. {{option.answerText}}
           </div>
 
         </div>
       </div>
     </div>
     <div class="col-sm-7">
-      <div style="display: block">
-        <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType">
-        </canvas>
-      </div>
+      <ngx-charts-advanced-pie-chart [results]="reportData[i]" *ngIf="q.question.type.type =='SINGLE'">
+      </ngx-charts-advanced-pie-chart>
+      <ngx-charts-bar-horizontal
+      [results]="reportData[i]"
+      [xAxis]="true"
+      [yAxis]="true"
+      *ngIf="q.question.type.type =='MULTIPLE'">
+      </ngx-charts-bar-horizontal>
     </div>
     <div class="col-sm-1 d-flex justify-content-center">
 
@@ -50,17 +54,13 @@
       </button>
     </div>
   </div>
-</div>
-<div class="modal-content form-group">
+  <div class="modal-content form-group" *ngIf="q.question.type.type =='TEXT'">
     <div class="modal-body row">
       <div class="col-sm-4">
-        <b><i class="far fa-question-circle"></i>Text Question</b>
+        <b><i class="far fa-question-circle"></i>{{q.question.question}}</b>
       </div>
       <div class="col-sm-7">
-          <angular-tag-cloud
-          [data]="data"
-          [width]="options.width"
-          [height]="options.height"
+        <angular-tag-cloud [data]="reportData[i]" [width]="options.width" [height]="options.height"
           [overflow]="options.overflow">
         </angular-tag-cloud>
       </div>
@@ -72,4 +72,4 @@
       </div>
     </div>
   </div>
-
+</div>
