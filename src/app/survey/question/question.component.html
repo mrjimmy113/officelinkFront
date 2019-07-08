@@ -14,8 +14,9 @@
         </div>
       </div>
       <div class="col-sm-3">
-        <select class="form-control" [(ngModel)]="quest.type" name="type" >
-          <option *ngFor="let type of typeList" [ngValue]="type" [selected]="quest.type.id == type.id">{{typeEnum[type.type]}}</option>
+        <select class="form-control" [(ngModel)]="quest.type" name="type">
+          <option *ngFor="let type of typeList" [ngValue]="type" [selected]="quest.type.id == type.id">
+            {{typeEnum[type.type]}}</option>
         </select>
       </div>
     </div>
@@ -26,15 +27,17 @@
         <div class="form-check" *ngFor="let option of quest.options; let i = index">
           <div class="row row-padding-bot">
             <div class="col-sm-1 row align-content-center d-flex justify-content-center">
-              <input type="radio" class="radio-big" disabled *ngIf="quest.type.type == 'SINGLE'"/>
-              <input type="checkbox" class="radio-big" disabled *ngIf="quest.type.type == 'MULTIPLE'"/>
+              <input type="radio" class="radio-big" disabled *ngIf="quest.type.type == 'SINGLE'" />
+              <input type="checkbox" class="radio-big" disabled *ngIf="quest.type.type == 'MULTIPLE'" />
             </div>
             <div class="col-sm-10 option">
               <input type="text" class="form-control" placeholder="Option {{i + 1}}" [disabled]="!isNew"
                 [(ngModel)]="quest.options[i].answerText" name="option{{i}}" #option{{i}}="ngModel" required />
             </div>
+
             <div class="col-sm-1 row align-content-center d-flex justify-content-center" *ngIf="isEditMode">
-              <button class="btn btn-danger" (click)="deleteOption(i)" *ngIf="isNew"><i class="fas fa-times"></i></button>
+              <button class="btn btn-danger" (click)="deleteOption(i)" *ngIf="isNew"><i
+                  class="fas fa-times"></i></button>
             </div>
           </div>
         </div>
@@ -55,7 +58,9 @@
   </form>
 
   <div class="modal-footer" *ngIf="isEditMode">
-    <button class="btn btn-primary" (click)="copyQuestion()" *ngIf="isNew"><i class="fas fa-copy"></i></button>
+    <button class="btn btn-primary" (click)="moveUp()" [disabled]="index == 0"><i class="fas fa-arrow-up"></i></button>
+    <button class="btn btn-primary" (click)="moveDown()" [disabled]="index == lastIndex"><i
+        class="fas fa-arrow-down"></i></button>
     <button class="btn btn-danger" (click)="deleteQuestion()"><i class="fas fa-trash"></i></button>
   </div>
 </div>

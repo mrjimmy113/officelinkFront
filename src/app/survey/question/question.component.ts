@@ -12,11 +12,14 @@ import { TypeQuestion } from 'src/app/model/typeQuestion';
 })
 export class QuestionComponent implements OnInit {
   @Input() quest:Question;
-  @Input() index:Number;
+  @Input() index:number;
+  @Input() lastIndex:number;
   @Output() updateEditMode = new EventEmitter();
   @Output() giveClassToParent = new EventEmitter();
   @Output() copyQ = new EventEmitter();
   @Output() deleteQ = new EventEmitter();
+  @Output() moveUpQ = new EventEmitter();
+  @Output() moveDownQ = new EventEmitter();
   isEditMode = false;
   isNew = true;
   typeList: TypeQuestion[];
@@ -24,7 +27,7 @@ export class QuestionComponent implements OnInit {
   constructor(private questSer:QuestionService) { }
 
   ngOnInit() {
-
+    this.quest.questionIndex = this.index;
     if(this.quest.id != undefined) this.isNew = false;
     let sub = this.questSer.getAllType().subscribe(result => {
       this.typeList = result;
@@ -59,12 +62,15 @@ export class QuestionComponent implements OnInit {
     this.isEditMode = false;
   }
 
-  copyQuestion() {
-    console.log(this.quest);
-    this.copyQ.emit(this.index);
-  }
-
   deleteQuestion() {
     this.deleteQ.emit(this.index);
+  }
+
+  moveUp() {
+    this.moveUpQ.emit(this.index);
+  }
+
+  moveDown() {
+    this.moveDownQ.emit(this.index);
   }
 }
