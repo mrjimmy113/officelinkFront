@@ -12,16 +12,16 @@
               </div>
               <form class="user">
                   <div class="form-group">
-                      <input  class="form-control form-control-user" name = "workspacename"  #workspacename="ngModel" placeholder="Work space name" [(ngModel)] = "account.workspacename"
+                      <input  class="form-control form-control-user" name = "workspacename"  #workspacename="ngModel" placeholder="Worksplace name" [(ngModel)] = "account.workplace.name"
                       [ngClass]="{'is-invalid' : (workspacename.invalid && (workspacename.dirty || workspacename.touched))}" required
                       pattern="^[a-zA-Z0-9._-\s]*$"
                       />
                       <div *ngIf="workspacename.invalid && (workspacename.dirty || workspacename.touched)" class="text-danger">
                         <div *ngIf="workspacename.errors.required">
-                          Work space name required
+                          Work splace name required
                         </div>
                         <div *ngIf="workspacename.errors.pattern">
-                          Word space name can't contain special character except "_-."
+                          Word splace name can't contain special character except "_-."
                         </div>
                         
                       </div>
@@ -112,16 +112,13 @@
                     </div>
                   </div>
                 <div class="form-group">
-                    <input type="text" class="form-control form-control-user" name = "address" #address = "ngModel" placeholder="Address" [(ngModel)] = account.address
+                    <input type="text" class="form-control form-control-user" name = "address" #address = "ngModel" placeholder="Address" [(ngModel)] = "account.location.address"
                     [ngClass]="{'is-invalid' : (address.invalid && (address.dirty || address.touched))}" required
-                    pattern="^[a-zA-Z0-9._-\s]*$"
+                   
                     />
                     <div *ngIf="address.invalid && (address.dirty || address.touched)" class="text-danger">
                       <div *ngIf="address.errors.required">
                         Address required
-                      </div>
-                      <div *ngIf="address.errors.pattern">
-                        Address can't contain special character except "_-."
                       </div>
                       
                     </div>

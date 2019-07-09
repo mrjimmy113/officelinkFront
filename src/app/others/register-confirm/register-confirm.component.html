@@ -13,7 +13,7 @@
             <form class="user">
                 <div class="form-group">
                     <label >Workspace</label>
-                    <input  class="form-control form-control-user" name = "workspacename"  #workspacename="ngModel" placeholder="Work space name" [(ngModel)] = "account.workspacename"
+                    <input  class="form-control form-control-user" name = "workspacename"  #workspacename="ngModel" placeholder="Work space name" [(ngModel)] = "account.workplace.name"
                     readonly
                     />
                   
@@ -43,6 +43,14 @@
                 >
                
               </div>
+
+              <div class="form-group">
+                <label >Address</label>
+              <input type="text" class="form-control form-control-user"  name = "address" #email = "ngModel" placeholder="Address" [(ngModel)] = account.location.address
+              readonly
+              >
+             
+            </div>
              
               <a href="login" style="color: #FFF"    class="btn btn-success btn-user btn-block">
                 Confirm
