@@ -23,7 +23,9 @@ export class RegisterConfirmComponent implements OnInit {
   ngOnInit() {
       this.account = new Account();
       this.accountToken =  this._route.snapshot.paramMap.get('accountToken');
-      this.accountSer.createAccountByToken(this.accountToken)
+      this.accountSer.createAccountByToken(this.accountToken).subscribe(res => {
+        
+      })
       this.accountSer.getAccountByToken(this.accountToken).subscribe(res => {
           this.account = res;
          

@@ -44,6 +44,7 @@ export class AccountSaveComponent implements OnInit {
       this.account.role_id = this.role_id;
       
       this.accountSer.update(this.account).subscribe(res => {
+          
           this.requestStatus = res;
       })
         
