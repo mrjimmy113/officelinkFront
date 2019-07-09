@@ -32,4 +32,7 @@ export class DepartmentService {
   delete(id):Observable<Number> {
     return this.http.delete<Number>(this.api + `?id=${id}`);
   }
+  getByLocationId(id):Observable<Department[]> {
+    return this.http.get<Department[]>(this.api + `/byLocation?id=${id}`);
+  }
 }

@@ -40,9 +40,8 @@ import { AccountDeleteComponent } from './account/account-delete/account-delete.
 import { JoinComponent } from './others/join/join.component'
 
 const authRoutes: Routes = [
+  { path: "filter", component: WordCloudListComponent },
 import { RegisterConfirmComponent } from './others/register-confirm/register-confirm.component';
-  { path: "admin/wordCloud", component: WordCloudListComponent },
-  { path: "admin/create", component: WordCloudSaveComponent },
   { path: "admin/account", component:AccountListComponent},
   { path: "admin/account/create" , component:AccountSaveComponent},
   { path: "admin/account/delete", component:AccountDeleteComponent},
@@ -66,7 +65,6 @@ import { RegisterConfirmComponent } from './others/register-confirm/register-con
   { path: "workplace/save", component:WorkplaceSaveComponent},
   { path:"report", component:SurveyReportComponent},
   { path:"question",component: QuestionListComponent},
-  { path:"survey/save", component: SurveySaveComponent},
   { path:"choose", component: ChooseQuestionComponent},
   { path: "survey",component:SurveyListComponent},
   { path: "configuration", component:ConfigurationComponent},

@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import {DomService} from '../../service/dom.service'
 import {AccountService} from '../../service/account.service'
@@ -15,7 +16,7 @@ import {Workplace} from '../../model/workplace'
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  
+
   account : Account;
   requestStatus;
   errorStatus;
@@ -69,10 +70,10 @@ export class RegisterComponent implements OnInit {
             
          }
 
-        
-    
+
+
   }
 
-  
+
 
 }

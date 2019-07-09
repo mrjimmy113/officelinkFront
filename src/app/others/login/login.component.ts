@@ -11,7 +11,7 @@ import {Router , ActivatedRoute} from '@angular/router'
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  constructor(private authSer:AuthenticationService){}
+  constructor(private authSer:AuthenticationService, private route:Router){}
   account:Account;
   isError = false;
   ngOnInit() {
@@ -21,7 +21,10 @@ export class LoginComponent implements OnInit {
   login() {
     this.isError = false;
     this.authSer.login(this.account).subscribe(result => {
-      if(result != null) this.authSer.setAuth(result);
+      if(result != null) {
+        this.authSer.setAuth(result);
+        this.route.navigate(['']);
+      }
       else this.isError =true;
     })
   }

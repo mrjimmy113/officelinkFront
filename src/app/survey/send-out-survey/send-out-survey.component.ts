@@ -48,7 +48,7 @@ export class SendOutSurveyComponent implements OnInit {
     this.modalSer.destroy();
   }
 
-  loadTeam(event: Event) {
+  loadTeam() {
     if (this.currentDepartment == undefined) {
       this.teamList = new Array<Team>();
       this.currentTeam = undefined;
@@ -62,8 +62,18 @@ export class SendOutSurveyComponent implements OnInit {
   }
   send() {
     this.surveySer.sendOutSurvey(this.inputs).subscribe(result => {
-      console.log(result);
     })
+  }
+  updateDep() {
+    if(this.currentLocation == undefined) {
+      this.departmentSer.getAll().subscribe(result => {
+        this.departmentList = result;
+      })
+    }else {
+      this.departmentSer.getByLocationId(this.currentLocation.id).subscribe(result => {
+        this.departmentList = result;
+      })
+    }
   }
 
   addInfor() {
