@@ -1,3 +1,4 @@
+import { AuthenticationService } from './../../service/authentication.service';
 import { ActivatedRoute } from '@angular/router';
 import { Answer } from './../../model/answer';
 import { SurveyService } from './../../service/survey.service';
@@ -13,24 +14,13 @@ import { Survey } from 'src/app/model/survey';
 export class SurveyTakeComponent implements OnInit {
   survey : Survey;
   answers : Array<Answer>;
+  isLogin = this.authSer.isLogin();
   token;
-  constructor(private surveySer:SurveyService, private route:ActivatedRoute) { }
+  constructor(private surveySer:SurveyService, private route:ActivatedRoute, private authSer:AuthenticationService) { }
 
   ngOnInit() {
     this.survey = new Survey();
     this.answers = new Array<Answer>();
-    this.route.params.subscribe(params => {
-      this.token = params["token"];
-      this.surveySer.getTakeSurvey(this.token).subscribe(result => {
-        this.survey = result;
-        this.survey.questions.forEach(element => {
-          let answer = new Answer();
-          answer.questionIdentity = element.questionIdentity;
-          this.answers.push(answer);
-        });
-      })
-    })
-
   }
 
   multipleAnswer(option : string, answerIndex) {
@@ -54,6 +44,23 @@ export class SurveyTakeComponent implements OnInit {
     this.surveySer.sendAnswer(this.answers).subscribe(result => {
       alert("Thank you for taking out this survey");
     })
+  }
+
+  activeSurvey() {
+    if(this.authSer.isLogin() ) {
+      this.isLogin = this.authSer.isLogin();
+      this.route.params.subscribe(params => {
+        this.token = params["token"];
+        this.surveySer.getTakeSurvey(this.token).subscribe(result => {
+          this.survey = result;
+          this.survey.questions.forEach(element => {
+            let answer = new Answer();
+            answer.questionIdentity = element.questionIdentity;
+            this.answers.push(answer);
+          });
+        })
+      })
+    }
   }
 
 }

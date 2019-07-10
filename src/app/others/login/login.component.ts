@@ -1,3 +1,5 @@
+import { EventEmitter } from '@angular/core';
+import { Output } from '@angular/core';
 import { AuthenticationService } from './../../service/authentication.service';
 import { Component, OnInit } from '@angular/core';
 import {AccountService} from '../../service/account.service'
@@ -11,6 +13,7 @@ import {Router , ActivatedRoute} from '@angular/router'
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  @Output() activeSurvey = new EventEmitter();
   constructor(private authSer:AuthenticationService, private route:Router){}
   account:Account;
   isError = false;
@@ -23,7 +26,11 @@ export class LoginComponent implements OnInit {
     this.authSer.login(this.account).subscribe(result => {
       if(result != null) {
         this.authSer.setAuth(result);
-        this.route.navigate(['']);
+        if(this.activeSurvey != null || this.activeSurvey != undefined) {
+          this.activeSurvey.emit();
+        }else {
+          this.route.navigate(['']);
+        }
       }
       else this.isError =true;
     })
