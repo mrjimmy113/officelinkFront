@@ -6,6 +6,8 @@ import { ModalService } from 'src/app/service/modal.service';
 import { initDomAdapter } from '@angular/platform-browser/src/browser';
 import {Account} from '../../model/account';
 import { Alert } from 'selenium-webdriver';
+import {Location} from '../../model/location';
+import {Workplace} from '../../model/workplace'
 
 @Component({
   selector: 'app-register',
@@ -18,52 +20,52 @@ export class RegisterComponent implements OnInit {
   requestStatus;
   errorStatus;
   confirmPassText : String;
-  
+  workplace : Workplace;
+  location : Location;
 
-  constructor( private accoutSer : AccountService , private modalSer : ModalService) { }
+
+
+  constructor( private accoutSer : AccountService) { }
 
   ngOnInit() {
     this.init();
   }
 
   init (){
+      
       this.account = new Account();
+      this.account.location = new Location();
+      this.account.workplace = new Workplace();
+      this.account.isDeleted = false;
+
       
       
   }
   register(){
-        this.account.role = "employer";
+    
+        this.account.role_id = 1;
         if(this.account.firstname == null || this.account.lastname == null || this.account.email == null || 
-         this.account.password == null|| this.account.address == null ){
+         this.account.password == null|| this.account.location.address == null  || this.account.workplace.name == null){
            alert("Input not empty. Try again ")
          }
          if(this.account.password != this.confirmPassText){
            alert("Password and Confirm password not match. Try again");
-         }else{
-          this.accoutSer.create(this.account).subscribe(res =>
-            {        
-  
-              this.requestStatus = res;           
-              if(this.requestStatus == 200){
-                  
-                  this.accoutSer.sendMail(this.account.email, this.account.role).subscribe(res => {
-                  
-                    
+         }else{                         
+                  this.accoutSer.sendMail(this.account).subscribe(res => {   
+
                     alert("Successful registration of account information, please check your mail to complete the registration")
-                  })
-              }
-              
-            },
+                  }
+             ,
             error => {
               this.errorStatus = error.status;
               if(this.errorStatus == 409){
-                 alert("Sorry, email or work space already exists, please check again")
+                 alert("Sorry, email or workplace already exists, please check again")
               }
               if(error.status == 400){
                 alert("The system has failed, please try again")
               }
-            }
-            )
+            })
+            
          }
 
         

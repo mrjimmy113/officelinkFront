@@ -1,0 +1,68 @@
+<div class="container ">
+
+  <div class="card o-hidden border-0 shadow-lg my-5">
+    <div class="card-body p-0">
+      <!-- Nested Row within Card Body -->
+      <div class="row">
+        <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+        <div class="col-lg-7">
+          <div class="p-5">
+            <div class="text-center">
+              <h6 class="h4 text-gray-900 mb-4">Your account has been activated with the information below</h6>
+            </div>
+            <form class="user">
+                <div class="form-group">
+                    <label >Workspace</label>
+                    <input  class="form-control form-control-user" name = "workspacename"  #workspacename="ngModel" placeholder="Work space name" [(ngModel)] = "account.workplace.name"
+                    readonly
+                    />
+                  
+                  </div>
+              <div class="form-group row">
+                  
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                    <label >First name</label>
+                  <input type="text" class="form-control form-control-user" name = "firstname" #firstname = "ngModel" placeholder="First Name" [(ngModel)] = account.firstname 
+                 readonly
+                  />
+                 
+                </div>
+                <div class="col-sm-6">
+                    <label >Last name</label>
+                  <input type="text" class="form-control form-control-user" name="lastname" #lastname = "ngModel" placeholder="Last Name" [(ngModel)] = account.lastname
+                  readonly
+                  />
+                 
+                </div>
+              </div>
+              
+              <div class="form-group">
+                  <label >Email</label>
+                <input type="email" class="form-control form-control-user"  name = "email" #email = "ngModel" placeholder="Email" [(ngModel)] = account.email
+                readonly
+                >
+               
+              </div>
+
+              <div class="form-group">
+                <label >Address</label>
+              <input type="text" class="form-control form-control-user"  name = "address" #email = "ngModel" placeholder="Address" [(ngModel)] = account.location.address
+              readonly
+              >
+             
+            </div>
+             
+              <a href="login" style="color: #FFF"    class="btn btn-success btn-user btn-block">
+                Confirm
+              </a>
+
+            </form>
+            <hr>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

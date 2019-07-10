@@ -51,7 +51,7 @@ export class InvitationComponent implements OnInit {
     if(this.newEmail == null){
       alert("Input not null. Try again")
     }else{
-      this.accountSer.sendMail(this.listEmail , "employee").subscribe(res => {
+      this.accountSer.sendInvite(this.listEmail).subscribe(res => {
       
         alert("Send Mail Success")
       },

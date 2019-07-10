@@ -1,3 +1,5 @@
+import {Account  } from './account';
+ 
 export class Location {
     id: Number;
     name: String;
@@ -8,4 +10,7 @@ export class Location {
     isDeleted: false;
     latitude: number;
     longitude: number;
+
+    listAccounts : Array<Account>;
+
 }
