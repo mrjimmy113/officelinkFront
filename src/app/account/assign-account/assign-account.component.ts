@@ -15,20 +15,53 @@ export class AssignAccountComponent implements OnInit {
   locationList : Array<Location>;
   teamList : Array<Team>
   requestStatus : Number;
+  newTeamIndex : Number;
+  newTeam : Team;
+  listTeam : String[];
   constructor(private locationSer : LocationService , private teamSer : TeamService) { }
 
   ngOnInit() {
-    this.getLocationByname("");
-   
+    this.listTeam = new Array<String>();
+    this.getLocationByWorkplace();
+    this.getTeamByWorkplace();
     
   }
 
-  getLocationByname(value){
-      this.locationSer.searchByName(value).subscribe(res => {
-        this.locationList = res.objList
+  getLocationByWorkplace(){
+      this.locationSer.getByWorkplace().subscribe(res => {
+        this.locationList = res
         
       })
   }
+  getTeamByWorkplace(){
+      this.teamSer.getByWorkplace().subscribe(res => {
+        this.teamList = res;
+      })
+  }
+
+  
+  assignTeam() {
+    if(this.newTeamIndex == null){
+      alert("Input not empty. Try again")
+    }else{
+      console.log(this.newTeamIndex);
+      this.listTeam.push(this.teamList[this.newTeamIndex].name);
+    this.newTeam = "";
+    }
+    
+  }
+  assignRemove(index) {
+    
+    this.listTeam.splice(index , 1);
+    
+    
+  }
+
+  assign(){
+    
+  }
+  
+  
 
   
 
