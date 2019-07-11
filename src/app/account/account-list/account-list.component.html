@@ -24,13 +24,13 @@
           First name <i class="fas fa-sort icon"></i>
         </div>
         <div class="col-sm-2 d-flex align-items-center clickable" (click)="sort('name')">
-          Last name 
+          Last name
         </div>
         <div class="col-sm-5 d-flex align-items-center clickable" (click)="sort('name')">
-          Email 
+          Email
         </div>
         <div class="col-sm-3 d-flex align-items-center clickable" (click)="sort('name')">
-          Address 
+          Address
         </div>
       </div>
 
@@ -62,9 +62,9 @@
 
         <div class="col-sm-4 d-flex align-items-center justify-content-center">
           <div class="w3-dropdown-hover">
-           
+
             <div class="w3-dropdown-content w3-bar-block">
-              <button href="#" class="w3-bar-item btn btn-warning" (click)="openAssign()">Assign</button>
+              <button href="#" class="w3-bar-item btn btn-warning" (click)="openAssign(item.id)">Assign</button>
               <button href="#" class="w3-bar-item btn btn-info" (click)="openEdit(item)">Edit</button>
               <button href="#" class="w3-bar-item btn btn-danger" (click)="delete(item.id)">Delete</button>
             </div>

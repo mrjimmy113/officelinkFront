@@ -19,16 +19,26 @@
       <div class="row">
         <div class="row col-sm-10">
 
-          <div class="col-sm-7 d-flex align-items-center clickable" (click)="sort('name')">
+          <div class="col-sm-4 d-flex align-items-center clickable" (click)="sort('name')">
             Survey <i class="fas fa-sort icon"></i>
           </div>
-          <div class="col-sm-5 d-flex align-items-center clickable" (click)="sort('name')">
-
+          <div class="col-sm-2 d-flex align-items-center clickable" (click)="sort('name')">
+            Sent Out Date <i class="fas fa-sort icon"></i>
           </div>
+          <div class="col-sm-2 d-flex align-items-center clickable" (click)="sort('name')">
+            Expire Date <i class="fas fa-sort icon"></i>
+          </div>
+          <div class="col-sm-2 d-flex align-items-center clickable" (click)="sort('name')">
+            Received Answer <i class="fas fa-sort icon"></i>
+          </div>
+          <div class="col-sm-2 d-flex align-items-center clickable" (click)="sort('name')">
+            Total Send Out <i class="fas fa-sort icon"></i>
+          </div>
+
         </div>
 
         <div class="col-sm-2 d-flex align-items-center justify-content-center">
-          Operation
+          View detail
         </div>
       </div>
     </div>
@@ -39,19 +49,27 @@
         <div class="row">
           <div class="row col-sm-10">
 
-            <div class="col-sm-7 d-flex align-items-center">
+            <div class="col-sm-4 d-flex align-items-center">
               {{item.name}}
+            </div>
+            <div class="col-sm-2 d-flex align-items-center">
+              {{item.dateSendOut | date}}
+            </div>
+            <div class="col-sm-2 d-flex align-items-center">
+              {{item.dateStop | date}}
+            </div>
+            <div class="col-sm-2 d-flex align-items-center">
+              {{item.receivedAnswer | number}}
+            </div>
+            <div class="col-sm-2 d-flex align-items-center">
+              {{item.sentOut | number}}
             </div>
 
 
           </div>
 
           <div class="col-sm-2 d-flex align-items-center justify-content-center">
-            <button class="btn btn-primary" (click)="openEdit(item)"><i class="fas fa-pen-alt"></i></button>
-            <span> | </span>
-            <button class="btn btn-info" (click)="sendOut(item.id)"><i class="fas fa-paper-plane"></i></button>
-            <span> | </span>
-            <button class="btn btn-danger" (click)="delete(item.id)"><i class="fas fa-trash-alt"></i></button>
+            <button class="btn btn-primary" (click)="goDetaild(item.id)"><i class="fas fa-chart-line"></i></button>
           </div>
         </div>
       </div>

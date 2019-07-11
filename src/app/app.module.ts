@@ -142,6 +142,7 @@ import { AssignAccountComponent } from './account/assign-account/assign-account.
     SendOutSurveyComponent,
     WordCloudSaveComponent,
     SurveySaveComponent,
+    AssignAccountComponent,
   ],
 
   providers: [

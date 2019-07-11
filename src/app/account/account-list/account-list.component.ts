@@ -25,7 +25,7 @@ export class AccountListComponent implements OnInit {
       this.search("");
 
   }
-  
+
 
   search(value){
     this.accountSer.search(value).subscribe(result => {
@@ -48,10 +48,10 @@ export class AccountListComponent implements OnInit {
   }
 
   delete(id){
-    
+
     this.modalSer.init(AccountDeleteComponent, id , () => this.search(""));
 
-    
+
   }
 
   edit(item){
@@ -62,12 +62,12 @@ export class AccountListComponent implements OnInit {
     this.modalSer.init(InvitationComponent, [] , () => this.search(""));
   }
 
-  openAssign(){
-    this.modalSer.init(AssignAccountComponent, [] , () => this.search(""));
+  openAssign(id){
+    this.modalSer.init(AssignAccountComponent,  id, () => this.search(""));
   }
 
-  
 
-  
+
+
 
 }

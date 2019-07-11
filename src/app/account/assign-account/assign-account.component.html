@@ -10,27 +10,28 @@
       <div class="modal-body">
         <div class="form-group">
           <div class="row col-sm-12">
-              
+
               <div class="col-sm-10">
                   <div class="form-group">
                       <label>Location(*)</label>
-                      <select class="form-control" name="location" #location="ngModel" [(ngModel)]="address"
+                      <select class="form-control" name="location" #location="ngModel" [(ngModel)]="locationId"
                         [ngClass]="{'is-invalid' : (location.invalid && (location.dirty || location.touched))}" required>
-                        <option selected disabled>Choose location</option>
-                        <option *ngFor="let item of locationList" [value]="item.id">{{item.address}}</option>
+                        <option [value]="0">Choose location</option>
+                        <option *ngFor="let item of locationList" [value]="item.id">{{item.name}}</option>
                       </select>
 
                     </div>
                     <div class="form-group">
                         <label>Team(*)</label>
-                        <select class="form-control" name="team" #location="ngModel" [(ngModel)]="newTeamIndex">
-                          
-                          <option selected disabled>Choose team</option>
-                          <option *ngFor="let item of teamList; let i = index" [value]="i">{{item.name}}</option>
+                        <select class="form-control" name="team" #location="ngModel" [(ngModel)]="teamId"
+                          (change)="chooseTeam($event)"
+                        >
+                          <option [value]="0">Choose team</option>
+                          <option *ngFor="let item of teamList; let i = index" [value]="item.id">{{item.name}}</option>
                         </select>
-  
+
                       </div>
-                
+
                   <!-- <input type="email" class="form-control form-control-user" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" name = "email" #email = "ngModel" placeholder="Email Invitation" [(ngModel)] = newEmail
                   [ngClass]="{'is-invalid' : (email.invalid && (email.dirty || email.touched))}" required
                   >
@@ -40,28 +41,27 @@
                         </div>
                     <div [hidden]="!email.errors?.pattern">
                       Email invalid
-                    </div> 
+                    </div>
                    </div>  -->
                   <label>Team List</label>
                   <div  class="invitation-box">
-                      
-                      <span class="badge badge-primary" *ngFor="let item of listTeam; let i = index">
-                      {{item}} <button class="btn-primary borderless" ><i class="fas fa-times" (click)="assignRemove(i, item.id )"></i></button>
+
+                      <span class="badge badge-primary" *ngFor="let item of displayTeam; let i = index">
+                      {{item}} <button class="btn-primary borderless" ><i class="fas fa-times" (click)="assignRemove(i)"></i></button>
                       </span>
-            
+
                     </div>
                 </div>
                 <div class="col-sm-2">
                   <button class="btn btn-success" (click)="assignTeam()">Add</button>
                 </div>
-                
-          
-          
-        
+
+
+
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" (click) = "assign()">Assign</button>
       </div>
     </div>
   </div>
-  

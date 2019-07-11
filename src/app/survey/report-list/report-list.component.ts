@@ -1,3 +1,5 @@
+import { Router } from '@angular/router';
+import { SurveyService } from './../../service/survey.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -11,10 +13,18 @@ export class ReportListComponent implements OnInit {
   maxPage;
   searchTerm = "";
   requestStatus: Number;
-  constructor() { }
+  constructor(private surveySer:SurveyService, private route:Router) { }
 
   ngOnInit() {
     this.itemList = new Array();
+    this.surveySer.getReportList(this.searchTerm, this.currentPage - 1).subscribe(result => {
+      this.itemList = result.objList;
+      this.maxPage = result.maxPage;
+      console.log(this.itemList);
+    })
+  }
+  goDetaild(id) {
+    this.route.navigateByUrl(`/report/detail/${id}`);
   }
 
 }

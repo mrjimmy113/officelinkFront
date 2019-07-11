@@ -28,7 +28,7 @@ export class AccountService {
   delete(id) : Observable<Number>{
     return this.httpClient.delete<Number>(this.api +`?id=${id}`);
   }
- 
+
   create(obj) : Observable<Number>{
     return this.httpClient.post<Number>(this.api, obj);
   }
@@ -53,12 +53,24 @@ export class AccountService {
     return this.httpClient.post<Number>(this.api + `/sendInvite`, mailInvited);
   }
 
-  
+
 
   createAccountByToken(accountToken) : Observable<Number>{
     return this.httpClient.post<Number>(this.api + `/confirm`, accountToken);
   }
 
-  
+  getInvitationInfor(token):Observable<Account>{
+    return this.httpClient.get<Account>(this.api + `/invitationInfor?token=${token}`);
+  }
+
+  acceptInvite(acc):Observable<Number> {
+    return this.httpClient.post<Number>(this.api + `/acceptInvite`,acc);
+  }
+
+  assign(assignInfor):Observable<Number>{
+    return this.httpClient.put<Number>(this.api + `/assign`,assignInfor);
+  }
+
+
 }
 

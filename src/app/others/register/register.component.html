@@ -109,9 +109,11 @@
                     </div>
 
                   </div>
-                <div class="form-group">
-                    <input type="text" class="form-control form-control-user" name = "address" #address = "ngModel" placeholder="Address" [(ngModel)] = "account.address"
-                    [ngClass]="{'is-invalid' : (address.invalid && (address.dirty || address.touched))}" required
+                  </div>
+                </div>
+              <div class="form-group">
+                  <input type="text" class="form-control form-control-user" name = "address" #address = "ngModel" placeholder="Address" [(ngModel)] = "account.address"
+                  [ngClass]="{'is-invalid' : (address.invalid && (address.dirty || address.touched))}" required
 
                   />
                   <div *ngIf="address.invalid && (address.dirty || address.touched)" class="text-danger">

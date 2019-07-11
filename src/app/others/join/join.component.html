@@ -13,10 +13,10 @@
             <form class="user">
               <div class="form-group row">
                 <div class="col-sm-6 mb-3 mb-sm-0">
-                  <input type="text" class="form-control form-control-user" name = "firstname" #firstname = "ngModel" placeholder="First Name" [(ngModel)] = account.firstname 
-                  [ngClass]="{'is-invalid' : (firstname.invalid && (firstname.dirty || firstname.touched))}" required
-                  pattern="^[a-zA-Z0-9._-\s]*$"
-                  />
+                  <input type="text" class="form-control form-control-user" name="firstname" #firstname="ngModel"
+                    placeholder="First Name" [(ngModel)]=account.firstname
+                    [ngClass]="{'is-invalid' : (firstname.invalid && (firstname.dirty || firstname.touched))}" required
+                    pattern="^[a-zA-Z0-9._-\s]*$" />
                   <div *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)" class="text-danger">
                     <div *ngIf="firstname.errors.required">
                       First name required
@@ -24,98 +24,76 @@
                     <div *ngIf="firstname.errors.pattern">
                       First name can't contain special character except "_-."
                     </div>
-                    
+
                   </div>
                 </div>
                 <div class="col-sm-6">
-                  <input type="text" class="form-control form-control-user" name="lastname" #lastname = "ngModel" placeholder="Last Name" [(ngModel)] = account.lastname
+                  <input type="text" class="form-control form-control-user" name="lastname" #lastname="ngModel"
+                    placeholder="Last Name" [(ngModel)]=account.lastname
                     [ngClass]="{'is-invalid' : (lastname.invalid && (lastname.dirty || lastname.touched))}" required
-                    pattern="^[a-zA-Z0-9._-\s]*$"
-                    />
-                    <div *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)" class="text-danger">
-                      <div *ngIf="lastname.errors.required">
-                        Last name required
-                      </div>
-                      <div *ngIf="lastname.errors.pattern">
-                        Last name can't contain special character except "_-."
-                      </div>
-                      
+                    pattern="^[a-zA-Z0-9._-\s]*$" />
+                  <div *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)" class="text-danger">
+                    <div *ngIf="lastname.errors.required">
+                      Last name required
                     </div>
+                    <div *ngIf="lastname.errors.pattern">
+                      Last name can't contain special character except "_-."
+                    </div>
+
+                  </div>
                 </div>
               </div>
-              
+
               <div class="form-group">
-                <input type="email" class="form-control form-control-user" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" name = "email" #email = "ngModel" placeholder="Email" [(ngModel)] = account.email
-                  [ngClass]="{'is-invalid' : (email.invalid && (email.dirty || email.touched))}" required
-                  >
-                  <div *ngIf="email.errors &&(email.touched || email.dirty)" class ="text-danger">
-                      <div *ngIf="email.errors.required">
-                          Email required
-                        </div>
-                    <div [hidden]="!email.errors?.pattern">
-                      Email invalid
-                    </div> 
-                   </div> 
+                <input type="email" class="form-control form-control-user"
+                  name="email" #email="ngModel" placeholder="Email"
+                  [(ngModel)]=account.email disabled
+                  [ngClass]="{'is-invalid' : (email.invalid && (email.dirty || email.touched))}">
               </div>
-              
+
               <div class="form-group row">
                 <div class="col-sm-6 mb-3 mb-sm-0">
                   <input type="password" class="form-control form-control-user" id="exampleFirstName"
-                    placeholder="Password" name = "password" #password = "ngModel" [(ngModel)] = "account.password"
+                    placeholder="Password" name="password" #password="ngModel" [(ngModel)]="account.password"
                     [ngClass]="{'is-invalid' : (password.invalid && (password.dirty || password.touched))}" required
-                    minlength="6" maxlength="15"
-                />
-                <div *ngIf="password.invalid && (password.dirty || password.touched)" class="text-danger">
-                  <div *ngIf="password.errors.required">
-                    Password required
+                    minlength="6" maxlength="15" />
+                  <div *ngIf="password.invalid && (password.dirty || password.touched)" class="text-danger">
+                    <div *ngIf="password.errors.required">
+                      Password required
+                    </div>
+
+                    <div *ngIf="password.errors.minlength || password.errors.maxlength">
+                      Password must be 6-15 characters
+                    </div>
+
                   </div>
-  
-                  <div *ngIf="password.errors.minlength || password.errors.maxlength">
-                    Password must be 6-15 characters
-                  </div>
-                  
-                </div>
                 </div>
                 <div class="col-sm-6">
                   <input type="password" class="form-control form-control-user" id="exampleLastName"
-                    placeholder="Confirm"
-                    name = "confirmPass" #confirmPass = "ngModel" [(ngModel)] = "confirmPassText"
-                    [ngClass]="{'is-invalid' : (confirmPass.invalid && (confirmPass.dirty || confirmPass.touched))}" required
-                    minlength="6" maxlength="15"
-                />
-                <div *ngIf="confirmPass.invalid && (confirmPass.dirty || confirmPass.touched)" class="text-danger">
-                  <div *ngIf="confirmPass.errors.required">
-                    Confirm password required
+                    placeholder="Confirm" name="confirmPass" #confirmPass="ngModel" [(ngModel)]="confirmPassText"
+                    [ngClass]="{'is-invalid' : (confirmPass.invalid && (confirmPass.dirty || confirmPass.touched))}"
+                    required minlength="6" maxlength="15" />
+                  <div *ngIf="confirmPass.invalid && (confirmPass.dirty || confirmPass.touched)" class="text-danger">
+                    <div *ngIf="confirmPass.errors.required">
+                      Confirm password required
+                    </div>
+
+                    <div *ngIf="confirmPass.errors.minlength || confirmPass.errors.maxlength">
+                      Confirm password must be 6-15 characters
+                    </div>
+
                   </div>
-  
-                  <div *ngIf="confirmPass.errors.minlength || confirmPass.errors.maxlength">
-                    Confirm password must be 6-15 characters
-                  </div>
-                  
-                </div>
                 </div>
               </div>
-            <div class="form-group">
-                <input type="text" class="form-control form-control-user" name = "address" #address = "ngModel" placeholder="Address" [(ngModel)] = "account.location.address"
-                [ngClass]="{'is-invalid' : (address.invalid && (address.dirty || address.touched))}" required
-                
-                />
-                <div *ngIf="address.invalid && (address.dirty || address.touched)" class="text-danger">
-                  <div *ngIf="address.errors.required">
-                    Address required
-                  </div>
-                 
-                </div>
-            </div>  
-              
-              <button    class="btn btn-primary btn-user btn-block" (click)="register(account.email)">
+
+              <button class="btn btn-primary btn-user btn-block" (click)="register(account.email)">
                 Sign Up
               </button>
 
             </form>
             <hr>
-            
-            
+
+
           </div>
         </div>
       </div>

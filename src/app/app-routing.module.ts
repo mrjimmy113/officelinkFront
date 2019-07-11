@@ -66,6 +66,7 @@ const authRoutes: Routes = [
   { path: "workplace", component: WorkplaceComponent },
   { path: "workplace/save", component: WorkplaceSaveComponent },
   { path: "report", component: ReportListComponent },
+  { path: "report/detail/:id", component: SurveyReportComponent },
   { path: "question", component: QuestionListComponent },
   { path: "choose", component: ChooseQuestionComponent },
   { path: "survey", component: SurveyListComponent },
@@ -79,7 +80,7 @@ const routes: Routes = [
   { path: "404", component: NotFoundComponent },
   { path: "forget", component: ForgetPasswordComponent },
   { path: "login", component: LoginComponent },
-  { path: "join", component: JoinComponent },
+  { path: "join/:token", component: JoinComponent },
   { path: "confirm/:accountToken", component: RegisterConfirmComponent },
   {
     path: "",

@@ -17,7 +17,7 @@ import { from } from 'rxjs';
 export class JoinComponent implements OnInit {
 
   account : Account;
-
+  token;
   requestStatus;
   errorStatus;
   messContent : String;
@@ -25,10 +25,17 @@ export class JoinComponent implements OnInit {
   workplace : Workplace;
   location : Location;
 
-  constructor(private accountSer : AccountService , private _route : Router) { }
+  constructor(private accountSer : AccountService , private route : ActivatedRoute, private _route:Router) { }
 
   ngOnInit() {
       this.account = new Account();
+      this.route.params.subscribe(params => {
+        this.token = params["token"];
+        this.accountSer.getInvitationInfor(this.token).subscribe(result => {
+          this.account = result;
+          console.log(this.account);
+        })
+      })
   }
 
   register(){
@@ -42,7 +49,7 @@ export class JoinComponent implements OnInit {
          alert("Password and Confirm password not match. Try again");
       }else{
 
-        this.accountSer.create(this.account).subscribe(res =>
+        this.accountSer.acceptInvite(this.account).subscribe(res =>
           {
 
             this.requestStatus = res;
