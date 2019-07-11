@@ -1,46 +1,41 @@
-import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
-import {DomService} from '../../service/dom.service'
-import {AccountService} from '../../service/account.service'
-import { from } from 'rxjs';
-import { ModalService } from 'src/app/service/modal.service';
-import { initDomAdapter } from '@angular/platform-browser/src/browser';
-import {Account} from '../../model/account';
-import { Alert } from 'selenium-webdriver';
-import {Location} from '../../model/location';
-import {Workplace} from '../../model/workplace'
+import { DisplayService } from "./../../service/display.service";
+import { Router } from "@angular/router";
+import { Component, OnInit } from "@angular/core";
+import { DomService } from "../../service/dom.service";
+import { AccountService } from "../../service/account.service";
+import { from } from "rxjs";
+import { ModalService } from "src/app/service/modal.service";
+import { initDomAdapter } from "@angular/platform-browser/src/browser";
+import { Account } from "../../model/account";
+import { Alert } from "selenium-webdriver";
+import { Location } from "../../model/location";
+import { Workplace } from "../../model/workplace";
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  selector: "app-register",
+  templateUrl: "./register.component.html",
+  styleUrls: ["./register.component.css"]
 })
 export class RegisterComponent implements OnInit {
-
-  account : Account;
+  account: Account;
   requestStatus;
   errorStatus;
-  confirmPassText : String;
-  workplace : Workplace;
-  location : Location;
+  confirmPassText: String;
+  workplace: Workplace;
+  location: Location;
 
-
-
-  constructor( private accoutSer : AccountService) { }
+  constructor(
+    private accoutSer: AccountService,
+    private route: Router,
+    private displaySer: DisplayService
+  ) {}
 
   ngOnInit() {
     this.init();
   }
 
-  init (){
-      
-      this.account = new Account();
-      this.account.location = new Location();
-      this.account.workplace = new Workplace();
-      this.account.isDeleted = false;
-
-      
-      
+  init() {
+    this.account = new Account();
   }
   register(){
       console.log(this.account);
@@ -73,7 +68,4 @@ export class RegisterComponent implements OnInit {
 
 
   }
-
-
-
 }

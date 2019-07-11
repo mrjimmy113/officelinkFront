@@ -11,7 +11,7 @@ export class HomeComponent implements OnInit {
   constructor(private displaySer:DisplayService) { }
 
   ngOnInit() {
-    this.displaySer.hideMenu();
+
   }
 
 }

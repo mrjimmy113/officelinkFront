@@ -59,8 +59,11 @@ import { RegisterConfirmComponent } from './others/register-confirm/register-con
 import { ConfigurationComponent } from "./configuration/configuration.component";
 import { ConfigurationSaveComponent } from "./configuration-save/configuration-save.component";
 
-import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { AuthHomeComponent } from './auth-home/auth-home.component';
+import { NgxChartsModule } from "@swimlane/ngx-charts";
+import { AuthHomeComponent } from "./auth-home/auth-home.component";
+import { ReportListComponent } from './survey/report-list/report-list.component';
+import { DashBoardComponent } from './others/dash-board/dash-board.component';
+import { TutorialComponent } from './others/tutorial/tutorial.component';
 import { AssignAccountComponent } from './account/assign-account/assign-account.component';
 
 @NgModule({
@@ -108,6 +111,9 @@ import { AssignAccountComponent } from './account/assign-account/assign-account.
     ConfigurationSaveComponent,
     AuthHomeComponent,
     RegisterConfirmComponent,
+    ReportListComponent,
+    DashBoardComponent,
+    TutorialComponent,
     AssignAccountComponent,
 
 

@@ -4,18 +4,13 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class DisplayService {
-  menu = true;
+  private loaderID = 'loader';
   constructor() { }
 
-  showMenu() {
-    this.menu = true;
+  show() {
+    document.getElementById(this.loaderID).className = 'show';
   }
-
-  hideMenu() {
-    this.menu = false;
-  }
-
-  statusMenu() : boolean {
-    return this.menu;
+  hide() {
+    document.getElementById(this.loaderID).className = 'hidden';
   }
 }

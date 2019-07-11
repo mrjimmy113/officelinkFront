@@ -17,7 +17,7 @@ import { from } from 'rxjs';
 export class JoinComponent implements OnInit {
 
   account : Account;
-  
+
   requestStatus;
   errorStatus;
   messContent : String;
@@ -29,32 +29,28 @@ export class JoinComponent implements OnInit {
 
   ngOnInit() {
       this.account = new Account();
-      this.account.location =  new Location(); 
-      this.account.workplace = new Workplace();
-      this.account.workplace.name = "hcm";
-      
   }
 
   register(){
-    
+
     this.account.role_id = 2;
     if(this.account.firstname == null || this.account.lastname == null || this.account.email == null || this.account.password == null
-      || this.account.location.address == null ){
+      ){
           alert("Input not empty. Try again")
       }
       if(this.account.password != this.confirmPassText ){
          alert("Password and Confirm password not match. Try again");
       }else{
-        
+
         this.accountSer.create(this.account).subscribe(res =>
-          {        
-    
-            this.requestStatus = res;           
+          {
+
+            this.requestStatus = res;
             if(this.requestStatus == 200){
                 alert("Welcome to office link")
                 this._route.navigateByUrl("/login")
             }
-            
+
           },
           error => {
             this.errorStatus = error.status;
@@ -66,9 +62,9 @@ export class JoinComponent implements OnInit {
             }
           }
           )
-    
+
       }
-    
+
 }
 
 
