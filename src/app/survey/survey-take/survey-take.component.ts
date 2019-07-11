@@ -21,6 +21,7 @@ export class SurveyTakeComponent implements OnInit {
   ngOnInit() {
     this.survey = new Survey();
     this.answers = new Array<Answer>();
+    this.activeSurvey();
   }
 
   multipleAnswer(option : string, answerIndex) {

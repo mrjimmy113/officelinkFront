@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.isError = false;
-    this.displaySer.show();
+    this.displaySer.showLoader();
     this.authSer.login(this.account).subscribe(result => {
       if(result != null) {
         this.authSer.setAuth(result);
@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
         }
       }
       else this.isError =true;
-      this.displaySer.hide();
+      this.displaySer.hideLoader();
     })
   }
 

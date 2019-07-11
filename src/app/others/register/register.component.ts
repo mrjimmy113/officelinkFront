@@ -1,4 +1,3 @@
-import { DisplayService } from "./../../service/display.service";
 import { Router } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
 import { DomService } from "../../service/dom.service";
@@ -10,6 +9,7 @@ import { Account } from "../../model/account";
 import { Alert } from "selenium-webdriver";
 import { Location } from "../../model/location";
 import { Workplace } from "../../model/workplace";
+import { DisplayService } from "src/app/service/display.service";
 
 @Component({
   selector: "app-register",
@@ -26,8 +26,8 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private accoutSer: AccountService,
-    private route: Router,
-    private displaySer: DisplayService
+    private displaySer: DisplayService,
+    private route: Router
   ) {}
 
   ngOnInit() {
@@ -36,6 +36,9 @@ export class RegisterComponent implements OnInit {
 
   init() {
     this.account = new Account();
+    this.account.location = new Location();
+    this.account.workplace = new Workplace();
+    this.account.isDeleted = false;
   }
   register(){
       console.log(this.account);

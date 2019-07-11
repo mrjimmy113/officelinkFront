@@ -7,10 +7,10 @@ export class DisplayService {
   private loaderID = 'loader';
   constructor() { }
 
-  show() {
+  showLoader() {
     document.getElementById(this.loaderID).className = 'show';
   }
-  hide() {
+  hideLoader() {
     document.getElementById(this.loaderID).className = 'hidden';
   }
 }

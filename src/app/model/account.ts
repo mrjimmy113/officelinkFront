@@ -1,3 +1,7 @@
+import {Role} from './role'
+import { Workplace } from './workplace';
+import {Location} from './location';
+import { from } from 'rxjs';
 export class Account {
     id : Number;
     password : String;
@@ -7,6 +11,11 @@ export class Account {
     address : String;
     isDeleted  = false;
     role_id : Number ;
-    locationId:Number;
-    teamId:Number;
+    //workspacename : String;
+
+    location : Location;
+    workplace: Workplace;
+
+
+
 }

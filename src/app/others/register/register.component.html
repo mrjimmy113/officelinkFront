@@ -1,145 +1,143 @@
 <div class="container ">
 
-    <div class="card o-hidden border-0 shadow-lg my-5">
-      <div class="card-body p-0">
-        <!-- Nested Row within Card Body -->
-        <div class="row">
-          <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
-          <div class="col-lg-7">
-            <div class="p-5">
-              <div class="text-center">
-                <h1 class="h4 text-gray-900 mb-4">Welcome to OFFICE LINK</h1>
-              </div>
-              <form class="user">
-                  <div class="form-group">
-                      <input  class="form-control form-control-user" name = "workspacename"  #workspacename="ngModel" placeholder="Worksplace name" [(ngModel)] = "account.workplace.name"
-                      [ngClass]="{'is-invalid' : (workspacename.invalid && (workspacename.dirty || workspacename.touched))}" required
-                      pattern="^[a-zA-Z0-9._-\s]*$"
-                      />
-                      <div *ngIf="workspacename.invalid && (workspacename.dirty || workspacename.touched)" class="text-danger">
-                        <div *ngIf="workspacename.errors.required">
-                          Work splace name required
-                        </div>
-                        <div *ngIf="workspacename.errors.pattern">
-                          Word splace name can't contain special character except "_-."
-                        </div>
-
-                      </div>
-                    </div>
-                <div class="form-group row">
-
-                  <div class="col-sm-6 mb-3 mb-sm-0">
-                    <input type="text" class="form-control form-control-user" name = "firstname" #firstname = "ngModel" placeholder="First Name" [(ngModel)] = account.firstname
-                    [ngClass]="{'is-invalid' : (firstname.invalid && (firstname.dirty || firstname.touched))}" required
+  <div class="card o-hidden border-0 shadow-lg my-5">
+    <div class="card-body p-0">
+      <!-- Nested Row within Card Body -->
+      <div class="row">
+        <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+        <div class="col-lg-7">
+          <div class="p-5">
+            <div class="text-center">
+              <h1 class="h4 text-gray-900 mb-4">Welcome to OFFICE LINK</h1>
+            </div>
+            <form class="user">
+                <div class="form-group">
+                    <input  class="form-control form-control-user" name = "workspacename"  #workspacename="ngModel" placeholder="Worksplace name" [(ngModel)] = "account.workplace.name"
+                    [ngClass]="{'is-invalid' : (workspacename.invalid && (workspacename.dirty || workspacename.touched))}" required
                     pattern="^[a-zA-Z0-9._-\s]*$"
                     />
-                    <div *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)" class="text-danger">
-                      <div *ngIf="firstname.errors.required">
-                        First name required
+                    <div *ngIf="workspacename.invalid && (workspacename.dirty || workspacename.touched)" class="text-danger">
+                      <div *ngIf="workspacename.errors.required">
+                        Work splace name required
                       </div>
-                      <div *ngIf="firstname.errors.pattern">
-                        First name can't contain special character except "_-."
+                      <div *ngIf="workspacename.errors.pattern">
+                        Word splace name can't contain special character except "_-."
                       </div>
 
                     </div>
+                  </div>
+              <div class="form-group row">
+
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input type="text" class="form-control form-control-user" name = "firstname" #firstname = "ngModel" placeholder="First Name" [(ngModel)] = account.firstname
+                  [ngClass]="{'is-invalid' : (firstname.invalid && (firstname.dirty || firstname.touched))}" required
+                  pattern="^[a-zA-Z0-9._-\s]*$"
+                  />
+                  <div *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)" class="text-danger">
+                    <div *ngIf="firstname.errors.required">
+                      First name required
+                    </div>
+                    <div *ngIf="firstname.errors.pattern">
+                      First name can't contain special character except "_-."
+                    </div>
+
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control form-control-user" name="lastname" #lastname = "ngModel" placeholder="Last Name" [(ngModel)] = account.lastname
+                  [ngClass]="{'is-invalid' : (lastname.invalid && (lastname.dirty || lastname.touched))}" required
+                  pattern="^[a-zA-Z0-9._-\s]*$"
+                  />
+                  <div *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)" class="text-danger">
+                    <div *ngIf="lastname.errors.required">
+                      Last name required
+                    </div>
+                    <div *ngIf="lastname.errors.pattern">
+                      Last name can't contain special character except "_-."
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <input type="email" class="form-control form-control-user" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" name = "email" #email = "ngModel" placeholder="Email" [(ngModel)] = account.email
+                [ngClass]="{'is-invalid' : (email.invalid && (email.dirty || email.touched))}" required
+                >
+                <div *ngIf="email.errors &&(email.touched || email.dirty)" class ="text-danger">
+                    <div *ngIf="email.errors.required">
+                        Email required
+                      </div>
+                  <div [hidden]="!email.errors?.pattern">
+                    Email invalid
+                  </div>
+                 </div>
+              </div>
+
+              <div class="form-group row">
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input type="password" class="form-control form-control-user" id="exampleFirstName"
+                      placeholder="Password" name = "password" #password = "ngModel" [(ngModel)] = "account.password"
+                      [ngClass]="{'is-invalid' : (password.invalid && (password.dirty || password.touched))}" required
+                      minlength="6" maxlength="15"
+                  />
+                  <div *ngIf="password.invalid && (password.dirty || password.touched)" class="text-danger">
+                    <div *ngIf="password.errors.required">
+                      Password required
+                    </div>
+
+                    <div *ngIf="password.errors.minlength || password.errors.maxlength">
+                      Password must be 6-15 characters
+                    </div>
+
+                  </div>
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" class="form-control form-control-user" name="lastname" #lastname = "ngModel" placeholder="Last Name" [(ngModel)] = account.lastname
-                    [ngClass]="{'is-invalid' : (lastname.invalid && (lastname.dirty || lastname.touched))}" required
-                    pattern="^[a-zA-Z0-9._-\s]*$"
-                    />
-                    <div *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)" class="text-danger">
-                      <div *ngIf="lastname.errors.required">
-                        Last name required
-                      </div>
-                      <div *ngIf="lastname.errors.pattern">
-                        Last name can't contain special character except "_-."
-                      </div>
-
+                    <input type="password" class="form-control form-control-user" id="exampleLastName"
+                      placeholder="Confirm"
+                      name = "confirmPass" #confirmPass = "ngModel" [(ngModel)] = "confirmPassText"
+                      [ngClass]="{'is-invalid' : (confirmPass.invalid && (confirmPass.dirty || confirmPass.touched))}" required
+                      minlength="6" maxlength="15"
+                  />
+                  <div *ngIf="confirmPass.invalid && (confirmPass.dirty || confirmPass.touched)" class="text-danger">
+                    <div *ngIf="confirmPass.errors.required">
+                      Confirm password required
                     </div>
-                  </div>
-                </div>
 
-                <div class="form-group">
-                  <input type="email" class="form-control form-control-user" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" name = "email" #email = "ngModel" placeholder="Email" [(ngModel)] = account.email
-                  [ngClass]="{'is-invalid' : (email.invalid && (email.dirty || email.touched))}" required
-                  >
-                  <div *ngIf="email.errors &&(email.touched || email.dirty)" class ="text-danger">
-                      <div *ngIf="email.errors.required">
-                          Email required
-                        </div>
-                    <div [hidden]="!email.errors?.pattern">
-                      Email invalid
+                    <div *ngIf="confirmPass.errors.minlength || confirmPass.errors.maxlength">
+                      Confirm password must be 6-15 characters
                     </div>
-                   </div>
-                </div>
 
-                <div class="form-group row">
-                    <div class="col-sm-6 mb-3 mb-sm-0">
-                      <input type="password" class="form-control form-control-user" id="exampleFirstName"
-                        placeholder="Password" name = "password" #password = "ngModel" [(ngModel)] = "account.password"
-                        [ngClass]="{'is-invalid' : (password.invalid && (password.dirty || password.touched))}" required
-                        minlength="6" maxlength="15"
-                    />
-                    <div *ngIf="password.invalid && (password.dirty || password.touched)" class="text-danger">
-                      <div *ngIf="password.errors.required">
-                        Password required
-                      </div>
-
-                      <div *ngIf="password.errors.minlength || password.errors.maxlength">
-                        Password must be 6-15 characters
-                      </div>
-
-                    </div>
-                    </div>
-                    <div class="col-sm-6">
-                      <input type="password" class="form-control form-control-user" id="exampleLastName"
-                        placeholder="Confirm"
-                        name = "confirmPass" #confirmPass = "ngModel" [(ngModel)] = "confirmPassText"
-                        [ngClass]="{'is-invalid' : (confirmPass.invalid && (confirmPass.dirty || confirmPass.touched))}" required
-                        minlength="6" maxlength="15"
-                    />
-                    <div *ngIf="confirmPass.invalid && (confirmPass.dirty || confirmPass.touched)" class="text-danger">
-                      <div *ngIf="confirmPass.errors.required">
-                        Confirm password required
-                      </div>
-
-                      <div *ngIf="confirmPass.errors.minlength || confirmPass.errors.maxlength">
-                        Confirm password must be 6-15 characters
-                      </div>
-
-                    </div>
-                    </div>
                   </div>
                 <div class="form-group">
                     <input type="text" class="form-control form-control-user" name = "address" #address = "ngModel" placeholder="Address" [(ngModel)] = "account.address"
                     [ngClass]="{'is-invalid' : (address.invalid && (address.dirty || address.touched))}" required
 
-                    />
-                    <div *ngIf="address.invalid && (address.dirty || address.touched)" class="text-danger">
-                      <div *ngIf="address.errors.required">
-                        Address required
-                      </div>
-
+                  />
+                  <div *ngIf="address.invalid && (address.dirty || address.touched)" class="text-danger">
+                    <div *ngIf="address.errors.required">
+                      Address required
                     </div>
-                </div>   -->
 
-                <button    class="btn btn-primary btn-user btn-block" (click)="register()">
-                  Register Account
-                </button>
+                  </div>
+              </div>
 
-              </form>
-              <hr>
-              <div class="text-center">
-                <a class="small" href="forgot-password.html">Forgot Password?</a>
-              </div>
-              <div class="text-center">
-                <a class="small" href="login.html">Already have an account? Login!</a>
-              </div>
+              <button    class="btn btn-primary btn-user btn-block" (click)="register()">
+                Register Account
+              </button>
+
+            </form>
+            <hr>
+            <div class="text-center">
+              <a class="small" href="forgot-password.html">Forgot Password?</a>
+            </div>
+            <div class="text-center">
+              <a class="small" href="login.html">Already have an account? Login!</a>
             </div>
           </div>
         </div>
       </div>
     </div>
-
   </div>
+
+</div>

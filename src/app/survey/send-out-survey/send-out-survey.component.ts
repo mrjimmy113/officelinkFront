@@ -41,6 +41,7 @@ export class SendOutSurveyComponent implements OnInit {
 
     this.locationSer.getAllLocation().subscribe(result => {
       this.locationList = result;
+      console.log(result);
     });
     this.departmentSer.getAll().subscribe(result => {
       this.departmentList = result;
