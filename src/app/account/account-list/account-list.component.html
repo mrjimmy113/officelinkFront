@@ -18,7 +18,7 @@
   <!--Heading-->
   <div class="w3-indigo list-group-item">
     <div class="row">
-      <div class="row col-sm-10">
+      <div class="row col-sm-8">
 
         <div class="col-sm-2 d-flex align-items-center clickable" (click)="sort('name')">
           First name <i class="fas fa-sort icon"></i>
@@ -34,7 +34,7 @@
         </div>
       </div>
 
-      <div class="col-sm-2 d-flex align-items-center justify-content-center">
+      <div class="col-sm-4 d-flex align-items-center justify-content-center">
         Operation
       </div>
     </div>
@@ -44,7 +44,7 @@
     <div class="list-group-item w3-hover-blue " [ngClass]="{'w3-light-grey': ((i % 2) == 1)}"
       [ngClass]="{'w3-white': ((i % 2) == 0)}" style="border:none" >
       <div class="row">
-        <div class="row col-sm-10">
+        <div class="row col-sm-8">
 
           <div class="col-sm-2 d-flex align-items-center">
             {{item.firstname}}
@@ -60,10 +60,11 @@
           </div>
         </div>
 
-        <div class="col-sm-2 d-flex align-items-center justify-content-center">
+        <div class="col-sm-4 d-flex align-items-center justify-content-center">
           <div class="w3-dropdown-hover">
            
             <div class="w3-dropdown-content w3-bar-block">
+              <button href="#" class="w3-bar-item btn btn-warning" (click)="openAssign()">Assign</button>
               <button href="#" class="w3-bar-item btn btn-info" (click)="openEdit(item)">Edit</button>
               <button href="#" class="w3-bar-item btn btn-danger" (click)="delete(item.id)">Delete</button>
             </div>

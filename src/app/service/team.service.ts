@@ -21,6 +21,7 @@ export class TeamService {
     return this.http.get<Team[]>(this.api + `/getByWorkplace`)
   }
 
+
   getTeamByDepId(id):Observable<Team[]> {
     return this.http.get<Team[]>(this.api + `/dep?id=${id}`)
   }

@@ -60,6 +60,7 @@ import { ConfigurationComponent } from './configuration/configuration.component'
 import { ConfigurationSaveComponent } from './configuration-save/configuration-save.component';
 
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { AssignAccountComponent } from './account/assign-account/assign-account.component';
 
 @NgModule({
   declarations: [
@@ -105,6 +106,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     ConfigurationComponent,
     ConfigurationSaveComponent,
     RegisterConfirmComponent,
+    AssignAccountComponent,
 
 
   ],
