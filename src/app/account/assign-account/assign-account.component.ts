@@ -73,7 +73,8 @@ export class AssignAccountComponent implements OnInit {
     assignInfor.locationId = this.locationId;
     assignInfor.teamIdList = this.choosenTeamList;
     this.accountSer.assign(assignInfor).subscribe(result => {
-      console.log(result);
+      alert("Assigned Successfully");
+      this.modalSer.destroy();
     })
   }
 

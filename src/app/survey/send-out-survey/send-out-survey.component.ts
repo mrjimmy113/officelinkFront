@@ -9,6 +9,7 @@ import { LocationService } from "./../../service/location.service";
 import { Component, OnInit, Input } from "@angular/core";
 import { Department } from "src/app/model/department";
 import { Team } from "src/app/model/team";
+import { DisplayService } from 'src/app/service/display.service';
 
 @Component({
   selector: "app-send-out-survey",
@@ -25,15 +26,19 @@ export class SendOutSurveyComponent implements OnInit {
   currentLocation: Location;
   currentDepartment: Department;
   currentTeam: Team;
+  expireDate:Date;
+  today = new Date();
   constructor(
     private locationSer: LocationService,
     private departmentSer: DepartmentService,
     private teamSer: TeamService,
     private modalSer: ModalService,
-    private surveySer: SurveyService
+    private surveySer: SurveyService,
+    private displaySer:DisplayService
   ) {}
 
   ngOnInit() {
+
     this.currentLocation = new Location();
     this.currentLocation.id = 0;
     this.currentDepartment = new Department();
@@ -84,8 +89,12 @@ export class SendOutSurveyComponent implements OnInit {
     let sendSurvey = new SendSurvey();
     sendSurvey.surveyId = this.inputs;
     sendSurvey.targetList = sendOutList;
+    sendSurvey.expireDate = (new Date(this.expireDate)).getTime();
+    this.displaySer.showLoader();
     this.surveySer.sendOutSurvey(sendSurvey).subscribe(result => {
-      console.log(result);
+      alert("Your survey has beend sent");
+      this.modalSer.destroy();
+      this.displaySer.hideLoader();
     })
   }
 

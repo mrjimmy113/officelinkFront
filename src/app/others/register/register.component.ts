@@ -41,19 +41,21 @@ export class RegisterComponent implements OnInit {
     this.account.isDeleted = false;
   }
   register(){
-      console.log(this.account);
-    
+
         this.account.role_id = 1;
-        if(this.account.firstname == null || this.account.lastname == null || this.account.email == null || 
+        if(this.account.firstname == null || this.account.lastname == null || this.account.email == null ||
          this.account.password == null|| this.account.address == null  || this.account.workplace.name == null){
            alert("Input not empty. Try again ")
          }
          if(this.account.password != this.confirmPassText){
            alert("Password and Confirm password not match. Try again");
-         }else{                         
-                  this.accoutSer.sendMail(this.account).subscribe(res => {   
+         }else{
+          this.displaySer.showLoader();
+                  this.accoutSer.sendMail(this.account).subscribe(res => {
 
                     alert("Successful registration of account information, please check your mail to complete the registration")
+                    this.route.navigateByUrl("/home");
+                    this.displaySer.hideLoader();
                   }
              ,
             error => {
@@ -64,8 +66,9 @@ export class RegisterComponent implements OnInit {
               if(error.status == 400){
                 alert("The system has failed, please try again")
               }
+              this.displaySer.hideLoader();
             })
-            
+
          }
 
 

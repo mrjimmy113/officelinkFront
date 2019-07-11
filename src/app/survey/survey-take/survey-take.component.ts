@@ -1,3 +1,4 @@
+import { SurveyAnswerInfor } from './../../model/surveyAnswerInfor';
 import { AuthenticationService } from "./../../service/authentication.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Answer } from "./../../model/answer";
@@ -48,7 +49,10 @@ export class SurveyTakeComponent implements OnInit {
   }
 
   saveAnswer() {
-    this.surveySer.sendAnswer(this.answers).subscribe(result => {
+    let surveyAnswerInfor = new SurveyAnswerInfor();
+    surveyAnswerInfor.answers = this.answers;
+    surveyAnswerInfor.surveyId = this.survey.id;
+    this.surveySer.sendAnswer(surveyAnswerInfor).subscribe(result => {
       alert("Thank you for taking out this survey");
       this.router.navigate(['/']);
     });
@@ -74,6 +78,8 @@ export class SurveyTakeComponent implements OnInit {
 
         });
       });
+    }else {
+      alert("Please login to do the survey");
     }
   }
 }

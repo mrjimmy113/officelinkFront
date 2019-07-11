@@ -58,7 +58,7 @@ const authRoutes: Routes = [
   { path: "news/:id/detail", component: NewsDetailComponent },
   { path: "q", component: SurveySaveComponent },
   { path: "memInvite", component: InvitationComponent },
-  { path: "take/:token", component: SurveyTakeComponent },
+
   { path: "team", component: TeamComponent },
   { path: "team/save", component: TeamSaveComponent },
   { path: "department", component: DepartmentComponent },
@@ -81,6 +81,7 @@ const routes: Routes = [
   { path: "forget", component: ForgetPasswordComponent },
   { path: "login", component: LoginComponent },
   { path: "join/:token", component: JoinComponent },
+  { path: "take/:token", component: SurveyTakeComponent },
   { path: "confirm/:accountToken", component: RegisterConfirmComponent },
   {
     path: "",
