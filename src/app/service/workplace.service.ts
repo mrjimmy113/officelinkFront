@@ -13,16 +13,12 @@ export class WorkplaceService {
 
   constructor(private http:HttpClient) { }
 
-  getAll():Observable<Array<Workplace>> {
-    return this.http.get<Array<Workplace>>(this.api + `/getAll`);
+  getUserWorkplace():Observable<Array<Workplace>> {
+    return this.http.get<Array<Workplace>>(this.api + `/getUserWorkplace`);
   }
 
-  search(term):Observable<PageSearch<Workplace>> {
-    return this.http.get<PageSearch<Workplace>>(this.api + `?term=${term}`);
-  }
-
-  getPage(term, page):Observable<PageSearch<Workplace>> {
-    return this.http.get<PageSearch<Workplace>>(this.api + `/getPage?term=${term}&page=${page}`);
+  searchGetPage(term, page):Observable<PageSearch<Workplace>> {
+    return this.http.get<PageSearch<Workplace>>(this.api + `/?term=${term}&page=${page}`);
   }
 
   create(obj):Observable<Number> {

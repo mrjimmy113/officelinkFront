@@ -18,11 +18,18 @@ export class DepartmentComponent implements OnInit {
   constructor(private modalSer: ModalService, private ser: DepartmentService) { }
 
   ngOnInit() {
-    this.search("");
+    this.init();
+  }
+
+  init() {
+    this.ser.searchGetPage("", 1).subscribe(result => {
+      this.maxPage = result.maxPage;
+      this.itemList = result.objList;
+    });
   }
 
   search(value) {
-    this.ser.search(value).subscribe(result => {
+    this.ser.searchGetPage(value, 1).subscribe(result => {
       this.maxPage = result.maxPage;
       this.itemList = result.objList;
     })
@@ -59,7 +66,7 @@ export class DepartmentComponent implements OnInit {
 
   loadPage(pageNumber) {
     this.currentPage = pageNumber;
-    this.ser.getPage(this.searchTerm, pageNumber).subscribe(result => {
+    this.ser.searchGetPage(this.searchTerm, pageNumber).subscribe(result => {
       this.maxPage = result.maxPage;
       this.itemList = result.objList;
     })

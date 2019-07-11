@@ -13,12 +13,12 @@ export class TeamService {
 
   constructor(private http:HttpClient) { }
 
-  search(term):Observable<PageSearch<Team>> {
-    return this.http.get<PageSearch<Team>>(this.api + `?term=${term}`);
+  searchGetPage(term, page):Observable<PageSearch<Team>> {
+    return this.http.get<PageSearch<Team>>(this.api + `?term=${term}&page=${page}`);
   }
 
-  getPage(term, page):Observable<PageSearch<Team>> {
-    return this.http.get<PageSearch<Team>>(this.api + `/getPage?term=${term}&page=${page}`);
+  getByWorkplace():Observable<Team[]> {
+    return this.http.get<Team[]>(this.api + `/getByWorkplace`)
   }
 
   getTeamByDepId(id):Observable<Team[]> {
