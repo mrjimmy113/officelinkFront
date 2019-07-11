@@ -40,6 +40,7 @@ import { JoinComponent } from './others/join/join.component'
 
 import { from } from 'rxjs';
 import { RegisterConfirmComponent } from './others/register-confirm/register-confirm.component';
+import { AssignAccountComponent } from './account/assign-account/assign-account.component';
 
 const routes: Routes = [
   { path: "", component:HomeComponent},
@@ -54,8 +55,8 @@ const routes: Routes = [
   { path: "admin/account", component:AccountListComponent},
   { path: "admin/account/create" , component:AccountSaveComponent},
   { path: "admin/account/delete", component:AccountDeleteComponent},
-  { path: "login/", component: LoginComponent, },
   { path: "confirm/:accountToken",  component: RegisterConfirmComponent},
+  { path: "admin/assign", component:AssignAccountComponent},
   
 
   { path: "404",  component: NotFoundComponent },

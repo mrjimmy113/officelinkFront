@@ -1,0 +1,67 @@
+
+<div class="modal-dialog" role="document" >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Assign member</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click) = "closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <div class="row col-sm-12">
+              
+              <div class="col-sm-10">
+                  <div class="form-group">
+                      <label>Location(*)</label>
+                      <select class="form-control" name="location" #location="ngModel" [(ngModel)]="address"
+                        [ngClass]="{'is-invalid' : (location.invalid && (location.dirty || location.touched))}" required>
+                        <option selected disabled>Choose location</option>
+                        <option *ngFor="let item of locationList" [value]="item.id">{{item.address}}</option>
+                      </select>
+
+                    </div>
+                    <div class="form-group">
+                        <label>Team(*)</label>
+                        <select class="form-control" name="team" #location="ngModel" [(ngModel)]="newTeamIndex">
+                          
+                          <option selected disabled>Choose team</option>
+                          <option *ngFor="let item of teamList; let i = index" [value]="i">{{item.name}}</option>
+                        </select>
+  
+                      </div>
+                
+                  <!-- <input type="email" class="form-control form-control-user" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" name = "email" #email = "ngModel" placeholder="Email Invitation" [(ngModel)] = newEmail
+                  [ngClass]="{'is-invalid' : (email.invalid && (email.dirty || email.touched))}" required
+                  >
+                  <div *ngIf="email.errors &&(email.touched || email.dirty)" class ="text-danger">
+                      <div *ngIf="email.errors.required">
+                          Email required
+                        </div>
+                    <div [hidden]="!email.errors?.pattern">
+                      Email invalid
+                    </div> 
+                   </div>  -->
+                  <label>Team List</label>
+                  <div  class="invitation-box">
+                      
+                      <span class="badge badge-primary" *ngFor="let item of listTeam; let i = index">
+                      {{item}} <button class="btn-primary borderless" ><i class="fas fa-times" (click)="assignRemove(i, item.id )"></i></button>
+                      </span>
+            
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                  <button class="btn btn-success" (click)="assignTeam()">Add</button>
+                </div>
+                
+          
+          
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click) = "assign()">Assign</button>
+      </div>
+    </div>
+  </div>
+  

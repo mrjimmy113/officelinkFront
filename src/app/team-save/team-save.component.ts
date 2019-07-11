@@ -50,8 +50,10 @@ export class TeamSaveComponent implements OnInit {
 
   // get list department and store in depList
   getListDepartment() {
+    console.log("aaaaaaa");
     this.depSer.getAll().subscribe(result => {
       this.depList = result;
+      console.log(result)
     });
   }
 

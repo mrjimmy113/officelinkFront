@@ -8,7 +8,7 @@ export class Account {
     email : String;
     firstname : String;
     lastname : String;
-    //address : String;
+    address : String;
     isDeleted  = false;
     role_id : Number ;
     //workspacename : String;
