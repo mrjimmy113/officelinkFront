@@ -1,0 +1,12 @@
+<div id="wrapper">
+  <app-side-menu ></app-side-menu>
+  <div id="content-wrapper" class="d-flex flex-column" >
+    <app-header ></app-header>
+    <!-- Main Content -->
+    <div id="content" style="max-height: 85vh; overflow-y:auto;">
+      <div style="padding-left: 12px; padding-right: 12px">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>

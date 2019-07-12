@@ -1,9 +1,10 @@
 import { QuestionReport } from './questionReport';
 export class SurveyReport {
+  id:Number;
   name : String;
-	startDate : Date;
-	endDate : Date;
-	received : number;
-	sendOut : number;
+	dateSendOut : Date;
+	dateStop : Date;
+	receivedAnswer : number;
+	sentOut : number;
 	questions : QuestionReport[];
 }

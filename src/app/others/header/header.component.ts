@@ -15,7 +15,13 @@ export class HeaderComponent implements OnInit {
   }
 
   display() {
-    this.isDisplay = !this.isDisplay;
+    this.isDisplay = true;
+  }
+  hide() {
+    this.isDisplay = false;
+  }
+  logout() {
+    this.authSer.logout();
   }
 
 }

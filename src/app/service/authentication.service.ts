@@ -47,6 +47,6 @@ export class AuthenticationService {
   }
   logout() {
     localStorage.removeItem(this.itemName);
-    window.location.pathname="/login";
+    window.location.pathname="/home";
   }
 }

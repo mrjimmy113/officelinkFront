@@ -46,4 +46,7 @@ export class LocationService {
   delete(id):Observable<Number>{
     return this.http.delete<Number>(this.api + `?id=${id}`);
   }
+  getByDepId(id):Observable<Location[]> {
+    return this.http.get<Location[]>(this.api + `/byDepartment?id=${id}`);
+  }
 }

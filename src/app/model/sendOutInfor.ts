@@ -1,5 +1,5 @@
 export class SendOutInfor {
-  locationId:Number;
-  departmentId:Number;
-  teamId:Number;
+  locationId:number;
+  departmentId:number;
+  teamId:number;
 }

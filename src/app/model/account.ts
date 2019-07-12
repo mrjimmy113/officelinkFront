@@ -16,6 +16,6 @@ export class Account {
     location : Location;
     workplace: Workplace;
 
-   
-    
+
+
 }

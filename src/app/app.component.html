@@ -1,25 +1,11 @@
 <div id="modal-container" class="hidden"></div>
 <div id="overlay" class="overlay" class="hidden"></div>
-<div id="wrapper" *ngIf="isLogin">
-  <app-side-menu></app-side-menu>
-  <div id="content-wrapper" class="d-flex flex-column" >
-    <app-header></app-header>
-    <!-- Main Content -->
-    <div id="content" style="max-height: 78vh; overflow-y:auto;">
-      <div style="padding-left: 12px; padding-right: 12px">
-        <router-outlet></router-outlet>
-      </div>
+<div id="loader" class="hidden">
+  <div class="d-flex align-items-center overlay justify-content-center">
+    <div class="spinner-border spinner-border-sm text-info" style="width: 10rem; height: 10rem;" role="status">
+      <span class="sr-only">Loading...</span>
     </div>
-    <footer class="sticky-footer bg-white">
-      <div class="container my-auto">
-        <div class="copyright text-center my-auto">
-          <span>Copyright &copy; Your Website 2019</span>
-        </div>
-      </div>
-    </footer>
   </div>
 </div>
-<div *ngIf="!isLogin">
-  <router-outlet></router-outlet>
-</div>
+<router-outlet></router-outlet>
 

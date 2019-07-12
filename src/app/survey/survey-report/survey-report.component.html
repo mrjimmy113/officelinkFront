@@ -1,9 +1,70 @@
 <h4>
-  <button class="btn-circle btn-primary">
+  <a class="btn-circle btn-primary" [routerLink]="['/report']" routerLinkActive="router-link-active" >
     <i class="fas fa-arrow-left"></i>
-  </button>
-  Cafeteria Experience Feedback
+  </a>
+  {{surveyReport.name}}
 </h4>
+<div class="d-flex justify-content-center form-group">
+  <h5>Survey Information</h5>
+</div>
+<div class="row form-group">
+  <div class="col-sm-4">
+    <div class="card border-left-primary shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Received Answer / Send out</div>
+            <div class=" mb-0">
+              <span class="h5 font-weight-bold">{{surveyReport.receivedAnswer}} /</span>
+              {{surveyReport.sentOut}}
+            </div>
+          </div>
+          <div class="col-auto">
+            <i class="far fa-comment-dots fa-2x text-gray-300"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="card border-left-success shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Send Out Date</div>
+            <div class="h5 font-weight-bold mb-0">
+              {{surveyReport.dateSendOut | date}}
+
+            </div>
+          </div>
+          <div class="col-auto">
+              <i class="far fa-calendar-check fa-2x text-gray-300"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="card border-left-danger shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Expire Date</div>
+            <div class="h5 font-weight-bold mb-0">
+              {{surveyReport.dateStop | date}}
+            </div>
+          </div>
+          <div class="col-auto">
+            <i class="far fa-calendar-times fa-2x text-gray-300"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="d-flex justify-content-center form-group">
+    <h5>Question Report</h5>
+  </div>
 <div class="row form-group d-flex justify-content-end">
   <div class="col-sm-4 row align-content-center d-flex justify-content-end" style="margin: 0px; padding-right: 24px">
     <b class="row ">Filtered by:</b>

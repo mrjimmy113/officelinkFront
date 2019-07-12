@@ -1,0 +1,16 @@
+.row {
+  padding: 0px;
+}
+.col-sm-4 {
+  padding: 0px;
+}
+.progress {
+  border-radius: 0px;
+  margin-bottom: 5px;
+}
+.card-body {
+  padding: 12px;
+}
+.card {
+  margin-bottom: 10px;
+}

@@ -1,5 +1,5 @@
 .invitation-box {
-  border: solid grey 1px; padding: 5px; border-radius: 2%; height: 200px; overflow-y: auto;
+  border: solid grey 1px; padding: 5px; border-radius: 2%; height: 150px; overflow-y: auto;
 }
 .borderless{
   border: none;

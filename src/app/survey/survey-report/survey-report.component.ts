@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { AnswerOption } from './../../model/answerOption';
 import { SurveyReport } from './../../model/surveyReport';
 import { SurveyService } from './../../service/survey.service';
@@ -26,20 +27,23 @@ export class SurveyReportComponent implements OnInit {
 
 
 
-  constructor(private modalSer:ModalService, private surveySer:SurveyService) { }
+  constructor(private modalSer:ModalService, private surveySer:SurveyService,private route:ActivatedRoute) { }
 
   ngOnInit() {
     this.surveyReport = new SurveyReport();
     this.reportData = new Array<any>();
-    this.surveySer.getReportAll(1).subscribe(result => {
-      this.surveyReport = result;
-      this.surveyReport.questions.forEach(element => {
-        if(element.question.type.type == 'TEXT') {
-          this.reportData.push(this.getWordCloud(element.answers));
-        }else {
-          this.reportData.push(this.getChartParam(element.answers, element.question.options));
-        }
-      });
+    this.route.params.subscribe(params =>{
+      this.surveySer.getReportAll(params['id']).subscribe(result => {
+        this.surveyReport = result;
+        console.log(result);
+        this.surveyReport.questions.forEach(element => {
+          if(element.question.type.type == 'TEXT') {
+            this.reportData.push(this.getWordCloud(element.answers));
+          }else {
+            this.reportData.push(this.getChartParam(element.answers, element.question.options));
+          }
+        });
+      })
     })
   }
   openCompare() {
