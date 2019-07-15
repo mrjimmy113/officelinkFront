@@ -16,6 +16,9 @@ export class AccountService {
     return this.httpClient.get<PageSearch<Account>>(this.api + `?term=${term}`);
   }
 
+  getProfile() : Observable<Account>{
+    return this.httpClient.get<Account>(this.api + `/profile`);
+  }
   getPage(term,page): Observable<Account[]> {
     return this.httpClient.get<Account[]>(this.api + `?term=${term}&page=${page}`);
   }

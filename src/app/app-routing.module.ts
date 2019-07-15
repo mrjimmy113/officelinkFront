@@ -1,3 +1,4 @@
+import { AccountProfileComponent } from './account/account-profile/account-profile.component';
 import { DashBoardComponent } from "./others/dash-board/dash-board.component";
 import { ReportListComponent } from "./survey/report-list/report-list.component";
 import { AuthGuard } from "./guard/auth.guard";
@@ -41,6 +42,7 @@ import { AccountSaveComponent } from "./account/account-save/account-save.compon
 import { AccountDeleteComponent } from "./account/account-delete/account-delete.component";
 import { JoinComponent } from "./others/join/join.component";
 import { RegisterConfirmComponent } from "./others/register-confirm/register-confirm.component";
+import { from } from 'rxjs';
 
 const authRoutes: Routes = [
   { path: "", component: DashBoardComponent },
@@ -48,6 +50,7 @@ const authRoutes: Routes = [
   { path: "account", component: AccountListComponent },
   { path: "account/create", component: AccountSaveComponent },
   { path: "account/delete", component: AccountDeleteComponent },
+  { path: "profile" , component: AccountProfileComponent},
   { path: "login-form/:emailToken", component: LoginComponent },
   { path: "location", component: LocationComponent },
   { path: "location/create", component: LocationCreateComponent },
