@@ -1,14 +1,24 @@
-import { Component, OnInit, Input, Output } from '@angular/core';
-import { Configuration } from '../model/configuration';
-import { ModalService } from '../service/modal.service';
-import { ConfigurationService } from '../service/configuration.service';
-import { Survey } from '../model/survey';
-import { SurveyService } from '../service/survey.service';
+import { SendSurvey } from './../model/sendSurvey';
+import { Location } from './../model/location';
+import { DepartmentService } from './../service/department.service';
+import { LocationService } from './../service/location.service';
+import { DisplayService } from 'src/app/service/display.service';
+import { Team } from "./../model/team";
+import { Department } from "src/app/model/department";
+import { Component, OnInit, Input, Output } from "@angular/core";
+import { Configuration } from "../model/configuration";
+import { ModalService } from "../service/modal.service";
+import { ConfigurationService } from "../service/configuration.service";
+import { Survey } from "../model/survey";
+import { SurveyService } from "../service/survey.service";
+import { SendOutInfor } from "../model/sendOutInfor";
+import { TeamService } from '../service/team.service';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
-  selector: 'app-configuration-save',
-  templateUrl: './configuration-save.component.html',
-  styleUrls: ['./configuration-save.component.css']
+  selector: "app-configuration-save",
+  templateUrl: "./configuration-save.component.html",
+  styleUrls: ["./configuration-save.component.css"]
 })
 export class ConfigurationSaveComponent implements OnInit {
   @Input() inputs;
@@ -28,7 +38,25 @@ export class ConfigurationSaveComponent implements OnInit {
   dayOfWeeks = new Array();
   arrayOfWeekDays;
 
-  constructor(private modalSer: ModalService, private configSer: ConfigurationService, private surveySer: SurveyService) { }
+  //Send out infor
+  locationList: Array<Location>;
+  departmentList: Array<Department>;
+  teamList: Array<Team>;
+  inforList: Array<SendOutInfor>;
+  displayInforList: Array<String>;
+  currentLocation: Location;
+  currentDepartment: Department;
+  currentTeam: Team;
+
+  constructor(
+    private modalSer: ModalService,
+    private configSer: ConfigurationService,
+    private surveySer: SurveyService,
+    private locationSer: LocationService,
+    private departmentSer: DepartmentService,
+    private teamSer: TeamService,
+    private displaySer:DisplayService
+  ) {}
 
   ngOnInit() {
     this.init();
@@ -37,6 +65,22 @@ export class ConfigurationSaveComponent implements OnInit {
   init() {
     this.generateMinuteAndWeekDays();
     this.getWorkplaceSurveys();
+    //Send out infor
+    this.currentLocation = new Location();
+    this.currentLocation.id = 0;
+    this.currentDepartment = new Department();
+    this.currentDepartment.id = 0;
+
+    this.locationSer.getAllLocation().subscribe(result => {
+      this.locationList = result;
+    });
+    this.departmentSer.getAll().subscribe(result => {
+      this.departmentList = result;
+    });
+    this.teamList = new Array<Team>();
+    this.displayInforList = new Array<String>();
+    this.inforList = new Array<SendOutInfor>();
+
     if (this.inputs.length == 0) {
       this.configuration = new Configuration();
       this.configuration.survey = new Survey();
@@ -45,8 +89,43 @@ export class ConfigurationSaveComponent implements OnInit {
       this.storeCronValue(this.configuration.scheduleTime);
       this.selectedSurveyId = this.configuration.survey.id;
       this.isEdit = true;
+      //#region Send out infor
+      let targetList = this.configuration.sendSurvey.targetList;
+      for (let index = 0; index < targetList.length; index++) {
+        let target = targetList[index];
+        if(target.locationId == 0 && target.departmentId == 0) {
+          this.inforList = new Array();
+          this.displayInforList = new Array();
+          this.inforList.push(target);
+          this.displayInforList.push("All Company");
+          break;
+        }
+        if(target.locationId != 0 && target.departmentId == 0) {
+          this.inforList.push(target);
+          this.displayInforList.push(target.locationName);
+          continue;
+        }
+        if(target.locationId == 0 && target.departmentId != 0) {
+          this.inforList.push(target);
+          this.displayInforList.push(target.departmentName);
+          continue;
+        }
+        if(target.locationId != 0 && target.departmentId != 0 && target.teamId == 0) {
+          this.inforList.push(target);
+          this.displayInforList.push(target.locationName + target.departmentName.valueOf());
+          continue;
+        }
+        if(target.locationId != 0 && target.departmentId != 0 && target.teamId != 0) {
+          this.inforList.push(target);
+          this.displayInforList.push(target.teamName);
+          continue;
+        }
+      }
+      //#endregion
     }
     this.requestStatus = 0;
+
+
   }
 
   generateMinuteAndWeekDays() {
@@ -65,7 +144,7 @@ export class ConfigurationSaveComponent implements OnInit {
     this.surveySer.getWorkplaceSurveys().subscribe(result => {
       this.surveys = result;
       console.log(this.surveys);
-    })
+    });
   }
 
   closeModal() {
@@ -87,7 +166,7 @@ export class ConfigurationSaveComponent implements OnInit {
       error => {
         if (error.status == 409) {
           alert("Something went wrong");
-        } else if (error.status = 400) {
+        } else if ((error.status = 400)) {
           alert("Bad request");
         }
         this.closeModal();
@@ -111,11 +190,18 @@ export class ConfigurationSaveComponent implements OnInit {
       error => {
         if (this.requestStatus == 400) alert("Bad request");
         this.requestStatus = 0;
-      });
+      }
+    );
   }
 
   save() {
-    console.log(this.selectedSurveyId);
+    //#region Send out infor
+    let sendOutList = this.filterSendOutList(this.inforList);
+    let sendSurvey = new SendSurvey();
+    sendSurvey.surveyId = this.selectedSurveyId;
+    sendSurvey.targetList = sendOutList;
+    this.configuration.sendSurvey = sendSurvey;
+    //#endregion
     this.requestStatus = 1;
     if (this.isEdit) this.update();
     else this.add();
@@ -157,7 +243,157 @@ export class ConfigurationSaveComponent implements OnInit {
     this.month = this.month == null ? "*" : this.month;
     let dayOfWeeks = this.dayOfWeeks == null ? "*" : this.dayOfWeeks;
 
-    let result = this.second + " " + this.minute + " " + this.hour + " " + this.dayOfMonth + " " + this.month + " " + dayOfWeeks
+    let result =
+      this.second +
+      " " +
+      this.minute +
+      " " +
+      this.hour +
+      " " +
+      this.dayOfMonth +
+      " " +
+      this.month +
+      " " +
+      dayOfWeeks;
     return result;
   }
+
+  //#region Send out infor
+  loadTeam(event: Event) {
+    let options: HTMLOptionsCollection = event.target["options"];
+    this.currentDepartment.name = options[options.selectedIndex].text;
+    this.currentTeam = undefined;
+    if (this.currentDepartment.id == 0) {
+      this.locationSer.getAllLocation().subscribe(result => {
+        this.locationList = result;
+      });
+    } else {
+      this.locationSer
+        .getByDepId(this.currentDepartment.id)
+        .subscribe(result => {
+          this.locationList = result;
+        });
+    }
+    if (this.currentDepartment.id == 0 && this.currentLocation.id) {
+      this.teamList = new Array<Team>();
+    } else {
+      this.teamSer
+        .getTeamByDepId(this.currentDepartment.id)
+        .subscribe(result => {
+          this.teamList = result;
+        });
+    }
+  }
+  filterSendOutList(list: SendOutInfor[]) : SendOutInfor[] {
+    let targetList = new Array<SendOutInfor>();
+    for (let index = 0; index < list.length; index++) {
+      let infor: SendOutInfor = list[index];
+      if (infor.locationId == 0 && infor.departmentId == 0) {
+        targetList = new Array<SendOutInfor>();
+        targetList.push(list[index]);
+        break;
+      }
+      if (infor.locationId != 0 && infor.departmentId == 0) {
+        targetList.push(list[index]);
+      }
+      if (infor.locationId == 0 && infor.departmentId != 0) {
+        targetList.push(list[index]);
+      }
+      if (
+        infor.locationId != 0 &&
+        infor.departmentId != 0 &&
+        infor.teamId != 0
+      ) {
+        let isFound = false;
+        for (let j = 0; j < list.length; j++) {
+          if (
+            list[index].departmentId ==
+            list[j].departmentId ||
+            list[index].locationId == list[j].locationId
+          ) {
+            isFound = true;
+          }
+        }
+        if (!isFound) {
+          targetList.push(list[index]);
+        }
+      }
+    }
+    return targetList;
+  }
+  updateDep(event: Event) {
+    let options: HTMLOptionsCollection = event.target["options"];
+    this.currentLocation.name = options[options.selectedIndex].text;
+    if (this.currentLocation.id == 0) {
+      this.departmentSer.getAll().subscribe(result => {
+        this.departmentList = result;
+      });
+    } else {
+      this.departmentSer
+        .getByLocationId(this.currentLocation.id)
+        .subscribe(result => {
+          this.departmentList = result;
+        });
+    }
+  }
+
+  addInfor() {
+    //Send Out Infor
+    let sendOutInfor = new SendOutInfor();
+    sendOutInfor.locationId = this.currentLocation.id.valueOf();
+    sendOutInfor.departmentId = this.currentDepartment.id.valueOf();
+    if (this.currentTeam == undefined) sendOutInfor.teamId = 0;
+    else sendOutInfor.teamId = this.currentTeam.id.valueOf();
+
+    //Check Duplicate
+    for (let index = 0; index < this.inforList.length; index++) {
+      let dupLocation =
+        sendOutInfor.locationId == this.inforList[index].locationId;
+      let dupDep =
+        sendOutInfor.departmentId == this.inforList[index].departmentId;
+      let dupTeam = sendOutInfor.teamId == this.inforList[index].teamId;
+      if (dupLocation && dupDep && dupTeam) {
+        alert("Duplicated Target");
+        return;
+      };
+    }
+
+    this.inforList.push(sendOutInfor);
+
+    //Display Infor
+    if (sendOutInfor.locationId == 0 && sendOutInfor.departmentId == 0) {
+      this.displayInforList.push("All Employee");
+    } else {
+      //Team
+      if (sendOutInfor.teamId != 0) {
+        this.displayInforList.push(this.currentTeam.name);
+        return;
+      }
+
+      //Department
+      if (sendOutInfor.locationId == 0 && sendOutInfor.departmentId != 0) {
+        this.displayInforList.push(this.currentDepartment.name);
+        return;
+      }
+
+      //Location
+      if (sendOutInfor.locationId != 0 && sendOutInfor.departmentId == 0) {
+        this.displayInforList.push(this.currentLocation.name);
+        return;
+      }
+
+      //Location - Department
+      if (sendOutInfor.locationId != 0 && sendOutInfor.departmentId != 0) {
+        this.displayInforList.push(
+          this.currentLocation.name + " - " + this.currentDepartment.name
+        );
+        return;
+      }
+    }
+  }
+  removeInfor(index) {
+    this.inforList.splice(index, 1);
+    this.displayInforList.splice(index, 1);
+  }
+  //#endregion
 }
