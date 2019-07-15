@@ -23,6 +23,10 @@ export class AccountService {
     return this.httpClient.get<Account[]>(this.api + `?term=${term}&page=${page}`);
   }
 
+  getAccountAssign() : Observable<Account>{
+    return this.httpClient.get<Account>(this.api + `/getAccountAssign`)
+  }
+
 
   update(obj) : Observable<Number>{
     return this.httpClient.put<Number>(this.api, obj);

@@ -1,3 +1,4 @@
+import { Workplace } from './../../model/workplace';
 import { AccountService } from './../../service/account.service';
 import { AssignInfor } from './../../model/assignInfor';
 import { ModalService } from "src/app/service/modal.service";
@@ -7,6 +8,7 @@ import { from } from "rxjs";
 import { Location } from "../../model/location";
 import { TeamService } from "../../service/team.service";
 import { Team } from "../../model/team";
+import { Account } from 'src/app/model/account';
 
 @Component({
   selector: "app-assign-account",
@@ -26,6 +28,13 @@ export class AssignAccountComponent implements OnInit {
   newTeam: Team;
   choosenTeamList : Array<number>;
   displayTeam: Array<String>;
+  account : Account;
+  location : Location;
+  workplace : Workplace;
+  teamAssigned : Array<Team>;
+  teamAssignedList ;
+
+  
   constructor(
     private locationSer: LocationService,
     private teamSer: TeamService,
@@ -34,12 +43,17 @@ export class AssignAccountComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.account = new Account();
+    this.account.location = new Location();
+    this.account.teams = new Array<Team>();
+
     this.locationId = 0;
     this.teamId = 0;
     this.displayTeam = new Array<String>();
     this.choosenTeamList = new Array<number>();
     this.getLocationByWorkplace();
     this.getTeamByWorkplace();
+    this.getInfoAssign(); 
   }
 
   getLocationByWorkplace() {
@@ -84,4 +98,17 @@ export class AssignAccountComponent implements OnInit {
     this.teamName = this.teamList[choosenTeam.selectedIndex -1 ].name;
     else this.teamName = '';
   }
+
+  getInfoAssign(){
+    this.accountSer.getAccountAssign().subscribe(result => {
+      this.account = result
+      this.teamAssigned = this.account.teams;
+      this.teamAssignedList =  this.teamAssigned.map(x => x.name).join(" - ")
+      
+       console.log(this.account);  
+    })
+  }
+
+
+
 }
