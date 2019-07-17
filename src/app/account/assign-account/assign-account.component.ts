@@ -32,7 +32,7 @@ export class AssignAccountComponent implements OnInit {
   location : Location;
   workplace : Workplace;
   teamAssigned : Array<Team>;
-  teamAssignedList ;
+ 
 
   
   constructor(
@@ -54,7 +54,12 @@ export class AssignAccountComponent implements OnInit {
     this.getLocationByWorkplace();
     this.getTeamByWorkplace();
     this.getInfoAssign(); 
+
+    
+
   }
+
+
 
   getLocationByWorkplace() {
     this.locationSer.getByWorkplace().subscribe(res => {
@@ -102,13 +107,18 @@ export class AssignAccountComponent implements OnInit {
   getInfoAssign(){
     this.accountSer.getAccountAssign().subscribe(result => {
       this.account = result
-      this.teamAssigned = this.account.teams;
-      this.teamAssignedList =  this.teamAssigned.map(x => x.name).join(" - ")
+      // this.teamAssigned = this.account.teams;
+      // this.teamAssignedList =  this.teamAssigned.map(x => x.name)
       
        console.log(this.account);  
     })
   }
 
-
+    getTeamAssigned(){
+      if(this.account.teams != null){
+        //this.displayTeam.push(this.teamName);
+        alert("Chuan")
+      }
+    }
 
 }

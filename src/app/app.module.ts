@@ -68,6 +68,7 @@ import { AssignAccountComponent } from './account/assign-account/assign-account.
 
 import { from } from 'rxjs';
 import { AccountProfileComponent } from './account/account-profile/account-profile.component';
+import { ResetPasswordComponent } from './others/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -119,6 +120,8 @@ import { AccountProfileComponent } from './account/account-profile/account-profi
     TutorialComponent,
     AssignAccountComponent,
     AccountProfileComponent,
+    ResetPasswordComponent,
+    
 
 
   ],

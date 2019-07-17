@@ -1,3 +1,4 @@
+import { ResetPasswordComponent } from './others/reset-password/reset-password.component';
 import { AccountProfileComponent } from './account/account-profile/account-profile.component';
 import { DashBoardComponent } from "./others/dash-board/dash-board.component";
 import { ReportListComponent } from "./survey/report-list/report-list.component";
@@ -61,6 +62,8 @@ const authRoutes: Routes = [
   { path: "news/:id/detail", component: NewsDetailComponent },
   { path: "q", component: SurveySaveComponent },
   { path: "memInvite", component: InvitationComponent },
+  
+  
 
   { path: "team", component: TeamComponent },
   { path: "team/save", component: TeamSaveComponent },
@@ -81,6 +84,7 @@ const routes: Routes = [
   { path: "home", component: HomeComponent },
   { path: "register", component: RegisterComponent },
   { path: "404", component: NotFoundComponent },
+  { path: "change-password/:emailToken", component: ResetPasswordComponent},
   { path: "forget", component: ForgetPasswordComponent },
   { path: "login", component: LoginComponent },
   { path: "join/:token", component: JoinComponent },
