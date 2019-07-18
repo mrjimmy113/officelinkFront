@@ -64,7 +64,6 @@ export class ConfigurationSaveComponent implements OnInit {
 
   init() {
     this.generateMinuteAndWeekDays();
-    this.getWorkplaceSurveys();
     //Send out infor
     this.currentLocation = new Location();
     this.currentLocation.id = 0;
@@ -81,9 +80,10 @@ export class ConfigurationSaveComponent implements OnInit {
     this.displayInforList = new Array<String>();
     this.inforList = new Array<SendOutInfor>();
 
-    if (this.inputs.length == 0) {
+    if (typeof(this.inputs) == 'number') {
       this.configuration = new Configuration();
       this.configuration.survey = new Survey();
+      this.selectedSurveyId = this.inputs;
     } else {
       this.configuration = this.inputs;
       this.storeCronValue(this.configuration.scheduleTime);
@@ -140,12 +140,6 @@ export class ConfigurationSaveComponent implements OnInit {
     this.arrayOfWeekDays = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
   }
 
-  getWorkplaceSurveys() {
-    this.surveySer.getWorkplaceSurveys().subscribe(result => {
-      this.surveys = result;
-      console.log(this.surveys);
-    });
-  }
 
   closeModal() {
     this.modalSer.destroy();
@@ -327,12 +321,14 @@ export class ConfigurationSaveComponent implements OnInit {
     if (this.currentLocation.id == 0) {
       this.departmentSer.getAll().subscribe(result => {
         this.departmentList = result;
+        console.log(result);
       });
     } else {
       this.departmentSer
         .getByLocationId(this.currentLocation.id)
         .subscribe(result => {
           this.departmentList = result;
+          console.log(result);
         });
     }
   }
@@ -394,6 +390,21 @@ export class ConfigurationSaveComponent implements OnInit {
   removeInfor(index) {
     this.inforList.splice(index, 1);
     this.displayInforList.splice(index, 1);
+  }
+  send() {
+    let sendOutList = this.filterSendOutList(this.inforList);
+    let sendSurvey = new SendSurvey();
+    sendSurvey.surveyId = this.inputs;
+    sendSurvey.targetList = sendOutList;
+    let expireDate = new Date();
+    expireDate.setDate(expireDate.getDate() + this.configuration.duration);
+    sendSurvey.expireDate = expireDate.getTime();
+    this.displaySer.showLoader();
+    this.surveySer.sendOutSurvey(sendSurvey).subscribe(result => {
+      alert("Your survey has beend sent");
+      this.modalSer.destroy();
+      this.displaySer.hideLoader();
+    })
   }
   //#endregion
 }

@@ -1,7 +1,7 @@
 <div class="modal-dialog modal-xl">
   <div class="modal-content">
     <div class="modal-header">
-      <h5>Question: How you rate the services ?</h5>
+      <h5>Question: {{question.question}}</h5>
 
       <button type="button" class="close" (click)="closeModal()">
         <span aria-hidden="true">&times;</span>
@@ -10,27 +10,39 @@
     <div class="modal-body">
       <div class="row">
         <div class="col-sm-8">
-          <span class="badge badge-primary" *ngFor="let email of listEmail; let i = index">
-            {{email}} <button class="btn-primary borderless"><i class="fas fa-times"
-                (click)="removeEmail(i)"></i></button>
+          <span class="badge badge-primary" *ngFor="let survey of choosenSurveys; let i = index">
+            {{survey.name}} <button class="btn-primary borderless"><i class="fas fa-times"
+                (click)="removeSurvey(i,survey)"></i></button>
           </span>
         </div>
         <div class="col-sm-4">
           <div class="input-group mb-3 d-flex justify-content-end">
-            <input placeholder="Enter Survey to compare" class="form-control" name="email" #email="ngModel"
-              [(ngModel)]="newEmail" />
+            <select class="form-control" [(ngModel)]="surveyIndex">
+              <option [ngValue]="-1">Choose Survey</option>
+              <option *ngFor="let survey of surveys; let i = index" [ngValue]="i">{{survey.name}}</option>
+            </select>
             <div class="input-group-append">
-              <button class="btn btn-success" (click)="addNewEmail()"><i class="fas fa-plus"></i></button>
+              <button class="btn btn-success" (click)="addNewSurvey()"><i class="fas fa-plus"></i></button>
             </div>
           </div>
         </div>
       </div>
-
-
-
-      <div style="display: block;">
-        <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [chartType]="lineChartType"></canvas>
-      </div>
+      <ngx-charts-area-chart-normalized
+      *ngIf="question.question.type.type == 'SINGLE'"
+      [results]="compareData"
+      [xAxis]="true"
+      [yAxis]="true"
+      [legend]="true"
+      [animations]="false"
+    ></ngx-charts-area-chart-normalized>
+    <ngx-charts-line-chart
+      *ngIf="question.question.type.type == 'MULTIPLE'"
+      [results]="compareData"
+      [xAxis]="true"
+      [yAxis]="true"
+      [legend]="true"
+      [animations]="false"
+    ></ngx-charts-line-chart>
     </div>
   </div>
 </div>
