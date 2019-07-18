@@ -27,6 +27,7 @@ export class NewsMainComponent implements OnInit {
     ) { }
 
   ngOnInit() {
+    this.itemList = new Array;
     this.searchByTitle("");
   }
 

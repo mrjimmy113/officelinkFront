@@ -7,9 +7,11 @@
       <form #newsForm="ngForm">
         <div class="form-group">
           <label style="font-weight: bold">Title</label>
-          <textarea class="form-control" placeholder="Fill in title" name="title" [(ngModel)]="news.title"
-            #title='ngModel' required
-            [ngClass]="{'is-invalid': (title.invalid && (title.dirty || title.touched))}"></textarea>
+          <textarea class="form-control" placeholder="Fill in title" name="title" id="newsTitle"
+            [(ngModel)]="news.title" #title='ngModel' required
+            [ngClass]="{'is-invalid': (title.invalid && (title.dirty || title.touched))}"
+            (keyup)="wordCountTitle(news.title)"></textarea>
+          <span>{{ countTitle }} words left</span>
           <div *ngIf="title.invalid && (title.dirty || title.touched)" class="text-danger">
             <div *ngIf="title.errors.required">
               Please fill in title
@@ -21,7 +23,9 @@
           <label style="font-weight: bold">Short Description</label>
           <textarea class="form-control" placeholder="Fill in short description" name="shortDescription"
             [(ngModel)]="news.shortDescription" #shortDescription='ngModel' required
-            [ngClass]="{'is-invalid': (shortDescription.invalid && (shortDescription.dirty || shortDescription.touched))}"></textarea>
+            [ngClass]="{'is-invalid': (shortDescription.invalid && (shortDescription.dirty || shortDescription.touched))}"
+            (keyup)="wordCountShort(news.shortDescription)"></textarea>
+          <span>{{ countShort }} words left</span>
           <div *ngIf="shortDescription.invalid && (shortDescription.dirty || shortDescription.touched)"
             class="text-danger">
             <div *ngIf="shortDescription.errors.required">
@@ -33,7 +37,9 @@
         <div class="form-group">
           <label style="font-weight: bold">Content</label>
           <ckeditor [editor]="Editor" name="content" [(ngModel)]="news.content" #content='ngModel' required
-            [ngClass]="{'is-invalid': (content.invalid && (content.dirty || content.touched))}"></ckeditor>
+            [ngClass]="{'is-invalid': (content.invalid && (content.dirty || content.touched))}"
+            (keyup)="wordCountContent(news.content)"></ckeditor>
+          <span>{{ countContent }} words left</span>
           <div *ngIf="content.invalid && (content.dirty || content.touched)" class="text-danger">
             <div *ngIf="content.errors.required">
               Please fill in content

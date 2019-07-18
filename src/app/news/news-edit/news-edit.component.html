@@ -8,8 +8,9 @@
         <div class="form-group">
           <label style="font-weight: bold">Title</label>
           <textarea class="form-control" placeholder="Fill in title" name="title" [(ngModel)]="news.title"
-            #title='ngModel' required
-            [ngClass]="{'is-invalid': (title.invalid && (title.dirty || title.touched))}"></textarea>
+            #title='ngModel' required [ngClass]="{'is-invalid': (title.invalid && (title.dirty || title.touched))}"
+            (keyup)="wordCountTitle(news.title)"></textarea>
+          <span>{{ countTitle }} words left</span>
           <div *ngIf="title.invalid && (title.dirty || title.touched)" class="text-danger">
             <div *ngIf="title.errors.required">
               Please fill in title
@@ -21,7 +22,9 @@
           <label style="font-weight: bold">Short Description</label>
           <textarea class="form-control" placeholder="Fill in short description" name="shortDescription"
             [(ngModel)]="news.shortDescription" #shortDescription='ngModel' required
-            [ngClass]="{'is-invalid': (shortDescription.invalid && (shortDescription.dirty || shortDescription.touched))}"></textarea>
+            [ngClass]="{'is-invalid': (shortDescription.invalid && (shortDescription.dirty || shortDescription.touched))}"
+            (keyup)="wordCountShort(news.shortDescription)"></textarea>
+          <span>{{ countShort }} words left</span>
           <div *ngIf="shortDescription.invalid && (shortDescription.dirty || shortDescription.touched)"
             class="text-danger">
             <div *ngIf="shortDescription.errors.required">
@@ -33,7 +36,9 @@
         <div class="form-group">
           <label style="font-weight: bold">Content</label>
           <ckeditor [editor]="Editor" name="content" [(ngModel)]="news.content" #content='ngModel' required
-            [ngClass]="{'is-invalid': (content.invalid && (content.dirty || content.touched))}"></ckeditor>
+            [ngClass]="{'is-invalid': (content.invalid && (content.dirty || content.touched))}"
+            (keyup)="wordCountContent(news.content)"></ckeditor>
+          <span>{{ countContent }} words left</span>
           <div *ngIf="content.invalid && (content.dirty || content.touched)" class="text-danger">
             <div *ngIf="content.errors.required">
               Please fill in content
@@ -46,7 +51,7 @@
             <div class="col-sm-4">
               <label style="font-weight: bold">Image</label> <br>
               <input type="file" (change)="onFileChange($event)" name="image" [(ngModel)]="dump" #image='ngModel'>
-                <!-- required pattern="([^\s]+(\.)(jpg|png|gif|bmp)$)">
+              <!-- required pattern="([^\s]+(\.)(jpg|png|gif|bmp)$)">
 
               <div *ngIf="image.invalid && (image.dirty || image.touched)" class="text-danger">
                 <div *ngIf="image.errors.required">

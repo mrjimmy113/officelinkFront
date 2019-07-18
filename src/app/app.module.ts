@@ -57,6 +57,7 @@ import { Login2Component } from './others/login2/login2.component'
 
 import { ConfigurationComponent } from './configuration/configuration.component';
 import { ConfigurationSaveComponent } from './configuration-save/configuration-save.component';
+import { SurveyHistoryComponent } from './survey/survey-history/survey-history.component';
 
 @NgModule({
   declarations: [
@@ -102,6 +103,7 @@ import { ConfigurationSaveComponent } from './configuration-save/configuration-s
     SurveyListComponent,
     ConfigurationComponent,
     ConfigurationSaveComponent,
+    SurveyHistoryComponent,
   ],
   imports: [
     BrowserModule,

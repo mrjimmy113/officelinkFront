@@ -24,6 +24,8 @@ export class LocationComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.itemList = new Array;
+    
     this.searchByName("");
   }
 

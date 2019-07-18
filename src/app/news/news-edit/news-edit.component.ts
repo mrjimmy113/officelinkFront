@@ -19,6 +19,9 @@ export class NewsEditComponent implements OnInit {
   tmp = null;
   maxFileSize = 500000;
   isOverSize = false;
+  countTitle = 20;
+  countShort = 40;
+  countContent = 1000;
 
   constructor(
     private newsSer: NewsService,
@@ -99,5 +102,29 @@ export class NewsEditComponent implements OnInit {
 
   doms(s) {
     return this.dom.bypassSecurityTrustUrl(s);
+  }
+
+  wordCountTitle(event) {
+    var key_length = event.split(' ').length;
+    this.countTitle = 21 - key_length;
+    if (key_length > 20) {
+      this.news.title = event.substring(0,event.lastIndexOf(" "));
+   }
+  }
+
+  wordCountShort(event) {
+    var key_length = event.split(' ').length;
+    this.countShort = 41 - key_length;
+    if (key_length > 40) {
+      this.news.shortDescription = event.substring(0,event.lastIndexOf(" "));
+   }
+  }
+
+  wordCountContent(event) {
+    var key_length = event.split(' ').length;
+    this.countContent = 1001 - key_length;
+    if (key_length > 1000) {
+      this.news.content = event.substring(0,event.lastIndexOf(" "));
+   }
   }
 }
