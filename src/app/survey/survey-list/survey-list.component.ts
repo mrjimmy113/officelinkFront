@@ -1,3 +1,4 @@
+import { ConfigurationSaveComponent } from './../../configuration-save/configuration-save.component';
 import { SendOutSurveyComponent } from './../send-out-survey/send-out-survey.component';
 import { ModalService } from './../../service/modal.service';
 import { Question } from './../../model/question';
@@ -85,7 +86,7 @@ export class SurveyListComponent implements OnInit {
   }
 
   sendOut(id) {
-    this.modalSer.init(SendOutSurveyComponent,id,[]);
+    this.modalSer.init(ConfigurationSaveComponent,id,[]);
   }
 
   offSave() {

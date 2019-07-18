@@ -1,4 +1,5 @@
 import { Survey } from "./survey";
+import { SendSurvey } from './sendSurvey';
 
 export class Configuration {
     id:Number;
@@ -6,4 +7,6 @@ export class Configuration {
     isActive:Boolean;
     workplaceId:Number;
     survey:Survey;
+    duration:number;
+    sendSurvey:SendSurvey;
 }
