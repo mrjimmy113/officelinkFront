@@ -25,7 +25,7 @@ export class ForgetPasswordComponent implements OnInit {
        }
      },
      error => {
-       if(error.status == 400){
+       if(error.status == 409){
          alert("Email not exist, try again")
        }
      }

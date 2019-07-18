@@ -75,14 +75,16 @@
                   minlength="6" maxlength="15"
                   />
                   <div *ngIf="password.invalid && (password.dirty || password.touched)" class="text-danger">
-                    <div *ngIf="firstname.errors.required">
-                      Current password required
+                    <div *ngIf="password.errors.required">
+                      Password required
                     </div>
-                   
+
+                    <div *ngIf="password.errors.minlength || password.errors.maxlength">
+                      Password must be 6-15 characters
+                    </div>
+
                   </div>
-                  <div *ngIf="password.errors.minlength || password.errors.maxlength">
-                    Password must be 6-15 characters
-                  </div>
+                  
                   <label>New password</label>
                   <input type="password" class="form-control form-control-user" name="newpassword" #newpassword = "ngModel" placeholder="New password" [(ngModel)] = "newPasswordText"
                           [ngClass]="{'is-invalid' : (newpassword.invalid && (newpassword.dirty || newpassword.touched))}" required
@@ -92,26 +94,28 @@
                             <div *ngIf="newpassword.errors.required">
                               New password required
                             </div>
-                           
-                            
-                          </div>
-                          <div *ngIf="newpassword.errors.minlength || newpassword.errors.maxlength">
-                            Password must be 6-15 characters
+        
+                            <div *ngIf="newpassword.errors.minlength || newpassword.errors.maxlength">
+                              New password must be 6-15 characters
+                            </div>
+        
                           </div>
                   <label>Confirm new password</label>
                   <input type="password" class="form-control form-control-user" name = "confirmpassword" #confirmpassword = "ngModel" placeholder="Confirm new password" [(ngModel)] = "confrimPasswordText"
                           [ngClass]="{'is-invalid' : (confirmpassword.invalid && (confirmpassword.dirty || confirmpassword.touched))}" required
                           minlength="6" maxlength="15"
                           />
-                          <div *ngIf="confirmpassword.invalid && (confirmpassword.dirty || confirmpassword.touched)" class="text-danger">
+                          <div *ngIf="confirmpassword.invalid && (newpassword.dirty || confirmpassword.touched)" class="text-danger">
                             <div *ngIf="confirmpassword.errors.required">
-                              Confirm new password required
+                              Confirm password required
                             </div>
-                            
+        
+                            <div *ngIf="confirmpassword.errors.minlength || confirmpassword.errors.maxlength">
+                              Confirm password must be 6-15 characters
+                            </div>
+        
                           </div>
-                          <div *ngIf="confirmpassword.errors.minlength || confirmpassword.errors.maxlength">
-                            Password must be 6-15 characters
-                          </div>
+                         
            
                 </div>
               </form>

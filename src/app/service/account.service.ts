@@ -24,8 +24,8 @@ export class AccountService {
     return this.httpClient.get<Account[]>(this.api + `?term=${term}&page=${page}`);
   }
 
-  getAccountAssign() : Observable<Account>{
-    return this.httpClient.get<Account>(this.api + `/getAccountAssign`);
+  getAccountAssign(id) : Observable<Account>{
+    return this.httpClient.get<Account>(this.api + `/getAccountAssign` + `?id=${id}`);
   }
 
   changeProfile(obj): Observable<Number>{

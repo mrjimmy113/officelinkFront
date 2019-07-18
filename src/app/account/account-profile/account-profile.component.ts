@@ -75,7 +75,7 @@ export class AccountProfileComponent implements OnInit {
         if(this.newPasswordText != this.confrimPasswordText){
           alert("New password And Confirm new password not match");
         }else{
-          alert(this.passwordInfo.email);
+         
             this.accountService.changePassword(this.passwordInfo).subscribe(res => {
              
               if(res == 200){

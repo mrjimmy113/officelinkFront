@@ -31,8 +31,10 @@ export class AssignAccountComponent implements OnInit {
   account : Account;
   location : Location;
   workplace : Workplace;
-  teamAssigned : Array<Team>;
  
+
+  test : String;
+  testListName ;
 
   
   constructor(
@@ -54,7 +56,6 @@ export class AssignAccountComponent implements OnInit {
     this.getLocationByWorkplace();
     this.getTeamByWorkplace();
     this.getInfoAssign(); 
-
     
 
   }
@@ -75,8 +76,8 @@ export class AssignAccountComponent implements OnInit {
   assignTeam() {
     this.displayTeam.push(this.teamName);
     this.choosenTeamList.push(this.teamId);
-    this.teamName = '';
-    this.teamId = 0;
+     this.teamName = '';
+     //this.teamId = 0;
   }
   assignRemove(index) {
     this.displayTeam.splice(index, 1);
@@ -87,38 +88,52 @@ export class AssignAccountComponent implements OnInit {
   }
 
   assign() {
-    let assignInfor = new AssignInfor();
-    assignInfor.accountId = this.inputs;
-    assignInfor.locationId = this.locationId;
-    assignInfor.teamIdList = this.choosenTeamList;
-    this.accountSer.assign(assignInfor).subscribe(result => {
-      alert("Assigned Successfully");
-      this.modalSer.destroy();
-    })
+   
+      let assignInfor = new AssignInfor();
+      assignInfor.accountId = this.inputs;
+      assignInfor.locationId = this.locationId;
+      assignInfor.teamIdList = this.choosenTeamList;
+      this.accountSer.assign(assignInfor).subscribe(result => {
+        alert("Assigned Successfully");
+        this.modalSer.destroy();
+      })
+    
   }
 
   chooseTeam(event :Event) {
     let choosenTeam : HTMLOptionsCollection = event.target['options'];
-    if(choosenTeam.selectedIndex != 0)
-    this.teamName = this.teamList[choosenTeam.selectedIndex -1 ].name;
-    else this.teamName = '';
+    if(choosenTeam.selectedIndex != 0){
+      this.teamName = this.teamList[choosenTeam.selectedIndex -1 ].name;
+    }  
+    else{
+      this.teamName = '';
+    } 
   }
 
   getInfoAssign(){
-    this.accountSer.getAccountAssign().subscribe(result => {
+    let assignInfor = new AssignInfor();
+    assignInfor.accountId = this.inputs;
+    this.accountSer.getAccountAssign(assignInfor.accountId).subscribe(result => {
       this.account = result
-      // this.teamAssigned = this.account.teams;
-      // this.teamAssignedList =  this.teamAssigned.map(x => x.name)
-      
-       console.log(this.account);  
+      if(this.account.location.id != null){
+        this.locationId = this.account.location.id
+      }
+      if(result.teams != null){
+        this.account.teams.forEach(result => {
+          this.teamName = result.name;
+          this.teamId = result.id;
+  
+          this.displayTeam.push(this.teamName);
+          this.choosenTeamList.push(this.teamId);
+  
+           this.teamName = '';
+           this.teamId = 0;
+        })
+         
+      }
+     
     })
   }
 
-    getTeamAssigned(){
-      if(this.account.teams != null){
-        //this.displayTeam.push(this.teamName);
-        alert("Chuan")
-      }
-    }
-
+   
 }

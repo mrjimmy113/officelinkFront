@@ -17,8 +17,9 @@
                       <select class="form-control" name="location" #location="ngModel" [(ngModel)]="locationId"
                         [ngClass]="{'is-invalid' : (location.invalid && (location.dirty || location.touched))}"
                         required>
-                        <option *ngIf="account.location.name != null" selected disabled [value]= "0">{{account.location.name}}</option>
+                        <option  *ngIf="account.location.name != null" selected disabled [value]= "0">{{account.location.name}}</option>
                         <option   [value]="0">Choose location</option>
+
                         <option *ngFor="let item of locationList" [value]="item.id">{{item.name}}</option>
                       </select>
 
