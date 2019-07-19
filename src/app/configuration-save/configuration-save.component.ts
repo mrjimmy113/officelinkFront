@@ -392,7 +392,7 @@ export class ConfigurationSaveComponent implements OnInit {
     this.displayInforList.splice(index, 1);
   }
   send() {
-    let sendOutList = this.filterSendOutList(this.inforList);
+    let sendOutList = this.inforList;
     let sendSurvey = new SendSurvey();
     sendSurvey.surveyId = this.inputs;
     sendSurvey.targetList = sendOutList;
