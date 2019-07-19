@@ -64,4 +64,7 @@ export class WorkplaceComponent implements OnInit {
       this.itemList = result.objList;
     })
   }
+  sort(property) {
+
+  }
 }

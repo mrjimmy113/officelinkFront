@@ -15,6 +15,7 @@ import { AssignAccountComponent } from '../assign-account/assign-account.compone
 export class AccountListComponent implements OnInit {
   itemList;
   maxPage;
+  currentPage = 1;
   requestStatus : Number;
   searchTerm = ""
 
@@ -66,6 +67,13 @@ export class AccountListComponent implements OnInit {
     this.modalSer.init(AssignAccountComponent,  id, () => this.search(""));
   }
 
+  sort(property) {
+
+  }
+
+  loadPage(page) {
+
+  }
 
 
 

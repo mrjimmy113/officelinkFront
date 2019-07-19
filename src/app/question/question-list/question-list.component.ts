@@ -57,5 +57,8 @@ export class QuestionListComponent implements OnInit {
       })
     }
   }
+  sort(property) {
+
+  }
 
 }

@@ -11,34 +11,36 @@
       <div class="form-group">
         <div class="row col-sm-12">
             <div class="col-sm-10">
-              
-                <input type="email" class="form-control form-control-user" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" name = "email" #email = "ngModel" placeholder="Email Invitation" [(ngModel)] = newEmail
-                [ngClass]="{'is-invalid' : (email.invalid && (email.dirty || email.touched))}" required
-                >
-                <div *ngIf="email.errors &&(email.touched || email.dirty)" class ="text-danger">
-                    <div *ngIf="email.errors.required">
-                        Email required
+
+                <form #emailForm="ngForm">
+                    <input type="email" class="form-control form-control-user" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" name = "email" #email = "ngModel" placeholder="Email Invitation" [(ngModel)] = newEmail
+                    [ngClass]="{'is-invalid' : (email.invalid && (email.dirty || email.touched))}" required
+                    >
+                    <div *ngIf="email.errors &&(email.touched || email.dirty)" class ="text-danger">
+                        <div *ngIf="email.errors.required">
+                            Email required
+                          </div>
+                      <div [hidden]="!email.errors?.pattern">
+                        Email invalid
                       </div>
-                  <div [hidden]="!email.errors?.pattern">
-                    Email invalid
-                  </div> 
-                 </div> 
+                     </div>
+                </form>
                 <label>Invitation List</label>
                 <div  class="invitation-box">
-                    
+
                     <span class="badge badge-primary" *ngFor="let item of listEmail; let i = index">
                     {{item}} <button class="btn-primary borderless" ><i class="fas fa-times" (click)="removeEmail(i, item )"></i></button>
                     </span>
-          
+
                   </div>
               </div>
               <div class="col-sm-2">
-                <button class="btn btn-success" (click)="addNewEmail()">Add</button>
+                <button class="btn btn-success" (click)="addNewEmail(emailForm)">Add</button>
               </div>
-              
-        
-        
-      
+
+
+
+
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-primary" (click) = "sendMail()">Send</button>

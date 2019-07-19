@@ -20,8 +20,8 @@ export class NewsMainComponent implements OnInit {
   requestStatus: Number;
 
   constructor(
-    private modalService: ModalService, 
-    private service: NewsService, 
+    private modalService: ModalService,
+    private service: NewsService,
     private dom: DomSanitizer,
     private datePipe: DatePipe,
     ) { }
@@ -45,7 +45,7 @@ export class NewsMainComponent implements OnInit {
       }
     }, 300);
   }
-  
+
   delete(id) {
     if (confirm("Are you sure to detele?")) {
       this.service.delete(id).subscribe(result => {
@@ -62,5 +62,12 @@ export class NewsMainComponent implements OnInit {
     return this.dom.bypassSecurityTrustUrl(s);
   }
 
+  loadPage(page) {
+
+  }
+
+  sort(property) {
+
+  }
 }
 

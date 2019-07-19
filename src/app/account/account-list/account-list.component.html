@@ -6,7 +6,7 @@
     <div class="input-group mb-3">
       <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchTerm" (input)="filter()">
       <div class="input-group-append">
-        <button class="btn btn-info" (click)="search()">
+        <button class="btn btn-info" (click)="search(searchTerm)">
           <i class="fas fa-search"></i>
         </button>
       </div>

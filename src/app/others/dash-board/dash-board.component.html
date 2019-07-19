@@ -1,14 +1,98 @@
-<div class="col-sm-2">
-  <div class="card shadow mb-4">
-    <!-- Card Header - Dropdown -->
-    <div class="card-header py-3  text-center">
-      <h6 class="m-0 font-weight-bold text-primary">Members</h6>
+<div *ngIf="tutorial">
+  <app-tutorial [dashBoard]="dashBoard"></app-tutorial>
+</div>
+<div *ngIf="!tutorial">
+  <h2>Dash board</h2>
+  <div class="d-flex justify-content-center">
+    <h3>Workplace Summary</h3>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 row">
+      <div class="col-sm-4">
+        <div class="card shadow mb-4">
+          <!-- Card Header - Dropdown -->
+          <div class="card-header py-3  text-center">
+            <h6 class="m-0 font-weight-bold text-primary">Total Members</h6>
+          </div>
+          <!-- Card Body -->
+          <div class="card-body text-center">
+            <i class="fas fa-user-alt fa-3x"></i>
+            <div>
+              <span class="text-primary" style="font-size: 24px">{{dashBoard.account | number}}</span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="card shadow mb-4">
+          <!-- Card Header - Dropdown -->
+          <div class="card-header py-3  text-center">
+            <h6 class="m-0 font-weight-bold text-primary">Total Teams</h6>
+          </div>
+          <!-- Card Body -->
+          <div class="card-body text-center">
+            <i class="fas fas fa-users fa-3x"></i>
+            <div>
+              <span class="text-primary" style="font-size: 24px">{{dashBoard.team | number}}</span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="card shadow mb-4">
+          <!-- Card Header - Dropdown -->
+          <div class="card-header py-3  text-center">
+            <h6 class="m-0 font-weight-bold text-primary">Total Departments</h6>
+          </div>
+          <!-- Card Body -->
+          <div class="card-body text-center">
+            <i class="fas fa-building fa-3x"></i>
+            <div>
+              <span class="text-primary" style="font-size: 24px">{{dashBoard.department | number}}</span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12">
+        <div class="card shadow mb-4">
+          <!-- Card Header - Dropdown -->
+          <div class="card-header py-3  text-center">
+            <h6 class="m-0 font-weight-bold text-primary">Lastest News</h6>
+          </div>
+          <!-- Card Body -->
+          <div class="card-body text-center">
+            <img [src]="'data:image/jpeg;base64,' + dashBoard.news.byte_image"
+              style='height: 165px; object-fit: contain' />
+            <div>
+              <a [routerLink]="['/news/' +dashBoard.news.id +'/detail']"
+                routerLinkActive="router-link-active">{{dashBoard.news.title}}</a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <!-- Card Body -->
-    <div class="card-body text-center">
-      <i class="fas fa-user-alt fa-3x"></i>
-      <hr>
-      <span class="badge badge-primary" style="font-size: 14px">{{100000 | number}}</span>
+    <div class="col-sm-6 row">
+      <div class="col-sm-12">
+        <div class="card shadow mb-4">
+          <!-- Card Header - Dropdown -->
+          <div class="card-header py-3  text-center">
+            <h6 class="m-0 font-weight-bold text-primary">Location</h6>
+          </div>
+          <!-- Card Body -->
+          <div class="card-body text-center">
+            <agm-map [latitude]="0" [longitude]="0" [zoom]="1" style="height: 400px">
+              <agm-marker [latitude]="location.latitude" [longitude]="location.longitude" [label]="location.name"
+                *ngFor="let location of dashBoard.location"></agm-marker>
+            </agm-map>
+
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+
+
 </div>

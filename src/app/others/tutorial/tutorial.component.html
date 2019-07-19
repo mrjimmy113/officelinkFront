@@ -22,7 +22,8 @@
           </p>
         </div>
       </div>
-      <div class="card border-left-success shadow h-100 py-2">
+      <!--Card Location-->
+      <div class="card border-left-success shadow h-100 py-2" *ngIf="dashBoard.location.length == 0">
         <div class="card-body">
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
@@ -37,7 +38,8 @@
           </div>
         </div>
       </div>
-      <div class="card border-left-success shadow h-100 py-2">
+      <!--Card Department-->
+      <div class="card border-left-success shadow h-100 py-2" *ngIf="dashBoard.department == 0">
         <div class="card-body">
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
@@ -52,7 +54,8 @@
           </div>
         </div>
       </div>
-      <div class="card border-left-success shadow h-100 py-2">
+      <!--Card Team-->
+      <div class="card border-left-success shadow h-100 py-2" *ngIf="dashBoard.team == 0">
         <div class="card-body">
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
@@ -67,7 +70,7 @@
           </div>
         </div>
       </div>
-      <div class="card border-left-success shadow h-100 py-2">
+      <div class="card border-left-success shadow h-100 py-2" *ngIf="dashBoard.account <= 1">
         <div class="card-body">
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
@@ -103,7 +106,8 @@
           </p>
         </div>
       </div>
-      <div class="card border-left-success shadow h-100 py-2">
+      <!--Card news-->
+      <div class="card border-left-success shadow h-100 py-2" *ngIf="dashBoard.news == null || dashBoard.news == undefined">
         <div class="card-body">
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
