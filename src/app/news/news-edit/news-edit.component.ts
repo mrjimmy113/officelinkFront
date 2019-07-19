@@ -12,7 +12,7 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./news-edit.component.css'],
 })
 export class NewsEditComponent implements OnInit {
-
+  dump
   Editor = ClassicEditor;
   requestStatus;
   news;

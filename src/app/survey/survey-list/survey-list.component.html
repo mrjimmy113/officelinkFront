@@ -1,6 +1,7 @@
 <div *ngIf="!isHide">
   <h2>Survey</h2>
   <button class="btn btn-success" (click)="openCreate()">New Survey</button>
+  <a class="btn btn-success" [routerLink]="['/configuration']" routerLinkActive="router-link-active" >Routine</a>
   <div class="d-flex justify-content-end">
     <div class="form-inline">
       <div class="input-group mb-3">

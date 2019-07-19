@@ -1,9 +1,11 @@
+import { NgForm } from '@angular/forms';
 import { Component, OnInit, Input } from '@angular/core';
 import { ModalService} from '../../service/modal.service';
 import { from } from 'rxjs';
 import {AccountService} from '../../service/account.service'
 import {Account} from '../../model/account'
 import { DisplayService } from 'src/app/service/display.service';
+import { Form } from '@angular/forms';
 
 @Component({
   selector: 'app-invitation',
@@ -27,12 +29,12 @@ export class InvitationComponent implements OnInit {
 
 
   }
-  addNewEmail() {
+  addNewEmail(emailForm : NgForm) {
     if(this.newEmail == null){
       alert("Input not empty. Try again")
     }else{
       this.listEmail.push(this.newEmail);
-    this.newEmail = "";
+      emailForm.resetForm();
     }
 
   }

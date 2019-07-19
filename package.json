@@ -7,7 +7,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "postinstall": "ng build --aot -prod"
   },
   "private": true,
   "dependencies": {
@@ -29,10 +30,15 @@
     "angular-tag-cloud-module": "^3.8.1",
     "chart.js": "^2.8.0",
     "core-js": "^2.5.4",
+    "express": "^4.17.1",
     "ng2-charts": "^2.2.3",
+    "path": "^0.12.7",
     "rxjs": "~6.3.3",
     "tslib": "^1.9.0",
-    "zone.js": "~0.8.26"
+    "zone.js": "~0.8.26",
+    "@angular/cli": "~7.3.6",
+    "@angular/compiler-cli": "~7.2.0",
+    "typescript": "~3.2.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.13.0",

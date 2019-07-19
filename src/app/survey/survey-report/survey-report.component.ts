@@ -129,7 +129,7 @@ export class SurveyReportComponent implements OnInit {
     })
   }
   openCompare(q : Question,reportData) {
-    this.modalSer.init(SurveyCompareComponent, [q,reportData,this.surveyId,this.surveyReport.name], []);
+    this.modalSer.init(SurveyCompareComponent, [q,reportData,this.surveyId,this.surveyReport.name,this.locationId,this.departmentId,this.teamId], []);
   }
 }
 interface NgxChartParam {

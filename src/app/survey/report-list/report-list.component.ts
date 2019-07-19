@@ -27,4 +27,8 @@ export class ReportListComponent implements OnInit {
     this.route.navigateByUrl(`/report/detail/${id}`);
   }
 
+  sort(property) {
+
+  }
+
 }

@@ -29,6 +29,9 @@ export class SurveyCompareComponent implements OnInit {
   surveys: Survey[];
   compareData;
   dataList: MyChartData[];
+  locationId;
+  departmentId;
+  teamId;
 
 
   constructor(
@@ -42,6 +45,9 @@ export class SurveyCompareComponent implements OnInit {
     this.reportData = this.inputs[1];
     this.surveyId = this.inputs[2];
     this.surveyName = this.inputs[3];
+    this.locationId = this.inputs[4];
+    this.departmentId = this.inputs[5];
+    this.teamId = this.inputs[6];
     this.listSurvey = new Array<String>();
     this.choosenSurveys = new Array<Survey>();
     this.surveys = new Array<Survey>();
@@ -50,18 +56,18 @@ export class SurveyCompareComponent implements OnInit {
     firstData.answers = this.question.answers;
     this.dataList.push(firstData);
     this.createChartData();
-    this.reportSer.getSameSurvey(this.surveyId).subscribe(result => {
+    this.reportSer.getSameSurvey(this.question.question.id,this.surveyId).subscribe(result => {
       this.surveys = result;
     });
   }
   addNewSurvey() {
     if (this.surveyIndex >= 0) {
       let chartData = new MyChartData();
-      chartData.surveyName = this.surveys[this.surveyIndex].name.toString() + "123";
+      chartData.surveyName = this.surveys[this.surveyIndex].name.toString();
       this.reportSer
         .getCompareQuestionAnswer(
           this.surveys[this.surveyIndex].id,
-          this.question.question.id
+          this.question.question.id,this.locationId,this.departmentId,this.teamId
         )
         .subscribe(result => {
           chartData.answers = result;

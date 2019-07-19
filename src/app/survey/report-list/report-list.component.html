@@ -1,9 +1,9 @@
-<div *ngIf="!isHide">
+<div>
   <h2>Survey Report</h2>
   <div class="d-flex justify-content-end">
     <div class="form-inline">
       <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchTerm" (input)="filter()">
+        <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchTerm">
         <div class="input-group-append">
           <button class="btn btn-info">
             <i class="fas fa-search"></i>

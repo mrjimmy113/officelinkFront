@@ -1,11 +1,12 @@
-import { Survey } from 'src/app/model/survey';
+import { Survey } from "src/app/model/survey";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { environment } from "./../../environments/environment";
 import { Injectable } from "@angular/core";
 import { SurveySendTargetDetail } from "../model/surveySendTargetDetail";
 import { QuestionReport } from "../model/questionReport";
-import { AnswerReport } from '../model/answerReport';
+import { AnswerReport } from "../model/answerReport";
+import { DashBoard } from "../model/dashBoard";
 
 @Injectable({
   providedIn: "root"
@@ -31,11 +32,19 @@ export class ReportService {
     );
   }
 
-  getSameSurvey(id):Observable<Survey[]> {
-    return this.http.get<Survey[]>(this.api + `/getSameSurvey?id=${id}`);
+  getSameSurvey(id, notId): Observable<Survey[]> {
+    return this.http.get<Survey[]>(
+      this.api + `/getSameSurvey?id=${id}&notId=${notId}`
+    );
   }
 
-  getCompareQuestionAnswer(surveyId, questionId) :Observable<AnswerReport[]> {
-    return this.http.get<AnswerReport[]>(this.api + `/getCompareQuestion?surveyId=${surveyId}&questionId=${questionId}`);
+  getCompareQuestionAnswer(surveyId, questionId,locationId,departmentId,teamId): Observable<AnswerReport[]> {
+    return this.http.get<AnswerReport[]>(
+      this.api +
+        `/getCompareQuestion?surveyId=${surveyId}&questionId=${questionId}&locationId=${locationId}&departmentId=${departmentId}&teamId=${teamId}`
+    );
+  }
+  getDashBoard(): Observable<DashBoard> {
+    return this.http.get<DashBoard>(this.api + `/dashboard`);
   }
 }

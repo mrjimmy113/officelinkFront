@@ -70,7 +70,7 @@
         <h4><span class="badge badge-pill badge-danger" *ngIf="requestStatus == 400">Fail</span></h4>
       </div>
       <div class="col-sm-6 d-flex justify-content-end" style="padding: 0px">
-        <button type="button" class="btn btn-success" (click)="save(createForm)"
+        <button type="button" class="btn btn-success" (click)="save()"
           [disabled]="(requestStatus ==1) || createForm.invalid || (quest.type == undefined)">
           <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
             *ngIf="requestStatus == 1"></span>

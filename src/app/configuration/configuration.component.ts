@@ -96,4 +96,7 @@ export class ConfigurationComponent implements OnInit {
         config.isActive = !config.isActive;
       });
   }
+  sort(property) {
+
+  }
 }
