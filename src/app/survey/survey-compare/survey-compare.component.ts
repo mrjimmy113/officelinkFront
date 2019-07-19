@@ -52,6 +52,7 @@ export class SurveyCompareComponent implements OnInit {
     this.choosenSurveys = new Array<Survey>();
     this.surveys = new Array<Survey>();
     let firstData = new MyChartData();
+    this.compareData = new Array();
     firstData.surveyName = this.surveyName;
     firstData.answers = this.question.answers;
     this.dataList.push(firstData);
@@ -63,10 +64,13 @@ export class SurveyCompareComponent implements OnInit {
   addNewSurvey() {
     if (this.surveyIndex >= 0) {
       let chartData = new MyChartData();
+      let currentSurvey =this.surveys[this.surveyIndex];
       chartData.surveyName = this.surveys[this.surveyIndex].name.toString();
+      this.choosenSurveys.push(currentSurvey);
+      this.surveys.splice(this.surveyIndex,1);
       this.reportSer
         .getCompareQuestionAnswer(
-          this.surveys[this.surveyIndex].id,
+          currentSurvey.id,
           this.question.question.id,this.locationId,this.departmentId,this.teamId
         )
         .subscribe(result => {
@@ -78,7 +82,12 @@ export class SurveyCompareComponent implements OnInit {
       this.surveys.splice(this.surveyIndex, 1);
     }
   }
-  removeSurvey(index, survey) {}
+  removeSurvey(index, survey) {
+    this.surveys.push(survey);
+    this.choosenSurveys.splice(index,1);
+    this.dataList.splice(index + 1,1);
+    this.createChartData();
+  }
   closeModal() {
     this.modalSer.destroy();
   }
