@@ -24,6 +24,8 @@ export class LocationCreateComponent implements OnInit {
   zoom: number;
   geoCoder;
   address: string;
+  countName = 20;
+  isName = false;
 
   @ViewChild("search")
   public searchElementRef: ElementRef;
@@ -121,6 +123,18 @@ export class LocationCreateComponent implements OnInit {
   back() {
     if(confirm('Do you want to go back')) {
       this.router.navigateByUrl("/location");
+    }
+  }
+
+  wordCountName(event) {
+    this.isName = false;
+    var key_length = event.split(' ').length;
+    this.countName = 21 - key_length;
+    if (key_length > 20) {
+      this.location.name = event.substring(0, event.lastIndexOf(" "));
+    }
+    if (key_length > 21) {
+      this.isName = true;
     }
   }
 }

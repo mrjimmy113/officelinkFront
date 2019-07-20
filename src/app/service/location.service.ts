@@ -31,7 +31,7 @@ export class LocationService {
     return this.http.get<PageSearch<Location>>(this.api + `?term=${term}`);
   }
 
-  getPage(term, page):Observable<PageSearch<Location>>{
+  searchGetPage(term, page):Observable<PageSearch<Location>>{
     return this.http.get<PageSearch<Location>>(this.api + `?term=${term}&page=${page}`);
   }
 

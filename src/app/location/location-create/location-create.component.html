@@ -15,23 +15,17 @@
           <label style="font-weight: bold">Name</label>
           <input type="text" class="form-control" name="name" placeholder="Fill in name" #name="ngModel"
             [(ngModel)]="location.name" [ngClass]="{'is-invalid' : (name.invalid && (name.dirty || name.touched))}"
-            required>
+            required (keyup)="wordCountName(location.name)"></textarea>
+          <span>{{ countName }} words left</span>
           <div *ngIf="name.invalid && (name.dirty || name.touched)" class="text-danger">
             <div *ngIf="name.errors.required">
               Please fill in name
             </div>
           </div>
-        </div>
-        <!-- <div class="form-group">
-          <textarea class="form-control" name="address" placeholder="Fill in address" #address="ngModel"
-            [(ngModel)]="location.address"
-            [ngClass]="{'is-invalid' : (address.invalid && (address.dirty || address.touched))}" required></textarea>
-          <div *ngIf="address.invalid && (address.dirty || address.touched)" class="text-danger">
-            <div *ngIf="address.errors.required">
-              Please fill in address
-            </div>
+          <div *ngIf="isName" class="text-danger">
+            This name is too long
           </div>
-        </div> -->
+        </div>
         <div class="form-group">
           <label style="font-weight: bold">Address</label>
           <input type="text" class="form-control" name="address" (keydown.enter)="$event.preventDefault()"
@@ -53,7 +47,7 @@
     <div class="modal-footer">
       <div class="col-sm-6 d-flex justify-content-end" style="padding: 0px">
         <button type="button" class="btn btn-success" (click)="create(locationForm)"
-          [disabled]="(!locationForm.form.valid || (requestStatus == 1))">
+          [disabled]="!locationForm.form.valid || (requestStatus == 1) || isName">
           <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
             *ngIf="requestStatus == 1"></span>
           <span *ngIf="requestStatus != 1">Create</span>

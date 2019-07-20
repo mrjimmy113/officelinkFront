@@ -5,6 +5,7 @@ import { NewsCreateComponent } from '../news-create/news-create.component';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NewsEditComponent } from '../news-edit/news-edit.component';
 import { DatePipe } from '@angular/common';
+import { UltisService } from "src/app/service/ultis.service";
 
 @Component({
   selector: 'app-news-main',
@@ -18,30 +19,36 @@ export class NewsMainComponent implements OnInit {
   maxPage;
   searchTerm = "";
   requestStatus: Number;
+  isSort = "";
 
   constructor(
     private modalService: ModalService,
     private service: NewsService,
     private dom: DomSanitizer,
     private datePipe: DatePipe,
+    private ultisSer: UltisService,
     ) { }
 
   ngOnInit() {
-    this.searchByTitle("");
+    this.itemList = new Array;
+    this.search();
   }
 
-  searchByTitle(value) {
-    this.service.searchByTitle(value).subscribe(result => {
+  search() {
+    this.service.searchGetPage(this.searchTerm, this.currentPage - 1).subscribe(result => {
       this.maxPage = result.maxPage;
       this.itemList = result.objList;
     })
+  }
+
+  loadPage(num) {
   }
 
   filter() {
     let newSearchTerm = this.searchTerm;
     setTimeout(() => {
       if (newSearchTerm == this.searchTerm) {
-        this.searchByTitle(this.searchTerm);
+        this.search();
       }
     }, 300);
   }
@@ -51,7 +58,7 @@ export class NewsMainComponent implements OnInit {
       this.service.delete(id).subscribe(result => {
         this.requestStatus = result;
         if (this.requestStatus == 200) {
-          this.searchByTitle("");
+          this.search();
         }
       });
     }
@@ -62,12 +69,15 @@ export class NewsMainComponent implements OnInit {
     return this.dom.bypassSecurityTrustUrl(s);
   }
 
-  loadPage(page) {
-
-  }
-
   sort(property) {
-
+    if (this.isSort == property) {
+      this.itemList.sort(this.ultisSer.sortByPropertyNameDSC(property));
+      this.isSort = "";
+    } else {
+      this.itemList.sort(this.ultisSer.sortByPropertyNameASC(property));
+      this.isSort = property;
+    }
   }
+
 }
 

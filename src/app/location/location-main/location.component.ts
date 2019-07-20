@@ -25,11 +25,11 @@ export class LocationComponent implements OnInit {
 
   ngOnInit() {
     this.itemList = new Array<Location>();
-    this.searchByName("");
+    this.search();
   }
 
-  searchByName(value) {
-    this.service.searchByName(value).subscribe(result => {
+  search() {
+    this.service.searchGetPage(this.searchTerm, this.currentPage - 1).subscribe(result => {
       this.maxPage = result.maxPage;
       this.itemList = result.objList;
     })
@@ -39,9 +39,12 @@ export class LocationComponent implements OnInit {
     let newSearchTerm = this.searchTerm;
     setTimeout(() => {
       if (newSearchTerm == this.searchTerm) {
-        this.searchByName(this.searchTerm);
+        this.search();
       }
     }, 300);
+  }
+
+  loadPage(num) {
   }
 
   delete(id) {
@@ -49,7 +52,7 @@ export class LocationComponent implements OnInit {
       this.service.delete(id).subscribe(result => {
         this.requestStatus = result;
         if (this.requestStatus == 200) {
-          this.searchByName("");
+          this.search();
         }
       });
     }
