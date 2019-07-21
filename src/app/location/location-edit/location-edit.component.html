@@ -14,14 +14,17 @@
         <div class="form-group">
           <label style="font-weight: bold">Name</label>
           <textarea class="form-control" placeholder="Fill in title" name="name" [(ngModel)]="location.name"
-            #name='ngModel' required
-            [ngClass]="{'is-invalid': (name.invalid && (name.dirty || name.touched))}"></textarea>
+            #name='ngModel' required [ngClass]="{'is-invalid': (name.invalid && (name.dirty || name.touched))}"
+            (keyup)="wordCountName(location.name)"></textarea>
+          <span>{{ countName }} words left</span>
           <div *ngIf="name.invalid && (name.dirty || name.touched)" class="text-danger">
             <div *ngIf="name.errors.required">
               Please fill in name
             </div>
           </div>
-
+          <div *ngIf="isName" class="text-danger">
+            This name is too long
+          </div>
         </div>
         <div class="form-group">
           <label style="font-weight: bold">Address</label>
