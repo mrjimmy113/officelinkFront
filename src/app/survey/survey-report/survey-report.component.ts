@@ -1,3 +1,4 @@
+import { UltisService } from 'src/app/service/ultis.service';
 import { Question } from './../../model/question';
 import { element } from 'protractor';
 import { Location } from './../../model/location';
@@ -45,7 +46,8 @@ export class SurveyReportComponent implements OnInit {
     private modalSer: ModalService,
     private surveySer: SurveyService,
     private route: ActivatedRoute,
-    private reportSer: ReportService
+    private reportSer: ReportService,
+    private utltis:UltisService
   ) {}
 
   ngOnInit() {
@@ -101,6 +103,7 @@ export class SurveyReportComponent implements OnInit {
       };
       dataList.push(data);
     });
+    dataList.sort(this.utltis.sortByPropertyNameDSC("value"));
     return dataList;
   }
 

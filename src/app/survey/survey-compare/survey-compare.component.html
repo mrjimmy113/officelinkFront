@@ -27,11 +27,19 @@
           </div>
         </div>
       </div>
-      <div style="height: 400px">
+      <div style="height: 400px" *ngIf="question.question.type.type != 'TEXT'">
         <ngx-charts-area-chart-normalized *ngIf="question.question.type.type == 'SINGLE'" [results]="compareData"
         [xAxis]="true" [yAxis]="true" [legend]="true" [animations]="false"></ngx-charts-area-chart-normalized>
       <ngx-charts-line-chart *ngIf="question.question.type.type == 'MULTIPLE'" [results]="compareData" [xAxis]="true"
         [yAxis]="true" [legend]="true" [animations]="false"></ngx-charts-line-chart>
+      </div>
+      <div *ngIf="question.question.type.type == 'TEXT'" class="row">
+        <div class="col-sm-6" *ngFor="let wcData of compareData; let i = index">
+          <label>{{dataList[i].surveyName}}</label>
+          <angular-tag-cloud [data]="wcData" [width]="options.width" [height]="options.height"
+          [overflow]="options.overflow">
+        </angular-tag-cloud>
+        </div>
       </div>
     </div>
   </div>

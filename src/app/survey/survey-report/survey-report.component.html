@@ -112,7 +112,7 @@
     <div class="col-sm-1 d-flex justify-content-center">
 
       <button class="btn-circle btn-primary" title="Compare with other survey"
-        (click)="openCompare(q,reportData[i])">
+        (click)="openCompare(q,surveyReport.questions[i].answers)">
         <i class="fas fa-file-medical-alt"></i>
       </button>
     </div>
@@ -129,7 +129,8 @@
       </div>
       <div class="col-sm-1 d-flex justify-content-center">
 
-        <button class="btn-circle btn-primary" title="Compare with other survey" (click)="openCompare()">
+        <button class="btn-circle btn-primary" title="Compare with other survey"
+          (click)="openCompare(q,surveyReport.questions[i].answers)">
           <i class="fas fa-file-medical-alt"></i>
         </button>
       </div>

@@ -1,3 +1,5 @@
+import { CloudData } from 'angular-tag-cloud-module';
+import { CloudOptions } from 'angular-tag-cloud-module';
 import { forEach } from "@angular/router/src/utils/collection";
 import { QuestionReport } from "./../../model/questionReport";
 import { AnswerOption } from "./../../model/answerOption";
@@ -33,6 +35,12 @@ export class SurveyCompareComponent implements OnInit {
   departmentId;
   teamId;
 
+  options: CloudOptions = {
+    width: 1,
+    height: 200,
+    overflow: false
+  };
+
 
   constructor(
     private modalSer: ModalService,
@@ -56,7 +64,7 @@ export class SurveyCompareComponent implements OnInit {
     firstData.surveyName = this.surveyName;
     firstData.answers = this.question.answers;
     this.dataList.push(firstData);
-    this.createChartData();
+    this.createData(this.reportData);
     this.reportSer.getSameSurvey(this.question.question.id,this.surveyId).subscribe(result => {
       this.surveys = result;
     });
@@ -76,7 +84,7 @@ export class SurveyCompareComponent implements OnInit {
         .subscribe(result => {
           chartData.answers = result;
           this.dataList.push(chartData);
-          this.createChartData();
+          this.createData(result);
         });
 
       this.surveys.splice(this.surveyIndex, 1);
@@ -86,8 +94,23 @@ export class SurveyCompareComponent implements OnInit {
     this.surveys.push(survey);
     this.choosenSurveys.splice(index,1);
     this.dataList.splice(index + 1,1);
-    this.createChartData();
+    if(this.question.question.type.type == "TEXT") {
+      this.compareData.splice(index + 1, 1);
+    }else {
+      this.createChartData();
+    }
+
   }
+
+  createData(data) {
+    if(this.question.question.type.type == "TEXT") {
+      if(this.dataList.length < 4) this.compareData.push(this.getWordCloud(data));
+      else alert("You can only compare 4 survey at a time");
+    }else {
+      this.createChartData();
+    }
+  }
+
   closeModal() {
     this.modalSer.destroy();
   }
@@ -126,6 +149,28 @@ export class SurveyCompareComponent implements OnInit {
       };
       this.compareData.push(data);
     });
+    this.compareData.sort(this.sortBySerieValue);
+  }
+
+  createWordCloudData() {
+
+  }
+
+  getWordCloud(answers: Array<AnswerReport>): CloudData[] {
+    let dataList = new Array<CloudData>();
+    answers.forEach(element => {
+      let data: CloudData = {
+        text: element.term.toString(),
+        weight: element.weight.valueOf(),
+        color: "#" + (((1 << 24) * Math.random()) | 0).toString(16)
+      };
+      dataList.push(data);
+    });
+    return dataList;
+  }
+
+  sortBySerieValue = (a : NormalizedChartData,b) => {
+    return b.series[0].value - a.series[0].value;
   }
 }
 interface NormalizedChartData {
