@@ -15,8 +15,11 @@
                   <div class="form-group">
                       <label>Location(*)</label>
                       <select class="form-control" name="location" #location="ngModel" [(ngModel)]="locationId"
-                        [ngClass]="{'is-invalid' : (location.invalid && (location.dirty || location.touched))}" required>
-                        <option [value]="0">Choose location</option>
+                        [ngClass]="{'is-invalid' : (location.invalid && (location.dirty || location.touched))}"
+                        required>
+                        <option  *ngIf="account.location.name != null" selected disabled [value]= "0">{{account.location.name}}</option>
+                        <option   [value]="0">Choose location</option>
+
                         <option *ngFor="let item of locationList" [value]="item.id">{{item.name}}</option>
                       </select>
 
@@ -26,7 +29,8 @@
                         <select class="form-control" name="team" #location="ngModel" [(ngModel)]="teamId"
                           (change)="chooseTeam($event)"
                         >
-                          <option [value]="0">Choose team</option>
+                        <!-- <option *ngIf="teamAssigned != null"  selected disabled [value]= "0">{{teamAssignedList}}</option> -->
+                          <option  [value]="0">Choose team</option>
                           <option *ngFor="let item of teamList; let i = index" [value]="item.id">{{item.name}}</option>
                         </select>
 

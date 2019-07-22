@@ -66,6 +66,10 @@ import { DashBoardComponent } from './others/dash-board/dash-board.component';
 import { TutorialComponent } from './others/tutorial/tutorial.component';
 import { AssignAccountComponent } from './account/assign-account/assign-account.component';
 
+import { from } from 'rxjs';
+import { AccountProfileComponent } from './account/account-profile/account-profile.component';
+import { ResetPasswordComponent } from './others/reset-password/reset-password.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -115,6 +119,9 @@ import { AssignAccountComponent } from './account/assign-account/assign-account.
     DashBoardComponent,
     TutorialComponent,
     AssignAccountComponent,
+    AccountProfileComponent,
+    ResetPasswordComponent,
+    
 
 
   ],

@@ -44,7 +44,7 @@ export class RegisterComponent implements OnInit {
 
         this.account.role_id = 1;
         if(this.account.firstname == null || this.account.lastname == null || this.account.email == null ||
-         this.account.password == null|| this.account.address == null  || this.account.workplace.name == null){
+         this.account.password == null|| this.account.address == null){
            alert("Input not empty. Try again ")
          }
          if(this.account.password != this.confirmPassText){

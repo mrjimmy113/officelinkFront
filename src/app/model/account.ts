@@ -1,6 +1,7 @@
 import {Role} from './role'
 import { Workplace } from './workplace';
 import {Location} from './location';
+import {Team} from './team';
 import { from } from 'rxjs';
 export class Account {
     id : Number;
@@ -15,7 +16,7 @@ export class Account {
 
     location : Location;
     workplace: Workplace;
-
+    teams : Array<Team>;
 
 
 }

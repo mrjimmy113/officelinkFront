@@ -1,3 +1,4 @@
+import { Workplace } from './../../model/workplace';
 import { AccountService } from './../../service/account.service';
 import { AssignInfor } from './../../model/assignInfor';
 import { ModalService } from "src/app/service/modal.service";
@@ -7,6 +8,7 @@ import { from } from "rxjs";
 import { Location } from "../../model/location";
 import { TeamService } from "../../service/team.service";
 import { Team } from "../../model/team";
+import { Account } from 'src/app/model/account';
 
 @Component({
   selector: "app-assign-account",
@@ -26,6 +28,15 @@ export class AssignAccountComponent implements OnInit {
   newTeam: Team;
   choosenTeamList : Array<number>;
   displayTeam: Array<String>;
+  account : Account;
+  location : Location;
+  workplace : Workplace;
+ 
+
+  test : String;
+  testListName ;
+
+  
   constructor(
     private locationSer: LocationService,
     private teamSer: TeamService,
@@ -34,13 +45,22 @@ export class AssignAccountComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.account = new Account();
+    this.account.location = new Location();
+    this.account.teams = new Array<Team>();
+
     this.locationId = 0;
     this.teamId = 0;
     this.displayTeam = new Array<String>();
     this.choosenTeamList = new Array<number>();
     this.getLocationByWorkplace();
     this.getTeamByWorkplace();
+    this.getInfoAssign(); 
+    
+
   }
+
+
 
   getLocationByWorkplace() {
     this.locationSer.getByWorkplace().subscribe(res => {
@@ -56,8 +76,8 @@ export class AssignAccountComponent implements OnInit {
   assignTeam() {
     this.displayTeam.push(this.teamName);
     this.choosenTeamList.push(this.teamId);
-    this.teamName = '';
-    this.teamId = 0;
+     this.teamName = '';
+     //this.teamId = 0;
   }
   assignRemove(index) {
     this.displayTeam.splice(index, 1);
@@ -68,20 +88,52 @@ export class AssignAccountComponent implements OnInit {
   }
 
   assign() {
-    let assignInfor = new AssignInfor();
-    assignInfor.accountId = this.inputs;
-    assignInfor.locationId = this.locationId;
-    assignInfor.teamIdList = this.choosenTeamList;
-    this.accountSer.assign(assignInfor).subscribe(result => {
-      alert("Assigned Successfully");
-      this.modalSer.destroy();
-    })
+   
+      let assignInfor = new AssignInfor();
+      assignInfor.accountId = this.inputs;
+      assignInfor.locationId = this.locationId;
+      assignInfor.teamIdList = this.choosenTeamList;
+      this.accountSer.assign(assignInfor).subscribe(result => {
+        alert("Assigned Successfully");
+        this.modalSer.destroy();
+      })
+    
   }
 
   chooseTeam(event :Event) {
     let choosenTeam : HTMLOptionsCollection = event.target['options'];
-    if(choosenTeam.selectedIndex != 0)
-    this.teamName = this.teamList[choosenTeam.selectedIndex -1 ].name;
-    else this.teamName = '';
+    if(choosenTeam.selectedIndex != 0){
+      this.teamName = this.teamList[choosenTeam.selectedIndex -1 ].name;
+    }  
+    else{
+      this.teamName = '';
+    } 
   }
+
+  getInfoAssign(){
+    let assignInfor = new AssignInfor();
+    assignInfor.accountId = this.inputs;
+    this.accountSer.getAccountAssign(assignInfor.accountId).subscribe(result => {
+      this.account = result
+      if(this.account.location.id != null){
+        this.locationId = this.account.location.id
+      }
+      if(result.teams != null){
+        this.account.teams.forEach(result => {
+          this.teamName = result.name;
+          this.teamId = result.id;
+  
+          this.displayTeam.push(this.teamName);
+          this.choosenTeamList.push(this.teamId);
+  
+           this.teamName = '';
+           this.teamId = 0;
+        })
+         
+      }
+     
+    })
+  }
+
+   
 }

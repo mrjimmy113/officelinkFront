@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { PageSearch } from './../model/page-search';
 import {Account} from '../model/account';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -16,8 +17,23 @@ export class AccountService {
     return this.httpClient.get<PageSearch<Account>>(this.api + `?term=${term}`);
   }
 
+  getProfile() : Observable<Account>{
+    return this.httpClient.get<Account>(this.api + `/profile`);
+  }
   getPage(term,page): Observable<Account[]> {
     return this.httpClient.get<Account[]>(this.api + `?term=${term}&page=${page}`);
+  }
+
+  getAccountAssign(id) : Observable<Account>{
+    return this.httpClient.get<Account>(this.api + `/getAccountAssign` + `?id=${id}`);
+  }
+
+  changeProfile(obj): Observable<Number>{
+    return this.httpClient.put<Number>(this.api + `/changeProfile`, obj);
+  }
+
+  changePassword(obj): Observable<Number>{
+    return this.httpClient.put<Number>(this.api + `/changePassword`, obj);
   }
 
 
@@ -53,6 +69,9 @@ export class AccountService {
     return this.httpClient.post<Number>(this.api + `/sendInvite`, mailInvited);
   }
 
+  sendMailReset(mailReset) : Observable<Number>{
+    return this.httpClient.post<Number>(this.api + `/sendMailReset`, mailReset);
+  }
 
 
   createAccountByToken(accountToken) : Observable<Number>{
@@ -69,6 +88,10 @@ export class AccountService {
 
   assign(assignInfor):Observable<Number>{
     return this.httpClient.put<Number>(this.api + `/assign`,assignInfor);
+  }
+
+  resetPassword(resetPasswordInfo) : Observable<Number>{
+    return this.httpClient.put<Number>(this.api + `/resetPassword` , resetPasswordInfo);
   }
 
 

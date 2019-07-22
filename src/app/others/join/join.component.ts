@@ -40,6 +40,7 @@ export class JoinComponent implements OnInit {
 
   register(){
 
+   
     this.account.role_id = 2;
     if(this.account.firstname == null || this.account.lastname == null || this.account.email == null || this.account.password == null
       ){
@@ -62,11 +63,12 @@ export class JoinComponent implements OnInit {
           error => {
             this.errorStatus = error.status;
             if(this.errorStatus == 409){
-               alert("Sorry, email or workplace already exists, please check again")
+               alert("Sorry, email already exists, please check again")
             }
             if(error.status == 400){
               alert("The system has failed, please try again")
             }
+            
           }
           )
 
