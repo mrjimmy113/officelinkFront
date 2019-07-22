@@ -51,8 +51,8 @@ export class InvitationComponent implements OnInit {
 
   sendMail(){
 
-    if(this.newEmail == null){
-      alert("Input not null. Try again")
+    if(this.listEmail.length == 0){
+      alert("Please add more email")
     }else{
       this.displaySer.showLoader();
       this.accountSer.sendInvite(this.listEmail).subscribe(res => {

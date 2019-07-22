@@ -18,6 +18,7 @@
                     <th>Hour(*)</th>
                     <th>Minutes(*)</th>
                     <th>Day of Week(*)</th>
+                    <th>Month</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -39,9 +40,18 @@
                     <td>
                       <div class="checkbox" *ngFor="let wDay of arrayOfWeekDays">
                         <label>
-                          <input type="checkbox" [attr.checked]="getIndex(wDay) >= 0 ? 'checked': null"
+                          <input type="checkbox" [attr.checked]="getWeekDaysIndex(wDay) >= 0 ? 'checked': null"
                             (click)="changeWeekDays(wDay)">
                           {{wDay}}
+                        </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="checkbox" *ngFor="let month of arrayOfMonths">
+                        <label>
+                          <input type="checkbox" [attr.checked]="getMonthsIndex(month) >= 0 ? 'checked': null"
+                            (click)="changeMonths(month)">
+                          {{month}}
                         </label>
                       </div>
                     </td>

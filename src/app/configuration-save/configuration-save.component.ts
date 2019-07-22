@@ -34,7 +34,8 @@ export class ConfigurationSaveComponent implements OnInit {
   hour;
   arrayOfHours = new Array<Number>();
   dayOfMonth;
-  month;
+  months = new Array();
+  arrayOfMonths;
   dayOfWeeks = new Array();
   arrayOfWeekDays;
 
@@ -138,6 +139,7 @@ export class ConfigurationSaveComponent implements OnInit {
     }
 
     this.arrayOfWeekDays = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
+    this.arrayOfMonths = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
   }
 
 
@@ -210,18 +212,20 @@ export class ConfigurationSaveComponent implements OnInit {
     this.minute = list[1];
     this.hour = list[2];
     this.dayOfMonth = list[3];
-    this.month = list[4];
-
-    var temp = list[5].split(",");
-    this.dayOfWeeks = temp;
+    this.months = list[4].split(",");
+    this.dayOfWeeks = list[5].split(",");
   }
 
-  getIndex(checkValue) {
+  getWeekDaysIndex(checkValue) {
     return this.dayOfWeeks.indexOf(checkValue);
   }
 
+  getMonthsIndex(checkValue) {
+    return this.months.indexOf(checkValue);
+  }
+
   changeWeekDays(wDay) {
-    let index = this.getIndex(wDay);
+    let index = this.getWeekDaysIndex(wDay);
     if (index >= 0) {
       this.dayOfWeeks.splice(index, 1);
     } else {
@@ -229,12 +233,21 @@ export class ConfigurationSaveComponent implements OnInit {
     }
   }
 
+  changeMonths(month) {
+    let index = this.getMonthsIndex(month);
+    if (index >= 0) {
+      this.months.splice(index, 1);
+    } else {
+      this.months.push(month);
+    }
+  }
+
   constructCronExpression() {
-    this.second = this.second == null ? "1" : this.second;
-    this.minute = this.minute == null ? "1" : this.minute;
-    this.hour = this.hour == null ? "1" : this.hour;
+    this.second = this.second == null ? "0" : this.second;
+    this.minute = this.minute == null ? "0" : this.minute;
+    this.hour = this.hour == null ? "0" : this.hour;
     this.dayOfMonth = this.dayOfMonth == null ? "*" : this.dayOfMonth;
-    this.month = this.month == null ? "*" : this.month;
+    let months = this.months == null ? "*" : this.months;
     let dayOfWeeks = this.dayOfWeeks == null ? "*" : this.dayOfWeeks;
 
     let result =
@@ -246,9 +259,11 @@ export class ConfigurationSaveComponent implements OnInit {
       " " +
       this.dayOfMonth +
       " " +
-      this.month +
+      months +
       " " +
       dayOfWeeks;
+
+      console.log(result);
     return result;
   }
 
