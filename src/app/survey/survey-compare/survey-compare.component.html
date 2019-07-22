@@ -1,4 +1,4 @@
-<div class="modal-dialog modal-xl" style="max-height: 80vh">
+<div class="modal-dialog modal-xl">
   <div class="modal-content">
     <div class="modal-header">
       <h5>Question: {{question.question.question}}</h5>
@@ -7,7 +7,7 @@
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
-    <div class="modal-body">
+    <div class="modal-body" >
       <div class="row">
         <div class="col-sm-8">
           <span class="badge badge-primary" *ngFor="let survey of choosenSurveys; let i = index">
@@ -27,22 +27,20 @@
           </div>
         </div>
       </div>
-      <ngx-charts-area-chart-normalized
-      *ngIf="question.question.type.type == 'SINGLE'"
-      [results]="compareData"
-      [xAxis]="true"
-      [yAxis]="true"
-      [legend]="true"
-      [animations]="false"
-    ></ngx-charts-area-chart-normalized>
-    <ngx-charts-line-chart
-      *ngIf="question.question.type.type == 'MULTIPLE'"
-      [results]="compareData"
-      [xAxis]="true"
-      [yAxis]="true"
-      [legend]="true"
-      [animations]="false"
-    ></ngx-charts-line-chart>
+      <div style="height: 400px" *ngIf="question.question.type.type != 'TEXT'">
+        <ngx-charts-area-chart-normalized *ngIf="question.question.type.type == 'SINGLE'" [results]="compareData"
+        [xAxis]="true" [yAxis]="true" [legend]="true" [animations]="false"></ngx-charts-area-chart-normalized>
+      <ngx-charts-line-chart *ngIf="question.question.type.type == 'MULTIPLE'" [results]="compareData" [xAxis]="true"
+        [yAxis]="true" [legend]="true" [animations]="false"></ngx-charts-line-chart>
+      </div>
+      <div *ngIf="question.question.type.type == 'TEXT'" class="row">
+        <div class="col-sm-6" *ngFor="let wcData of compareData; let i = index">
+          <label>{{dataList[i].surveyName}}</label>
+          <angular-tag-cloud [data]="wcData" [width]="options.width" [height]="options.height"
+          [overflow]="options.overflow">
+        </angular-tag-cloud>
+        </div>
+      </div>
     </div>
   </div>
 </div>
