@@ -40,6 +40,7 @@ export class JoinComponent implements OnInit {
 
   register(){
 
+   
     this.account.role_id = 2;
     if(this.account.firstname == null || this.account.lastname == null || this.account.email == null || this.account.password == null
       ){
