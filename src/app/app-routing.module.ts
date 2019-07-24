@@ -1,3 +1,4 @@
+import { ReadNewsComponent } from './others/read-news/read-news.component';
 import { ResetPasswordComponent } from './others/reset-password/reset-password.component';
 import { AccountProfileComponent } from './account/account-profile/account-profile.component';
 import { DashBoardComponent } from "./others/dash-board/dash-board.component";
@@ -62,8 +63,8 @@ const authRoutes: Routes = [
   { path: "news/:id/detail", component: NewsDetailComponent },
   { path: "q", component: SurveySaveComponent },
   { path: "memInvite", component: InvitationComponent },
-  
-  
+
+
 
   { path: "team", component: TeamComponent },
   { path: "team/save", component: TeamSaveComponent },
@@ -77,7 +78,8 @@ const authRoutes: Routes = [
   { path: "choose", component: ChooseQuestionComponent },
   { path: "survey", component: SurveyListComponent },
   { path: "configuration", component: ConfigurationComponent },
-  { path: "configuration/save", component: ConfigurationSaveComponent }
+  { path: "configuration/save", component: ConfigurationSaveComponent },
+  {path:"readNews", component:ReadNewsComponent}
 ];
 
 const routes: Routes = [

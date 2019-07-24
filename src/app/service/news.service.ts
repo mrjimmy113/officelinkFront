@@ -45,4 +45,7 @@ export class NewsService {
   delete(id):Observable<Number>{
     return this.http.delete<Number>(this.api + `?id=${id}`);
   }
+  getLastest(page):Observable<PageSearch<News>> {
+    return this.http.get<PageSearch<News>>(this.api + `/lastest?page=${page}`);
+  }
 }
