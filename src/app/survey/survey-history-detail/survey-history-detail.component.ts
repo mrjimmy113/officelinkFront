@@ -52,20 +52,7 @@ export class SurveyHistoryDetailComponent implements OnInit {
           (<HTMLInputElement>document.getElementById('multipleChoice' + index)).checked = true;
         }
       });
-      // console.log("option: ", option);
-      // console.log("answers: ", this.answers[answerIndex].content);
-
     }
-    // if (answer.includes(option)) {
-    //   answer.replace(option, "");
-    // } else {
-    //   if (answer.trim().length == 0) {
-    //     answer = option;
-    //   } else {
-    //     answer = answer + "," + option;
-    //   }
-    // }
-    // this.answers[answerIndex].content = answer;
   }
 
 }
