@@ -47,6 +47,8 @@ import { RegisterConfirmComponent } from "./others/register-confirm/register-con
 import { SurveyHistoryDetailComponent } from "./survey/survey-history-detail/survey-history-detail.component"
 import { SurveyHistoryMainComponent } from "./survey/survey-history-main/survey-history-main.component"
 import { from } from 'rxjs';
+import { SurveyHistoryMainComponent } from './survey/survey-history-main/survey-history-main.component';
+import { SurveyHistoryDetailComponent } from './survey/survey-history-detail/survey-history-detail.component';
 
 const authRoutes: Routes = [
   { path: "", component: DashBoardComponent },
@@ -63,6 +65,8 @@ const authRoutes: Routes = [
   { path: "news/:id/edit", component: NewsEditComponent },
   { path: "news/create", component: NewsCreateComponent },
   { path: "news/:id/detail", component: NewsDetailComponent },
+  { path: "history", component: SurveyHistoryMainComponent },
+  { path: "history/detail", component: SurveyHistoryDetailComponent },
   { path: "q", component: SurveySaveComponent },
   { path: "memInvite", component: InvitationComponent },
   { path: "history", component: SurveyHistoryMainComponent },

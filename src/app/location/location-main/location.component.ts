@@ -44,7 +44,12 @@ export class LocationComponent implements OnInit {
     }, 300);
   }
 
-  loadPage(num) {
+  loadPage(pageNumber) {
+    this.currentPage = pageNumber;
+    this.service.searchGetPage(this.searchTerm,  this.currentPage - 1).subscribe(result => {
+      this.maxPage = result.maxPage;
+      this.itemList = result.objList;
+    })
   }
 
   delete(id) {
@@ -67,4 +72,5 @@ export class LocationComponent implements OnInit {
       this.isSort = property;
     }
   }
+
 }

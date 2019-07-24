@@ -10,4 +10,5 @@ export class Survey {
   questions: Array<Question>;
   sent : boolean;
   configuration: Configuration;
+  dateTaken: Date;
 }

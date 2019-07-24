@@ -10,6 +10,7 @@ import { PageSearch } from "../model/page-search";
 import { SurveyReport } from "../model/surveyReport";
 import { SurveyAnswerInfor } from '../model/surveyAnswerInfor';
 import { Answer } from '../model/answer';
+import { AnswerOption } from '../model/answerOption';
 
 @Injectable({
   providedIn: "root"

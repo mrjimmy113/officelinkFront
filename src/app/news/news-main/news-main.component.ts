@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalService } from 'src/app/service/modal.service';
 import { NewsService } from 'src/app/service/news.service';
-import { NewsCreateComponent } from '../news-create/news-create.component';
 import { DomSanitizer } from '@angular/platform-browser';
-import { NewsEditComponent } from '../news-edit/news-edit.component';
 import { DatePipe } from '@angular/common';
 import { UltisService } from "src/app/service/ultis.service";
 
