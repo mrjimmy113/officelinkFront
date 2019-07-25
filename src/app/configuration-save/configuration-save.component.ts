@@ -247,8 +247,8 @@ export class ConfigurationSaveComponent implements OnInit {
     this.minute = this.minute == null ? "0" : this.minute;
     this.hour = this.hour == null ? "0" : this.hour;
     this.dayOfMonth = this.dayOfMonth == null ? "*" : this.dayOfMonth;
-    let months = this.months == null ? "*" : this.months;
-    let dayOfWeeks = this.dayOfWeeks == null ? "*" : this.dayOfWeeks;
+    let months = this.months.length <= 0 ? "*" : this.months;
+    let dayOfWeeks = this.dayOfWeeks.length <= 0 ? "*" : this.dayOfWeeks;
 
     let result =
       this.second +
