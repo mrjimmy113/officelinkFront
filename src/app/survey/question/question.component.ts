@@ -38,13 +38,18 @@ export class QuestionComponent implements OnInit {
     })
     if(this.isNew) {
       this.quest.options = new Array<AnswerOption>();
+      this.quest.options.push(new AnswerOption());
     }
     this.classToParent();
 
   }
 
   addOption() {
-    this.quest.options.push(new AnswerOption());
+    if(this.quest.options.length <= 8) {
+      this.quest.options.push(new AnswerOption());
+    }else {
+      alert("The maximum number of option is 8")
+    }
   }
 
   deleteOption(index) {

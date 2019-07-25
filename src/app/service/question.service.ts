@@ -26,10 +26,7 @@ export class QuestionService {
   delete(id):Observable<Number> {
     return this.http.delete<Number>(this.api + `?id=${id}`);
   }
-  searchWithType(term,type) : Observable<PageSearch<Question>> {
-    return this.http.get<PageSearch<Question>>(this.api + `/search?term=${term}&type=${type}`);
-  }
-  getPageWithType(term,type,num):Observable<Question[]> {
-    return this.http.get<Question[]>(this.api + `/search/getPage?term=${term}&type=${type}&num=${num}`);
+  searchWithType(term,type,page) : Observable<PageSearch<Question>> {
+    return this.http.get<PageSearch<Question>>(this.api + `/search?term=${term}&type=${type}&page=${page}`);
   }
 }

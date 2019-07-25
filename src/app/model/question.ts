@@ -7,4 +7,5 @@ export class Question {
   options: Array<AnswerOption>;
   questionIdentity:Number;
   questionIndex: number;
+  required: boolean = true;
 }

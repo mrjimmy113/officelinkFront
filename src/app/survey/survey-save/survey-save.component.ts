@@ -76,6 +76,7 @@ export class SurveySaveComponent implements OnInit {
     this.modalSer.init(ChooseQuestionComponent, this.survey.questions, []);
   }
   save() {
+    console.log(this.survey);
     if (!this.isEdit) {
       this.surveySer.create(this.survey).subscribe(result => {
         alert("Successfully Created");
