@@ -1,5 +1,6 @@
+import { ApplyFilter } from './../model/applyFilter';
 import { Survey } from "src/app/model/survey";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpResponse } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { environment } from "./../../environments/environment";
 import { Injectable } from "@angular/core";
@@ -38,7 +39,13 @@ export class ReportService {
     );
   }
 
-  getCompareQuestionAnswer(surveyId, questionId,locationId,departmentId,teamId): Observable<AnswerReport[]> {
+  getCompareQuestionAnswer(
+    surveyId,
+    questionId,
+    locationId,
+    departmentId,
+    teamId
+  ): Observable<AnswerReport[]> {
     return this.http.get<AnswerReport[]>(
       this.api +
         `/getCompareQuestion?surveyId=${surveyId}&questionId=${questionId}&locationId=${locationId}&departmentId=${departmentId}&teamId=${teamId}`
@@ -46,5 +53,18 @@ export class ReportService {
   }
   getDashBoard(): Observable<DashBoard> {
     return this.http.get<DashBoard>(this.api + `/dashboard`);
+  }
+  getDownloadToken(surveyId, questionId): Observable<String> {
+    return this.http.get<String>(
+      this.api +
+        `/getDownloadToken?surveyId=${surveyId}&questionId=${questionId}`,
+      {responseType: "text" as "json" }
+    );
+  }
+  getDownloadLink(token):string {
+    return this.api + `/download?token=${token}`;
+  }
+  getFilterdWordCloud(applyFilter : ApplyFilter): Observable<AnswerReport[]> {
+    return this.http.post<AnswerReport[]>(this.api + `/applyFilter`,applyFilter);
   }
 }

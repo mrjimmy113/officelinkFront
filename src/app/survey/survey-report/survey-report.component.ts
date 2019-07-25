@@ -1,3 +1,5 @@
+import { ApplyFilter } from './../../model/applyFilter';
+import { WordCloudFilter } from './../../model/word-cloud-filter';
 import { UltisService } from 'src/app/service/ultis.service';
 import { Question } from './../../model/question';
 import { element } from 'protractor';
@@ -14,6 +16,8 @@ import { ModalService } from "./../../service/modal.service";
 import { Component, OnInit } from "@angular/core";
 import { CloudOptions, CloudData } from "angular-tag-cloud-module";
 import { AnswerReport } from "src/app/model/answerReport";
+import { WordCloudService } from 'src/app/service/word-cloud.service';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: "app-survey-report",
@@ -24,6 +28,7 @@ export class SurveyReportComponent implements OnInit {
   locations: Location[];
   departments: Department[];
   teams: Team[];
+  filters:WordCloudFilter[];
 
   locationId: number;
   departmentId: number;
@@ -47,7 +52,8 @@ export class SurveyReportComponent implements OnInit {
     private surveySer: SurveyService,
     private route: ActivatedRoute,
     private reportSer: ReportService,
-    private utltis:UltisService
+    private utltis:UltisService,
+    private filterSer:WordCloudService,
   ) {}
 
   ngOnInit() {
@@ -76,6 +82,9 @@ export class SurveyReportComponent implements OnInit {
         });
       });
     });
+    this.filterSer.getAll().subscribe(result => {
+      this.filters = result;
+    })
   }
 
   getWordCloud(answers: Array<AnswerReport>): CloudData[] {
@@ -134,6 +143,28 @@ export class SurveyReportComponent implements OnInit {
   openCompare(q : Question,reportData) {
     this.modalSer.init(SurveyCompareComponent, [q,reportData,this.surveyId,this.surveyReport.name,this.locationId,this.departmentId,this.teamId], []);
   }
+
+  getDownloadToken(id) {
+    this.reportSer.getDownloadToken(this.surveyId,id).subscribe(result => {
+      window.open(this.reportSer.getDownloadLink(result));
+    });
+  }
+  filterWordCloud(event :Event,dataIndex) {
+    let options : HTMLOptionsCollection = event.target['options'];
+    let filterId = options[options.selectedIndex].value;
+    if(Number(filterId) == 0) {
+      this.reportData[dataIndex] = this.getWordCloud(this.surveyReport.questions[dataIndex].answers);
+    }else {
+      let applyFilter = new ApplyFilter();
+      applyFilter.filterId = Number(filterId);
+      applyFilter.answers = this.surveyReport.questions[dataIndex].answers;
+      this.reportSer.getFilterdWordCloud(applyFilter).subscribe(result => {
+        this.reportData[dataIndex] = this.getWordCloud(result);
+      })
+    }
+
+  }
+
 }
 interface NgxChartParam {
   name: string;
