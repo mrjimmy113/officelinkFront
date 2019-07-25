@@ -37,7 +37,7 @@ export class ChooseQuestionComponent implements OnInit {
           this.maxPage = result.maxPage;
         });
     } else {
-      this.questSer.search(this.term).subscribe(result => {
+      this.questSer.search(this.term,this.currentPage - 1).subscribe(result => {
         this.itemList = result.objList;
         this.maxPage = result.maxPage;
       });

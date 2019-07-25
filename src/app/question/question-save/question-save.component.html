@@ -11,38 +11,52 @@
         <!--Question + Types-->
         <div class="row row-padding-bot">
           <div class="col-sm-9">
-            <input class="form-control" placeholder="Question" name="question" #question="ngModel"
-              [(ngModel)]="quest.question" required
+            <input class="form-control" placeholder="Question(*)" name="question" #question="ngModel"
+              [(ngModel)]="quest.question" required maxlength="150"
               [ngClass]="{'is-invalid': (question.invalid && (question.dirty || question.touched))}" />
             <div *ngIf="question.invalid && (question.dirty || question.touched)" class="text-danger">
               <div *ngIf="question.errors.required">
                 Please input your question
               </div>
-
+            </div>
+            <div *ngIf="(question.dirty || question.touched) && (quest.question != undefined)">
+              <div *ngIf="quest.question.length == 150" class="text-info">
+                Question can not exceed 150 characters
+              </div>
             </div>
           </div>
           <div class="col-sm-3">
             <select class="form-control" [(ngModel)]="quest.type" name="type">
               <option [ngValue]="undefined">-Choose Question Type-</option>
-              <option *ngFor="let type of typeList" [ngValue]="type">{{type.type}}</option>
+              <option *ngFor="let type of typeList" [ngValue]="type">{{typeEnum[type.type]}}</option>
             </select>
           </div>
         </div>
         <!--Answer-->
         <div *ngIf="quest.type != undefined">
           <!--Multiple Choice-->
-          <div *ngIf="quest.type.type == 'Multiple Choice'">
+          <div *ngIf="quest.type.type == 'MULTIPLE' || quest.type.type == 'SINGLE'">
             <div class="form-check" *ngFor="let option of quest.options; let i = index">
               <div class="row row-padding-bot">
                 <div class="col-sm-1 row align-content-center d-flex justify-content-center">
-                  <input type="radio" class="radio-big" disabled />
+                  <input type="radio" class="radio-big" disabled *ngIf="quest.type.type == 'SINGLE'" />
+                  <input type="checkbox" class="radio-big" disabled *ngIf="quest.type.type == 'MULTIPLE'" />
                 </div>
                 <div class="col-sm-10 option">
-                  <input type="text" class="form-control" placeholder="Option {{i + 1}}"
+                  <input type="text" class="form-control" placeholder="Option {{i + 1}} (*)" maxlength="50"
                     [(ngModel)]="quest.options[i].answerText" name="option{{i}}" #option{{i}}="ngModel" required />
+
                 </div>
                 <div class="col-sm-1 row align-content-center d-flex justify-content-center">
                   <button class="btn btn-danger" (click)="deleteOption(i)"><i class="fas fa-times"></i></button>
+                </div>
+              </div>
+              <div *ngIf="quest.options[i].answerText != undefined">
+                <div *ngIf="quest.options[i].answerText.length == 50" class="text-info">
+                  Option can not exceed 50 characters
+                </div>
+                <div *ngIf="quest.options[i].answerText.length == 0" class="text-danger">
+                  Please fill in this option
                 </div>
               </div>
             </div>
@@ -50,8 +64,9 @@
               <button class="btn btn-primary" (click)="addOption()">Add More Option</button>
             </div>
           </div>
+
           <!--Free Text-->
-          <div *ngIf="quest.type.type == 'Free Text'">
+          <div *ngIf="quest.type.type == 'TEXT'">
             <div class="row">
               <label class="col-sm-2" style="text-align: center ">Answer: </label>
               <input placeholder="Free Text Answer" class="form-control col-sm-9" readonly />
