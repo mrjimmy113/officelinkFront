@@ -17,6 +17,7 @@ export class SurveyHistoryDetailComponent implements OnInit {
   survey: Survey;
   answers: Array<Answer>;
   surveyAnswerInfor: SurveyAnswerInfor;
+  multiAnswer : MultipleA[];
 
   constructor(
     private modalSer: ModalService,
@@ -28,6 +29,7 @@ export class SurveyHistoryDetailComponent implements OnInit {
   }
 
   init() {
+    this.multiAnswer = new Array();
     this.answers = new Array<Answer>();
     this.survey = this.inputs;
     this.surveySer.getAnswerForSurveyHistory(this.survey.id).subscribe(result => {
@@ -68,4 +70,8 @@ export class SurveyHistoryDetailComponent implements OnInit {
     // this.answers[answerIndex].content = answer;
   }
 
+}
+export class MultipleA {
+  index:number;
+  array:string[];
 }
