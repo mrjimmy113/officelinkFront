@@ -3,7 +3,7 @@
     <!--Question + Types-->
     <div class="row row-padding-bot">
       <div class="col-sm-9">
-        <div *ngIf="isEditMode && isNew; else showQuestion">
+        <div [hidden]="!(isEditMode && isNew)">
           <input class="form-control" placeholder="Question" name="question" #question="ngModel"
             [(ngModel)]="quest.question" required maxlength="150"
             [ngClass]="{'is-invalid': (question.invalid && (question.dirty || question.touched))}" />
@@ -19,14 +19,14 @@
             </div>
           </div>
         </div>
-        <ng-template #showQuestion>
+        <div [hidden]="isEditMode && isNew">
           <div *ngIf="quest.question == undefined || quest.question.length == 0; else notEmpty">
             <b class="text-primary">This question is empty, please click to edit</b>
           </div>
           <ng-template #notEmpty>
             <b>{{quest.question}}</b>
           </ng-template>
-        </ng-template>
+        </div>
       </div>
       <div class="col-sm-3">
         <div *ngIf="isEditMode && isNew; else showType">
@@ -53,11 +53,11 @@
               <input type="checkbox" class="radio-big" disabled *ngIf="quest.type.type == 'MULTIPLE'" />
             </div>
             <div class="col-sm-10 option">
-              <div *ngIf="isEditMode && isNew; else showOption">
+              <div [hidden]="!(isEditMode && isNew)">
                 <input type="text" class="form-control" placeholder="Option {{i + 1}}" maxlength="50"
                   [(ngModel)]="quest.options[i].answerText" name="option{{i}}" #option{{i}}="ngModel" required />
               </div>
-              <ng-template #showOption>
+              <div [hidden]="isEditMode && isNew">
                 <div
                   *ngIf="quest.options[i].answerText == undefined || quest.options[i].answerText.length == 0; else emptyOp">
                   <b class="text-primary">This option is empty, please click to edit</b>
@@ -65,7 +65,7 @@
                 <ng-template #emptyOp>
                   <b>{{quest.options[i].answerText}}</b>
                 </ng-template>
-              </ng-template>
+              </div>
             </div>
 
             <div class="col-sm-1 row align-content-center d-flex justify-content-center" *ngIf="isEditMode">
