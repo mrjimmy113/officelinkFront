@@ -34,6 +34,9 @@
     </div>
   </div>
   <!--Row-->
+  <div *ngIf="itemList.length == 0" class="d-flex justify-content-center">
+    <h4>No record found</h4>
+  </div>
   <div class="card" *ngFor="let item of itemList; let i = index">
     <div class="list-group-item w3-hover-blue " [ngClass]="{'w3-light-grey': ((i % 2) == 1)}"
       [ngClass]="{'w3-white': ((i % 2) == 0)}" style="border:none">
