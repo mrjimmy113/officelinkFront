@@ -70,6 +70,7 @@ import { from } from 'rxjs';
 import { AccountProfileComponent } from './account/account-profile/account-profile.component';
 import { ResetPasswordComponent } from './others/reset-password/reset-password.component';
 import { ReadNewsComponent } from './others/read-news/read-news.component';
+import { DetailComponent } from './question/detail/detail.component';
 
 @NgModule({
   declarations: [
@@ -123,7 +124,8 @@ import { ReadNewsComponent } from './others/read-news/read-news.component';
     AccountProfileComponent,
     ResetPasswordComponent,
     ReadNewsComponent,
-    
+    DetailComponent,
+
 
 
   ],
@@ -152,6 +154,7 @@ import { ReadNewsComponent } from './others/read-news/read-news.component';
     WordCloudSaveComponent,
     SurveySaveComponent,
     AssignAccountComponent,
+    DetailComponent,
   ],
 
   providers: [

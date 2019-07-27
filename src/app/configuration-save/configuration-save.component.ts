@@ -411,9 +411,7 @@ export class ConfigurationSaveComponent implements OnInit {
     let sendSurvey = new SendSurvey();
     sendSurvey.surveyId = this.inputs;
     sendSurvey.targetList = sendOutList;
-    let expireDate = new Date();
-    expireDate.setDate(expireDate.getDate() + this.configuration.duration);
-    sendSurvey.expireDate = expireDate.getTime();
+    sendSurvey.duration = this.configuration.duration;
     this.displaySer.showLoader();
     this.surveySer.sendOutSurvey(sendSurvey).subscribe(result => {
       alert("Your survey has beend sent");

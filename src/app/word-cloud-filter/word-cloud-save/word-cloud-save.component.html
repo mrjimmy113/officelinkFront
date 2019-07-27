@@ -10,13 +10,13 @@
       <div class="modal-body">
         <form #filterForm="ngForm">
           <div class="row form-group">
-            <div class="col-sm-9">
+            <div class="col-sm-7">
               <label>
                 Filter Name<span class="text-danger">*</span>
               </label>
               <input class="form-control" name="name" #name="ngModel" [(ngModel)]="filter.name" required
-                [ngClass]="{'is-invalid': ((name.invalid) && (name.dirty || name.isTouched)) || isExisted}" (input)="checkIsExisted()"
-                placeholder="Input Filter name" />
+                [ngClass]="{'is-invalid': ((name.invalid) && (name.dirty || name.isTouched)) || isExisted}"
+                (input)="checkIsExisted()" placeholder="Input Filter name" />
               <div *ngIf="(name.invalid) && (name.dirty || name.isTouched)" class="text-danger">
                 <div *ngIf="name.errors.required">
                   Please enter filter name
@@ -26,25 +26,32 @@
                 Filter "{{filter.name}}" in "{{filter.language}}" is existed
               </div>
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-2">
               <label>
                 Language<span class="text-danger">*</span>
               </label>
-              <select class="form-control" name="language" #language="ngModel" [(ngModel)]="filter.language"
-                required (change)="checkIsExisted()"
-                [ngClass]="{'is-invalid': isExisted}">
+              <select class="form-control" name="language" #language="ngModel" [(ngModel)]="filter.language" required
+                (change)="checkIsExisted()" [ngClass]="{'is-invalid': isExisted}">
                 <option *ngFor="let l of lang" [value]="l">{{l}}</option>
               </select>
+            </div>
+            <div class="col-sm-3">
+              <label>Include / Exclude</label>
+              <div class="custom-control custom-switch text-primary">
+                <input type="checkbox" class="custom-control-input" id="customSwitch1" name="exclude" #exclude="ngModel"
+                  [(ngModel)]="filter.exclude">
+                <label class="custom-control-label" for="customSwitch1">
+                  <span *ngIf="filter.exclude">Exclude</span>
+                  <span *ngIf="!filter.exclude">Include</span>
+                </label>
+              </div>
             </div>
           </div>
         </form>
         <!--Heading-->
         <div class="row heading bg-primary text-gray-100 nopadding">
-          <div class="col-sm-7">
+          <div class="col-sm-11">
             Word
-          </div>
-          <div class="col-sm-4 d-flex justify-content-center">
-            Include/Exclude
           </div>
           <div class="col-sm-1 nopadding">
           </div>
@@ -56,12 +63,8 @@
           </div>
           <div class="row rowpadding" *ngFor="let word of words; let i = index">
 
-            <div class="col-sm-7">
+            <div class="col-sm-11">
               {{word.name}}
-            </div>
-            <div class="col-sm-4 d-flex justify-content-center">
-              <span *ngIf="!word.isExclude">Include</span>
-              <span *ngIf="word.isExclude">Exclude</span>
             </div>
             <div class="col-sm-1">
               <button class="btn btn-danger" (click)="removeWord(i)"><i class="fa fa-trash"></i></button>
@@ -72,7 +75,7 @@
         </div>
         <form #wordForm="ngForm" autocomplete="off">
           <div class="row" style="padding-top: 12px">
-            <div class="col-sm-7 center">
+            <div class="col-sm-11 center">
               <label>
                 Word
               </label>
@@ -87,16 +90,6 @@
               <div *ngIf="isWordDuplicate" class="text-danger">
                 This word is existed in the filter
               </div>
-            </div>
-            <div class="col-sm-4 center">
-              <label class="d-flex justify-content-center">
-                <span class="badge" [ngClass]="{'badge-primary': !this.currentWord.isExclude}" (click)="includeExclude()">Include</span>
-                <i class="fas fa-arrows-alt-h"
-                  style="margin-top:auto; margin-bottom: auto; margin-left: 2px; margin-right: 2px"></i>
-                <span class="badge" [ngClass]="{'badge-primary': this.currentWord.isExclude}" (click)="includeExclude()">Exclude</span>
-              </label>
-
-
             </div>
             <div class="col-sm-1 center">
               <label> &nbsp;</label>

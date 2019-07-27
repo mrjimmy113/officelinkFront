@@ -36,4 +36,7 @@ export class WordCloudService {
   isExisted(name,language):Observable<boolean>{
     return this.http.get<boolean>(this.api + `/existed?name=${name}&language=${language}`);
   }
+  getAll():Observable<WordCloudFilter[]> {
+    return this.http.get<WordCloudFilter[]>(this.api + `/all`);
+  }
 }

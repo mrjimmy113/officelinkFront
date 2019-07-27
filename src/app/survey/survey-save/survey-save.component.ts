@@ -1,5 +1,6 @@
+import { NgForm } from '@angular/forms';
 import { UltisService } from './../../service/ultis.service';
-import { TypeEnum } from "./../../model/typeEnum";
+import {ViewChild} from '@angular/core';
 import { DynamicLoadService } from "./../../service/dynamic-load.service";
 import { SurveyService } from "./../../service/survey.service";
 import { Survey } from "./../../model/survey";
@@ -8,7 +9,8 @@ import { ModalService } from "./../../service/modal.service";
 import { QuestionComponent } from "./../question/question.component";
 import { Question } from "./../../model/question";
 import { Component, OnInit, Input, Output } from "@angular/core";
-import { listenToElementOutputs } from "@angular/core/src/view/element";
+import { HttpErrorResponse } from '@angular/common/http';
+
 
 @Component({
   selector: "app-survey-save",
@@ -18,6 +20,7 @@ import { listenToElementOutputs } from "@angular/core/src/view/element";
 export class SurveySaveComponent implements OnInit {
   @Input() inputs;
   @Output() outputs;
+  @ViewChild("surveyForm") form : NgForm;
   survey: Survey;
   qComponentList: QuestionComponent[];
   isEdit = false;
@@ -75,16 +78,43 @@ export class SurveySaveComponent implements OnInit {
   openChooseQuestion() {
     this.modalSer.init(ChooseQuestionComponent, this.survey.questions, []);
   }
+
+  isValidForm() : boolean {
+    if(this.form.invalid) {
+      alert("Please check your survey title")
+      return false;
+    }
+    if(this.qComponentList.length == 0) {
+      alert("Survey must have more than one question");
+      return false;
+    }
+
+    for (let index = 0; index < this.qComponentList.length; index++) {
+      const element = this.qComponentList[index];
+      if(element.form.invalid) {
+        alert("Question number " + (index + 1) + " is not valid");
+        return false;
+      }
+    }
+
+    return true;
+  }
+
   save() {
+    if(!this.isValidForm()) return;
     if (!this.isEdit) {
       this.surveySer.create(this.survey).subscribe(result => {
         alert("Successfully Created");
         this.close();
+      }, (err : HttpErrorResponse) => {
+        if(err.status == 409) alert("Your survey title is already existed");
       });
     } else {
       this.surveySer.update(this.survey).subscribe(result => {
         alert("Successfully Updated");
         this.close();
+      }, (err : HttpErrorResponse) => {
+        if(err.status == 409) alert("Your survey title is already existed");
       });
     }
   }

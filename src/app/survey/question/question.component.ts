@@ -2,8 +2,9 @@ import { TypeEnum } from './../../model/typeEnum';
 import { QuestionService } from './../../service/question.service';
 import { AnswerOption } from './../../model/answerOption';
 import { Question } from './../../model/question';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { TypeQuestion } from 'src/app/model/typeQuestion';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-question',
@@ -20,6 +21,7 @@ export class QuestionComponent implements OnInit {
   @Output() deleteQ = new EventEmitter();
   @Output() moveUpQ = new EventEmitter();
   @Output() moveDownQ = new EventEmitter();
+  @ViewChild("createForm") form : NgForm;
   isEditMode = false;
   isNew = true;
   typeList: TypeQuestion[];
@@ -38,13 +40,18 @@ export class QuestionComponent implements OnInit {
     })
     if(this.isNew) {
       this.quest.options = new Array<AnswerOption>();
+      this.quest.options.push(new AnswerOption());
     }
     this.classToParent();
 
   }
 
   addOption() {
-    this.quest.options.push(new AnswerOption());
+    if(this.quest.options.length <= 8) {
+      this.quest.options.push(new AnswerOption());
+    }else {
+      alert("The maximum number of option is 8")
+    }
   }
 
   deleteOption(index) {
@@ -73,4 +80,5 @@ export class QuestionComponent implements OnInit {
   moveDown() {
     this.moveDownQ.emit(this.index);
   }
+
 }

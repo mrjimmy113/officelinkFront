@@ -1,6 +1,6 @@
 <button class="btn btn-primary btn-icon-split" (click)="close()">
   <span class="icon">
-      <i class="fas fa-arrow-alt-circle-left"></i>
+    <i class="fas fa-arrow-alt-circle-left"></i>
   </span>
   <span class="text">Back</span>
 </button>
@@ -8,7 +8,22 @@
   <div class="modal-content">
     <div class="modal-header">
       <div class="col-sm-10 noPadding">
-        <input type="text" placeholder="Survey Title" class="form-control" [(ngModel)]="survey.name" />
+        <form #surveyForm="ngForm">
+          <input type="text" placeholder="Survey Title" class="form-control" name="title" #title="ngModel" [(ngModel)]="survey.name" required
+            [ngClass]="{'is-invalid': (title.invalid && (title.dirty || title.touched))}" maxlength="150" />
+            <div *ngIf="title.invalid && (title.dirty || title.touched)" class="text-danger">
+                <div *ngIf="title.errors.required">
+                  Please input your survey title
+                </div>
+
+              </div>
+              <div *ngIf="(title.dirty || title.touched) && (survey.name != undefined)">
+                <div *ngIf="survey.name.length == 150" class="text-primary">
+                  Survey title can not exceed 150 characters
+                </div>
+              </div>
+        </form>
+
       </div>
       <div class="col-sm-2 d-flex justify-content-end noPadding">
         <button class="btn btn-success" (click)="save()" *ngIf="!isEdit">Create</button>
@@ -17,11 +32,11 @@
     </div>
     <div class="">
       <div *ngFor="let question of survey.questions; let i = index">
-        <app-question [quest]="question" [index]="i" [lastIndex]="survey.questions.length - 1" (updateEditMode)="updateEditMode()"
-          (giveClassToParent)="getChildInfor($event)" (copyQ)="copyQ($event)" (deleteQ)="deleteQ($event)"
-          (moveUpQ)="moveUpQ($event)" (moveDownQ)="moveDownQ($event)"
-          >
+        <app-question [quest]="question" [index]="i" [lastIndex]="survey.questions.length - 1"
+          (updateEditMode)="updateEditMode()" (giveClassToParent)="getChildInfor($event)" (copyQ)="copyQ($event)"
+          (deleteQ)="deleteQ($event)" (moveUpQ)="moveUpQ($event)" (moveDownQ)="moveDownQ($event)">
         </app-question>
+        <hr>
       </div>
 
     </div>
@@ -32,3 +47,4 @@
     </div>
   </div>
 </div>
+

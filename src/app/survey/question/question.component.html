@@ -3,21 +3,43 @@
     <!--Question + Types-->
     <div class="row row-padding-bot">
       <div class="col-sm-9">
-        <input class="form-control" placeholder="Question" name="question" #question="ngModel"
-          [(ngModel)]="quest.question" required [disabled]="!isNew"
-          [ngClass]="{'is-invalid': (question.invalid && (question.dirty || question.touched))}" />
-        <div *ngIf="question.invalid && (question.dirty || question.touched)" class="text-danger">
-          <div *ngIf="question.errors.required">
-            Please input your question
-          </div>
+        <div [hidden]="!(isEditMode && isNew)">
+          <input class="form-control" placeholder="Question" name="question" #question="ngModel"
+            [(ngModel)]="quest.question" required maxlength="150"
+            [ngClass]="{'is-invalid': (question.invalid && (question.dirty || question.touched))}" />
+          <div *ngIf="question.invalid && (question.dirty || question.touched)" class="text-danger">
+            <div *ngIf="question.errors.required">
+              Please input your question
+            </div>
 
+          </div>
+          <div *ngIf="(question.dirty || question.touched) && (quest.question != undefined)">
+            <div *ngIf="quest.question.length == 150" class="text-primary">
+              Question can not exceed 150 characters
+            </div>
+          </div>
+        </div>
+        <div [hidden]="isEditMode && isNew">
+          <div *ngIf="quest.question == undefined || quest.question.length == 0; else notEmpty">
+            <b class="text-primary">This question is empty, please click to edit</b>
+          </div>
+          <ng-template #notEmpty>
+            <b>{{quest.question}}</b>
+          </ng-template>
         </div>
       </div>
       <div class="col-sm-3">
-        <select class="form-control" [(ngModel)]="quest.type" name="type">
-          <option *ngFor="let type of typeList" [ngValue]="type" [selected]="quest.type.id == type.id">
-            {{typeEnum[type.type]}}</option>
-        </select>
+        <div *ngIf="isEditMode && isNew; else showType">
+          <select class="form-control" [(ngModel)]="quest.type" name="type">
+            <option *ngFor="let type of typeList" [ngValue]="type">
+              {{typeEnum[type.type]}}</option>
+          </select>
+        </div>
+        <ng-template #showType>
+          <div *ngIf="(quest.type != undefined)">
+            <b>{{typeEnum[quest.type.type]}}</b>
+          </div>
+        </ng-template>
       </div>
     </div>
     <!--Answer-->
@@ -31,22 +53,43 @@
               <input type="checkbox" class="radio-big" disabled *ngIf="quest.type.type == 'MULTIPLE'" />
             </div>
             <div class="col-sm-10 option">
-              <input type="text" class="form-control" placeholder="Option {{i + 1}}" [disabled]="!isNew"
-                [(ngModel)]="quest.options[i].answerText" name="option{{i}}" #option{{i}}="ngModel" required />
+              <div [hidden]="!(isEditMode && isNew)">
+                <input type="text" class="form-control" placeholder="Option {{i + 1}}" maxlength="50"
+                  [(ngModel)]="quest.options[i].answerText" name="option{{i}}" #option{{i}}="ngModel" required />
+              </div>
+              <div [hidden]="isEditMode && isNew">
+                <div
+                  *ngIf="quest.options[i].answerText == undefined || quest.options[i].answerText.length == 0; else emptyOp">
+                  <b class="text-primary">This option is empty, please click to edit</b>
+                </div>
+                <ng-template #emptyOp>
+                  <b>{{quest.options[i].answerText}}</b>
+                </ng-template>
+              </div>
             </div>
 
             <div class="col-sm-1 row align-content-center d-flex justify-content-center" *ngIf="isEditMode">
-              <button class="btn btn-danger" (click)="deleteOption(i)" *ngIf="isNew"><i
-                  class="fas fa-times"></i></button>
+              <button class="btn btn-danger" (click)="deleteOption(i)" *ngIf="isNew"
+                [disabled]="quest.options.length == 1"><i class="fas fa-times"></i></button>
+            </div>
+          </div>
+          <div *ngIf="quest.options[i].answerText != undefined">
+            <div *ngIf="quest.options[i].answerText.length == 50" class="text-primary">
+              Option can not exceed 50 characters
+            </div>
+            <div *ngIf="quest.options[i].answerText.length == 0" class="text-danger">
+              Please fill in this option
             </div>
           </div>
         </div>
         <div class="form-group add-btn" *ngIf="isEditMode">
-          <button class="btn btn-primary" (click)="addOption()" *ngIf="isNew">Add More Option</button>
+          <button class="btn btn-primary" (click)="addOption()" *ngIf="isNew">
+            Add More Option
+          </button>
         </div>
       </div>
       <!--Free Text-->
-      <div *ngIf="quest.type.type == 'TEXT'" class="form-group">
+      <div *ngIf="(quest.type.type == 'TEXT') && (isEditMode)" class="form-group">
         <div class="row">
           <label class="col-sm-2" style="text-align: center ">Answer: </label>
           <input placeholder="Free Text Answer" class="form-control col-sm-9" readonly />
@@ -58,9 +101,15 @@
   </form>
 
   <div class="modal-footer" *ngIf="isEditMode">
+
     <button class="btn btn-primary" (click)="moveUp()" [disabled]="index == 0"><i class="fas fa-arrow-up"></i></button>
     <button class="btn btn-primary" (click)="moveDown()" [disabled]="index == lastIndex"><i
         class="fas fa-arrow-down"></i></button>
     <button class="btn btn-danger" (click)="deleteQuestion()"><i class="fas fa-trash"></i></button>
+    <div class="custom-control custom-switch text-primary">
+      <input type="checkbox" class="custom-control-input" id="customSwitch1" [(ngModel)]="quest.required">
+      <label class="custom-control-label" for="customSwitch1">Required</label>
+    </div>
+
   </div>
 </div>

@@ -26,7 +26,6 @@ export class SendOutSurveyComponent implements OnInit {
   currentLocation: Location;
   currentDepartment: Department;
   currentTeam: Team;
-  expireDate:Date;
   today = new Date();
   constructor(
     private locationSer: LocationService,
@@ -89,7 +88,7 @@ export class SendOutSurveyComponent implements OnInit {
     let sendSurvey = new SendSurvey();
     sendSurvey.surveyId = this.inputs;
     sendSurvey.targetList = sendOutList;
-    sendSurvey.expireDate = (new Date(this.expireDate)).getTime();
+    sendSurvey.duration = 0;
     this.displaySer.showLoader();
     this.surveySer.sendOutSurvey(sendSurvey).subscribe(result => {
       alert("Your survey has beend sent");

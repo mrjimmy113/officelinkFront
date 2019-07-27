@@ -58,6 +58,20 @@ export class SurveyListComponent implements OnInit {
     });
   }
 
+  openClone(choosen: Survey) {
+    let clone = new Survey();
+    this.surveySer.getDetail(choosen.id).subscribe(result => {
+      this.isHide = true;
+      clone.questions = result;
+      this.saveComponentRef = this.dyLoadSer.init(
+        "saveComponent",
+        SurveySaveComponent,
+        clone,
+        () => this.offSave()
+      );
+    });
+  }
+
   search() {
     this.surveySer
       .search(this.searchTerm, this.currentPage - 1)

@@ -20,19 +20,13 @@ export class QuestionService {
   create(question : Question):Observable<Number> {
     return this.http.post<Number>(this.api,question);
   }
-  search(term) : Observable<PageSearch<Question>> {
-    return this.http.get<PageSearch<Question>>(this.api + `?term=${term}`);
-  }
-  getPage(term,num):Observable<Question[]> {
-    return this.http.get<Question[]>(this.api + `/getPage?term=${term}&num=${num}`);
+  search(term,page) : Observable<PageSearch<Question>> {
+    return this.http.get<PageSearch<Question>>(this.api + `?term=${term}&page=${page}`);
   }
   delete(id):Observable<Number> {
     return this.http.delete<Number>(this.api + `?id=${id}`);
   }
-  searchWithType(term,type) : Observable<PageSearch<Question>> {
-    return this.http.get<PageSearch<Question>>(this.api + `/search?term=${term}&type=${type}`);
-  }
-  getPageWithType(term,type,num):Observable<Question[]> {
-    return this.http.get<Question[]>(this.api + `/search/getPage?term=${term}&type=${type}&num=${num}`);
+  searchWithType(term,type,page) : Observable<PageSearch<Question>> {
+    return this.http.get<PageSearch<Question>>(this.api + `/search?term=${term}&type=${type}&page=${page}`);
   }
 }

@@ -16,9 +16,9 @@
           </div>
           <div class="col-sm-3">
             <select class="form-control" [(ngModel)]="currentType" (change)="changeType()">
-              <option [ngValue]="0">-Choose Type-</option>
+              <option [ngValue]="0">-All Type-</option>
               <option *ngFor="let type of typeList" [ngValue]="type.id">
-                {{type.type}}
+                {{typeEnum[type.type]}}
               </option>
             </select>
           </div>
@@ -37,8 +37,9 @@
             </div>
           </div>
           <div class="col-sm-2 d-flex justify-content-center">
-            <i class="fas fa-edit fa-2x" *ngIf="item.type.type == 'Free Text'"></i>
-            <i class="far fa-dot-circle fa-2x" *ngIf="item.type.type == 'Multiple Choice'"></i>
+            <i class="fas fa-edit fa-2x" *ngIf="item.type.type == 'TEXT'" title="Free Text"></i>
+            <i class="far fa-dot-circle fa-2x" *ngIf="item.type.type == 'SINGLE'" title="Single Choice"></i>
+            <i class="far fa-square fa-2x" *ngIf="item.type.type == 'MULTIPLE'" title="Multiple Choice"></i>
           </div>
           <div class="col-sm-1">
             <button class="btn btn-success" (click)="chooseQuestion(item)" *ngIf="!checkChoosen(item)">
@@ -48,8 +49,8 @@
               <i class="fas fa-check"></i>
             </button>
           </div>
-
         </div>
+        <button (click)="loadMore()" class="btn btn-primary">Load More</button>
       </div>
     </div>
 
