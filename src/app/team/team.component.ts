@@ -20,7 +20,6 @@ export class TeamComponent implements OnInit {
 
   ngOnInit() {
     this.search("");
-    console.log(this.itemList);
   }
 
   search(value) {
@@ -31,11 +30,11 @@ export class TeamComponent implements OnInit {
   }
 
   openCreate() {
-    this.modalSer.init(TeamSaveComponent, [], () => this.search(""));
+    this.modalSer.init(TeamSaveComponent, [], () => this.loadPage(this.currentPage));
   }
 
   openEdit(item) {
-    this.modalSer.init(TeamSaveComponent, item, () => this.search(""));
+    this.modalSer.init(TeamSaveComponent, item, () => this.loadPage(this.currentPage));
   }
 
   filter() {

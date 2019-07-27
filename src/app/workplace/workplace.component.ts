@@ -29,11 +29,11 @@ export class WorkplaceComponent implements OnInit {
   }
 
   openCreate() {
-    this.modalSer.init(WorkplaceSaveComponent, [], () => this.search(""));
+    this.modalSer.init(WorkplaceSaveComponent, [], () => this.loadPage(this.currentPage));
   }
 
   openEdit(item) {
-    this.modalSer.init(WorkplaceSaveComponent, item, () => this.search(""));
+    this.modalSer.init(WorkplaceSaveComponent, item, () => this.loadPage(this.currentPage));
   }
 
   filter() {

@@ -22,10 +22,7 @@ export class DepartmentComponent implements OnInit {
   }
 
   init() {
-    this.ser.searchGetPage("", 1).subscribe(result => {
-      this.maxPage = result.maxPage;
-      this.itemList = result.objList;
-    });
+    this.search("");
   }
 
   search(value) {
@@ -36,11 +33,11 @@ export class DepartmentComponent implements OnInit {
   }
 
   openCreate() {
-    this.modalSer.init(DepartmentSaveComponent, [], () => this.search(""));
+    this.modalSer.init(DepartmentSaveComponent, [], () => this.loadPage(this.currentPage));
   }
 
   openEdit(item) {
-    this.modalSer.init(DepartmentSaveComponent, item, () => this.search(""));
+    this.modalSer.init(DepartmentSaveComponent, item, () => this.loadPage(this.currentPage));
   }
 
   filter() {
