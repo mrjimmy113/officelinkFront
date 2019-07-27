@@ -55,7 +55,7 @@ export class DepartmentComponent implements OnInit {
         this.requestStatus = result;
         if (this.requestStatus == 200) {
           alert("Success");
-          this.search("");
+          this.loadPage(this.currentPage);
         }
       });
     }

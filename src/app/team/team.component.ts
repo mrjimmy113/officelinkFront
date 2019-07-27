@@ -52,7 +52,7 @@ export class TeamComponent implements OnInit {
         this.requestStatus = result;
         if (this.requestStatus == 200) {
           alert("success");
-          this.search("");
+          this.loadPage(this.currentPage)
         }
       });
     }
