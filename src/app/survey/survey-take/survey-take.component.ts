@@ -49,13 +49,16 @@ export class SurveyTakeComponent implements OnInit {
   }
 
   saveAnswer() {
-    let surveyAnswerInfor = new SurveyAnswerInfor();
+    if(this.requireValidate()) {
+       let surveyAnswerInfor = new SurveyAnswerInfor();
     surveyAnswerInfor.answers = this.answers;
     surveyAnswerInfor.surveyId = this.survey.id;
     this.surveySer.sendAnswer(surveyAnswerInfor).subscribe(result => {
       alert("Thank you for taking out this survey");
       this.router.navigate(['/']);
     });
+    }
+   
   }
 
   activeSurvey() {
@@ -82,4 +85,18 @@ export class SurveyTakeComponent implements OnInit {
       alert("Please login to do the survey");
     }
   }
+
+  requireValidate() : boolean {
+    for (let index = 0; index < this.survey.questions.length; index++) {
+      const element = this.survey.questions[index];
+      if(element.required) {
+        if(this.answers[index].content == undefined || this.answers[index].content.trim() == '') {
+          alert("Question number " + (index + 1) + " is required");
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
 }

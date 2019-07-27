@@ -3,17 +3,16 @@
   <div class="modal-content">
     <div class="modal-header bg-success" style="color: white">
       <div class="col-sm-10 noPadding">
-        <h5>Feedback: {{survey.name}}</h5>
+        <h5>Survey: {{survey.name}}</h5>
       </div>
     </div>
     <div class="modal-body" style="padding-left: 24px">
       <div *ngFor="let q of survey.questions; let i = index">
-        <b><i class="far fa-question-circle"></i> {{q.question}}</b>
-
+        <b><i class="far fa-question-circle"></i> {{(i+1)+ ". " + q.question}} <span class="text-danger" *ngIf="q.required">(*)</span></b>
         <div class="form-group">
           <label>Answer:</label>
           <!--Free Text-->
-          <input type="text" [required]="q.required" class="form-control" *ngIf="q.type.type == 'TEXT'" [(ngModel)]="answers[i].content" />
+          <textarea rows="4" maxlength="300" [required]="q.required" class="form-control" *ngIf="q.type.type == 'TEXT'" [(ngModel)]="answers[i].content" ></textarea>
           <!--Single Choice-->
           <div *ngIf="q.type.type == 'SINGLE'">
             <div class="form-check" *ngFor="let option of q.options">
