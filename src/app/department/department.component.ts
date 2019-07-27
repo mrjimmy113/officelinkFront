@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalService } from '../service/modal.service';
 import { DepartmentService } from '../service/department.service';
 import { DepartmentSaveComponent } from '../department-save/department-save.component';
+import { Department } from '../model/department';
 
 @Component({
   selector: 'app-department',
@@ -9,7 +10,7 @@ import { DepartmentSaveComponent } from '../department-save/department-save.comp
   styleUrls: ['./department.component.css']
 })
 export class DepartmentComponent implements OnInit {
-  itemList;
+  itemList = new Array<Department>();
   currentPage = 1;
   maxPage;
   searchTerm = "";
@@ -22,10 +23,7 @@ export class DepartmentComponent implements OnInit {
   }
 
   init() {
-    this.ser.searchGetPage("", 1).subscribe(result => {
-      this.maxPage = result.maxPage;
-      this.itemList = result.objList;
-    });
+    this.search("");
   }
 
   search(value) {
@@ -36,11 +34,11 @@ export class DepartmentComponent implements OnInit {
   }
 
   openCreate() {
-    this.modalSer.init(DepartmentSaveComponent, [], () => this.search(""));
+    this.modalSer.init(DepartmentSaveComponent, [], () => this.loadPage(this.currentPage));
   }
 
   openEdit(item) {
-    this.modalSer.init(DepartmentSaveComponent, item, () => this.search(""));
+    this.modalSer.init(DepartmentSaveComponent, item, () => this.loadPage(this.currentPage));
   }
 
   filter() {
@@ -58,7 +56,12 @@ export class DepartmentComponent implements OnInit {
         this.requestStatus = result;
         if (this.requestStatus == 200) {
           alert("Success");
-          this.search("");
+          if (this.itemList.length <= 1) {
+            this.loadPage(this.currentPage - 1);
+          }
+          else {
+            this.loadPage(this.currentPage);
+          }
         }
       });
     }
