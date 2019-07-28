@@ -23,7 +23,11 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.isError = false;
+
+    if(this.account.email == "" || this.account.password == ""){
+      alert("Email and password not empty. Try again");
+    }else{
+      this.isError = false;
     this.displaySer.showLoader();
     this.authSer.login(this.account).subscribe(result => {
       if(result != null) {
@@ -37,6 +41,9 @@ export class LoginComponent implements OnInit {
       else this.isError =true;
       this.displaySer.hideLoader();
     })
+
+    }
+    
   }
 
 
