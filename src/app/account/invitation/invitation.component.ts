@@ -30,7 +30,7 @@ export class InvitationComponent implements OnInit {
 
   }
   addNewEmail(emailForm : NgForm) {
-    if(this.newEmail == null){
+    if(this.newEmail == "" || this.newEmail == null){
       alert("Input not empty. Try again")
     }else{
       this.listEmail.push(this.newEmail);
