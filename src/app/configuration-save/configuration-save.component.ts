@@ -25,6 +25,7 @@ export class ConfigurationSaveComponent implements OnInit {
   @Output() outputs;
   requestStatus: Number;
   isEdit = false;
+  isRoutine = false;
   configuration: Configuration;
   surveys: Array<Survey>;
   selectedSurveyId: Number = 0;
@@ -194,6 +195,18 @@ export class ConfigurationSaveComponent implements OnInit {
     //#region Send out infor
     let sendOutList = this.filterSendOutList(this.inforList);
     let sendSurvey = new SendSurvey();
+    if (sendOutList.length <= 0){
+      alert("You must choose at least a target to send.")
+      return;
+    }
+    if(this.configuration.duration == undefined) {
+      alert("Duration must be choosen.")
+      return;
+    }
+    if(this.configuration.duration <= 0) {
+      alert("Duration cannot be zero or negative.")
+      return;
+    }
     sendSurvey.surveyId = this.selectedSurveyId;
     sendSurvey.targetList = sendOutList;
     this.configuration.sendSurvey = sendSurvey;
@@ -409,6 +422,18 @@ export class ConfigurationSaveComponent implements OnInit {
   send() {
     let sendOutList = this.inforList;
     let sendSurvey = new SendSurvey();
+    if (sendOutList.length <= 0){
+      alert("You must choose at least a target to send.")
+      return;
+    }
+    if(this.configuration.duration == undefined) {
+      alert("Duration must be choosen.")
+      return;
+    }
+    if(this.configuration.duration <= 0) {
+      alert("Duration cannot be zero or negative.")
+      return;
+    }
     sendSurvey.surveyId = this.inputs;
     sendSurvey.targetList = sendOutList;
     sendSurvey.duration = this.configuration.duration;
