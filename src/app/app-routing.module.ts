@@ -44,6 +44,8 @@ import { AccountSaveComponent } from "./account/account-save/account-save.compon
 import { AccountDeleteComponent } from "./account/account-delete/account-delete.component";
 import { JoinComponent } from "./others/join/join.component";
 import { RegisterConfirmComponent } from "./others/register-confirm/register-confirm.component";
+import { SurveyHistoryDetailComponent } from "./survey/survey-history-detail/survey-history-detail.component"
+import { SurveyHistoryMainComponent } from "./survey/survey-history-main/survey-history-main.component"
 import { from } from 'rxjs';
 
 const authRoutes: Routes = [
@@ -63,7 +65,8 @@ const authRoutes: Routes = [
   { path: "news/:id/detail", component: NewsDetailComponent },
   { path: "q", component: SurveySaveComponent },
   { path: "memInvite", component: InvitationComponent },
-
+  { path: "history", component: SurveyHistoryMainComponent },
+  { path: "history/detail", component: SurveyHistoryDetailComponent },
 
 
   { path: "team", component: TeamComponent },
