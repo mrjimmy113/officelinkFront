@@ -30,9 +30,9 @@ export class ConfigurationSaveComponent implements OnInit {
   surveys: Array<Survey>;
   selectedSurveyId: Number = 0;
   second;
-  minute;
+  minute = '0';
   arrayOfMinutes = new Array<Number>();
-  hour;
+  hour = '0';
   arrayOfHours = new Array<Number>();
   dayOfMonth;
   months = new Array();
@@ -200,7 +200,7 @@ export class ConfigurationSaveComponent implements OnInit {
       return;
     }
     if(this.configuration.duration == undefined) {
-      alert("Duration must be choosen.")
+      alert("Duration must be chosen.")
       return;
     }
     if(this.configuration.duration <= 0) {
@@ -210,6 +210,7 @@ export class ConfigurationSaveComponent implements OnInit {
     sendSurvey.surveyId = this.selectedSurveyId;
     sendSurvey.targetList = sendOutList;
     this.configuration.sendSurvey = sendSurvey;
+    
     //#endregion
     this.requestStatus = 1;
     if (this.isEdit) this.update();
