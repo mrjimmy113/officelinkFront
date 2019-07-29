@@ -52,18 +52,26 @@ export class DepartmentComponent implements OnInit {
 
   delete(id) {
     if (confirm("Do you want to delete this")) {
-      this.ser.delete(id).subscribe(result => {
-        this.requestStatus = result;
-        if (this.requestStatus == 200) {
-          alert("Success");
-          if (this.itemList.length <= 1) {
-            this.loadPage(this.currentPage - 1);
+      this.ser.delete(id).subscribe(
+        result => {
+          this.requestStatus = result;
+          if (this.requestStatus == 200) {
+            alert("Success");
+            if (this.itemList.length <= 1) {
+              this.loadPage(this.currentPage - 1);
+            }
+            else {
+              this.loadPage(this.currentPage);
+            }
           }
-          else {
-            this.loadPage(this.currentPage);
+        },
+        error => {
+          if (error.status == 409) {
+            alert("This department contain team(s) in it. Please remove all team(s) in this department before delete it.");
+          } else if (error.status = 400) {
+            alert("Bad request");
           }
-        }
-      });
+        });
     }
   }
 
