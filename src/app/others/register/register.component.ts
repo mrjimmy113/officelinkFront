@@ -39,6 +39,7 @@ export class RegisterComponent implements OnInit {
     this.account.location = new Location();
     this.account.workplace = new Workplace();
     this.account.isDeleted = false;
+    this.account.address = "";
   }
   register(){
 

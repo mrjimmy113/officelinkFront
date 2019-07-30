@@ -39,7 +39,7 @@ export class ChooseQuestionComponent implements OnInit {
           this.maxPage = result.maxPage;
         });
     } else {
-      this.questSer.search(this.term,this.currentPage - 1).subscribe(result => {
+      this.questSer.getChooseList(this.term,this.currentPage - 1).subscribe(result => {
         this.itemList = result.objList;
         this.maxPage = result.maxPage;
       });
@@ -69,7 +69,6 @@ export class ChooseQuestionComponent implements OnInit {
     this.modalSer.destroy();
   }
   loadMore() {
-    console.log(this.maxPage);
     if(this.maxPage < this.currentPage) {
       console.log("ye");
       this.currentPage++;

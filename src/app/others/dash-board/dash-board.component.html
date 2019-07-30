@@ -64,12 +64,18 @@
           </div>
           <!-- Card Body -->
           <div class="card-body text-center">
-            <img [src]="'data:image/jpeg;base64,' + dashBoard.news.byte_image"
-              style='height: 165px; object-fit: contain' />
-            <div>
-              <a [routerLink]="['/news/' +dashBoard.news.id +'/detail']"
-                routerLinkActive="router-link-active">{{dashBoard.news.title}}</a>
+            <div *ngIf="dashBoard.news != null && dashBoard.news != undefined; else noData">
+              <img [src]="'data:image/jpeg;base64,' + dashBoard.news.byte_image"
+                style='height: 165px; object-fit: contain' />
+              <div>
+                <a [routerLink]="['/news/' +dashBoard.news.id +'/detail']"
+                  routerLinkActive="router-link-active">{{dashBoard.news.title}}</a>
+              </div>
             </div>
+            <ng-template #noData>
+              <h3>No Data</h3>
+            </ng-template>
+
           </div>
         </div>
       </div>
