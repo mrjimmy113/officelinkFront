@@ -65,4 +65,7 @@ export class SurveyService {
   getAnswerForSurveyHistory(id): Observable<Array<Answer>> {
     return this.http.get<Array<Answer>>(this.api + `/history/answer?id=${id}`);
   }
+  getTemplate(term,page):Observable<PageSearch<Survey>> {
+    return this.http.get<PageSearch<Survey>>(this.api + `/template?term=${term}&page=${page}`)
+  }
 }

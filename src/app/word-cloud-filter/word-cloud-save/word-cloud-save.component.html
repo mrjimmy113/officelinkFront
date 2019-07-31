@@ -14,12 +14,17 @@
               <label>
                 Filter Name<span class="text-danger">*</span>
               </label>
-              <input class="form-control" name="name" #name="ngModel" [(ngModel)]="filter.name" required
-                [ngClass]="{'is-invalid': ((name.invalid) && (name.dirty || name.isTouched)) || isExisted}"
+              <input class="form-control" name="name" #name="ngModel" [(ngModel)]="filter.name" required maxlength="100"
+                [ngClass]="{'is-invalid': ((name.invalid) && (name.dirty || name.touched)) || isExisted}"
                 (input)="checkIsExisted()" placeholder="Input Filter name" />
-              <div *ngIf="(name.invalid) && (name.dirty || name.isTouched)" class="text-danger">
+              <div *ngIf="(name.invalid) && (name.dirty || name.touched)" class="text-danger">
                 <div *ngIf="name.errors.required">
                   Please enter filter name
+                </div>
+              </div>
+              <div *ngIf="(name.dirty || name.touched) && (filter.name != undefined)">
+                <div *ngIf="filter.name.length == 100" class="text-info">
+                  Filter name can not exceed 100 characters
                 </div>
               </div>
               <div *ngIf="isExisted" class="text-danger">
@@ -80,11 +85,16 @@
                 Word
               </label>
               <input type="text" class="form-control" name="word" #word="ngModel" [(ngModel)]="currentWord.name"
-                placeholder="Input Word" required (input)="checkDuplicateWord()"
-                [ngClass]="{'is-invalid': ((word.invalid) && (word.dirty || word.isTouched)) || isWordDuplicate}" />
-              <div *ngIf="(word.invalid) && (word.dirty || word.isTouched)" class="text-danger">
+                placeholder="Input Word" required (input)="checkDuplicateWord()" maxlength="50"
+                [ngClass]="{'is-invalid': ((word.invalid) && (word.dirty || word.touched)) || isWordDuplicate}" />
+              <div *ngIf="(word.invalid) && (word.dirty || word.touched)" class="text-danger">
                 <div *ngIf="word.errors.required">
                   Please enter word
+                </div>
+              </div>
+              <div *ngIf="(word.dirty || word.touched) && (currentWord.name != undefined)">
+                <div *ngIf="currentWord.name.length == 50" class="text-info">
+                  Word can not exceed 50 characters
                 </div>
               </div>
               <div *ngIf="isWordDuplicate" class="text-danger">

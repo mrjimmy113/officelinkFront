@@ -2,9 +2,11 @@
   <span class="icon">
     <i class="fas fa-arrow-alt-circle-left"></i>
   </span>
-  <span class="text">Back</span>
+  <span class="text">Back to list</span>
 </button>
-<div class="modal-lg modal-dialog" style="margin-top: 2px">
+<app-choose-template (newBlankSurvey)="closeTemplate()" (newWithTemplate)="getTemplate($event)" *ngIf="!isEdit && isChooseTemplate"></app-choose-template>
+<!--Create Survey-->
+<div class="modal-lg modal-dialog" style="margin-top: 2px" *ngIf="!isChooseTemplate">
   <div class="modal-content">
     <div class="modal-header">
       <div class="col-sm-10 noPadding">
