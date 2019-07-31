@@ -60,16 +60,11 @@
               </table>
             </div>
           </form>
-          <div>
-            <h2>
-              <label class="container">
-                <div class="checkbox-text">
-                  Create routine
-                </div>
-                <input type="checkbox" [(ngModel)]="isRoutine">
-                <span class="checkmark"></span>
-              </label>
-            </h2>
+          <div class="form-inline create-routine">
+            <h3>
+              Create routine
+            </h3>
+            <input class="custom-checkbox" type="checkbox" [(ngModel)]="isRoutine">
           </div>
         </div>
 

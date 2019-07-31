@@ -13,6 +13,16 @@
   opacity: 0.4;
 }
 
+.custom-checkbox {
+  width: 20px;
+  height: 20px;
+}
+
+.create-routine *{
+  margin-right: 15px;
+  /* padding: 10%; */
+}
+
 /*  */
 /* Customize the label (the container) */
 .container {
