@@ -30,7 +30,7 @@
       </div>
       <div class="col-sm-3">
         <div *ngIf="isEditMode && isNew; else showType">
-          <select class="form-control" [(ngModel)]="quest.type" name="type">
+          <select class="form-control" [(ngModel)]="quest.type" name="type" (change)="updateType()">
             <option *ngFor="let type of typeList" [ngValue]="type">
               {{typeEnum[type.type]}}</option>
           </select>

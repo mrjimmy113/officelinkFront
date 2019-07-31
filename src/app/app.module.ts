@@ -72,7 +72,8 @@ import { ResetPasswordComponent } from './others/reset-password/reset-password.c
 import { ReadNewsComponent } from './others/read-news/read-news.component';
 import { DetailComponent } from './question/detail/detail.component';
 import { SurveyHistoryDetailComponent } from "./survey/survey-history-detail/survey-history-detail.component"
-import { SurveyHistoryMainComponent } from "./survey/survey-history-main/survey-history-main.component"
+import { SurveyHistoryMainComponent } from "./survey/survey-history-main/survey-history-main.component";
+import { ChooseTemplateComponent } from './survey/choose-template/choose-template.component'
 
 @NgModule({
   declarations: [
@@ -129,6 +130,7 @@ import { SurveyHistoryMainComponent } from "./survey/survey-history-main/survey-
     DetailComponent,
     SurveyHistoryDetailComponent,
     SurveyHistoryMainComponent,
+    ChooseTemplateComponent,
 
   ],
   imports: [

@@ -24,6 +24,7 @@ export class SurveySaveComponent implements OnInit {
   survey: Survey;
   qComponentList: QuestionComponent[];
   isEdit = false;
+  isChooseTemplate =true;
   constructor(
     private modalSer: ModalService,
     private surveySer: SurveyService,
@@ -120,5 +121,14 @@ export class SurveySaveComponent implements OnInit {
   }
   close() {
     this.outputs();
+  }
+  closeTemplate() {
+    this.isChooseTemplate = false;
+  }
+  getTemplate(id) {
+    this.closeTemplate();
+    this.surveySer.getDetail(id).subscribe(result => {
+      this.survey.questions = result;
+    })
   }
 }
