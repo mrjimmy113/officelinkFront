@@ -3,6 +3,7 @@ import { ModalService } from '../service/modal.service';
 import { DepartmentService } from '../service/department.service';
 import { DepartmentSaveComponent } from '../department-save/department-save.component';
 import { Department } from '../model/department';
+import { UltisService } from '../service/ultis.service';
 
 @Component({
   selector: 'app-department',
@@ -15,8 +16,9 @@ export class DepartmentComponent implements OnInit {
   maxPage;
   searchTerm = "";
   requestStatus: Number;
+  isSort = "";
 
-  constructor(private modalSer: ModalService, private ser: DepartmentService) { }
+  constructor(private modalSer: ModalService, private ser: DepartmentService, private ultisSer: UltisService) { }
 
   ngOnInit() {
     this.init();
@@ -81,5 +83,15 @@ export class DepartmentComponent implements OnInit {
       this.maxPage = result.maxPage;
       this.itemList = result.objList;
     })
+  }
+
+  sort(property) {
+    if (this.isSort == property) {
+      this.itemList.sort(this.ultisSer.sortByPropertyNameDSC(property));
+      this.isSort = "";
+    } else {
+      this.itemList.sort(this.ultisSer.sortByPropertyNameASC(property));
+      this.isSort = property;
+    }
   }
 }

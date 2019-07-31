@@ -13,10 +13,6 @@ export class ConfigurationService {
 
   constructor(private http:HttpClient) { }
 
-  getConfig(configId):Observable<Configuration> {
-    return this.http.get<Configuration>(this.api + `/getConfig` + `?id=${configId}`);
-  }
-
   searchGetPage(term, page):Observable<PageSearch<Configuration>> {
     return this.http.get<PageSearch<Configuration>>(this.api + `/searchGetPage` + `?term=${term}&page=${page}`);
   }
