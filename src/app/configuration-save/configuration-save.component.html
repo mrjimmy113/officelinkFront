@@ -9,7 +9,7 @@
       </div>
       <div class="modal-body row">
         <div class="col-sm-6">
-          <form #configForm="ngForm">
+          <form #configForm="ngForm" [ngClass]="{false: 'disabledbutton'}[isRoutine]">
             <div class="form-group">
               <label>Schedule Time(*)</label>
               <table class="table table-hover table-sm table-bordered text-center">
@@ -17,8 +17,8 @@
                   <tr>
                     <th>Hour(*)</th>
                     <th>Minutes(*)</th>
-                    <th>Day of Week(*)</th>
-                    <th>Month</th>
+                    <th>Day of Week (Blank is Every)</th>
+                    <th>Month (Blank is Every)</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -59,25 +59,15 @@
                 </tbody>
               </table>
             </div>
-            <div class="form-group">
-              <label>Duration(*)</label>
-              <div class="input-group mb-3">
-                <input class="form-control" type="number" name="dura" #dura="ngModel" [(ngModel)]="configuration.duration"
-                  [ngClass]="{'is-invalid' : (dura.invalid && (dura.dirty || dura.touched))}" required />
-
-                <div class="text-danger" *ngIf="(dura.invalid && (dura.dirty || dura.touched))">
-                  <div *ngIf="dura.errors.required">
-                    Please input duration
-                  </div>
-                </div>
-                <div class="input-group-append">
-                  <span class="input-group-text">Days Until Expired</span>
-                </div>
-              </div>
-
-            </div>
           </form>
+          <div class="form-inline create-routine">
+            <h3>
+              Create routine
+            </h3>
+            <input class="custom-checkbox" type="checkbox" [(ngModel)]="isRoutine">
+          </div>
         </div>
+
         <div class="col-sm-6">
           <!--Choose-->
           <div class="row form-group">
@@ -126,6 +116,24 @@
             </span>
 
           </div>
+          <br />
+          <div class="form-group">
+            <label>Duration(*)</label>
+            <div class="input-group mb-3">
+              <input class="form-control" type="number" name="dura" #dura="ngModel" [(ngModel)]="configuration.duration"
+                [ngClass]="{'is-invalid' : (dura.invalid && (dura.dirty || dura.touched))}" required />
+
+              <div class="text-danger" *ngIf="(dura.invalid && (dura.dirty || dura.touched))">
+                <div *ngIf="dura.errors.required">
+                  Please input duration
+                </div>
+              </div>
+              <div class="input-group-append">
+                <span class="input-group-text">Days Until Expired</span>
+              </div>
+            </div>
+
+          </div>
         </div>
       </div>
       <div class="modal-footer">
@@ -134,15 +142,14 @@
           <h4><span class="badge badge-pill badge-danger" *ngIf="requestStatus == 400">Fail</span></h4>
         </div>
         <div class="col-sm-6 d-flex justify-content-end" style="padding: 0px">
-          <button type="button" class="btn btn-success" (click)="save()"
-            [disabled]="(requestStatus==1) || configForm.invalid">
+          <button type="button" class="btn btn-success" (click)="save()" *ngIf="isRoutine == true">
             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
               *ngIf="requestStatus == 1"></span>
             <span *ngIf="isEdit == false && requestStatus != 1">Create Routine</span>
 
             <span *ngIf="isEdit == true && requestStatus != 1">Save Configuration</span>
           </button>
-          <button class="btn btn-success" style="margin-left: 20px">
+          <button class="btn btn-success" style="margin-left: 20px" *ngIf="isRoutine == false">
             <span *ngIf="isEdit == false && requestStatus != 1" (click)="send()">Send Once</span>
           </button>
         </div>
