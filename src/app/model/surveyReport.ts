@@ -1,3 +1,4 @@
+import { SendOutInfor } from './sendOutInfor';
 import { QuestionReport } from './questionReport';
 export class SurveyReport {
   id:Number;
@@ -6,5 +7,6 @@ export class SurveyReport {
 	dateStop : Date;
 	receivedAnswer : number;
 	sentOut : number;
-	questions : QuestionReport[];
+  questions : QuestionReport[];
+  sendTargets: SendOutInfor[];
 }

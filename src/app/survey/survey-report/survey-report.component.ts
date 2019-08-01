@@ -1,3 +1,4 @@
+import { SendOutInfor } from './../../model/sendOutInfor';
 import { ApplyFilter } from './../../model/applyFilter';
 import { WordCloudFilter } from './../../model/word-cloud-filter';
 import { UltisService } from 'src/app/service/ultis.service';
@@ -37,6 +38,8 @@ export class SurveyReportComponent implements OnInit {
   surveyId:number;
 
   surveyReport: SurveyReport;
+  textOfSendOutInfor: string[];
+
   colorScheme = {
     domain: ["#5AA454", "#A10A28", "#C7B42C", "#AAAAAA"]
   };
@@ -62,6 +65,7 @@ export class SurveyReportComponent implements OnInit {
     this.teamId = 0;
     this.surveyReport = new SurveyReport();
     this.reportData = new Array<any>();
+    this.textOfSendOutInfor = new Array();
     this.route.params.subscribe(params => {
       this.surveyId = params["id"];
       this.reportSer.getSendSurveyTargetDetail(this.surveyId).subscribe(result => {
@@ -71,6 +75,7 @@ export class SurveyReportComponent implements OnInit {
       })
       this.surveySer.getReportAll(this.surveyId).subscribe(result => {
         this.surveyReport = result;
+        this.getTextFromSendOutInfor(this.surveyReport.sendTargets);
         this.surveyReport.questions.forEach(element => {
           if (element.question.type.type == "TEXT") {
             this.reportData.push(this.getWordCloud(element.answers));
@@ -162,7 +167,22 @@ export class SurveyReportComponent implements OnInit {
         this.reportData[dataIndex] = this.getWordCloud(result);
       })
     }
+  }
 
+  getTextFromSendOutInfor(infors : SendOutInfor[]) {
+    infors.forEach(element => {
+      if(element.departmentName == '' && element.locationName == '' && element.teamName =='') {
+        this.textOfSendOutInfor.push('All Company');
+      }else if(element.departmentName != '' && element.locationName == '' && element.teamName =='') {
+        this.textOfSendOutInfor.push(element.departmentName.toString());
+      }else if(element.departmentName == '' && element.locationName != '' && element.teamName =='') {
+        this.textOfSendOutInfor.push(element.locationName.toString());
+      }else if(element.departmentName != '' && element.locationName != '' && element.teamName =='') {
+        this.textOfSendOutInfor.push(element.locationName + " - " + element.departmentName);
+      }else if(element.departmentName != '' && element.locationName != '' && element.teamName !='') {
+        this.textOfSendOutInfor.push(element.teamName.toString());
+      }
+    });
   }
 
 }
