@@ -174,13 +174,13 @@ export class SurveyReportComponent implements OnInit {
       if(element.departmentName == '' && element.locationName == '' && element.teamName =='') {
         this.textOfSendOutInfor.push('All Company');
       }else if(element.departmentName != '' && element.locationName == '' && element.teamName =='') {
-        this.textOfSendOutInfor.push(element.departmentName.toString());
+        this.textOfSendOutInfor.push('Department: ' + element.departmentName.toString());
       }else if(element.departmentName == '' && element.locationName != '' && element.teamName =='') {
-        this.textOfSendOutInfor.push(element.locationName.toString());
+        this.textOfSendOutInfor.push('Location: ' + element.locationName.toString());
       }else if(element.departmentName != '' && element.locationName != '' && element.teamName =='') {
-        this.textOfSendOutInfor.push(element.locationName + " - " + element.departmentName);
+        this.textOfSendOutInfor.push('Location: ' + element.locationName + " - Department: " + element.departmentName);
       }else if(element.departmentName != '' && element.locationName != '' && element.teamName !='') {
-        this.textOfSendOutInfor.push(element.teamName.toString());
+        this.textOfSendOutInfor.push('Team: ' + element.teamName.toString());
       }
     });
   }

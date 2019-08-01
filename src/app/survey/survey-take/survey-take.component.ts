@@ -72,7 +72,6 @@ export class SurveyTakeComponent implements OnInit {
   activeSurvey() {
     if (this.authSer.isLogin()) {
       this.isLogin = this.authSer.isLogin();
-      console.log("cl");
       this.route.params.subscribe(
         params => {
           this.token = params["token"];
@@ -80,12 +79,12 @@ export class SurveyTakeComponent implements OnInit {
             this.survey = result;
             this.survey.questions.forEach(element => {
               let answer = new Answer();
+              answer.questionType = element.type.type;
               answer.questionIdentity = element.questionIdentity;
               this.answers.push(answer);
             });
           },
           (err: HttpErrorResponse) => {
-            console.log(err.status);
             if (err.status == 409) {
               alert("You have taken this survey");
               this.router.navigate(["/"]);
