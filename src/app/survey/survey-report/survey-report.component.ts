@@ -1,3 +1,5 @@
+import { ApplyFilterComponent } from './../apply-filter/apply-filter.component';
+import { QuestionReport } from './../../model/questionReport';
 import { SendOutInfor } from './../../model/sendOutInfor';
 import { ApplyFilter } from './../../model/applyFilter';
 import { WordCloudFilter } from './../../model/word-cloud-filter';
@@ -145,8 +147,8 @@ export class SurveyReportComponent implements OnInit {
       });
     })
   }
-  openCompare(q : Question,reportData) {
-    this.modalSer.init(SurveyCompareComponent, [q,reportData,this.surveyId,this.surveyReport.name,this.locationId,this.departmentId,this.teamId], []);
+  openCompare(q) {
+    this.modalSer.init(SurveyCompareComponent, [q,this.surveyId,this.surveyReport.name,this.locationId,this.departmentId,this.teamId], []);
   }
 
   getDownloadToken(id) {
@@ -183,6 +185,12 @@ export class SurveyReportComponent implements OnInit {
         this.textOfSendOutInfor.push('Team: ' + element.teamName.toString());
       }
     });
+  }
+  valueFormatting(value: number) {
+    return value.toFixed(1);
+  }
+  openApplyFilter(q:QuestionReport) {
+    this.modalSer.init(ApplyFilterComponent,q,[]);
   }
 
 }

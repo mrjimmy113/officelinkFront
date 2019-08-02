@@ -92,9 +92,7 @@
               <div class="form-group">
                 <label>Team</label>
                 <select class="form-control" [disabled]="teamList.length == 0" [(ngModel)]="currentTeam">
-                  <option *ngIf="teamList.length == 0" [ngValue]="undefined">Please choose Department and Location
-                  </option>
-                  <option [ngValue]="undefined" *ngIf="teamList.length != 0">All Team</option>
+                  <option [ngValue]="undefined" >All Team</option>
                   <option *ngFor="let team of teamList" [ngValue]="team">{{team.name}}</option>
                 </select>
               </div>

@@ -124,7 +124,7 @@
     </div>
     <div class="col-sm-7">
       <ngx-charts-advanced-pie-chart [results]="reportData[i]" *ngIf="q.question.type.type =='SINGLE'"
-        [animations]="false">
+        [animations]="false" [valueFormatting]="valueFormatting" >
       </ngx-charts-advanced-pie-chart>
       <ngx-charts-bar-horizontal [results]="reportData[i]" [xAxis]="true" [yAxis]="true" [animations]="false"
         *ngIf="q.question.type.type =='MULTIPLE'">
@@ -169,11 +169,10 @@
       <div class="col-sm-1 ">
         <div class="d-flex justify-content-center">
           <button class="btn-circle btn-primary" title="Compare with other survey"
-            (click)="openCompare(q,surveyReport.questions[i].answers)">
+            (click)="openCompare(q)">
             <i class="fas fa-file-medical-alt"></i>
           </button>
         </div>
-
         <div class="d-flex justify-content-center" style="margin-top: 12px">
           <button class="btn-circle btn-primary" title="Download Answer" (click)="getDownloadToken(q.question.id)">
             <i class="fas fa-download"></i>

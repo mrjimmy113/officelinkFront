@@ -20,6 +20,8 @@ export class ChooseQuestionComponent implements OnInit {
   currentType = 0;
   typeEnum = TypeEnum;
   choosenList = new Array<Question>();
+  showDetail = false;
+  detailQuestion;
   constructor(private questSer: QuestionService, private modalSer:ModalService) {}
 
   ngOnInit() {
@@ -88,6 +90,15 @@ export class ChooseQuestionComponent implements OnInit {
         });
       }
     }
+  }
+  viewDetail(q:Question) {
+    console.log(q);
+    this.showDetail = true;
+    this.detailQuestion = q;
+  }
+
+  closeDetail() {
+    this.showDetail = false;
   }
 
 }

@@ -51,9 +51,15 @@
       </div>
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/account']" routerLinkActive="router-link-active">
-          <i class="fas fa-user"></i>
-          <span>Account</span>
+        <a class="nav-link" [routerLink]="['/location']" routerLinkActive="router-link-active">
+          <i class="fas fa-map-marker-alt"></i>
+          <span>Location</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/department']" routerLinkActive="router-link-active">
+          <i class="fas fa-building"></i>
+          <span>Department</span>
         </a>
       </li>
 
@@ -63,19 +69,13 @@
           <span>Team</span>
         </a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/account']" routerLinkActive="router-link-active">
+          <i class="fas fa-user"></i>
+          <span>Account</span>
+        </a>
+      </li>
 
-      <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/department']" routerLinkActive="router-link-active">
-          <i class="fas fa-building"></i>
-          <span>Department</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/location']" routerLinkActive="router-link-active">
-          <i class="fas fa-map-marker-alt"></i>
-          <span>Location</span>
-        </a>
-      </li>
       <!-- Divider -->
       <hr class="sidebar-divider">
     </div>
