@@ -20,20 +20,25 @@ export class ChooseTemplateComponent implements OnInit {
 
   ngOnInit() {
     this.itemList = new Array<Survey>();
-    this.search();
+    this.search(this.term,this.currentPage);
   }
 
-  search() {
-    this.surveySer.getTemplate(this.term,this.currentPage - 1).subscribe(result => {
+  search(term, currentPage) {
+    this.surveySer.getTemplate(term,currentPage - 1).subscribe(result => {
       this.itemList = result.objList;
       this.maxPage = result.maxPage;
     })
   }
+  loadPage(pageNum) {
+    this.currentPage = pageNum;
+    this.search(this.term,this.currentPage);
+  }
+
   filter() {
     let oldTerm = this.term;
     setTimeout(() => {
       if (oldTerm == this.term) {
-        this.search();
+        this.search(this.term,this.currentPage);
       }
     }, 300);
   }

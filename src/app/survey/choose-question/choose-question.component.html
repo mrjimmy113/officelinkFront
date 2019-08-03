@@ -25,7 +25,13 @@
         </div>
       </div>
       <!--List question-->
-
+      <div class="d-flex justify-content-end">
+        <div class="row align-content-center" style="padding-bottom: 0px; margin-right: 12px">
+          Page: {{currentPage}} of {{maxPage}}
+        </div>
+        <button class="btn btn-light" style="border-radius: 0px" [disabled]="currentPage == 1" (click)="loadPage(currentPage - 1)"><i class="fas fa-chevron-left" ></i></button>
+        <button class="btn btn-light" style="border-radius: 0px" [disabled]="currentPage == maxPage" (click)="loadPage(currentPage + 1)"><i class="fas fa-chevron-right" ></i></button>
+      </div>
       <div class="modal-content modal-body list">
         <div class="d-flex justify-content-center" *ngIf="itemList.length == 0">
           <h5>No record found</h5>

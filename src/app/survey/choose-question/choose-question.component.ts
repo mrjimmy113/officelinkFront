@@ -70,29 +70,25 @@ export class ChooseQuestionComponent implements OnInit {
   closeModal() {
     this.modalSer.destroy();
   }
-  loadMore() {
-    if(this.maxPage < this.currentPage) {
-      console.log("ye");
-      this.currentPage++;
-      if (this.currentType != 0) {
-        this.questSer
-          .searchWithType(this.term, this.currentType,this.currentPage - 1)
-          .subscribe(result => {
-            result.objList.forEach(e => {
-              this.itemList.push(e);
-            })
-          });
-      } else {
-        this.questSer.search(this.term,this.currentPage - 1).subscribe(result => {
-          result.objList.forEach(e => {
-            this.itemList.push(e);
-          })
+  loadPage(pageNum) {
+    this.currentPage = pageNum;
+    if (this.currentType != 0) {
+      this.questSer
+        .searchWithType(this.term, this.currentType,this.currentPage - 1)
+        .subscribe(result => {
+          this.itemList = result.objList;
+          this.maxPage = result.maxPage;
         });
-      }
+    } else {
+      this.questSer.search(this.term,this.currentPage - 1).subscribe(result => {
+        result.objList.forEach(e => {
+          this.itemList = result.objList;
+          this.maxPage = result.maxPage;
+        })
+      });
     }
   }
   viewDetail(q:Question) {
-    console.log(q);
     this.showDetail = true;
     this.detailQuestion = q;
   }
