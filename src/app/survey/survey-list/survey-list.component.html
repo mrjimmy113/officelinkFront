@@ -51,8 +51,6 @@
           <div class="col-sm-2 d-flex align-items-center justify-content-center">
             <button class="btn btn-primary" (click)="openEdit(item)" *ngIf="!item.sent"><i class="fas fa-pen-alt"></i></button>
             <span *ngIf="!item.sent"> | </span>
-            <button class="btn btn-success" (click)="openClone(item)"><i class="fas fa-copy"></i></button>
-            <span> | </span>
             <button class="btn btn-info" (click)="sendOut(item.id)" *ngIf="!item.sent"><i class="fas fa-paper-plane"></i></button>
             <span *ngIf="!item.sent"> | </span>
             <button class="btn btn-danger" (click)="delete(item.id)"><i class="fas fa-trash-alt"></i></button>

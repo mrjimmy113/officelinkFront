@@ -48,9 +48,6 @@ export class SurveyService {
   getWorkplaceSurveys(): Observable<Array<Survey>> {
     return this.http.get<Array<Survey>>(this.api + `/getWorkplaceSurveys`);
   }
-  getReportAll(id): Observable<SurveyReport> {
-    return this.http.get<SurveyReport>(this.api + `/report/detail?id=${id}`);
-  }
   getReportList(term, page): Observable<PageSearch<SurveyReport>> {
     return this.http.get<PageSearch<SurveyReport>>(
       this.api + `/report?term=${term}&page=${page}`

@@ -1,4 +1,4 @@
-<div class="modal-lg modal-dialog">
+<div class="modal-lg modal-dialog" [hidden]="showDetail">
   <div class="modal-content">
     <div class="modal-header">
       <h5 class="modal-title">Choose Question</h5>
@@ -25,13 +25,19 @@
         </div>
       </div>
       <!--List question-->
-
+      <div class="d-flex justify-content-end">
+        <div class="row align-content-center" style="padding-bottom: 0px; margin-right: 12px">
+          Page: {{currentPage}} of {{maxPage}}
+        </div>
+        <button class="btn btn-light" style="border-radius: 0px" [disabled]="currentPage == 1" (click)="loadPage(currentPage - 1)"><i class="fas fa-chevron-left" ></i></button>
+        <button class="btn btn-light" style="border-radius: 0px" [disabled]="currentPage == maxPage" (click)="loadPage(currentPage + 1)"><i class="fas fa-chevron-right" ></i></button>
+      </div>
       <div class="modal-content modal-body list">
         <div class="d-flex justify-content-center" *ngIf="itemList.length == 0">
           <h5>No record found</h5>
         </div>
         <div class="row" *ngFor="let item of itemList">
-          <div class="col-sm-9 row align-content-center">
+          <div class="col-sm-8 row align-content-center">
             <div>
               {{item.question}}
             </div>
@@ -41,18 +47,71 @@
             <i class="far fa-dot-circle fa-2x" *ngIf="item.type.type == 'SINGLE'" title="Single Choice"></i>
             <i class="far fa-square fa-2x" *ngIf="item.type.type == 'MULTIPLE'" title="Multiple Choice"></i>
           </div>
-          <div class="col-sm-1">
-            <button class="btn btn-success" (click)="chooseQuestion(item)" *ngIf="!checkChoosen(item)">
+          <div class="col-sm-2">
+            <button class="btn btn-info" (click)="viewDetail(item)" style="margin-right: 6px">
+              <i class="fas fa-info-circle"></i>
+            </button>
+            <button class="btn btn-success" (click)="chooseQuestion(item)" [disabled]="checkChoosen(item)">
               <i class="fas fa-plus"></i>
             </button>
-            <button class="btn btn-success" disabled *ngIf="checkChoosen(item)">
-              <i class="fas fa-check"></i>
-            </button>
+
           </div>
         </div>
-        <button (click)="loadMore()" class="btn btn-primary">Load More</button>
       </div>
     </div>
 
+  </div>
+</div>
+<div class="modal-dialog" *ngIf="showDetail && detailQuestion != undefined ">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">Question Detail</h5>
+      <button type="button" class="close" (click)="closeDetail()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div>
+        <b><i class="far fa-question-circle"></i> {{detailQuestion.question}}</b>
+        <div class="form-group">
+          <label>Answer:</label>
+          <!--Free Text-->
+          <input type="text" class="form-control" *ngIf="detailQuestion.type.type == 'TEXT'" />
+          <!--Single Choice-->
+          <div *ngIf="detailQuestion.type.type == 'SINGLE'">
+            <div class="form-check" *ngFor="let option of detailQuestion.options">
+              <div class="row row-padding-bot">
+                <div class="col-sm-1 row align-content-center d-flex justify-content-center">
+                  <input type="radio" class="radio-big" disabled />
+                </div>
+                <div class="col-sm-10 option">
+                  {{option.answerText}}
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <!--Mutiple Choice-->
+          <div *ngIf="detailQuestion.type.type == 'MULTIPLE'">
+            <div class="form-check" *ngFor="let option of detailQuestion.options">
+              <div class="row row-padding-bot">
+                <div class="col-sm-1 row align-content-center d-flex justify-content-center">
+                  <input type="checkbox" class="radio-big" disabled (click)="multipleAnswer(option.id,i)" />
+                </div>
+                <div class="col-sm-10 option">
+                  {{option.answerText}}
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-danger" (click)="closeDetail()">Back</button>
+    </div>
   </div>
 </div>

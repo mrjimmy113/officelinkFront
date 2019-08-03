@@ -33,8 +33,8 @@ export class WordCloudService {
   delete(id):Observable<Number> {
     return this.http.delete<Number>(this.api + `?id=${id}`);
   }
-  isExisted(name,language):Observable<boolean>{
-    return this.http.get<boolean>(this.api + `/existed?name=${name}&language=${language}`);
+  isExisted(name):Observable<boolean>{
+    return this.http.get<boolean>(this.api + `/existed?name=${name}`);
   }
   getAll():Observable<WordCloudFilter[]> {
     return this.http.get<WordCloudFilter[]>(this.api + `/all`);

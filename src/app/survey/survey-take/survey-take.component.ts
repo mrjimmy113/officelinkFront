@@ -1,4 +1,4 @@
-import { SurveyAnswerInfor } from './../../model/surveyAnswerInfor';
+import { SurveyAnswerInfor } from "./../../model/surveyAnswerInfor";
 import { AuthenticationService } from "./../../service/authentication.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Answer } from "./../../model/answer";
@@ -6,6 +6,7 @@ import { SurveyService } from "./../../service/survey.service";
 import { Question } from "./../../model/question";
 import { Component, OnInit } from "@angular/core";
 import { Survey } from "src/app/model/survey";
+import { HttpErrorResponse } from "@angular/common/http";
 
 @Component({
   selector: "app-survey-take",
@@ -21,7 +22,7 @@ export class SurveyTakeComponent implements OnInit {
     private surveySer: SurveyService,
     private route: ActivatedRoute,
     private authSer: AuthenticationService,
-    private router:Router
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -49,48 +50,59 @@ export class SurveyTakeComponent implements OnInit {
   }
 
   saveAnswer() {
-    if(this.requireValidate()) {
-       let surveyAnswerInfor = new SurveyAnswerInfor();
-    surveyAnswerInfor.answers = this.answers;
-    surveyAnswerInfor.surveyId = this.survey.id;
-    this.surveySer.sendAnswer(surveyAnswerInfor).subscribe(result => {
-      alert("Thank you for taking out this survey");
-      this.router.navigate(['/']);
-    });
+    if (this.requireValidate()) {
+      let surveyAnswerInfor = new SurveyAnswerInfor();
+      surveyAnswerInfor.answers = this.answers;
+      surveyAnswerInfor.surveyId = this.survey.id;
+      this.surveySer.sendAnswer(surveyAnswerInfor).subscribe(
+        () => {
+          alert("Thank you for taking out this survey");
+          this.router.navigate(["/"]);
+        },
+        (err: HttpErrorResponse) => {
+          if (err.status == 409) {
+            alert("You have taken this survey");
+            this.router.navigate(["/"]);
+          }
+        }
+      );
     }
-   
   }
 
   activeSurvey() {
     if (this.authSer.isLogin()) {
       this.isLogin = this.authSer.isLogin();
-      this.route.params.subscribe(params => {
-        this.token = params["token"];
-        this.surveySer.getTakeSurvey(this.token).subscribe(result => {
-          if (result == null) {
-            alert("You have taken this survey");
-            this.router.navigate(['/']);
-          } else {
+      this.route.params.subscribe(
+        params => {
+          this.token = params["token"];
+          this.surveySer.getTakeSurvey(this.token).subscribe(result => {
             this.survey = result;
             this.survey.questions.forEach(element => {
               let answer = new Answer();
+              answer.questionType = element.type.type;
               answer.questionIdentity = element.questionIdentity;
               this.answers.push(answer);
             });
-          }
-
-        });
-      });
-    }else {
+          },
+          (err: HttpErrorResponse) => {
+            if (err.status == 409) {
+              alert("You have taken this survey");
+              this.router.navigate(["/"]);
+            }
+          });
+        }
+      );
+    } else {
       alert("Please login to do the survey");
     }
   }
 
-  requireValidate() : boolean {
+  requireValidate(): boolean {
     for (let index = 0; index < this.survey.questions.length; index++) {
       const element = this.survey.questions[index];
-      if(element.required) {
-        if(this.answers[index].content == undefined || this.answers[index].content.trim() == '') {
+      if (element.required) {
+        let answer: String = this.answers[index].content;
+        if (answer == undefined || answer.toString().trim() == "") {
           alert("Question number " + (index + 1) + " is required");
           return false;
         }
@@ -98,5 +110,4 @@ export class SurveyTakeComponent implements OnInit {
     }
     return true;
   }
-
 }

@@ -41,7 +41,6 @@ export class WordCloudSaveComponent implements OnInit {
       this.filter = this.inputs;
       this.words = this.filter.wordList;
       this.currentName = this.filter.name;
-      this.currentLanguage = this.filter.language;
       this.isEdit = true;
     }
     this.currentWord = new Word();
@@ -110,14 +109,11 @@ export class WordCloudSaveComponent implements OnInit {
   checkIsExisted() {
     if (
       this.filter.name != undefined &&
-      this.filter.name.trim() != "" &&
-      this.filter.language != undefined &&
-      this.filter.language.trim() != ""
+      this.filter.name.trim() != ""
     ) {
       if(this.isEdit) {
         if((
-          (this.filter.name.toLowerCase() == this.currentName.toLowerCase()) &&
-          (this.filter.language == this.currentLanguage)
+          (this.filter.name.toLowerCase() == this.currentName.toLowerCase())
         )) {
           return;
         }
@@ -126,7 +122,7 @@ export class WordCloudSaveComponent implements OnInit {
       setTimeout(() => {
         if (oldName == this.filter.name) {
           this.ser
-            .isExisted(this.filter.name, this.filter.language)
+            .isExisted(this.filter.name)
             .subscribe(result => {
               this.isExisted = result;
             });

@@ -10,7 +10,7 @@
       <div class="modal-body">
         <form #filterForm="ngForm">
           <div class="row form-group">
-            <div class="col-sm-7">
+            <div class="col-sm-9">
               <label>
                 Filter Name<span class="text-danger">*</span>
               </label>
@@ -30,15 +30,6 @@
               <div *ngIf="isExisted" class="text-danger">
                 Filter "{{filter.name}}" in "{{filter.language}}" is existed
               </div>
-            </div>
-            <div class="col-sm-2">
-              <label>
-                Language<span class="text-danger">*</span>
-              </label>
-              <select class="form-control" name="language" #language="ngModel" [(ngModel)]="filter.language" required
-                (change)="checkIsExisted()" [ngClass]="{'is-invalid': isExisted}">
-                <option *ngFor="let l of lang" [value]="l">{{l}}</option>
-              </select>
             </div>
             <div class="col-sm-3">
               <label>Include / Exclude</label>
