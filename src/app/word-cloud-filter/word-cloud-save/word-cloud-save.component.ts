@@ -22,6 +22,8 @@ export class WordCloudSaveComponent implements OnInit {
   lang = ["English", "Vietnamese"];
   isWordDuplicate = false;
   isExisted = false;
+  currentName;
+  currentLanguage;
 
   constructor(private ser: WordCloudService, private modalSer: ModalService) {}
 
@@ -38,10 +40,10 @@ export class WordCloudSaveComponent implements OnInit {
     } else {
       this.filter = this.inputs;
       this.words = this.filter.wordList;
+      this.currentName = this.filter.name;
       this.isEdit = true;
     }
     this.currentWord = new Word();
-    this.currentWord.isExclude = false;
     this.requestStatus = 0;
   }
 
@@ -53,7 +55,6 @@ export class WordCloudSaveComponent implements OnInit {
     this.currentWord.name = this.currentWord.name.toLowerCase();
     this.words.push(this.currentWord);
     this.currentWord = new Word();
-    this.currentWord.isExclude = false;
     form.resetForm();
   }
   add() {
@@ -105,21 +106,23 @@ export class WordCloudSaveComponent implements OnInit {
       }
     }, 300);
   }
-  includeExclude() {
-    this.currentWord.isExclude = !this.currentWord.isExclude;
-  }
   checkIsExisted() {
     if (
       this.filter.name != undefined &&
-      this.filter.name.trim() != "" &&
-      this.filter.language != undefined &&
-      this.filter.language.trim() != ""
+      this.filter.name.trim() != ""
     ) {
+      if(this.isEdit) {
+        if((
+          (this.filter.name.toLowerCase() == this.currentName.toLowerCase())
+        )) {
+          return;
+        }
+      }
       let oldName = this.filter.name;
       setTimeout(() => {
         if (oldName == this.filter.name) {
           this.ser
-            .isExisted(this.filter.name, this.filter.language)
+            .isExisted(this.filter.name)
             .subscribe(result => {
               this.isExisted = result;
             });

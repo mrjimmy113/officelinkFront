@@ -1,3 +1,4 @@
+import { AuthenticationService } from './../../service/authentication.service';
 import { ReportService } from './../../service/report.service';
 import { Component, OnInit } from '@angular/core';
 import { DashBoard } from 'src/app/model/dashBoard';
@@ -10,9 +11,11 @@ import { DashBoard } from 'src/app/model/dashBoard';
 export class DashBoardComponent implements OnInit {
   dashBoard : DashBoard
   tutorial = false;
-  constructor(private reportSer:ReportService) { }
+  role;
+  constructor(private reportSer:ReportService, private authSer:AuthenticationService) { }
 
   ngOnInit() {
+    this.role = this.authSer.getRole();
     this.dashBoard = new DashBoard();
     this.reportSer.getDashBoard().subscribe(result => {
       this.dashBoard = result;
@@ -21,6 +24,7 @@ export class DashBoardComponent implements OnInit {
   }
 
   isTutorial(): boolean {
+    if(this.role != 'employer') return false;
     if(this.dashBoard.account == 0) return true;
 
     if(this.dashBoard.department == 0) return true;

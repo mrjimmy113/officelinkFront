@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalService } from '../service/modal.service';
 import { WorkplaceService } from '../service/workplace.service';
 import { WorkplaceSaveComponent } from '../workplace-save/workplace-save.component';
+import { Workplace } from '../model/workplace';
 
 @Component({
   selector: 'app-workplace',
@@ -9,7 +10,7 @@ import { WorkplaceSaveComponent } from '../workplace-save/workplace-save.compone
   styleUrls: ['./workplace.component.css']
 })
 export class WorkplaceComponent implements OnInit {
-  itemList;
+  itemList = new Array<Workplace>();
   currentPage = 1;
   maxPage;
   searchTerm = "";
@@ -29,11 +30,11 @@ export class WorkplaceComponent implements OnInit {
   }
 
   openCreate() {
-    this.modalSer.init(WorkplaceSaveComponent, [], () => this.search(""));
+    this.modalSer.init(WorkplaceSaveComponent, [], () => this.loadPage(this.currentPage));
   }
 
   openEdit(item) {
-    this.modalSer.init(WorkplaceSaveComponent, item, () => this.search(""));
+    this.modalSer.init(WorkplaceSaveComponent, item, () => this.loadPage(this.currentPage));
   }
 
   filter() {
@@ -51,7 +52,12 @@ export class WorkplaceComponent implements OnInit {
         this.requestStatus = result;
         if (this.requestStatus == 200) {
           alert("Success");
-          this.search("");
+          if (this.itemList.length <= 1) {
+            this.loadPage(this.currentPage - 1);
+          }
+          else {
+            this.loadPage(this.currentPage);
+          }
         }
       });
     }

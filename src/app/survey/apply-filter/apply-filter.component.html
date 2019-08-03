@@ -1,0 +1,35 @@
+<div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5>Question: {{question.question.question}}</h5>
+
+        <button type="button" class="close" (click)="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" >
+        <div class="row">
+          <div class="col-sm-8">
+            <span class="badge badge-primary" *ngFor="let filter of choosenFilters; let i = index">
+              {{filter.name}} <button class="btn-primary borderless"><i class="fas fa-times"
+                  (click)="removeFilter(i)"></i></button>
+            </span>
+          </div>
+          <div class="col-sm-4">
+            <div class="input-group mb-3 d-flex justify-content-end">
+              <select class="form-control">
+                <option>Choose Filter</option>
+                <option *ngFor="let filter of filterList; let i = index" [ngValue]="i">{{filter.name}}</option>
+              </select>
+              <div class="input-group-append">
+                <button class="btn btn-success" (click)="addNewSurvey()"><i class="fas fa-plus"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <angular-tag-cloud [data]="" [width]="options.width" [height]="options.height"
+          [overflow]="options.overflow">
+        </angular-tag-cloud>
+      </div>
+    </div>
+  </div>

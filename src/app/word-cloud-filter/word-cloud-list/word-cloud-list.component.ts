@@ -22,6 +22,7 @@ export class WordCloudListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.itemList = new Array();
     this.search();
   }
 

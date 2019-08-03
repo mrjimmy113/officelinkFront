@@ -25,13 +25,14 @@ export class ConfigurationSaveComponent implements OnInit {
   @Output() outputs;
   requestStatus: Number;
   isEdit = false;
+  isRoutine = false;
   configuration: Configuration;
   surveys: Array<Survey>;
   selectedSurveyId: Number = 0;
   second;
-  minute;
+  minute = '0';
   arrayOfMinutes = new Array<Number>();
-  hour;
+  hour = '0';
   arrayOfHours = new Array<Number>();
   dayOfMonth;
   months = new Array();
@@ -194,9 +195,22 @@ export class ConfigurationSaveComponent implements OnInit {
     //#region Send out infor
     let sendOutList = this.filterSendOutList(this.inforList);
     let sendSurvey = new SendSurvey();
+    if (sendOutList.length <= 0){
+      alert("You must choose at least a target to send.")
+      return;
+    }
+    if(this.configuration.duration == undefined) {
+      alert("Duration must be chosen.")
+      return;
+    }
+    if(this.configuration.duration <= 0) {
+      alert("Duration cannot be zero or negative.")
+      return;
+    }
     sendSurvey.surveyId = this.selectedSurveyId;
     sendSurvey.targetList = sendOutList;
     this.configuration.sendSurvey = sendSurvey;
+    
     //#endregion
     this.requestStatus = 1;
     if (this.isEdit) this.update();
@@ -247,8 +261,8 @@ export class ConfigurationSaveComponent implements OnInit {
     this.minute = this.minute == null ? "0" : this.minute;
     this.hour = this.hour == null ? "0" : this.hour;
     this.dayOfMonth = this.dayOfMonth == null ? "*" : this.dayOfMonth;
-    let months = this.months == null ? "*" : this.months;
-    let dayOfWeeks = this.dayOfWeeks == null ? "*" : this.dayOfWeeks;
+    let months = this.months.length <= 0 ? "*" : this.months;
+    let dayOfWeeks = this.dayOfWeeks.length <= 0 ? "*" : this.dayOfWeeks;
 
     let result =
       this.second +
@@ -409,11 +423,21 @@ export class ConfigurationSaveComponent implements OnInit {
   send() {
     let sendOutList = this.inforList;
     let sendSurvey = new SendSurvey();
+    if (sendOutList.length <= 0){
+      alert("You must choose at least a target to send.")
+      return;
+    }
+    if(this.configuration.duration == undefined) {
+      alert("Duration must be choosen.")
+      return;
+    }
+    if(this.configuration.duration <= 0) {
+      alert("Duration cannot be zero or negative.")
+      return;
+    }
     sendSurvey.surveyId = this.inputs;
     sendSurvey.targetList = sendOutList;
-    let expireDate = new Date();
-    expireDate.setDate(expireDate.getDate() + this.configuration.duration);
-    sendSurvey.expireDate = expireDate.getTime();
+    sendSurvey.duration = this.configuration.duration;
     this.displaySer.showLoader();
     this.surveySer.sendOutSurvey(sendSurvey).subscribe(result => {
       alert("Your survey has beend sent");

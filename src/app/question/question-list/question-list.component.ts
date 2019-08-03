@@ -1,7 +1,11 @@
+import { UltisService } from 'src/app/service/ultis.service';
+import { Question } from './../../model/question';
+import { TypeEnum } from './../../model/typeEnum';
 import { QuestionService } from './../../service/question.service';
 import { ModalService } from './../../service/modal.service';
 import { Component, OnInit } from '@angular/core';
 import { QuestionSaveComponent } from '../question-save/question-save.component';
+import { DetailComponent } from '../detail/detail.component';
 @Component({
   selector: 'app-question-list',
   templateUrl: './question-list.component.html',
@@ -12,8 +16,10 @@ export class QuestionListComponent implements OnInit {
   currentPage = 1;
   maxPage;
   searchTerm = "";
+  isSort = "";
   requestStatus:Number;
-  constructor(private modalSer:ModalService, private quesSer:QuestionService) { }
+  typeEnum = TypeEnum;
+  constructor(private modalSer:ModalService, private quesSer:QuestionService, private ultiSer:UltisService) { }
 
   ngOnInit() {
     this.itemList = new Array();
@@ -27,15 +33,14 @@ export class QuestionListComponent implements OnInit {
   }
 
   search() {
-    this.quesSer.search(this.searchTerm).subscribe(result => {
+    this.quesSer.search(this.searchTerm,this.currentPage - 1).subscribe(result => {
       this.maxPage = result.maxPage;
       this.itemList = result.objList;
     });
   }
   loadPage(num) {
-    this.quesSer.getPage(this.searchTerm, num).subscribe(result => {
-      this.itemList = result;
-    });
+    this.currentPage = num;
+    this.search();
   }
   filter() {
     let newSearchTerm = this.searchTerm;
@@ -57,8 +62,17 @@ export class QuestionListComponent implements OnInit {
       })
     }
   }
+  detail(quest : Question) {
+    this.modalSer.init(DetailComponent,quest,[]);
+  }
   sort(property) {
-
+    if (this.isSort == property) {
+      this.itemList.sort(this.ultiSer.sortByPropertyNameDSC(property));
+      this.isSort = "";
+    } else {
+      this.itemList.sort(this.ultiSer.sortByPropertyNameASC(property));
+      this.isSort = property;
+    }
   }
 
 }

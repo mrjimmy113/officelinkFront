@@ -15,15 +15,16 @@
                 <input class="form-control form-control-user" name="workspacename" #workspacename="ngModel"
                   placeholder="Worksplace name" [(ngModel)]="account.workplace.name"
                   [ngClass]="{'is-invalid' : (workspacename.invalid && (workspacename.dirty || workspacename.touched))}"
-                  required  />
+                  required />
                 <div *ngIf="workspacename.invalid && (workspacename.dirty || workspacename.touched)"
                   class="text-danger">
                   <div *ngIf="workspacename.errors.required">
-                    Worksplace name required
+                    Work splace name required
                   </div>
+                 
 
-                    </div>
-                  </div>
+                </div>
+              </div>
               <div class="form-group row">
 
                 <div class="col-sm-6 mb-3 mb-sm-0">
@@ -55,26 +56,26 @@
               </div>
 
               <div class="form-group">
-                <input type="email" class="form-control form-control-user" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" name = "email" #email = "ngModel" placeholder="Email" [(ngModel)] = account.email
-                [ngClass]="{'is-invalid' : (email.invalid && (email.dirty || email.touched))}" required
-                >
-                <div *ngIf="email.errors &&(email.touched || email.dirty)" class ="text-danger">
-                    <div *ngIf="email.errors.required">
-                        Email required
-                      </div>
+                <input type="email" class="form-control form-control-user"
+                  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" name="email" #email="ngModel" placeholder="Email"
+                  [(ngModel)]=account.email
+                  [ngClass]="{'is-invalid' : (email.invalid && (email.dirty || email.touched))}" required>
+                <div *ngIf="email.errors &&(email.touched || email.dirty)" class="text-danger">
+                  <div *ngIf="email.errors.required">
+                    Email required
+                  </div>
                   <div [hidden]="!email.errors?.pattern">
                     Email invalid
                   </div>
-                 </div>
+                </div>
               </div>
 
               <div class="form-group row">
-                  <div class="col-sm-6 mb-3 mb-sm-0">
-                    <input type="password" class="form-control form-control-user" id="exampleFirstName"
-                      placeholder="Password" name = "password" #password = "ngModel" [(ngModel)] = "account.password"
-                      [ngClass]="{'is-invalid' : (password.invalid && (password.dirty || password.touched))}" required
-                      minlength="6" maxlength="15"
-                  />
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input type="password" class="form-control form-control-user" id="exampleFirstName"
+                    placeholder="Password" name="password" #password="ngModel" [(ngModel)]="account.password"
+                    [ngClass]="{'is-invalid' : (password.invalid && (password.dirty || password.touched))}" required
+                    minlength="6" maxlength="15" />
                   <div *ngIf="password.invalid && (password.dirty || password.touched)" class="text-danger">
                     <div *ngIf="password.errors.required">
                       Password required
@@ -85,35 +86,22 @@
                     </div>
 
                   </div>
-                  </div>
-                  <div class="col-sm-6">
-                    <input type="password" class="form-control form-control-user" id="exampleLastName"
-                      placeholder="Confirm"
-                      name = "confirmPass" #confirmPass = "ngModel" [(ngModel)] = "confirmPassText"
-                      [ngClass]="{'is-invalid' : (confirmPass.invalid && (confirmPass.dirty || confirmPass.touched))}" required
-                      minlength="6" maxlength="15"
-                  />
+                </div>
+                <div class="col-sm-6">
+                  <input type="password" class="form-control form-control-user" id="exampleLastName"
+                    placeholder="Confirm" name="confirmPass" #confirmPass="ngModel" [(ngModel)]="confirmPassText"
+                    [ngClass]="{'is-invalid' : (confirmPass.invalid && (confirmPass.dirty || confirmPass.touched))}"
+                    required minlength="6" maxlength="15" />
                   <div *ngIf="confirmPass.invalid && (confirmPass.dirty || confirmPass.touched)" class="text-danger">
                     <div *ngIf="confirmPass.errors.required">
                       Confirm password required
                     </div>
                   </div>
-                  </div>
                 </div>
-              <div class="form-group">
-                  <input type="text" class="form-control form-control-user" name = "address" #address = "ngModel" placeholder="Address" [(ngModel)] = "account.address"
-                  [ngClass]="{'is-invalid' : (address.invalid && (address.dirty || address.touched))}" required
-
-                  />
-                  <div *ngIf="address.invalid && (address.dirty || address.touched)" class="text-danger">
-                    <div *ngIf="address.errors.required">
-                      Address required
-                    </div>
-
-                  </div>
               </div>
 
-              <button    class="btn btn-primary btn-user btn-block" (click)="register()">
+
+              <button class="btn btn-primary btn-user btn-block" (click)="register()">
                 Register Account
               </button>
 

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalService } from '../service/modal.service';
 import { TeamService } from '../service/team.service';
 import { TeamSaveComponent } from '../team-save/team-save.component';
+import { Team } from '../model/team';
 
 @Component({
   selector: 'app-team',
@@ -9,7 +10,7 @@ import { TeamSaveComponent } from '../team-save/team-save.component';
   styleUrls: ['./team.component.css']
 })
 export class TeamComponent implements OnInit {
-  itemList;
+  itemList = new Array<Team>();
   currentPage = 1;
   maxPage;
   searchTerm = "";
@@ -29,11 +30,11 @@ export class TeamComponent implements OnInit {
   }
 
   openCreate() {
-    this.modalSer.init(TeamSaveComponent, [], () => this.search(""));
+    this.modalSer.init(TeamSaveComponent, [], () => this.loadPage(this.currentPage));
   }
 
   openEdit(item) {
-    this.modalSer.init(TeamSaveComponent, item, () => this.search(""));
+    this.modalSer.init(TeamSaveComponent, item, () => this.loadPage(this.currentPage));
   }
 
   filter() {
@@ -51,7 +52,12 @@ export class TeamComponent implements OnInit {
         this.requestStatus = result;
         if (this.requestStatus == 200) {
           alert("success");
-          this.search("");
+          if (this.itemList.length <= 1) {
+            this.loadPage(this.currentPage - 1);
+          }
+          else {
+            this.loadPage(this.currentPage);
+          }
         }
       });
     }

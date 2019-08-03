@@ -1,0 +1,61 @@
+<div class="">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ survey.name }}</h5>
+        <button type="button" class="close" (click)="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="padding-left: 24px">
+        <div *ngFor="let q of survey.questions; let i = index">
+          <b><i class="far fa-question-circle"></i> {{q.question}}</b>
+
+          <div class="form-group">
+            <label>Answer:</label>
+
+            <!--Free Text-->
+            <textarea class="form-control" *ngIf="q.type.type == 'TEXT'" [(ngModel)]="answers[i].content" readonly></textarea>
+            <!--Single Choice-->
+            <div *ngIf="q.type.type == 'SINGLE'">
+              <div class="form-check" *ngFor="let option of q.options">
+                <div class="row row-padding-bot">
+                  <div class="col-sm-1 row align-content-center d-flex justify-content-center">
+                    <input type="radio" class="radio-big" name="{{q.id}}" [value]="option.id +''"
+                      [(ngModel)]="answers[i].content" disabled/>
+                  </div>
+                  <div class="col-sm-10 option">
+                    {{option.answerText}}
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <!--Mutiple Choice-->
+            <div *ngIf="q.type.type == 'MULTIPLE'">
+              <div class="form-check" *ngFor="let option of q.options; let j = index">
+                <div class="row row-padding-bot" >
+                  <div class="col-sm-1 row align-content-center d-flex justify-content-center" >
+                    {{multipleAnswer(option.id,i,j)}}
+                    <input id="{{'multipleChoice' + j}}" type="checkbox" class="radio-big"  disabled/>
+                  </div>
+                  <div class="col-sm-10 option">
+                    {{option.answerText}}
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <hr>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="col-sm-6 d-flex justify-content-end" style="padding: 0px">
+          <button type="button" class="btn btn-danger" (click)="closeModal()"><span>Cancel</span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

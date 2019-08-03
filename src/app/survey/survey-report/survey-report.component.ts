@@ -1,3 +1,8 @@
+import { ApplyFilterComponent } from './../apply-filter/apply-filter.component';
+import { QuestionReport } from './../../model/questionReport';
+import { SendOutInfor } from './../../model/sendOutInfor';
+import { ApplyFilter } from './../../model/applyFilter';
+import { WordCloudFilter } from './../../model/word-cloud-filter';
 import { UltisService } from 'src/app/service/ultis.service';
 import { Question } from './../../model/question';
 import { element } from 'protractor';
@@ -14,6 +19,8 @@ import { ModalService } from "./../../service/modal.service";
 import { Component, OnInit } from "@angular/core";
 import { CloudOptions, CloudData } from "angular-tag-cloud-module";
 import { AnswerReport } from "src/app/model/answerReport";
+import { WordCloudService } from 'src/app/service/word-cloud.service';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: "app-survey-report",
@@ -24,6 +31,7 @@ export class SurveyReportComponent implements OnInit {
   locations: Location[];
   departments: Department[];
   teams: Team[];
+  filters:WordCloudFilter[];
 
   locationId: number;
   departmentId: number;
@@ -32,6 +40,8 @@ export class SurveyReportComponent implements OnInit {
   surveyId:number;
 
   surveyReport: SurveyReport;
+  textOfSendOutInfor: string[];
+
   colorScheme = {
     domain: ["#5AA454", "#A10A28", "#C7B42C", "#AAAAAA"]
   };
@@ -44,10 +54,10 @@ export class SurveyReportComponent implements OnInit {
 
   constructor(
     private modalSer: ModalService,
-    private surveySer: SurveyService,
     private route: ActivatedRoute,
     private reportSer: ReportService,
-    private utltis:UltisService
+    private utltis:UltisService,
+    private filterSer:WordCloudService,
   ) {}
 
   ngOnInit() {
@@ -56,6 +66,7 @@ export class SurveyReportComponent implements OnInit {
     this.teamId = 0;
     this.surveyReport = new SurveyReport();
     this.reportData = new Array<any>();
+    this.textOfSendOutInfor = new Array();
     this.route.params.subscribe(params => {
       this.surveyId = params["id"];
       this.reportSer.getSendSurveyTargetDetail(this.surveyId).subscribe(result => {
@@ -63,19 +74,15 @@ export class SurveyReportComponent implements OnInit {
         this.departments = result.departments;
         this.teams = result.teams;
       })
-      this.surveySer.getReportAll(this.surveyId).subscribe(result => {
+      this.reportSer.getReport(this.surveyId).subscribe(result => {
         this.surveyReport = result;
-        this.surveyReport.questions.forEach(element => {
-          if (element.question.type.type == "TEXT") {
-            this.reportData.push(this.getWordCloud(element.answers));
-          } else {
-            this.reportData.push(
-              this.getChartParam(element.answers, element.question.options)
-            );
-          }
-        });
+        this.surveyReport.questions = undefined;
+        this.getTextFromSendOutInfor(this.surveyReport.sendTargets);
       });
     });
+    this.filterSer.getAll().subscribe(result => {
+      this.filters = result;
+    })
   }
 
   getWordCloud(answers: Array<AnswerReport>): CloudData[] {
@@ -119,6 +126,7 @@ export class SurveyReportComponent implements OnInit {
 
   applyFilter() {
     this.reportSer.getFilteredReport(this.surveyId,this.locationId,this.departmentId,this.teamId).subscribe(result => {
+      this.surveyReport.questions = result;
       this.reportData = new Array();
       result.forEach(element => {
         if (element.question.type.type == "TEXT") {
@@ -131,9 +139,52 @@ export class SurveyReportComponent implements OnInit {
       });
     })
   }
-  openCompare(q : Question,reportData) {
-    this.modalSer.init(SurveyCompareComponent, [q,reportData,this.surveyId,this.surveyReport.name,this.locationId,this.departmentId,this.teamId], []);
+  openCompare(q) {
+    this.modalSer.init(SurveyCompareComponent, [q,this.surveyId,this.surveyReport.name,this.locationId,this.departmentId,this.teamId], []);
   }
+
+  getDownloadToken(id) {
+    this.reportSer.getDownloadToken(this.surveyId,id).subscribe(result => {
+      window.open(this.reportSer.getDownloadLink(result));
+    });
+  }
+  filterWordCloud(event :Event,dataIndex) {
+    let options : HTMLOptionsCollection = event.target['options'];
+    let filterId = options[options.selectedIndex].value;
+    if(Number(filterId) == 0) {
+      this.reportData[dataIndex] = this.getWordCloud(this.surveyReport.questions[dataIndex].answers);
+    }else {
+      let applyFilter = new ApplyFilter();
+      applyFilter.filterId = Number(filterId);
+      applyFilter.answers = this.surveyReport.questions[dataIndex].answers;
+      this.reportSer.getFilterdWordCloud(applyFilter).subscribe(result => {
+        this.reportData[dataIndex] = this.getWordCloud(result);
+      })
+    }
+  }
+
+  getTextFromSendOutInfor(infors : SendOutInfor[]) {
+    infors.forEach(element => {
+      if(element.departmentName == '' && element.locationName == '' && element.teamName =='') {
+        this.textOfSendOutInfor.push('All Company');
+      }else if(element.departmentName != '' && element.locationName == '' && element.teamName =='') {
+        this.textOfSendOutInfor.push('Department: ' + element.departmentName.toString());
+      }else if(element.departmentName == '' && element.locationName != '' && element.teamName =='') {
+        this.textOfSendOutInfor.push('Location: ' + element.locationName.toString());
+      }else if(element.departmentName != '' && element.locationName != '' && element.teamName =='') {
+        this.textOfSendOutInfor.push('Location: ' + element.locationName + " - Department: " + element.departmentName);
+      }else if(element.departmentName != '' && element.locationName != '' && element.teamName !='') {
+        this.textOfSendOutInfor.push('Team: ' + element.teamName.toString());
+      }
+    });
+  }
+  valueFormatting(value: number) {
+    return value.toFixed(1);
+  }
+  openApplyFilter(q:QuestionReport) {
+    this.modalSer.init(ApplyFilterComponent,q,[]);
+  }
+
 }
 interface NgxChartParam {
   name: string;

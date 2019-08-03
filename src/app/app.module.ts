@@ -69,6 +69,12 @@ import { AssignAccountComponent } from './account/assign-account/assign-account.
 import { from } from 'rxjs';
 import { AccountProfileComponent } from './account/account-profile/account-profile.component';
 import { ResetPasswordComponent } from './others/reset-password/reset-password.component';
+import { ReadNewsComponent } from './others/read-news/read-news.component';
+import { DetailComponent } from './question/detail/detail.component';
+import { SurveyHistoryDetailComponent } from "./survey/survey-history-detail/survey-history-detail.component"
+import { SurveyHistoryMainComponent } from "./survey/survey-history-main/survey-history-main.component";
+import { ChooseTemplateComponent } from './survey/choose-template/choose-template.component';
+import { ApplyFilterComponent } from './survey/apply-filter/apply-filter.component'
 
 @NgModule({
   declarations: [
@@ -121,8 +127,12 @@ import { ResetPasswordComponent } from './others/reset-password/reset-password.c
     AssignAccountComponent,
     AccountProfileComponent,
     ResetPasswordComponent,
-    
-
+    ReadNewsComponent,
+    DetailComponent,
+    SurveyHistoryDetailComponent,
+    SurveyHistoryMainComponent,
+    ChooseTemplateComponent,
+    ApplyFilterComponent,
 
   ],
   imports: [
@@ -150,6 +160,8 @@ import { ResetPasswordComponent } from './others/reset-password/reset-password.c
     WordCloudSaveComponent,
     SurveySaveComponent,
     AssignAccountComponent,
+    DetailComponent,
+    ApplyFilterComponent
   ],
 
   providers: [

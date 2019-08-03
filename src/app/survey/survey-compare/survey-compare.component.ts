@@ -22,7 +22,6 @@ export class SurveyCompareComponent implements OnInit {
   @Input() inputs;
   surveyId: number;
   question: QuestionReport;
-  reportData;
   surveyName: string;
   listSurvey: String[];
   newSurvey: String;
@@ -50,12 +49,11 @@ export class SurveyCompareComponent implements OnInit {
   ngOnInit() {
     this.dataList = new Array<MyChartData>();
     this.question = this.inputs[0];
-    this.reportData = this.inputs[1];
-    this.surveyId = this.inputs[2];
-    this.surveyName = this.inputs[3];
-    this.locationId = this.inputs[4];
-    this.departmentId = this.inputs[5];
-    this.teamId = this.inputs[6];
+    this.surveyId = this.inputs[1];
+    this.surveyName = this.inputs[2];
+    this.locationId = this.inputs[3];
+    this.departmentId = this.inputs[4];
+    this.teamId = this.inputs[5];
     this.listSurvey = new Array<String>();
     this.choosenSurveys = new Array<Survey>();
     this.surveys = new Array<Survey>();
@@ -64,7 +62,7 @@ export class SurveyCompareComponent implements OnInit {
     firstData.surveyName = this.surveyName;
     firstData.answers = this.question.answers;
     this.dataList.push(firstData);
-    this.createData(this.reportData);
+    this.createData(this.question.answers);
     this.reportSer.getSameSurvey(this.question.question.id,this.surveyId).subscribe(result => {
       this.surveys = result;
     });

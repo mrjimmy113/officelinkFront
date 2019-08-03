@@ -8,6 +8,8 @@ import { environment } from "./../../environments/environment";
 import { Injectable } from "@angular/core";
 import { PageSearch } from "../model/page-search";
 import { SurveyReport } from "../model/surveyReport";
+import { SurveyAnswerInfor } from '../model/surveyAnswerInfor';
+import { Answer } from '../model/answer';
 
 @Injectable({
   providedIn: "root"
@@ -46,12 +48,21 @@ export class SurveyService {
   getWorkplaceSurveys(): Observable<Array<Survey>> {
     return this.http.get<Array<Survey>>(this.api + `/getWorkplaceSurveys`);
   }
-  getReportAll(id): Observable<SurveyReport> {
-    return this.http.get<SurveyReport>(this.api + `/report/detail?id=${id}`);
-  }
   getReportList(term, page): Observable<PageSearch<SurveyReport>> {
     return this.http.get<PageSearch<SurveyReport>>(
       this.api + `/report?term=${term}&page=${page}`
     );
+  }
+  getSurveyHistory(term, page): Observable<PageSearch<Survey>> {
+    return this.http.get<PageSearch<Survey>>(
+      this.api + `/history?term=${term}&page=${page}`
+    );
+  }
+
+  getAnswerForSurveyHistory(id): Observable<Array<Answer>> {
+    return this.http.get<Array<Answer>>(this.api + `/history/answer?id=${id}`);
+  }
+  getTemplate(term,page):Observable<PageSearch<Survey>> {
+    return this.http.get<PageSearch<Survey>>(this.api + `/template?term=${term}&page=${page}`)
   }
 }

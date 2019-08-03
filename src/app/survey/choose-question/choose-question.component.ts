@@ -1,3 +1,4 @@
+import { TypeEnum } from './../../model/typeEnum';
 import { ModalService } from './../../service/modal.service';
 import { PageSearch } from "./../../model/page-search";
 import { Question } from "./../../model/question";
@@ -17,7 +18,10 @@ export class ChooseQuestionComponent implements OnInit {
   currentPage = 1;
   typeList;
   currentType = 0;
+  typeEnum = TypeEnum;
   choosenList = new Array<Question>();
+  showDetail = false;
+  detailQuestion;
   constructor(private questSer: QuestionService, private modalSer:ModalService) {}
 
   ngOnInit() {
@@ -31,13 +35,13 @@ export class ChooseQuestionComponent implements OnInit {
   search() {
     if (this.currentType != 0) {
       this.questSer
-        .searchWithType(this.term, this.currentType)
+        .searchWithType(this.term, this.currentType,this.currentPage - 1)
         .subscribe(result => {
           this.itemList = result.objList;
           this.maxPage = result.maxPage;
         });
     } else {
-      this.questSer.search(this.term).subscribe(result => {
+      this.questSer.getChooseList(this.term,this.currentPage - 1).subscribe(result => {
         this.itemList = result.objList;
         this.maxPage = result.maxPage;
       });
@@ -65,6 +69,32 @@ export class ChooseQuestionComponent implements OnInit {
   }
   closeModal() {
     this.modalSer.destroy();
+  }
+  loadPage(pageNum) {
+    this.currentPage = pageNum;
+    if (this.currentType != 0) {
+      this.questSer
+        .searchWithType(this.term, this.currentType,this.currentPage - 1)
+        .subscribe(result => {
+          this.itemList = result.objList;
+          this.maxPage = result.maxPage;
+        });
+    } else {
+      this.questSer.search(this.term,this.currentPage - 1).subscribe(result => {
+        result.objList.forEach(e => {
+          this.itemList = result.objList;
+          this.maxPage = result.maxPage;
+        })
+      });
+    }
+  }
+  viewDetail(q:Question) {
+    this.showDetail = true;
+    this.detailQuestion = q;
+  }
+
+  closeDetail() {
+    this.showDetail = false;
   }
 
 }

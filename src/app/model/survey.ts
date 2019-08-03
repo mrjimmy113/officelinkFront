@@ -4,7 +4,8 @@ export class Survey {
   id:Number;
   name:String;
   workplaceId : Number;
-	isShared : boolean;
-	isActive : boolean;
+	shared : boolean;
+	active : boolean;
   questions: Array<Question>;
+  sent : boolean;
 }
