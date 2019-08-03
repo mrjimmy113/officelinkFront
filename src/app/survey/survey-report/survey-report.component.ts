@@ -54,7 +54,6 @@ export class SurveyReportComponent implements OnInit {
 
   constructor(
     private modalSer: ModalService,
-    private surveySer: SurveyService,
     private route: ActivatedRoute,
     private reportSer: ReportService,
     private utltis:UltisService,
@@ -75,18 +74,10 @@ export class SurveyReportComponent implements OnInit {
         this.departments = result.departments;
         this.teams = result.teams;
       })
-      this.surveySer.getReportAll(this.surveyId).subscribe(result => {
+      this.reportSer.getReport(this.surveyId).subscribe(result => {
         this.surveyReport = result;
+        this.surveyReport.questions = undefined;
         this.getTextFromSendOutInfor(this.surveyReport.sendTargets);
-        this.surveyReport.questions.forEach(element => {
-          if (element.question.type.type == "TEXT") {
-            this.reportData.push(this.getWordCloud(element.answers));
-          } else {
-            this.reportData.push(
-              this.getChartParam(element.answers, element.question.options)
-            );
-          }
-        });
       });
     });
     this.filterSer.getAll().subscribe(result => {
@@ -135,6 +126,7 @@ export class SurveyReportComponent implements OnInit {
 
   applyFilter() {
     this.reportSer.getFilteredReport(this.surveyId,this.locationId,this.departmentId,this.teamId).subscribe(result => {
+      this.surveyReport.questions = result;
       this.reportData = new Array();
       result.forEach(element => {
         if (element.question.type.type == "TEXT") {

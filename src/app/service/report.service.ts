@@ -1,3 +1,4 @@
+import { SurveyReport } from './../model/surveyReport';
 import { ApplyFilter } from './../model/applyFilter';
 import { Survey } from "src/app/model/survey";
 import { HttpClient, HttpHeaders, HttpResponse } from "@angular/common/http";
@@ -66,5 +67,8 @@ export class ReportService {
   }
   getFilterdWordCloud(applyFilter : ApplyFilter): Observable<AnswerReport[]> {
     return this.http.post<AnswerReport[]>(this.api + `/applyFilter`,applyFilter);
+  }
+  getReport(id) :Observable<SurveyReport> {
+    return this.http.get<SurveyReport>(this.api + `/detail?id=${id}`)
   }
 }
