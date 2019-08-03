@@ -17,11 +17,17 @@ export class AccountService {
     return this.httpClient.get<PageSearch<Account>>(this.api + `?term=${term}`);
   }
 
+
+
   getProfile() : Observable<Account>{
     return this.httpClient.get<Account>(this.api + `/profile`);
   }
   getPage(term,page): Observable<Account[]> {
     return this.httpClient.get<Account[]>(this.api + `?term=${term}&page=${page}`);
+  }
+
+  searchGetPage(term, page):Observable<PageSearch<Account>> {
+    return this.httpClient.get<PageSearch<Account>>(this.api + `/getAccount` +  `?term=${term}&page=${page}`);
   }
 
   getAccountAssign(id) : Observable<Account>{
@@ -34,6 +40,10 @@ export class AccountService {
 
   changePassword(obj): Observable<Number>{
     return this.httpClient.put<Number>(this.api + `/changePassword`, obj);
+  }
+
+  updateEmployee(obj) : Observable<Number>{
+    return this.httpClient.put<Number>(this.api + `/updateEmployee`, obj);
   }
 
 
@@ -61,9 +71,12 @@ export class AccountService {
 
 
   sendMail(obj) : Observable<Number>{
-    return this.httpClient.post<Number>(this.api + `/sendMail`, obj);
+    return this.httpClient.post<Number>(this.api + `/sendMailRegister`, obj);
   }
 
+  createAccount(obj) : Observable<Number>{
+    return this.httpClient.post<Number>(this.api + `/createAccount` , obj);
+  }
 
   sendInvite(mailInvited) : Observable<Number>{
     return this.httpClient.post<Number>(this.api + `/sendInvite`, mailInvited);
@@ -75,7 +88,7 @@ export class AccountService {
 
 
   createAccountByToken(accountToken) : Observable<Number>{
-    return this.httpClient.post<Number>(this.api + `/confirm`, accountToken);
+    return this.httpClient.put<Number>(this.api + `/confirm`, accountToken);
   }
 
   getInvitationInfor(token):Observable<Account>{
@@ -84,6 +97,10 @@ export class AccountService {
 
   acceptInvite(acc):Observable<Number> {
     return this.httpClient.post<Number>(this.api + `/acceptInvite`,acc);
+  }
+
+  checkEmailExisted(email):Observable<Number> {
+    return this.httpClient.post<Number>(this.api + `/checkEmailExisted`,email);
   }
 
   assign(assignInfor):Observable<Number>{

@@ -15,15 +15,13 @@
                 <input class="form-control form-control-user" name="workspacename" #workspacename="ngModel"
                   placeholder="Worksplace name" [(ngModel)]="account.workplace.name"
                   [ngClass]="{'is-invalid' : (workspacename.invalid && (workspacename.dirty || workspacename.touched))}"
-                  required pattern="^[a-zA-Z0-9._-\s]*$" />
+                  required />
                 <div *ngIf="workspacename.invalid && (workspacename.dirty || workspacename.touched)"
                   class="text-danger">
                   <div *ngIf="workspacename.errors.required">
                     Work splace name required
                   </div>
-                  <div *ngIf="workspacename.errors.pattern">
-                    Word splace name can't contain special character except "_-."
-                  </div>
+                 
 
                 </div>
               </div>
@@ -33,14 +31,12 @@
                   <input type="text" class="form-control form-control-user" name="firstname" #firstname="ngModel"
                     placeholder="First Name" [(ngModel)]=account.firstname
                     [ngClass]="{'is-invalid' : (firstname.invalid && (firstname.dirty || firstname.touched))}" required
-                    pattern="^[a-zA-Z0-9._-\s]*$" />
+                    />
                   <div *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)" class="text-danger">
                     <div *ngIf="firstname.errors.required">
                       First name required
                     </div>
-                    <div *ngIf="firstname.errors.pattern">
-                      First name can't contain special character except "_-."
-                    </div>
+                   
 
                   </div>
                 </div>
@@ -48,14 +44,12 @@
                   <input type="text" class="form-control form-control-user" name="lastname" #lastname="ngModel"
                     placeholder="Last Name" [(ngModel)]=account.lastname
                     [ngClass]="{'is-invalid' : (lastname.invalid && (lastname.dirty || lastname.touched))}" required
-                    pattern="^[a-zA-Z0-9._-\s]*$" />
+                    />
                   <div *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)" class="text-danger">
                     <div *ngIf="lastname.errors.required">
                       Last name required
                     </div>
-                    <div *ngIf="lastname.errors.pattern">
-                      Last name can't contain special character except "_-."
-                    </div>
+                   
 
                   </div>
                 </div>
@@ -102,11 +96,6 @@
                     <div *ngIf="confirmPass.errors.required">
                       Confirm password required
                     </div>
-
-                    <div *ngIf="confirmPass.errors.minlength || confirmPass.errors.maxlength">
-                      Confirm password must be 6-15 characters
-                    </div>
-
                   </div>
                 </div>
               </div>

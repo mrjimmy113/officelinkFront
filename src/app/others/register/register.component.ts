@@ -39,20 +39,25 @@ export class RegisterComponent implements OnInit {
     this.account.location = new Location();
     this.account.workplace = new Workplace();
     this.account.isDeleted = false;
-    this.account.address = "";
+    this.account.isActivated = false;
+    
   }
   register(){
 
         this.account.role_id = 1;
         if(this.account.firstname == null || this.account.lastname == null || this.account.email == null ||
-         this.account.password == null|| this.account.address == null){
+         this.account.password == null){
            alert("Input not empty. Try again ")
          }
          if(this.account.password != this.confirmPassText){
            alert("Password and Confirm password not match. Try again");
          }else{
           this.displaySer.showLoader();
+         
                   this.accoutSer.sendMail(this.account).subscribe(res => {
+                    this.accoutSer.createAccount(this.account).subscribe(res => {
+                      
+                    })
 
                     alert("Successful registration of account information, please check your mail to complete the registration")
                     this.route.navigateByUrl("/home");

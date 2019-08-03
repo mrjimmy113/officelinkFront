@@ -27,13 +27,14 @@ export class AccountListComponent implements OnInit {
 
   }
 
-
-  search(value){
-    this.accountSer.search(value).subscribe(result => {
-      this.itemList = result.objList;
+  search(value) {
+    this.accountSer.searchGetPage(value, 1).subscribe(result => {
       this.maxPage = result.maxPage;
+      this.itemList = result.objList;
     })
   }
+
+  
 
   filter() {
     let newSearchTerm = this.searchTerm;
@@ -45,36 +46,39 @@ export class AccountListComponent implements OnInit {
   }
 
   openEdit(item){
-    this.modalSer.init(AccountSaveComponent,item,() => this.search(""));
+    this.modalSer.init(AccountSaveComponent,item,() => this.loadPage(this.currentPage));
   }
 
   delete(id){
 
-    this.modalSer.init(AccountDeleteComponent, id , () => this.search(""));
+    this.modalSer.init(AccountDeleteComponent, id ,() => this.loadPage(this.currentPage));
 
 
   }
 
   edit(item){
-    this.modalSer.init(AccountSaveComponent, item , () => this.search(""));
+    this.modalSer.init(AccountSaveComponent, item , () => this.loadPage(this.currentPage));
   }
 
   openCreate(){
-    this.modalSer.init(InvitationComponent, [] , () => this.search(""));
+    this.modalSer.init(InvitationComponent, [] , () => this.loadPage(this.currentPage));
   }
 
   openAssign(id){
-    this.modalSer.init(AssignAccountComponent,  id, () => this.search(""));
+    this.modalSer.init(AssignAccountComponent,  id, () => this.loadPage(this.currentPage));
   }
 
   sort(property) {
 
   }
 
-  loadPage(page) {
-
+  loadPage(pageNumber) {
+    this.currentPage = pageNumber;
+    this.accountSer.searchGetPage(this.searchTerm, pageNumber).subscribe(result => {
+      this.maxPage = result.maxPage;
+      this.itemList = result.objList;
+    })
   }
-
 
 
 

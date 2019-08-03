@@ -17,10 +17,27 @@
                 </div>
                 <form class="user">
                   <div class="form-group">
-                    <input type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address" name="account.email" [(ngModel)]= "account.email">
+                    <input type="email" class="form-control form-control-user" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" name = "email" #email = "ngModel"  id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address"  [(ngModel)]= "account.email"
+                    [ngClass]="{'is-invalid' : (email.invalid && (email.dirty || email.touched))}" required
+                    >
+                    <div *ngIf="email.errors &&(email.touched || email.dirty)" class ="text-danger">
+                      <div *ngIf="email.errors.required">
+                          Email required
+                        </div>
+                    <div [hidden]="!email.errors?.pattern">
+                      Email invalid
+                    </div>
+                   </div>
                   </div>
                   <div class="form-group">
-                    <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password" name ="account.password" [(ngModel)]= "account.password">
+                    <input type="password" name = "password" #password = "ngModel" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password"  [(ngModel)]= "account.password"
+                    [ngClass]="{'is-invalid' : (password.invalid && (password.dirty || password.touched))}" required
+                    >
+                    <div *ngIf="password.invalid && (password.dirty || password.touched)" class="text-danger">
+                      <div *ngIf="password.errors.required">
+                        Password required
+                      </div>
+                    </div>
                   </div>
                   <div *ngIf="isError" class="text-danger form-group d-flex justify-content-center">
                     Your email or password is not right
