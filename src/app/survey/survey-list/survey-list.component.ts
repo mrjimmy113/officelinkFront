@@ -85,7 +85,7 @@ export class SurveyListComponent implements OnInit {
   }
 
   sendOut(id) {
-    this.modalSer.init(ConfigurationSaveComponent,id,[]);
+    this.modalSer.init(ConfigurationSaveComponent,id,() => this.search());
   }
 
   offSave() {

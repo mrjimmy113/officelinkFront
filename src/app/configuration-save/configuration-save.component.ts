@@ -193,7 +193,7 @@ export class ConfigurationSaveComponent implements OnInit {
 
   save() {
     //#region Send out infor
-    let sendOutList = this.filterSendOutList(this.inforList);
+    let sendOutList = this.inforList;
     let sendSurvey = new SendSurvey();
     if (sendOutList.length <= 0){
       alert("You must choose at least a target to send.")
@@ -210,7 +210,7 @@ export class ConfigurationSaveComponent implements OnInit {
     sendSurvey.surveyId = this.selectedSurveyId;
     sendSurvey.targetList = sendOutList;
     this.configuration.sendSurvey = sendSurvey;
-    
+
     //#endregion
     this.requestStatus = 1;
     if (this.isEdit) this.update();
@@ -307,43 +307,7 @@ export class ConfigurationSaveComponent implements OnInit {
         });
     }
   }
-  filterSendOutList(list: SendOutInfor[]) : SendOutInfor[] {
-    let targetList = new Array<SendOutInfor>();
-    for (let index = 0; index < list.length; index++) {
-      let infor: SendOutInfor = list[index];
-      if (infor.locationId == 0 && infor.departmentId == 0) {
-        targetList = new Array<SendOutInfor>();
-        targetList.push(list[index]);
-        break;
-      }
-      if (infor.locationId != 0 && infor.departmentId == 0) {
-        targetList.push(list[index]);
-      }
-      if (infor.locationId == 0 && infor.departmentId != 0) {
-        targetList.push(list[index]);
-      }
-      if (
-        infor.locationId != 0 &&
-        infor.departmentId != 0 &&
-        infor.teamId != 0
-      ) {
-        let isFound = false;
-        for (let j = 0; j < list.length; j++) {
-          if (
-            list[index].departmentId ==
-            list[j].departmentId ||
-            list[index].locationId == list[j].locationId
-          ) {
-            isFound = true;
-          }
-        }
-        if (!isFound) {
-          targetList.push(list[index]);
-        }
-      }
-    }
-    return targetList;
-  }
+
   updateDep(event: Event) {
     let options: HTMLOptionsCollection = event.target["options"];
     this.currentLocation.name = options[options.selectedIndex].text;
@@ -377,7 +341,7 @@ export class ConfigurationSaveComponent implements OnInit {
       let dupDep =
         sendOutInfor.departmentId == this.inforList[index].departmentId;
       let dupTeam = sendOutInfor.teamId == this.inforList[index].teamId;
-      if (dupLocation && dupDep && dupTeam) {
+      if ((dupLocation && dupDep) || dupTeam) {
         alert("Duplicated Target");
         return;
       };
@@ -443,6 +407,7 @@ export class ConfigurationSaveComponent implements OnInit {
       alert("Your survey has beend sent");
       this.modalSer.destroy();
       this.displaySer.hideLoader();
+      this.outputs();
     })
   }
   //#endregion
