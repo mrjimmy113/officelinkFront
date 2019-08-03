@@ -50,7 +50,8 @@ export class SurveyReportComponent implements OnInit {
     height: 200,
     overflow: false
   };
-  reportData: Array<any>;
+
+  noDataFlag = false;
 
   constructor(
     private modalSer: ModalService,
@@ -65,7 +66,6 @@ export class SurveyReportComponent implements OnInit {
     this.departmentId = 0;
     this.teamId = 0;
     this.surveyReport = new SurveyReport();
-    this.reportData = new Array<any>();
     this.textOfSendOutInfor = new Array();
     this.route.params.subscribe(params => {
       this.surveyId = params["id"];
@@ -127,16 +127,18 @@ export class SurveyReportComponent implements OnInit {
   applyFilter() {
     this.reportSer.getFilteredReport(this.surveyId,this.locationId,this.departmentId,this.teamId).subscribe(result => {
       this.surveyReport.questions = result;
-      this.reportData = new Array();
       result.forEach(element => {
         if (element.question.type.type == "TEXT") {
-          this.reportData.push(this.getWordCloud(element.answers));
+          if(element.answers.length > 0) {
+            element.reportData = this.getWordCloud(element.answers);
+          }
         } else {
-          this.reportData.push(
-            this.getChartParam(element.answers, element.question.options)
-          );
+          if(element.answers.length > 0) {
+            element.reportData = this.getChartParam(element.answers, element.question.options);
+          }
         }
       });
+      console.log(this.surveyReport.questions);
     })
   }
   openCompare(q) {
@@ -152,13 +154,13 @@ export class SurveyReportComponent implements OnInit {
     let options : HTMLOptionsCollection = event.target['options'];
     let filterId = options[options.selectedIndex].value;
     if(Number(filterId) == 0) {
-      this.reportData[dataIndex] = this.getWordCloud(this.surveyReport.questions[dataIndex].answers);
+      this.surveyReport.questions[dataIndex].reportData = this.getWordCloud(this.surveyReport.questions[dataIndex].answers);
     }else {
       let applyFilter = new ApplyFilter();
       applyFilter.filterId = Number(filterId);
       applyFilter.answers = this.surveyReport.questions[dataIndex].answers;
       this.reportSer.getFilterdWordCloud(applyFilter).subscribe(result => {
-        this.reportData[dataIndex] = this.getWordCloud(result);
+        this.surveyReport.questions[dataIndex].reportData = this.getWordCloud(result);
       })
     }
   }
