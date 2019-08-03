@@ -33,10 +33,29 @@ export class InvitationComponent implements OnInit {
     if(this.newEmail == "" || this.newEmail == null){
       alert("Input not empty. Try again")
     }else{
-      this.listEmail.push(this.newEmail);
+      this.accountSer.checkEmailExisted(this.newEmail).subscribe(res => {
+        this.listEmail.forEach(email => {
+          if(this.newEmail == email){
+            alert("Email already exists in the email list. Try again")
+            emailForm.resetForm();
+          }       
+      });
+  
+      if(this.newEmail != null ){
+        this.listEmail.push(this.newEmail);
       emailForm.resetForm();
-    }
-
+  
+      }         
+      }, 
+      error => {
+        if(error.status == 409){
+          emailForm.resetForm();
+          alert("Email existed on System. Try again")
+        }
+        
+       
+      })
+    } 
   }
   removeEmail(index) {
 
@@ -54,22 +73,25 @@ export class InvitationComponent implements OnInit {
     if(this.listEmail.length == 0){
       alert("Please add more email")
     }else{
+
       this.displaySer.showLoader();
-      this.accountSer.sendInvite(this.listEmail).subscribe(res => {
+      this.accountSer.acceptInvite(this.listEmail).subscribe(result => {
+        this.accountSer.sendInvite(this.listEmail).subscribe(res => {
 
-        alert("Send Mail Success")
-        this.displaySer.hideLoader();
-        this.modalSer.destroy();
-      },
-      error => {
-        if(error.status == 400){
-          alert("Error , try again")
+          alert("Send Mail Success")
+          this.displaySer.hideLoader();
+          this.modalSer.destroy();
+        },
+        error => {
+          if(error.status == 400){
+            alert("Error , try again")
+          }
+          this.displaySer.hideLoader();
         }
-        this.displaySer.hideLoader();
-      }
-      )
+        )
+      }    
+      )     
     }
-
   }
 
   closeModal(){

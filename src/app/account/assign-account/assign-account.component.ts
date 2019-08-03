@@ -41,7 +41,7 @@ export class AssignAccountComponent implements OnInit {
     private locationSer: LocationService,
     private teamSer: TeamService,
     private modalSer: ModalService,
-    private accountSer:AccountService,
+    private accountSer:AccountService
   ) {}
 
   ngOnInit() {

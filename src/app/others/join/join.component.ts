@@ -50,7 +50,7 @@ export class JoinComponent implements OnInit {
          alert("Password and Confirm password not match. Try again");
       }else{
 
-        this.accountSer.acceptInvite(this.account).subscribe(res =>
+        this.accountSer.updateEmployee(this.account).subscribe(res =>
           {
 
             this.requestStatus = res;
