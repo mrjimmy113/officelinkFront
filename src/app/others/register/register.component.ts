@@ -39,11 +39,8 @@ export class RegisterComponent implements OnInit {
     this.account.location = new Location();
     this.account.workplace = new Workplace();
     this.account.isDeleted = false;
-<<<<<<< Updated upstream
-=======
     this.account.isActivated = false;
     
->>>>>>> Stashed changes
   }
   register(){
 

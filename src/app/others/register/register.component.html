@@ -11,20 +11,6 @@
               <h1 class="h4 text-gray-900 mb-4">Welcome to OFFICE LINK</h1>
             </div>
             <form class="user">
-<<<<<<< Updated upstream
-                <div class="form-group">
-                    <input  class="form-control form-control-user" name = "workspacename"  #workspacename="ngModel" placeholder="Worksplace name" [(ngModel)] = "account.workplace.name"
-                    [ngClass]="{'is-invalid' : (workspacename.invalid && (workspacename.dirty || workspacename.touched))}" required
-                    pattern="^[a-zA-Z0-9._-\s]*$"
-                    />
-                    <div *ngIf="workspacename.invalid && (workspacename.dirty || workspacename.touched)" class="text-danger">
-                      <div *ngIf="workspacename.errors.required">
-                        Worksplace name required
-                      </div>
-                      <div *ngIf="workspacename.errors.pattern">
-                        Wordsplace name can't contain special character except "_-."
-                      </div>
-=======
               <div class="form-group">
                 <input class="form-control form-control-user" name="workspacename" #workspacename="ngModel"
                   placeholder="Worksplace name" [(ngModel)]="account.workplace.name"
@@ -35,24 +21,16 @@
                   <div *ngIf="workspacename.errors.required">
                     Worksplace name required
                   </div>
->>>>>>> Stashed changes
 
                     </div>
                   </div>
               <div class="form-group row">
 
                 <div class="col-sm-6 mb-3 mb-sm-0">
-<<<<<<< Updated upstream
-                  <input type="text" class="form-control form-control-user" name = "firstname" #firstname = "ngModel" placeholder="First Name" [(ngModel)] = account.firstname
-                  [ngClass]="{'is-invalid' : (firstname.invalid && (firstname.dirty || firstname.touched))}" required
-                  pattern="^[a-zA-Z0-9._-\s]*$"
-                  />
-=======
                   <input type="text" class="form-control form-control-user" name="firstname" #firstname="ngModel"
                     placeholder="First Name" [(ngModel)]=account.firstname
                     [ngClass]="{'is-invalid' : (firstname.invalid && (firstname.dirty || firstname.touched))}" required
                     />
->>>>>>> Stashed changes
                   <div *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)" class="text-danger">
                     <div *ngIf="firstname.errors.required">
                       First name required
@@ -62,17 +40,10 @@
                   </div>
                 </div>
                 <div class="col-sm-6">
-<<<<<<< Updated upstream
-                  <input type="text" class="form-control form-control-user" name="lastname" #lastname = "ngModel" placeholder="Last Name" [(ngModel)] = account.lastname
-                  [ngClass]="{'is-invalid' : (lastname.invalid && (lastname.dirty || lastname.touched))}" required
-                  pattern="^[a-zA-Z0-9._-\s]*$"
-                  />
-=======
                   <input type="text" class="form-control form-control-user" name="lastname" #lastname="ngModel"
                     placeholder="Last Name" [(ngModel)]=account.lastname
                     [ngClass]="{'is-invalid' : (lastname.invalid && (lastname.dirty || lastname.touched))}" required
                     />
->>>>>>> Stashed changes
                   <div *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)" class="text-danger">
                     <div *ngIf="lastname.errors.required">
                       Last name required
