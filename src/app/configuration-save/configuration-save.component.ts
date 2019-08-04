@@ -392,7 +392,7 @@ export class ConfigurationSaveComponent implements OnInit {
       return;
     }
     if(this.configuration.duration == undefined) {
-      alert("Duration must be choosen.")
+      alert("Duration must be chosen.")
       return;
     }
     if(this.configuration.duration <= 0) {
@@ -404,7 +404,7 @@ export class ConfigurationSaveComponent implements OnInit {
     sendSurvey.duration = this.configuration.duration;
     this.displaySer.showLoader();
     this.surveySer.sendOutSurvey(sendSurvey).subscribe(result => {
-      alert("Your survey has beend sent");
+      alert("Your survey has been sent");
       this.modalSer.destroy();
       this.displaySer.hideLoader();
       this.outputs();
