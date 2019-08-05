@@ -3,6 +3,7 @@ import { News } from 'src/app/model/news';
 import { NewsService } from 'src/app/service/news.service';
 import { NgForm } from '@angular/forms';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-news-create',
@@ -27,6 +28,7 @@ export class NewsCreateComponent implements OnInit {
 
   constructor(
     private newsSer: NewsService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -45,8 +47,7 @@ export class NewsCreateComponent implements OnInit {
       this.requestStatus = result;
       if (this.requestStatus == 201) {
         alert("Successfully created");
-        newsForm.resetForm();
-        this.ngOnInit();
+        this.router.navigateByUrl('/news')
       }
     },
       error => {
@@ -66,6 +67,7 @@ export class NewsCreateComponent implements OnInit {
       if (event.target.files[0].size > this.maxFileSize) {
         this.isOverSize = true;
       } else {
+        this.isOverSize = false;
         this.tmp = event.target.files[0];
         const reader = new FileReader();
         reader.readAsDataURL(this.tmp);
@@ -80,9 +82,6 @@ export class NewsCreateComponent implements OnInit {
     this.isTitle = false;
     var key_length = event.split(' ').length;
     this.countTitle = 21 - key_length;
-    if (key_length > 20) {
-      this.news.title = event.substring(0, event.lastIndexOf(" "));
-    }
     if (key_length > 21) {
       this.isTitle = true;
     }
@@ -92,9 +91,6 @@ export class NewsCreateComponent implements OnInit {
     this.isShort = false;
     var key_length = event.split(' ').length;
     this.countShort = 41 - key_length;
-    if (key_length > 40) {
-      this.news.shortDescription = event.substring(0, event.lastIndexOf(" "));
-    }
     if (key_length > 41) {
       this.isShort = true;
     }
@@ -104,9 +100,6 @@ export class NewsCreateComponent implements OnInit {
     this.isContent = false;
     var key_length = event.split(' ').length;
     this.countContent = 1001 - key_length;
-    if (key_length > 1000) {
-      this.news.content = event.substring(0, event.lastIndexOf(" "));
-    }
     if (key_length > 1001) {
       this.isContent = true;
     }

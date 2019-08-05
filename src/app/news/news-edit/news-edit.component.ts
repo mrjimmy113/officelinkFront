@@ -25,6 +25,7 @@ export class NewsEditComponent implements OnInit {
   isTitle = false;
   isShort = false;
   isContent = false;
+  isImage = false;
 
   constructor(
     private newsSer: NewsService,
@@ -48,10 +49,18 @@ export class NewsEditComponent implements OnInit {
   }
 
   onFileChange(event) {
+    var text = event.target.value.split('.')[1];
+    console.log("haha ", text);
+    if (text != "jpg" && text != "png" && text != "gif") {
+      this.isImage = true;
+    } else {
+      this.isImage = false;
+    }
     if (!(event.target.value.length == 0)) {
       if (event.target.files[0].size > this.maxFileSize) {
         this.isOverSize = true;
       } else {
+        this.isOverSize = false;
         this.tmp = event.target.files[0];
         const reader = new FileReader();
         reader.readAsDataURL(this.tmp);
@@ -111,9 +120,6 @@ export class NewsEditComponent implements OnInit {
     this.isTitle = false;
     var key_length = event.split(' ').length;
     this.countTitle = 21 - key_length;
-    if (key_length > 20) {
-      this.news.title = event.substring(0, event.lastIndexOf(" "));
-    }
     if (key_length > 21) {
       this.isTitle = true;
     }
@@ -123,9 +129,6 @@ export class NewsEditComponent implements OnInit {
     this.isShort = false;
     var key_length = event.split(' ').length;
     this.countShort = 41 - key_length;
-    if (key_length > 40) {
-      this.news.shortDescription = event.substring(0, event.lastIndexOf(" "));
-    }
     if (key_length > 41) {
       this.isShort = true;
     }
@@ -135,9 +138,6 @@ export class NewsEditComponent implements OnInit {
     this.isContent = false;
     var key_length = event.split(' ').length;
     this.countContent = 1001 - key_length;
-    if (key_length > 1000) {
-      this.news.content = event.substring(0, event.lastIndexOf(" "));
-    }
     if (key_length > 1001) {
       this.isContent = true;
     }

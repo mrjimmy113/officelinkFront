@@ -11,7 +11,7 @@
             [(ngModel)]="news.title" #title='ngModel' required style="width: 50%"
             [ngClass]="{'is-invalid': (title.invalid && (title.dirty || title.touched))}"
             (keyup)="wordCountTitle(news.title)" />
-          <span>{{ countTitle }} words left</span>
+          <span *ngIf="!isTitle">{{ countTitle }} words left</span>
           <div *ngIf="title.invalid && (title.dirty || title.touched)" class="text-danger">
             <div *ngIf="title.errors.required">
               Please fill in title
@@ -27,7 +27,7 @@
             [(ngModel)]="news.shortDescription" #shortDescription='ngModel' required
             [ngClass]="{'is-invalid': (shortDescription.invalid && (shortDescription.dirty || shortDescription.touched))}"
             (keyup)="wordCountShort(news.shortDescription)"></textarea>
-          <span>{{ countShort }} words left</span>
+          <span *ngIf="!isShort">{{ countShort }} words left</span>
           <div *ngIf="shortDescription.invalid && (shortDescription.dirty || shortDescription.touched)"
             class="text-danger">
             <div *ngIf="shortDescription.errors.required">
@@ -43,7 +43,7 @@
           <ckeditor [editor]="Editor" name="content" [(ngModel)]="news.content" #content='ngModel' required
             [ngClass]="{'is-invalid': (content.invalid && (content.dirty || content.touched))}"
             (keyup)="wordCountContent(news.content)"></ckeditor>
-          <span>{{ countContent }} words left</span>
+          <span *ngIf="!isContent">{{ countContent }} words left</span>
           <div *ngIf="content.invalid && (content.dirty || content.touched)" class="text-danger">
             <div *ngIf="content.errors.required">
               Please fill in content
@@ -58,14 +58,14 @@
             <div class="col-sm-4">
               <label style="font-weight: bold">Image</label> <br>
               <input type="file" (change)="onFileChange($event)" name="image" [(ngModel)]="news.image" #image='ngModel'
-                required pattern="([^\s]+(\.)(jpg|png|gif|bmp)$)">
+                required pattern="([^\s]+(\.)(jpg|png|gif)$)">
 
               <div *ngIf="image.invalid && (image.dirty || image.touched)" class="text-danger">
                 <div *ngIf="image.errors.required">
                   Image is required
                 </div>
                 <div *ngIf="image.errors.pattern">
-                  This file is not an image
+                  Please choose the file .png, .jpg, .gif
                 </div>
               </div>
               <div *ngIf="isOverSize" class="text-danger">

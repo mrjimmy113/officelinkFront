@@ -47,8 +47,6 @@ import { RegisterConfirmComponent } from "./others/register-confirm/register-con
 import { SurveyHistoryDetailComponent } from "./survey/survey-history-detail/survey-history-detail.component"
 import { SurveyHistoryMainComponent } from "./survey/survey-history-main/survey-history-main.component"
 import { from } from 'rxjs';
-import { SurveyHistoryMainComponent } from './survey/survey-history-main/survey-history-main.component';
-import { SurveyHistoryDetailComponent } from './survey/survey-history-detail/survey-history-detail.component';
 
 const authRoutes: Routes = [
   { path: "", component: DashBoardComponent },
