@@ -4,6 +4,7 @@ import { Configuration } from '../model/configuration';
 import { ConfigurationService } from '../service/configuration.service';
 import { ConfigurationSaveComponent } from '../configuration-save/configuration-save.component';
 import { Workplace } from '../model/workplace';
+import { UltisService } from '../service/ultis.service';
 
 @Component({
   selector: 'app-configuration',
@@ -17,8 +18,9 @@ export class ConfigurationComponent implements OnInit {
   searchTerm = "";
   requestStatus: Number;
   workplace: Workplace;
+  isSort = "";
 
-  constructor(private modalSer: ModalService, private ser: ConfigurationService) { }
+  constructor(private modalSer: ModalService, private ser: ConfigurationService, private ultisSer: UltisService) { }
 
   ngOnInit() {
     this.init();
@@ -42,6 +44,19 @@ export class ConfigurationComponent implements OnInit {
     let result = "";
     var list = cronExpression.split(" ");
     result = list[5];
+    if (result == "*") {
+      result = "Every Day";
+    }
+    return result;
+  }
+
+  getMonthsFromCron(cronExpression: String) {
+    let result = "";
+    var list = cronExpression.split(" ");
+    result = list[4];
+    if (result == "*") {
+      result = "Every Month";
+    }
     return result;
   }
 
@@ -96,7 +111,48 @@ export class ConfigurationComponent implements OnInit {
         config.isActive = !config.isActive;
       });
   }
-  sort(property) {
 
+  sort(property) {
+    if (property == "surveyName") {
+      if (this.isSort == property) {
+        this.itemList.sort(this.sortConfigBySurveyASC());
+        this.isSort = "";
+      } else {
+        this.itemList.sort(this.sortConfigBySurveyDSC());
+        this.isSort = property;
+      }
+    } else {
+      if (this.isSort == property) {
+        this.itemList.sort(this.ultisSer.sortByPropertyNameDSC(property));
+        this.isSort = "";
+      } else {
+        this.itemList.sort(this.ultisSer.sortByPropertyNameASC(property));
+        this.isSort = property;
+      }
+    }
+  }
+
+  sortConfigBySurveyASC() {
+    return function (a, b) {
+      if (a['survey'].name < b['survey'].name) {
+        return -1;
+      }
+      if (a['survey'].name > b['survey'].name) {
+        return 1;
+      }
+      return 0;
+    }
+  }
+
+  sortConfigBySurveyDSC() {
+    return function (a, b) {
+      if (a['survey'].name < b['survey'].name) {
+        return 1;
+      }
+      if (a['survey'].name > b['survey'].name) {
+        return -1;
+      }
+      return 0;
+    }
   }
 }

@@ -3,6 +3,7 @@ import { ModalService } from '../service/modal.service';
 import { TeamService } from '../service/team.service';
 import { TeamSaveComponent } from '../team-save/team-save.component';
 import { Team } from '../model/team';
+import { UltisService } from '../service/ultis.service';
 
 @Component({
   selector: 'app-team',
@@ -15,8 +16,9 @@ export class TeamComponent implements OnInit {
   maxPage;
   searchTerm = "";
   requestStatus: Number;
+  isSort = "";
 
-  constructor(private modalSer: ModalService, private ser: TeamService) { }
+  constructor(private modalSer: ModalService, private ser: TeamService, private ultisSer: UltisService) { }
 
   ngOnInit() {
     this.search("");
@@ -69,5 +71,49 @@ export class TeamComponent implements OnInit {
       this.maxPage = result.maxPage;
       this.itemList = result.objList;
     })
+  }
+
+  sort(property) {
+    if (property == "departmentName") {
+      if (this.isSort == property) {
+        this.itemList.sort(this.sortTeamByDepartmentASC());
+        this.isSort = "";
+      } else {
+        this.itemList.sort(this.sortTeamByDepartmentDSC());
+        this.isSort = property;
+      }
+    } else {
+      if (this.isSort == property) {
+        this.itemList.sort(this.ultisSer.sortByPropertyNameDSC(property));
+        this.isSort = "";
+      } else {
+        this.itemList.sort(this.ultisSer.sortByPropertyNameASC(property));
+        this.isSort = property;
+      }
+    }
+  }
+
+  sortTeamByDepartmentASC() {
+    return function (a, b) {
+      if (a['department'].name < b['department'].name) {
+        return -1;
+      }
+      if (a['department'].name > b['department'].name) {
+        return 1;
+      }
+      return 0;
+    }
+  }
+
+  sortTeamByDepartmentDSC() {
+    return function (a, b) {
+      if (a['department'].name < b['department'].name) {
+        return 1;
+      }
+      if (a['department'].name > b['department'].name) {
+        return -1;
+      }
+      return 0;
+    }
   }
 }
