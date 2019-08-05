@@ -30,12 +30,12 @@
         <span>Survey Report</span></a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" [routerLink]="['/history']" routerLinkActive="router-link-active">
+      <a class="nav-link" [routerLink]="['/history']" *ngIf="role == 'employee' || role == 'manager'" routerLinkActive="router-link-active">
         <i class="fas fa-history"></i>
         <span>Taken survey history</span></a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" [routerLink]="['/readNews']" routerLinkActive="router-link-active">
+      <a class="nav-link" [routerLink]="['/readNews']" *ngIf="role == 'employee' || role == 'manager'" routerLinkActive="router-link-active">
         <i class="far fa-newspaper"></i>
         <span>Read news</span></a>
     </li>
@@ -125,11 +125,5 @@
 
 
   </div>
-
-  <!-- Sidebar Toggler (Sidebar) -->
-  <div class="text-center d-none d-md-inline">
-    <button class="rounded-circle border-0" id="sidebarToggle"></button>
-  </div>
-
 </ul>
 <!-- End of Sidebar -->

@@ -1,4 +1,10 @@
-<div class="">
+<button class="btn btn-primary btn-icon-split" (click)="back()">
+  <span class="icon">
+    <i class="fas fa-arrow-alt-circle-left"></i>
+  </span>
+  <span class="text">Back to list</span>
+</button>
+<div class="modal-dialog">
   <div class="modal-content">
     <div class="modal-header">
       <h5 class="modal-title" style="font-weight: bold">Update Location</h5>
@@ -42,7 +48,6 @@
             *ngIf="requestStatus == 1"></span>
           <span *ngIf="requestStatus != 1">Save</span>
         </button>
-        <button type="button" class="btn btn-danger" [routerLink]="['../../']"><span>Cancel</span></button>
       </div>
     </div>
   </div>

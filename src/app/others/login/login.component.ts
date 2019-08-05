@@ -1,3 +1,4 @@
+import { NgForm } from '@angular/forms';
 import { EventEmitter } from '@angular/core';
 import { Output } from '@angular/core';
 import { AuthenticationService } from './../../service/authentication.service';
@@ -22,28 +23,24 @@ export class LoginComponent implements OnInit {
     this.account = new Account();
   }
 
-  login() {
-
-    if(this.account.email == "" || this.account.password == ""){
-      alert("Email and password not empty. Try again");
-    }else{
+  login(loginForm : NgForm) {
+    if(loginForm.valid) {
       this.isError = false;
-    this.displaySer.showLoader();
-    this.authSer.login(this.account).subscribe(result => {
-      if(result != null) {
-        this.authSer.setAuth(result);
-        if(this.activeSurvey.observers.length > 0) {
-          this.activeSurvey.emit();
-        }else {
-          this.route.navigate(['']);
+      this.displaySer.showLoader();
+      this.authSer.login(this.account).subscribe(result => {
+        if(result != null) {
+          this.authSer.setAuth(result);
+          if(this.activeSurvey.observers.length > 0) {
+            this.activeSurvey.emit();
+          }else {
+            this.route.navigate(['']);
+          }
         }
-      }
-      else this.isError =true;
-      this.displaySer.hideLoader();
-    })
-
+        else this.isError =true;
+        this.displaySer.hideLoader();
+      })
     }
-    
+
   }
 
 

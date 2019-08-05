@@ -1,3 +1,4 @@
+import { ModalService } from 'src/app/service/modal.service';
 import { Component, OnInit, ViewChild, ElementRef, NgZone } from '@angular/core';
 import { Location } from '../../model/location';
 import { LocationService } from '../../service/location.service';
@@ -27,6 +28,7 @@ export class LocationEditComponent implements OnInit {
     private ngZone: NgZone,
     private router: Router,
     private route: ActivatedRoute,
+    private modalSer:ModalService
   ) { }
 
   ngOnInit() {
@@ -37,7 +39,7 @@ export class LocationEditComponent implements OnInit {
     //load Places Autocomplete
     this.mapsAPILoader.load().then(() => {
       this.zoom = 15;
-      
+
       this.geoCoder = new google.maps.Geocoder;
 
       let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
@@ -75,15 +77,16 @@ export class LocationEditComponent implements OnInit {
     this.service.update(this.location).subscribe(result => {
       this.requestStatus = result;
       if (this.requestStatus == 200) {
-        alert("Successfully updated");
+        alert('Successfully updated');
+        this.router.navigateByUrl('/location')
       }
     },
       error => {
         if (error.status == 409) {
-          alert("Name or Address has been existed!");
+          alert('Name or Address is existed!');
           this.requestStatus = 0;
-        } else if (error.status = 404) {
-          alert("Bad request");
+        } else if ((error.status = 404)) {
+          alert('Bad request');
           this.requestStatus = 0;
         }
       }
@@ -104,5 +107,10 @@ export class LocationEditComponent implements OnInit {
       }
 
     });
+  }
+  back() {
+    if(confirm('Do you want to go back')) {
+      this.router.navigateByUrl("/location");
+    }
   }
 }
