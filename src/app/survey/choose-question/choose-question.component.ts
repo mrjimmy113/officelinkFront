@@ -14,7 +14,7 @@ export class ChooseQuestionComponent implements OnInit {
   @Input() inputs;
   term = "";
   itemList = new Array<Question>();
-  maxPage;
+  maxPage = 1;
   currentPage = 1;
   typeList;
   currentType = 0;

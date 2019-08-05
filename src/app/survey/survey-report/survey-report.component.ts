@@ -138,7 +138,6 @@ export class SurveyReportComponent implements OnInit {
           }
         }
       });
-      console.log(this.surveyReport.questions);
     })
   }
   openCompare(q) {

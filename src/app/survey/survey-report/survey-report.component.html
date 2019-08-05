@@ -136,7 +136,7 @@
 
       <ng-template #noData>
         <ngx-charts-advanced-pie-chart [results]="q.reportData" *ngIf="q.question.type.type =='SINGLE'"
-          [animations]="false" [valueFormatting]="valueFormatting">
+          [animations]="false" >
         </ngx-charts-advanced-pie-chart>
         <ngx-charts-bar-horizontal [results]="q.reportData" [xAxis]="true" [yAxis]="true" [animations]="false"
           *ngIf="q.question.type.type =='MULTIPLE'">

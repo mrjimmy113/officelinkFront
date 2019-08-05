@@ -61,6 +61,7 @@ export class RegisterComponent implements OnInit {
           this.accoutSer.createAccount(this.account).subscribe(res => {});
           alert('Successful registration of account information, please check your mail to complete the registration');
           this.displaySer.hideLoader();
+          this.route.navigateByUrl('/');
         },
         error => {
           this.errorStatus = error.status;

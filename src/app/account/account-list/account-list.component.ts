@@ -23,7 +23,8 @@ export class AccountListComponent implements OnInit {
   constructor(private modalSer : ModalService, private accountSer : AccountService) {}
 
   ngOnInit() {
-      this.search("");
+    this.itemList = new Array();
+    this.search("");
 
   }
 
@@ -34,7 +35,7 @@ export class AccountListComponent implements OnInit {
     })
   }
 
-  
+
 
   filter() {
     let newSearchTerm = this.searchTerm;

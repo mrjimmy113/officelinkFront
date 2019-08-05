@@ -34,6 +34,7 @@ export class AssignAccountComponent implements OnInit {
   location: Location;
   workplace: Workplace;
   departmentList: Array<Department>;
+  choosenDep = 0;
 
   test: String;
   testListName;
@@ -76,7 +77,8 @@ export class AssignAccountComponent implements OnInit {
       alert("Please choose a Team");
       return;
     }
-    if (this.choosenTeamList.includes(this.teamId)) {
+
+    if (this.choosenTeamList.includes(Number.parseInt(this.teamId))) {
       alert("This team has already on the list");
       this.teamName = "";
       this.teamId = 0;
@@ -135,10 +137,14 @@ export class AssignAccountComponent implements OnInit {
       .getAccountAssign(assignInfor.accountId)
       .subscribe(result => {
         this.account = result;
-        if (this.account.location.id != null) {
+        if (this.account.location != null && this.account.location != undefined) {
           this.locationId = this.account.location.id;
         }
-        if (result.teams != null) {
+        if (result.teams != null && this.account.teams.length > 0) {
+          this.choosenDep = result.teams[0].department.id.valueOf();
+          this.teamSer.getTeamByDepId(this.choosenDep).subscribe(result => {
+            this.teamList = result;
+          });
           this.account.teams.forEach(result => {
             this.teamName = result.name;
             this.teamId = result.id;
@@ -163,5 +169,9 @@ export class AssignAccountComponent implements OnInit {
         this.teamList = result;
       });
     }
+  }
+  removeAllTeam() {
+    this.displayTeam = new Array();
+    this.choosenTeamList = new Array();
   }
 }

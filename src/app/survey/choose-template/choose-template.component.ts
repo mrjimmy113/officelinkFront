@@ -11,7 +11,7 @@ import { Survey } from 'src/app/model/survey';
 export class ChooseTemplateComponent implements OnInit {
   itemList: Array<Survey>;
   term = "";
-  maxPage;
+  maxPage = 1;
   currentPage = 1;
   @Output() newBlankSurvey = new EventEmitter();
   @Output() newWithTemplate = new EventEmitter();
