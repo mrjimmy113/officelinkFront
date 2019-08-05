@@ -27,7 +27,7 @@ export class NewsService {
   }
 
   searchGetPage(term, page):Observable<PageSearch<News>>{
-    return this.http.get<PageSearch<News>>(this.api + `?term=${term}&page=${page}`);
+    return this.http.get<PageSearch<News>>(this.api + `/getPage?term=${term}&page=${page}`);
   }
 
   create(obj):Observable<Number>{

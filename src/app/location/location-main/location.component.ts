@@ -46,10 +46,7 @@ export class LocationComponent implements OnInit {
 
   loadPage(pageNumber) {
     this.currentPage = pageNumber;
-    this.service.searchGetPage(this.searchTerm,  this.currentPage - 1).subscribe(result => {
-      this.maxPage = result.maxPage;
-      this.itemList = result.objList;
-    })
+    this.search();
   }
 
   delete(id) {

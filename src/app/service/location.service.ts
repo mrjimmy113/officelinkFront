@@ -32,7 +32,7 @@ export class LocationService {
   }
 
   searchGetPage(term, page):Observable<PageSearch<Location>>{
-    return this.http.get<PageSearch<Location>>(this.api + `?term=${term}&page=${page}`);
+    return this.http.get<PageSearch<Location>>(this.api + `/getPage?term=${term}&page=${page}`);
   }
 
   create(obj):Observable<Number>{

@@ -39,7 +39,12 @@ export class NewsMainComponent implements OnInit {
     })
   }
 
-  loadPage(num) {
+  loadPage(pageNumber) {
+    this.currentPage = pageNumber;
+    this.service.searchGetPage(this.searchTerm, pageNumber).subscribe(result => {
+      this.maxPage = result.maxPage;
+      this.itemList = result.objList;
+    })
   }
 
   filter() {

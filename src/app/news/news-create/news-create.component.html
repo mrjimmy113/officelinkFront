@@ -7,10 +7,10 @@
       <form #newsForm="ngForm">
         <div class="form-group">
           <label style="font-weight: bold">Title</label>
-          <textarea class="form-control" placeholder="Fill in title" name="title" id="newsTitle"
-            [(ngModel)]="news.title" #title='ngModel' required
+          <input class="form-control" placeholder="Fill in title" name="title" id="newsTitle"
+            [(ngModel)]="news.title" #title='ngModel' required style="width: 50%"
             [ngClass]="{'is-invalid': (title.invalid && (title.dirty || title.touched))}"
-            (keyup)="wordCountTitle(news.title)"></textarea>
+            (keyup)="wordCountTitle(news.title)" />
           <span>{{ countTitle }} words left</span>
           <div *ngIf="title.invalid && (title.dirty || title.touched)" class="text-danger">
             <div *ngIf="title.errors.required">
