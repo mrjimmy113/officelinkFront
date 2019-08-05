@@ -13,7 +13,7 @@
       <form #locationForm="ngForm">
         <div class="form-group">
           <label style="font-weight: bold">Name</label>
-          <input type="text" class="form-control" name="name" placeholder="Fill in name" #name="ngModel"
+          <input class="form-control" name="name" placeholder="Fill in name" #name="ngModel" style="width: 50%"
             [(ngModel)]="location.name" [ngClass]="{'is-invalid' : (name.invalid && (name.dirty || name.touched))}"
             required (keyup)="wordCountName(location.name)" />
           <span>{{ countName }} words left</span>
