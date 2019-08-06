@@ -48,7 +48,6 @@ export class WordCloudSaveComponent implements OnInit {
   }
 
   closeModal() {
-    this.outputs();
     this.modalSer.destroy();
   }
   addWordToList(form: NgForm) {
@@ -62,6 +61,7 @@ export class WordCloudSaveComponent implements OnInit {
       this.requestStatus = result;
       if (this.requestStatus == 201) {
         alert("Successfully Create");
+        this.outputs();
         this.closeModal();
       }
     });
@@ -71,6 +71,7 @@ export class WordCloudSaveComponent implements OnInit {
       this.requestStatus = result;
       if (this.requestStatus == 200) {
         alert("Successfully Update");
+        this.outputs();
         this.closeModal();
       }
     });

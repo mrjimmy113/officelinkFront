@@ -162,10 +162,14 @@
           <div class="form-group">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                <span class="btn btn-success"><i class="fas fa-filter"></i></span>
+                <button class="btn btn-success" (click)="addFilter(i)">
+                  <span *ngIf="choosenFilter == 0; else hasChoosen">Create</span>
+                  <ng-template #hasChoosen>Update</ng-template>
+
+                </button>
               </div>
-              <select class="form-control d-flex align-content-end" (change)="filterWordCloud($event,i)">
-                <option [value]="0">DEFAULT</option>
+              <select class="form-control d-flex align-content-end" (change)="filterWordCloud($event,i)" [(ngModel)]="choosenFilter">
+                <option [value]="0">No Filter is applied</option>
                 <option *ngFor="let filter of filters" [value]="filter.id">{{filter.name}}</option>
               </select>
             </div>

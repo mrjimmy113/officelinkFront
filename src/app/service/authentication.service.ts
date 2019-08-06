@@ -45,6 +45,10 @@ export class AuthenticationService {
     if(this.isLogin())
     return this.getAuth().name;
   }
+  getWorkplaceName() {
+    if(this.isLogin())
+    return this.getAuth().workplaceName;
+  }
   logout() {
     localStorage.removeItem(this.itemName);
     window.location.pathname="/home";

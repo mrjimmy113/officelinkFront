@@ -6,5 +6,5 @@ export class DashBoard {
   department : number;
   location : Location[];
   news : News;
-  reports : SurveyReport[];
+  endTutorial:boolean;
 }

@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
   name = this.authSer.getName();
+  workplaceName = this.authSer.getWorkplaceName();
   isDisplay = false;
   constructor(private authSer:AuthenticationService) { }
 

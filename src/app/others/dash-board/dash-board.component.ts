@@ -24,6 +24,7 @@ export class DashBoardComponent implements OnInit {
   }
 
   isTutorial(): boolean {
+    if(this.dashBoard.endTutorial) return false;
     if(this.role != 'employer') return false;
     if(this.dashBoard.account == 0) return true;
 

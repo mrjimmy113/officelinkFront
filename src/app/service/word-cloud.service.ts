@@ -39,4 +39,7 @@ export class WordCloudService {
   getAll():Observable<WordCloudFilter[]> {
     return this.http.get<WordCloudFilter[]>(this.api + `/all`);
   }
+  getOne(id):Observable<WordCloudFilter> {
+    return this.http.get<WordCloudFilter>(this.api + `/one?id=${id}`)
+  }
 }

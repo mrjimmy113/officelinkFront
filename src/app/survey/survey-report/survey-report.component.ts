@@ -1,12 +1,13 @@
-import { ApplyFilterComponent } from './../apply-filter/apply-filter.component';
-import { QuestionReport } from './../../model/questionReport';
-import { SendOutInfor } from './../../model/sendOutInfor';
-import { ApplyFilter } from './../../model/applyFilter';
-import { WordCloudFilter } from './../../model/word-cloud-filter';
-import { UltisService } from 'src/app/service/ultis.service';
-import { Question } from './../../model/question';
-import { element } from 'protractor';
-import { Location } from './../../model/location';
+import { WordCloudSaveComponent } from "./../../word-cloud-filter/word-cloud-save/word-cloud-save.component";
+import { ApplyFilterComponent } from "./../apply-filter/apply-filter.component";
+import { QuestionReport } from "./../../model/questionReport";
+import { SendOutInfor } from "./../../model/sendOutInfor";
+import { ApplyFilter } from "./../../model/applyFilter";
+import { WordCloudFilter } from "./../../model/word-cloud-filter";
+import { UltisService } from "src/app/service/ultis.service";
+import { Question } from "./../../model/question";
+import { element } from "protractor";
+import { Location } from "./../../model/location";
 import { ReportService } from "./../../service/report.service";
 import { Team } from "./../../model/team";
 import { Department } from "./../../model/department";
@@ -19,8 +20,8 @@ import { ModalService } from "./../../service/modal.service";
 import { Component, OnInit } from "@angular/core";
 import { CloudOptions, CloudData } from "angular-tag-cloud-module";
 import { AnswerReport } from "src/app/model/answerReport";
-import { WordCloudService } from 'src/app/service/word-cloud.service';
-import { filter } from 'rxjs/operators';
+import { WordCloudService } from "src/app/service/word-cloud.service";
+import { filter } from "rxjs/operators";
 
 @Component({
   selector: "app-survey-report",
@@ -31,13 +32,13 @@ export class SurveyReportComponent implements OnInit {
   locations: Location[];
   departments: Department[];
   teams: Team[];
-  filters:WordCloudFilter[];
+  filters: WordCloudFilter[];
 
   locationId: number;
   departmentId: number;
   teamId: number;
 
-  surveyId:number;
+  surveyId: number;
 
   surveyReport: SurveyReport;
   textOfSendOutInfor: string[];
@@ -52,13 +53,14 @@ export class SurveyReportComponent implements OnInit {
   };
 
   noDataFlag = false;
+  choosenFilter = 0;
 
   constructor(
     private modalSer: ModalService,
     private route: ActivatedRoute,
     private reportSer: ReportService,
-    private utltis:UltisService,
-    private filterSer:WordCloudService,
+    private utltis: UltisService,
+    private filterSer: WordCloudService
   ) {}
 
   ngOnInit() {
@@ -69,20 +71,20 @@ export class SurveyReportComponent implements OnInit {
     this.textOfSendOutInfor = new Array();
     this.route.params.subscribe(params => {
       this.surveyId = params["id"];
-      this.reportSer.getSendSurveyTargetDetail(this.surveyId).subscribe(result => {
-        this.locations = result.locations;
-        this.departments = result.departments;
-        this.teams = result.teams;
-      })
+      this.reportSer
+        .getSendSurveyTargetDetail(this.surveyId)
+        .subscribe(result => {
+          this.locations = result.locations;
+          this.departments = result.departments;
+          this.teams = result.teams;
+        });
       this.reportSer.getReport(this.surveyId).subscribe(result => {
         this.surveyReport = result;
         this.surveyReport.questions = undefined;
         this.getTextFromSendOutInfor(this.surveyReport.sendTargets);
       });
     });
-    this.filterSer.getAll().subscribe(result => {
-      this.filters = result;
-    })
+    this.getFilterList();
   }
 
   getWordCloud(answers: Array<AnswerReport>): CloudData[] {
@@ -125,67 +127,143 @@ export class SurveyReportComponent implements OnInit {
   }
 
   applyFilter() {
-    this.reportSer.getFilteredReport(this.surveyId,this.locationId,this.departmentId,this.teamId).subscribe(result => {
-      this.surveyReport.questions = result;
-      result.forEach(element => {
-        if (element.question.type.type == "TEXT") {
-          if(element.answers.length > 0) {
-            element.reportData = this.getWordCloud(element.answers);
+    this.reportSer
+      .getFilteredReport(
+        this.surveyId,
+        this.locationId,
+        this.departmentId,
+        this.teamId
+      )
+      .subscribe(result => {
+        this.surveyReport.questions = result;
+        result.forEach(element => {
+          if (element.question.type.type == "TEXT") {
+            if (element.answers.length > 0) {
+              element.reportData = this.getWordCloud(element.answers);
+            }
+          } else {
+            if (element.answers.length > 0) {
+              element.reportData = this.getChartParam(
+                element.answers,
+                element.question.options
+              );
+            }
           }
-        } else {
-          if(element.answers.length > 0) {
-            element.reportData = this.getChartParam(element.answers, element.question.options);
-          }
-        }
+        });
       });
-    })
   }
   openCompare(q) {
-    this.modalSer.init(SurveyCompareComponent, [q,this.surveyId,this.surveyReport.name,this.locationId,this.departmentId,this.teamId], []);
+    this.modalSer.init(
+      SurveyCompareComponent,
+      [
+        q,
+        this.surveyId,
+        this.surveyReport.name,
+        this.locationId,
+        this.departmentId,
+        this.teamId
+      ],
+      []
+    );
   }
 
   getDownloadToken(id) {
-    this.reportSer.getDownloadToken(this.surveyId,id).subscribe(result => {
+    this.reportSer.getDownloadToken(this.surveyId, id).subscribe(result => {
       window.open(this.reportSer.getDownloadLink(result));
     });
   }
-  filterWordCloud(event :Event,dataIndex) {
-    let options : HTMLOptionsCollection = event.target['options'];
+  filterWordCloud(event: Event, dataIndex) {
+    let options: HTMLOptionsCollection = event.target["options"];
     let filterId = options[options.selectedIndex].value;
-    if(Number(filterId) == 0) {
-      this.surveyReport.questions[dataIndex].reportData = this.getWordCloud(this.surveyReport.questions[dataIndex].answers);
-    }else {
+    this.getNewWordCloud(filterId, dataIndex);
+  }
+
+  getNewWordCloud(filterId, dataIndex) {
+    if (Number(filterId) == 0) {
+      this.surveyReport.questions[dataIndex].reportData = this.getWordCloud(
+        this.surveyReport.questions[dataIndex].answers
+      );
+    } else {
       let applyFilter = new ApplyFilter();
       applyFilter.filterId = Number(filterId);
       applyFilter.answers = this.surveyReport.questions[dataIndex].answers;
       this.reportSer.getFilterdWordCloud(applyFilter).subscribe(result => {
-        this.surveyReport.questions[dataIndex].reportData = this.getWordCloud(result);
-      })
+        this.surveyReport.questions[dataIndex].reportData = this.getWordCloud(
+          result
+        );
+      });
     }
   }
 
-  getTextFromSendOutInfor(infors : SendOutInfor[]) {
+  getTextFromSendOutInfor(infors: SendOutInfor[]) {
     infors.forEach(element => {
-      if(element.departmentName == '' && element.locationName == '' && element.teamName =='') {
-        this.textOfSendOutInfor.push('All Company');
-      }else if(element.departmentName != '' && element.locationName == '' && element.teamName =='') {
-        this.textOfSendOutInfor.push('Department: ' + element.departmentName.toString());
-      }else if(element.departmentName == '' && element.locationName != '' && element.teamName =='') {
-        this.textOfSendOutInfor.push('Location: ' + element.locationName.toString());
-      }else if(element.departmentName != '' && element.locationName != '' && element.teamName =='') {
-        this.textOfSendOutInfor.push('Location: ' + element.locationName + " - Department: " + element.departmentName);
-      }else if(element.departmentName != '' && element.locationName != '' && element.teamName !='') {
-        this.textOfSendOutInfor.push('Team: ' + element.teamName.toString());
+      if (
+        element.departmentName == "" &&
+        element.locationName == "" &&
+        element.teamName == ""
+      ) {
+        this.textOfSendOutInfor.push("All Company");
+      } else if (
+        element.departmentName != "" &&
+        element.locationName == "" &&
+        element.teamName == ""
+      ) {
+        this.textOfSendOutInfor.push(
+          "Department: " + element.departmentName.toString()
+        );
+      } else if (
+        element.departmentName == "" &&
+        element.locationName != "" &&
+        element.teamName == ""
+      ) {
+        this.textOfSendOutInfor.push(
+          "Location: " + element.locationName.toString()
+        );
+      } else if (
+        element.departmentName != "" &&
+        element.locationName != "" &&
+        element.teamName == ""
+      ) {
+        this.textOfSendOutInfor.push(
+          "Location: " +
+            element.locationName +
+            " - Department: " +
+            element.departmentName
+        );
+      } else if (
+        element.departmentName != "" &&
+        element.locationName != "" &&
+        element.teamName != ""
+      ) {
+        this.textOfSendOutInfor.push("Team: " + element.teamName.toString());
       }
     });
   }
-  valueFormatting(value: number) {
-    return value.toFixed(1);
-  }
-  openApplyFilter(q:QuestionReport) {
-    this.modalSer.init(ApplyFilterComponent,q,[]);
+
+  openApplyFilter(q: QuestionReport) {
+    this.modalSer.init(ApplyFilterComponent, q, []);
   }
 
+  getFilterList() {
+    this.filterSer.getAll().subscribe(result => {
+      this.filters = result;
+    });
+  }
+
+  addFilter(dataIndex) {
+    if (this.choosenFilter == 0) {
+      this.modalSer.init(WordCloudSaveComponent, [], () => {
+        this.getFilterList();
+      });
+    } else {
+      this.filterSer.getOne(this.choosenFilter).subscribe(result => {
+        this.modalSer.init(WordCloudSaveComponent, result, () => {
+          this.getFilterList();
+          this.getNewWordCloud(this.choosenFilter, dataIndex);
+        });
+      });
+    }
+  }
 }
 interface NgxChartParam {
   name: string;
