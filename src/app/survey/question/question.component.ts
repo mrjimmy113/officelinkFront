@@ -48,6 +48,7 @@ export class QuestionComponent implements OnInit {
     if (this.isNew) {
       this.quest.options = new Array<AnswerOption>();
       this.quest.options.push(new AnswerOption());
+      this.quest.options.push(new AnswerOption());
     }
     this.classToParent();
   }
@@ -92,6 +93,7 @@ export class QuestionComponent implements OnInit {
       this.quest.options = new Array<AnswerOption>();
     } else {
       if (this.quest.options.length == 0) {
+        this.quest.options.push(new AnswerOption());
         this.quest.options.push(new AnswerOption());
       }
     }

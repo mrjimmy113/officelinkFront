@@ -26,7 +26,7 @@
             </div>
           </div>
           <div class="col-sm-3">
-            <select class="form-control" [(ngModel)]="quest.type" name="type">
+            <select class="form-control" [(ngModel)]="quest.type" name="type" (change)="updateType()">
               <option [ngValue]="undefined">-Choose Question Type-</option>
               <option *ngFor="let type of typeList" [ngValue]="type">{{typeEnum[type.type]}}</option>
             </select>
@@ -49,7 +49,7 @@
                 </div>
                 <div class="col-sm-1 row align-content-center d-flex justify-content-center">
                   <button class="btn btn-danger" (click)="deleteOption(i)"
-                  [disabled]="quest.options.length == 1"
+                  [disabled]="quest.options.length <= 2"
                   ><i class="fas fa-times"></i></button>
                 </div>
               </div>

@@ -58,22 +58,20 @@ export class WordCloudSaveComponent implements OnInit {
   }
   add() {
     this.ser.create(this.filter).subscribe(result => {
-      this.requestStatus = result;
-      if (this.requestStatus == 201) {
-        alert("Successfully Create");
-        this.outputs();
-        this.closeModal();
+      alert("Successfully Create");
+      this.outputs[0]();
+      if(this.outputs[1] != undefined) {
+        this.outputs[1](result);
       }
+      this.closeModal();
     });
   }
   update() {
     this.ser.update(this.filter).subscribe(result => {
       this.requestStatus = result;
-      if (this.requestStatus == 200) {
-        alert("Successfully Update");
-        this.outputs();
-        this.closeModal();
-      }
+      alert("Successfully Update");
+      this.outputs[0]();
+      this.closeModal();
     });
   }
   save() {
@@ -108,25 +106,18 @@ export class WordCloudSaveComponent implements OnInit {
     }, 300);
   }
   checkIsExisted() {
-    if (
-      this.filter.name != undefined &&
-      this.filter.name.trim() != ""
-    ) {
-      if(this.isEdit) {
-        if((
-          (this.filter.name.toLowerCase() == this.currentName.toLowerCase())
-        )) {
+    if (this.filter.name != undefined && this.filter.name.trim() != "") {
+      if (this.isEdit) {
+        if (this.filter.name.toLowerCase() == this.currentName.toLowerCase()) {
           return;
         }
       }
       let oldName = this.filter.name;
       setTimeout(() => {
         if (oldName == this.filter.name) {
-          this.ser
-            .isExisted(this.filter.name)
-            .subscribe(result => {
-              this.isExisted = result;
-            });
+          this.ser.isExisted(this.filter.name).subscribe(result => {
+            this.isExisted = result;
+          });
         }
       }, 300);
     }

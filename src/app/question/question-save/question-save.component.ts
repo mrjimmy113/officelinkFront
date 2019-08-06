@@ -26,13 +26,14 @@ export class QuestionSaveComponent implements OnInit {
     this.quest = new Question();
     this.quest.options = new Array<AnswerOption>();
     this.quest.options.push(new AnswerOption());
+    this.quest.options.push(new AnswerOption());
     this.quesSer.getAllType().subscribe(result => {
       this.typeList = result;
     });
   }
   addOption() {
     if(this.quest.options.length >=8) {
-      alert("The maximum number of option is 10");
+      alert("The maximum number of option is 8");
     }else {
       this.quest.options.push(new AnswerOption());
     }
@@ -56,5 +57,15 @@ export class QuestionSaveComponent implements OnInit {
     },err => {
       alert('Error');
     })
+  }
+  updateType() {
+    if (this.quest.type.type == 'TEXT') {
+      this.quest.options = new Array<AnswerOption>();
+    } else {
+      if (this.quest.options.length == 0) {
+        this.quest.options.push(new AnswerOption());
+        this.quest.options.push(new AnswerOption());
+      }
+    }
   }
 }

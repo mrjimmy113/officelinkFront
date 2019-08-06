@@ -33,12 +33,12 @@ export class SurveyTakeComponent implements OnInit {
   }
 
   multipleAnswer(option: string, answerIndex) {
-    let answer: String = "";
+    let answer: string = "";
     if (!(this.answers[answerIndex].content == undefined)) {
       answer = this.answers[answerIndex].content + "";
     }
     if (answer.includes(option)) {
-      answer.replace(option, "");
+      answer = answer.replace(option, "");
     } else {
       if (answer.trim().length == 0) {
         answer = option;
@@ -47,6 +47,7 @@ export class SurveyTakeComponent implements OnInit {
       }
     }
     this.answers[answerIndex].content = answer;
+    console.log(this.answers[answerIndex].content);
   }
 
   saveAnswer() {

@@ -70,7 +70,7 @@
 
             <div class="col-sm-1 row align-content-center d-flex justify-content-center" *ngIf="isEditMode">
               <button class="btn btn-danger" (click)="deleteOption(i)" *ngIf="isNew"
-                [disabled]="quest.options.length == 1"><i class="fas fa-times"></i></button>
+                [disabled]="quest.options.length <= 2"><i class="fas fa-times"></i></button>
             </div>
           </div>
           <div *ngIf="quest.options[i].answerText != undefined">

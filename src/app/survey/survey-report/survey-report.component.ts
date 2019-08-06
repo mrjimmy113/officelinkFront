@@ -252,9 +252,19 @@ export class SurveyReportComponent implements OnInit {
 
   addFilter(dataIndex) {
     if (this.choosenFilter == 0) {
-      this.modalSer.init(WordCloudSaveComponent, [], () => {
-        this.getFilterList();
-      });
+      this.modalSer.init(
+        WordCloudSaveComponent,
+        [],
+        [
+          () => {
+            this.getFilterList();
+          },
+          newFilter => {
+            this.getNewWordCloud(newFilter, dataIndex);
+            this.choosenFilter = newFilter;
+          }
+        ]
+      );
     } else {
       this.filterSer.getOne(this.choosenFilter).subscribe(result => {
         this.modalSer.init(WordCloudSaveComponent, result, () => {
