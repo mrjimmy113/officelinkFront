@@ -28,6 +28,7 @@ export class TeamComponent implements OnInit {
     this.ser.searchGetPage(value, 1).subscribe(result => {
       this.maxPage = result.maxPage;
       this.itemList = result.objList;
+      console.log(this.itemList);
     })
   }
 

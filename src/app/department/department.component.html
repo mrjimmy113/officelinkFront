@@ -25,6 +25,9 @@
           <div class="col-sm-7 d-flex align-items-center clickable">
             Department Name <i class="fas fa-sort icon" (click)="sort('name')"></i>
           </div>
+          <div class="col-sm-3 d-flex align-items-center clickable">
+            Date Created <i class="fas fa-sort icon" (click)="sort('dateCreated')"></i>
+          </div>
         </div>
 
         <div class="col-sm-2 d-flex align-items-center justify-content-center">
@@ -41,6 +44,9 @@
 
             <div class="col-sm-7 d-flex align-items-center">
               {{item.name}}
+            </div>
+            <div class="col-sm-3 d-flex align-items-center">
+              {{item.dateCreated}}
             </div>
           </div>
 
