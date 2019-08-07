@@ -74,7 +74,8 @@ import { DetailComponent } from './question/detail/detail.component';
 import { SurveyHistoryDetailComponent } from "./survey/survey-history-detail/survey-history-detail.component"
 import { SurveyHistoryMainComponent } from "./survey/survey-history-main/survey-history-main.component";
 import { ChooseTemplateComponent } from './survey/choose-template/choose-template.component';
-import { ApplyFilterComponent } from './survey/apply-filter/apply-filter.component'
+import { ApplyFilterComponent } from './survey/apply-filter/apply-filter.component';
+import { DialogComponent } from './others/dialog/dialog.component'
 
 @NgModule({
   declarations: [
@@ -133,6 +134,7 @@ import { ApplyFilterComponent } from './survey/apply-filter/apply-filter.compone
     SurveyHistoryMainComponent,
     ChooseTemplateComponent,
     ApplyFilterComponent,
+    DialogComponent,
 
   ],
   imports: [
@@ -161,7 +163,8 @@ import { ApplyFilterComponent } from './survey/apply-filter/apply-filter.compone
     SurveySaveComponent,
     AssignAccountComponent,
     DetailComponent,
-    ApplyFilterComponent
+    ApplyFilterComponent,
+    DialogComponent
   ],
 
   providers: [

@@ -1,15 +1,16 @@
-import { UltisService } from 'src/app/service/ultis.service';
-import { Question } from './../../model/question';
-import { TypeEnum } from './../../model/typeEnum';
-import { QuestionService } from './../../service/question.service';
-import { ModalService } from './../../service/modal.service';
-import { Component, OnInit } from '@angular/core';
-import { QuestionSaveComponent } from '../question-save/question-save.component';
-import { DetailComponent } from '../detail/detail.component';
+import { UltisService } from "src/app/service/ultis.service";
+import { Question } from "./../../model/question";
+import { TypeEnum } from "./../../model/typeEnum";
+import { QuestionService } from "./../../service/question.service";
+import { ModalService } from "./../../service/modal.service";
+import { Component, OnInit } from "@angular/core";
+import { QuestionSaveComponent } from "../question-save/question-save.component";
+import { DetailComponent } from "../detail/detail.component";
+import { DialogService } from "src/app/service/dialog.service";
 @Component({
-  selector: 'app-question-list',
-  templateUrl: './question-list.component.html',
-  styleUrls: ['./question-list.component.css']
+  selector: "app-question-list",
+  templateUrl: "./question-list.component.html",
+  styleUrls: ["./question-list.component.css"]
 })
 export class QuestionListComponent implements OnInit {
   itemList;
@@ -17,9 +18,14 @@ export class QuestionListComponent implements OnInit {
   maxPage;
   searchTerm = "";
   isSort = "";
-  requestStatus:Number;
+  requestStatus: Number;
   typeEnum = TypeEnum;
-  constructor(private modalSer:ModalService, private quesSer:QuestionService, private ultiSer:UltisService) { }
+  constructor(
+    private modalSer: ModalService,
+    private quesSer: QuestionService,
+    private ultiSer: UltisService,
+    private dialogSer: DialogService
+  ) {}
 
   ngOnInit() {
     this.itemList = new Array();
@@ -27,16 +33,18 @@ export class QuestionListComponent implements OnInit {
   }
 
   openCreate() {
-    this.modalSer.init(QuestionSaveComponent,[],() => {
+    this.modalSer.init(QuestionSaveComponent, [], () => {
       this.search();
     });
   }
 
   search() {
-    this.quesSer.search(this.searchTerm,this.currentPage - 1).subscribe(result => {
-      this.maxPage = result.maxPage;
-      this.itemList = result.objList;
-    });
+    this.quesSer
+      .search(this.searchTerm, this.currentPage - 1)
+      .subscribe(result => {
+        this.maxPage = result.maxPage;
+        this.itemList = result.objList;
+      });
   }
   loadPage(num) {
     this.currentPage = num;
@@ -45,25 +53,22 @@ export class QuestionListComponent implements OnInit {
   filter() {
     let newSearchTerm = this.searchTerm;
     setTimeout(() => {
-      if(newSearchTerm == this.searchTerm) {
+      if (newSearchTerm == this.searchTerm) {
         this.search();
       }
-    },300)
+    }, 300);
   }
   delete(id) {
-    if(confirm("Do you want to take out this action")) {
+    this.dialogSer.init("Delete Question", "Do you want to delete this question", () => {
       this.quesSer.delete(id).subscribe(result => {
-        if(result === 200) {
-          alert('Question is deleted successfully');
           this.search();
-        }
       }, err => {
         alert('Error');
       })
-    }
+    },undefined);
   }
-  detail(quest : Question) {
-    this.modalSer.init(DetailComponent,quest,[]);
+  detail(quest: Question) {
+    this.modalSer.init(DetailComponent, quest, []);
   }
   sort(property) {
     if (this.isSort == property) {
@@ -74,5 +79,4 @@ export class QuestionListComponent implements OnInit {
       this.isSort = property;
     }
   }
-
 }

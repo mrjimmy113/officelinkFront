@@ -1,4 +1,6 @@
-import { TypeEnum } from './../../model/typeEnum';
+import { DialogComponent } from "./../../others/dialog/dialog.component";
+import { DialogService } from "./../../service/dialog.service";
+import { TypeEnum } from "./../../model/typeEnum";
 import { TypeQuestion } from "./../../model/typeQuestion";
 import { QuestionService } from "./../../service/question.service";
 import { ModalService } from "./../../service/modal.service";
@@ -19,7 +21,8 @@ export class QuestionSaveComponent implements OnInit {
   typeEnum = TypeEnum;
   constructor(
     private modalSer: ModalService,
-    private quesSer: QuestionService
+    private quesSer: QuestionService,
+    private dialogSer: DialogService
   ) {}
 
   ngOnInit() {
@@ -32,9 +35,9 @@ export class QuestionSaveComponent implements OnInit {
     });
   }
   addOption() {
-    if(this.quest.options.length >=8) {
+    if (this.quest.options.length >= 8) {
       alert("The maximum number of option is 8");
-    }else {
+    } else {
       this.quest.options.push(new AnswerOption());
     }
   }
@@ -45,21 +48,28 @@ export class QuestionSaveComponent implements OnInit {
     this.quest.options.splice(index, 1);
   }
   save() {
-    if(this.quest.type.type == 'TEXT') {
+    if (this.quest.type.type == "TEXT") {
       this.quest.options = new Array<AnswerOption>();
     }
-    this.quesSer.create(this.quest).subscribe(result => {
-      if(result == 201) {
-        alert("Question is saved successfully");
-        this.outputs();
-        this.modalSer.destroy();
+    this.quesSer.create(this.quest).subscribe(
+      result => {
+        this.dialogSer.init(
+          "Create Question",
+          "Question is saved successfully",
+          undefined,
+          () => {
+            this.outputs();
+            this.modalSer.destroy();
+          }
+        );
+      },
+      err => {
+        alert("Error");
       }
-    },err => {
-      alert('Error');
-    })
+    );
   }
   updateType() {
-    if (this.quest.type.type == 'TEXT') {
+    if (this.quest.type.type == "TEXT") {
       this.quest.options = new Array<AnswerOption>();
     } else {
       if (this.quest.options.length == 0) {
