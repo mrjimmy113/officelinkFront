@@ -64,6 +64,7 @@ export class SurveyListComponent implements OnInit {
       .subscribe(result => {
         this.maxPage = result.maxPage;
         this.itemList = result.objList;
+        console.log(this.itemList);
       });
   }
   loadPage(num) {}
@@ -102,5 +103,32 @@ export class SurveyListComponent implements OnInit {
       this.itemList.sort(this.ultisSer.sortByPropertyNameASC(property));
       this.isSort = property;
     }
+  }
+
+  getTimeFromCron(cronExpression: String) {
+    let result = "";
+    var list = cronExpression.split(" ");
+    result = list[2] + ":" + list[1];
+    return result;
+  }
+
+  getWeekDaysFromCron(cronExpression: String) {
+    let result = "";
+    var list = cronExpression.split(" ");
+    result = list[5];
+    if (result == "*") {
+      result = "Every Day";
+    }
+    return result;
+  }
+
+  getMonthsFromCron(cronExpression: String) {
+    let result = "";
+    var list = cronExpression.split(" ");
+    result = list[4];
+    if (result == "*") {
+      result = "Every Month";
+    }
+    return result;
   }
 }

@@ -1,4 +1,5 @@
 import { Question } from './question';
+import { Configuration } from './configuration';
 
 export class Survey {
   id:Number;
@@ -8,4 +9,5 @@ export class Survey {
 	active : boolean;
   questions: Array<Question>;
   sent : boolean;
+  configuration: Configuration;
 }
