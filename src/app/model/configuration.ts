@@ -4,7 +4,7 @@ import { SendSurvey } from './sendSurvey';
 export class Configuration {
     id:Number;
     scheduleTime:String;
-    isActive:Boolean;
+    active:Boolean;
     workplaceId:Number;
     survey:Survey;
     duration:number;

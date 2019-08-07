@@ -65,4 +65,7 @@ export class SurveyService {
   getTemplate(term,page):Observable<PageSearch<Survey>> {
     return this.http.get<PageSearch<Survey>>(this.api + `/template?term=${term}&page=${page}`)
   }
+  updateActiveStatus(id, isActive): Observable<any> {
+    return this.http.get<any>(this.api + `/status?id=${id}&isActive=${isActive}`);
+  }
 }

@@ -28,6 +28,7 @@ export class TeamComponent implements OnInit {
     this.ser.searchGetPage(value, 1).subscribe(result => {
       this.maxPage = result.maxPage;
       this.itemList = result.objList;
+      console.log(this.itemList);
     })
   }
 
@@ -50,7 +51,8 @@ export class TeamComponent implements OnInit {
 
   delete(id) {
     if (confirm("Do you want to delete this")) {
-      this.ser.delete(id).subscribe(result => {
+      this.ser.delete(id).subscribe(
+        result => {
         this.requestStatus = result;
         if (this.requestStatus == 200) {
           alert("success");
@@ -60,6 +62,13 @@ export class TeamComponent implements OnInit {
           else {
             this.loadPage(this.currentPage);
           }
+        }
+      },
+      error => {
+        if (error.status == 409) {
+          alert("This team contain employee(s) in it. Please unassigned all employee(s) in this team before delete it.");
+        } else if (error.status = 400) {
+          alert("Bad request");
         }
       });
     }
