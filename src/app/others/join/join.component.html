@@ -7,10 +7,10 @@
         <div class="col-lg-5 d-none d-lg-block bg-login-image"></div>
         <div class="col-lg-7">
           <div class="p-5">
-            <div class="text-center">
+            <div class="text-center" *ngIf="account.deleted == false">
               <h1 class="h4 text-gray-900 mb-4">Join Now</h1>
             </div>
-            <form class="user">
+            <form class="user" *ngIf="account.deleted == false">
               <div class="form-group row">
                 <div class="col-sm-6 mb-3 mb-sm-0">
                   <input type="text" class="form-control form-control-user" name="firstname" #firstname="ngModel"
@@ -77,12 +77,36 @@
                   </div>
                 </div>
               </div>
+          
 
               <button class="btn btn-primary btn-user btn-block" (click)="register()">
                 Sign Up
               </button>
 
             </form>
+            <div *ngIf="account.deleted == true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">Office Link </h5>
+                      </div>
+                      <div class="modal-body">
+                        <form class="text-danger">
+                            Your account cannot join the system. Please contact to: officelinksup@gmail.com for support
+                        </form>
+                      </div>
+                      <div class="modal-footer">
+                        
+                        <div class="col-sm-6 d-flex justify-content-end" style="padding: 0px">
+                          <button hr type="button" class="btn btn-success" (click)="goLogin()" >
+                           OK
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>                 
+
+            </div>
             <hr>
 
 

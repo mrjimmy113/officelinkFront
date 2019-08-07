@@ -32,6 +32,7 @@ export class AccountListComponent implements OnInit {
     this.accountSer.searchGetPage(value, 1).subscribe(result => {
       this.maxPage = result.maxPage;
       this.itemList = result.objList;
+      console.log(this.itemList)
     })
   }
 

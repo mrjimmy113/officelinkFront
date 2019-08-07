@@ -38,6 +38,10 @@ export class JoinComponent implements OnInit {
       })
   }
 
+  goLogin(){
+    this._route.navigateByUrl("/login");
+  }
+
   register(){
 
    
