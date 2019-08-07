@@ -151,6 +151,7 @@ export class ConfigurationSaveComponent implements OnInit {
   add() {
     this.configuration.scheduleTime = this.constructCronExpression();
     this.configuration.survey.id = this.selectedSurveyId;
+    this.configuration.isActive = true;
     this.configSer.create(this.configuration).subscribe(
       result => {
         this.requestStatus = result;
