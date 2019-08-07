@@ -108,7 +108,7 @@ export class ConfigurationComponent implements OnInit {
     this.ser.update(config).subscribe(
       error => {
         if (this.requestStatus == 400) alert("Bad request");
-        config.isActive = !config.isActive;
+        config.active = !config.active;
       });
   }
 

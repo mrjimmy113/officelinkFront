@@ -142,9 +142,9 @@ export class SurveyListComponent implements OnInit {
     );
 
     if (survey.configuration != null) {
-      survey.configuration.isActive = !survey.configuration.isActive;
-      console.log(survey.configuration.isActive);
-      this.configSer.updateActiveStatus(survey.configuration.id, survey.configuration.isActive).subscribe(
+      survey.configuration.active = !survey.configuration.active;
+      console.log(survey.configuration.active);
+      this.configSer.updateActiveStatus(survey.configuration.id, survey.configuration.active).subscribe(
         error => {
           if (this.requestStatus == 400) alert("Bad request");
         }

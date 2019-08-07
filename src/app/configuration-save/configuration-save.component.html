@@ -118,8 +118,7 @@
           <div class="form-group">
             <label>Duration(*)</label>
             <div class="input-group mb-3">
-              <input class="form-control" type="number" name="dura" #dura="ngModel" [(ngModel)]="configuration.duration"
-                [ngClass]="{'is-invalid' : (dura.invalid && (dura.dirty || dura.touched))}" required />
+              <input class="form-control" type="number" name="dura" #dura="ngModel" [(ngModel)]="configuration.duration"/>
 
               <div class="text-danger" *ngIf="(dura.invalid && (dura.dirty || dura.touched))">
                 <div *ngIf="dura.errors.required">
