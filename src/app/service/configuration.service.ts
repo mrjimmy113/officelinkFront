@@ -28,4 +28,8 @@ export class ConfigurationService {
   delete(id):Observable<Number> {
     return this.http.delete<Number>(this.api + `?id=${id}`);
   }
+
+  updateActiveStatus(id, isActive): Observable<any> {
+    return this.http.get<any>(this.api + `/status?id=${id}&isActive=${isActive}`);
+  }
 }

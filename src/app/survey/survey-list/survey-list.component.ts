@@ -8,6 +8,7 @@ import { DynamicLoadService } from "./../../service/dynamic-load.service";
 import { SurveyService } from "./../../service/survey.service";
 import { Component, OnInit } from "@angular/core";
 import { UltisService } from "src/app/service/ultis.service";
+import { ConfigurationService } from 'src/app/service/configuration.service';
 
 @Component({
   selector: "app-survey-list",
@@ -25,10 +26,11 @@ export class SurveyListComponent implements OnInit {
   isSort = "";
   constructor(
     private surveySer: SurveyService,
+    private configSer: ConfigurationService,
     private dyLoadSer: DynamicLoadService,
     private ultisSer: UltisService,
-    private modalSer:ModalService
-  ) {}
+    private modalSer: ModalService
+  ) { }
 
   ngOnInit() {
     this.itemList = new Array();
@@ -67,7 +69,7 @@ export class SurveyListComponent implements OnInit {
         console.log(this.itemList);
       });
   }
-  loadPage(num) {}
+  loadPage(num) { }
   filter() {
     let newSearchTerm = this.searchTerm;
     setTimeout(() => {
@@ -86,7 +88,7 @@ export class SurveyListComponent implements OnInit {
   }
 
   sendOut(id) {
-    this.modalSer.init(ConfigurationSaveComponent,id,() => this.search());
+    this.modalSer.init(ConfigurationSaveComponent, id, () => this.search());
   }
 
   offSave() {
@@ -130,5 +132,23 @@ export class SurveyListComponent implements OnInit {
       result = "Every Month";
     }
     return result;
+  }
+
+  changeActive(survey: Survey) {
+    this.surveySer.updateActiveStatus(survey.id, survey.active).subscribe(
+      error => {
+        if (this.requestStatus == 400) alert("Bad request");
+      }
+    );
+
+    if (survey.configuration != null) {
+      survey.configuration.isActive = !survey.configuration.isActive;
+      console.log(survey.configuration.isActive);
+      this.configSer.updateActiveStatus(survey.configuration.id, survey.configuration.isActive).subscribe(
+        error => {
+          if (this.requestStatus == 400) alert("Bad request");
+        }
+      );
+    }
   }
 }
