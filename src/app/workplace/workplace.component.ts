@@ -5,6 +5,7 @@ import { WorkplaceSaveComponent } from '../workplace-save/workplace-save.compone
 import { Workplace } from '../model/workplace';
 import { DialogService } from '../service/dialog.service';
 import { MyMessage } from '../const/message';
+import { UltisService } from '../service/ultis.service';
 
 @Component({
   selector: 'app-workplace',
@@ -17,9 +18,11 @@ export class WorkplaceComponent implements OnInit {
   maxPage;
   searchTerm = "";
   requestStatus: Number;
+  isSort = "";
 
   constructor(
     private modalSer: ModalService, 
+    private ultisSer: UltisService,
     private ser: WorkplaceService,
     private dialogSer: DialogService
     ) { }
@@ -32,6 +35,7 @@ export class WorkplaceComponent implements OnInit {
     this.ser.searchGetPage(value, 1).subscribe(result => {
       this.maxPage = result.maxPage;
       this.itemList = result.objList;
+      console.log(this.itemList);
     })
   }
 
@@ -83,6 +87,12 @@ export class WorkplaceComponent implements OnInit {
     })
   }
   sort(property) {
-
+    if (this.isSort == property) {
+      this.itemList.sort(this.ultisSer.sortByPropertyNameDSC(property));
+      this.isSort = "";
+    } else {
+      this.itemList.sort(this.ultisSer.sortByPropertyNameASC(property));
+      this.isSort = property;
+    }
   }
 }
