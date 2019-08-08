@@ -18,21 +18,20 @@ export class ForgetPasswordComponent implements OnInit {
   }
 
   sendMailResetPass(){
-    
      this.accountService.sendMailReset(this.emailReset).subscribe(result => {
        if(result == 200){
          this.dialogService.init("Office Link", "Please check your email to reset password", undefined,undefined);        
        }
      },
      error => {
-       if(error.status == 204){
-         //alert("Email not exist, try again")
+       if(error.status == 404){
          this.dialogService.init("Office Link", "Email not exist, try again", undefined,undefined);  
        }
+
      }
      )
 
-
+     
   }
 
 }

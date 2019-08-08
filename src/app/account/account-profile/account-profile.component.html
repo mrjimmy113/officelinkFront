@@ -93,13 +93,15 @@
                   <label>Confirm new password</label>
                   <input type="password" class="form-control form-control-user" name = "confirmpassword" #confirmpassword = "ngModel" placeholder="Confirm new password" [(ngModel)] = "confrimPasswordText"
                           [ngClass]="{'is-invalid' : (confirmpassword.invalid && (confirmpassword.dirty || confirmpassword.touched))}" required
-                          
+                          pattern="{{newPasswordText}}"
                           />
                           <div *ngIf="confirmpassword.invalid && (newpassword.dirty || confirmpassword.touched)" class="text-danger">
-                            <div *ngIf="confirmpassword.errors.required">
-                              Confirm password required
+                            
+                            <div *ngIf="confirmpassword.invalid && (confirmpassword.dirty || confirmpassword.touched)" class="text-danger">
+                              <div *ngIf="confirmpassword.errors.pattern">
+                                Confirm passsword is different from new password
+                              </div>
                             </div>
-        
               
         
                           </div>

@@ -54,9 +54,7 @@ export class InvitationComponent implements OnInit {
           //alert("Email existed on System. Try again")
           this.dialogService.init("Office Link", "Email existed on System. Try again", undefined,undefined)
           
-        }
-        
-       
+        }           
       })
     } 
   }

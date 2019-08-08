@@ -75,7 +75,9 @@ import { ReadNewsComponent } from './others/read-news/read-news.component';
 import { DetailComponent } from './question/detail/detail.component';
 import { ChooseTemplateComponent } from './survey/choose-template/choose-template.component';
 import { ApplyFilterComponent } from './survey/apply-filter/apply-filter.component';
-import { DialogComponent } from './others/dialog/dialog.component'
+import { DialogComponent } from './others/dialog/dialog.component';
+import {MatCheckboxModule} from '@angular/material';
+
 
 @NgModule({
   declarations: [
@@ -140,6 +142,7 @@ import { DialogComponent } from './others/dialog/dialog.component'
   imports: [
     BrowserModule,
     HttpClientModule,
+    MatCheckboxModule,
     FormsModule,
     AppRoutingModule,
     ScrollingModule,

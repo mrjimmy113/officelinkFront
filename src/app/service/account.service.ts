@@ -30,6 +30,10 @@ export class AccountService {
     return this.httpClient.get<PageSearch<Account>>(this.api + `/getAccount` +  `?term=${term}&page=${page}`);
   }
 
+  searchAccountNotAssign(term, page):Observable<PageSearch<Account>> {
+    return this.httpClient.get<PageSearch<Account>>(this.api + `/getAccountNotAssign` +  `?term=${term}&page=${page}`);
+  }
+
   getAccountAssign(id) : Observable<Account>{
     return this.httpClient.get<Account>(this.api + `/getAccountAssign` + `?id=${id}`);
   }

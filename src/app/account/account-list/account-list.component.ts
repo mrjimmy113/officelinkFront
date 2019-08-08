@@ -1,3 +1,4 @@
+import { forEach } from '@angular/router/src/utils/collection';
 import { Component, OnInit } from '@angular/core';
 import {ModalService} from '../../service/modal.service'
 import { from } from 'rxjs';
@@ -18,7 +19,8 @@ export class AccountListComponent implements OnInit {
   maxPage;
   currentPage = 1;
   requestStatus : Number;
-  searchTerm = ""
+  searchTerm = "";
+  notAssign = false;
 
 
   constructor(private modalSer : ModalService, private accountSer : AccountService , private dialogSerive : DialogService ) {}
@@ -29,8 +31,27 @@ export class AccountListComponent implements OnInit {
     
   }
 
+  toggle(event: Event) {
+    if(this.notAssign){
+        this.searchAccountNotAssign("");
+    }else{
+      this.search("")
+    }
+
+  }
+
+  
+
   search(value) {
     this.accountSer.searchGetPage(value, 1).subscribe(result => {
+      this.maxPage = result.maxPage;
+      this.itemList = result.objList;
+      console.log(this.itemList)
+    })
+  }
+
+  searchAccountNotAssign(value) {
+    this.accountSer.searchAccountNotAssign(value, 1).subscribe(result => {
       this.maxPage = result.maxPage;
       this.itemList = result.objList;
       console.log(this.itemList)
@@ -48,9 +69,7 @@ export class AccountListComponent implements OnInit {
     }, 300);
   }
 
-  openEdit(item){
-    this.modalSer.init(AccountSaveComponent,item,() => this.loadPage(this.currentPage));
-  }
+ 
 
   delete(id){
     //this.modalSer.init(AccountDeleteComponent, id ,() => this.loadPage(this.currentPage));
