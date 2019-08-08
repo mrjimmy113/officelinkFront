@@ -161,8 +161,8 @@
           <label class="control-label">Apply Filter</label>
           <div class="form-group">
             <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <button class="btn btn-success" (click)="addFilter(i)">
+              <div class="input-group-prepend" *ngIf="role == 'employer'">
+                <button class="btn btn-success" (click)="addFilter(i)" [disabled]="disableTemplate">
                   <span *ngIf="choosenFilter == 0; else hasChoosen">Create</span>
                   <ng-template #hasChoosen>Update</ng-template>
 

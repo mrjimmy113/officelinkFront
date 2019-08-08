@@ -1,3 +1,4 @@
+import { AuthenticationService } from './../../service/authentication.service';
 import { WordCloudSaveComponent } from "./../../word-cloud-filter/word-cloud-save/word-cloud-save.component";
 import { ApplyFilterComponent } from "./../apply-filter/apply-filter.component";
 import { QuestionReport } from "./../../model/questionReport";
@@ -54,13 +55,15 @@ export class SurveyReportComponent implements OnInit {
 
   noDataFlag = false;
   choosenFilter = 0;
-
+  role = this.authSer.getRole();
+  disableTemplate = false;
   constructor(
     private modalSer: ModalService,
     private route: ActivatedRoute,
     private reportSer: ReportService,
     private utltis: UltisService,
-    private filterSer: WordCloudService
+    private filterSer: WordCloudService,
+    private authSer:AuthenticationService,
   ) {}
 
   ngOnInit() {
@@ -175,6 +178,11 @@ export class SurveyReportComponent implements OnInit {
   filterWordCloud(event: Event, dataIndex) {
     let options: HTMLOptionsCollection = event.target["options"];
     let filterId = options[options.selectedIndex].value;
+    if(this.isFilterTemplate(filterId)) {
+      this.disableTemplate = true;
+    }else {
+      this.disableTemplate = false;
+    }
     this.getNewWordCloud(filterId, dataIndex);
   }
 
@@ -273,6 +281,14 @@ export class SurveyReportComponent implements OnInit {
         });
       });
     }
+  }
+
+  isFilterTemplate(id) :boolean {
+    let found = this.filters.filter(e => {
+      return e.id == id;
+    })
+
+    return found[0].template;
   }
 }
 interface NgxChartParam {
