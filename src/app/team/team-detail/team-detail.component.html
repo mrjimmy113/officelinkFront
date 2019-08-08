@@ -13,7 +13,7 @@
         <div><b>Department:</b> {{team.department.name}}</div>
       </div>
       <div class="banner">
-        <h6 class="font-weight-bold">Employee(s): {{team.accounts}}</h6>
+        <h6 class="font-weight-bold">Employee(s):</h6>
         <p *ngIf="team.accounts == null || team.accounts == undefined || team.accounts.length <= 0">
           No employee has been assigned to this team yet.
           <a href (click)="redirectToAccount()">Assign employee here</a>

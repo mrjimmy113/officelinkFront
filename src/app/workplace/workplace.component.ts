@@ -4,6 +4,7 @@ import { WorkplaceService } from '../service/workplace.service';
 import { WorkplaceSaveComponent } from '../workplace-save/workplace-save.component';
 import { Workplace } from '../model/workplace';
 import { DialogService } from '../service/dialog.service';
+import { MyMessage } from '../const/message';
 
 @Component({
   selector: 'app-workplace',
@@ -51,13 +52,13 @@ export class WorkplaceComponent implements OnInit {
     }, 300);
   }
 
-  delete(wp: Workplace) {
-    this.dialogSer.init("Deactive Workplace", "Do you want to deactive workplace " + wp.name, () =>
+  deactive(wp: Workplace) {
+    this.dialogSer.init("Deactive Workplace", MyMessage.confirmDeactivateWorkplace, () =>
       this.ser.delete(wp.id).subscribe(
         result => {
           this.requestStatus = result;
           if (this.requestStatus == 200) {
-            this.dialogSer.init("Operation success", "Workplace has been deactived", undefined, undefined)
+            this.dialogSer.init("Operation success", MyMessage.deactiveWorkplace, undefined, undefined)
             if (this.itemList.length <= 1) {
               this.loadPage(this.currentPage - 1);
             }
@@ -67,10 +68,8 @@ export class WorkplaceComponent implements OnInit {
           }
         },
         error => {
-          if (error.status == 409) {
-            this.dialogSer.init("Operation fail", "Unexpected error has occured.", undefined, undefined)
-          } else if (error.status = 400) {
-            this.dialogSer.init("Operation fail", "Unexpected error has occured.", undefined, undefined)
+          if (error.status = 400) {
+            this.dialogSer.init("Operation fail", MyMessage.actionError, undefined, undefined)
           }
         }
       ), undefined);

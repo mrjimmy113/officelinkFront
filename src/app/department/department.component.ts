@@ -5,6 +5,7 @@ import { DepartmentSaveComponent } from '../department-save/department-save.comp
 import { Department } from '../model/department';
 import { UltisService } from '../service/ultis.service';
 import { DialogService } from '../service/dialog.service';
+import { MyMessage } from '../const/message';
 
 @Component({
   selector: 'app-department',
@@ -59,12 +60,12 @@ export class DepartmentComponent implements OnInit {
   }
 
   delete(dep: Department) {
-    this.dialogSer.init("Delete Department", "Do you want to delete department " + dep.name, () =>
+    this.dialogSer.init("Delete Department", MyMessage.confirmDeleteDep, () =>
       this.ser.delete(dep.id).subscribe(
         result => {
           this.requestStatus = result;
           if (this.requestStatus == 200) {
-            this.dialogSer.init("Operation success", "Department has been deleted", undefined, undefined)
+            this.dialogSer.init("Operation success", MyMessage.deleteDepartment, undefined, undefined)
             if (this.itemList.length <= 1) {
               this.loadPage(this.currentPage - 1);
             }
@@ -75,9 +76,9 @@ export class DepartmentComponent implements OnInit {
         },
         error => {
           if (error.status == 409) {
-            this.dialogSer.init("Operation fail", "This department contain team(s) in it. Please remove all team(s) in this department before delete it.", undefined, undefined)
+            this.dialogSer.init("Operation fail", MyMessage.deleteDepHasTeamWarning, undefined, undefined)
           } else if (error.status = 400) {
-            this.dialogSer.init("Operation fail", "Unexpected error has occured.", undefined, undefined)
+            this.dialogSer.init("Operation fail", MyMessage.error400Message, undefined, undefined)
           }
         }
       ), undefined);

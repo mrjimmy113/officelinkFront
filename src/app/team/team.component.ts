@@ -6,6 +6,7 @@ import { Team } from '../model/team';
 import { UltisService } from '../service/ultis.service';
 import { TeamDetailComponent } from './team-detail/team-detail.component';
 import { DialogService } from '../service/dialog.service';
+import { MyMessage } from '../const/message';
 
 @Component({
   selector: 'app-team',
@@ -24,7 +25,7 @@ export class TeamComponent implements OnInit {
     private modalSer: ModalService, 
     private ser: TeamService, 
     private ultisSer: UltisService,
-    private dialogSer: DialogService
+    private dialogSer: DialogService,
     ) { }
 
   ngOnInit() {
@@ -35,7 +36,6 @@ export class TeamComponent implements OnInit {
     this.ser.searchGetPage(value, 1).subscribe(result => {
       this.maxPage = result.maxPage;
       this.itemList = result.objList;
-      console.log(this.itemList);
     })
   }
 
@@ -57,12 +57,12 @@ export class TeamComponent implements OnInit {
   }
 
   delete(team: Team) {
-    this.dialogSer.init("Delete Team", "Do you want to delete team " + team.name, () =>
+    this.dialogSer.init("Delete Team", MyMessage.confirmDeleteTeam, () =>
       this.ser.delete(team.id).subscribe(
         result => {
           this.requestStatus = result;
           if (this.requestStatus == 200) {
-            this.dialogSer.init("Operation success", "Team has been deleted", undefined, undefined)
+            this.dialogSer.init("Operation success", MyMessage.deleteTeam, undefined, undefined)
             if (this.itemList.length <= 1) {
               this.loadPage(this.currentPage - 1);
             }
@@ -73,9 +73,9 @@ export class TeamComponent implements OnInit {
         },
         error => {
           if (error.status == 409) {
-            this.dialogSer.init("Operation fail", "This team contain employee(s) in it. Please remove all employee(s) in this team before delete it.", undefined, undefined)
+            this.dialogSer.init("Operation fail", MyMessage.deleteTeamHasEmplsWarning, undefined, undefined)
           } else if (error.status = 400) {
-            this.dialogSer.init("Operation fail", "Unexpected error has occured.", undefined, undefined)
+            this.dialogSer.init("Operation fail", MyMessage.error400Message, undefined, undefined)
           }
         }
       ), undefined);

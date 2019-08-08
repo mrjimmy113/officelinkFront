@@ -58,10 +58,10 @@
 
       </div>
       <div class="modal-footer">
-        <div class="col-sm-6">
+        <!-- <div class="col-sm-6">
           <h4><span class="badge badge-pill badge-success" *ngIf="requestStatus == 200">Success</span></h4>
           <h4><span class="badge badge-pill badge-danger" *ngIf="requestStatus == 400">Fail</span></h4>
-        </div>
+        </div> -->
         <div class="col-sm-6 d-flex justify-content-end" style="padding: 0px">
           <button type="button" class="btn btn-success" (click)="save()"
             [disabled]="(requestStatus==1) || depForm.invalid">

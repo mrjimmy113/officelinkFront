@@ -5,6 +5,7 @@ import { ModalService } from "../service/modal.service";
 import { TeamService } from "../service/team.service";
 import { DepartmentService } from "../service/department.service";
 import { DialogService } from '../service/dialog.service';
+import { MyMessage } from '../const/message';
 
 @Component({
   selector: "app-team-save",
@@ -64,7 +65,7 @@ export class TeamSaveComponent implements OnInit {
         this.requestStatus = result;
         this.dialogSer.init(
           "Operation success",
-          "Successfully created team with name: " + this.team.name,
+          MyMessage.createTeam,
           undefined,
           () => this.closeModal()
         );
@@ -74,16 +75,16 @@ export class TeamSaveComponent implements OnInit {
         if (error.status == 409) {
           this.dialogSer.init(
             "Operation fail",
-            "Fail to create team with name: " + this.team.name + ".Name cannot be dupplicated",
+            MyMessage.dupplicatedTeamName,
             undefined,
-            () => this.closeModal()
+            undefined
           );
         } else if (error.status = 400) {
           this.dialogSer.init(
             "Operation fail",
-            "Fail to create team with name: " + this.team.name + ".Unexpected error has occured",
+            MyMessage.error400Message,
             undefined,
-            () => this.closeModal()
+            undefined
           );
         }
         this.requestStatus = 0;
@@ -100,7 +101,7 @@ export class TeamSaveComponent implements OnInit {
         if (this.requestStatus == 200) {
           this.dialogSer.init(
             "Operation success",
-            "Successfully updated the team.",
+            MyMessage.updateTeam,
             undefined,
             () => this.closeModal()
           );
@@ -108,12 +109,19 @@ export class TeamSaveComponent implements OnInit {
         this.outputs();
       },
       error => {
-        if (this.requestStatus == 400) {
+        if (error.status == 409) {
           this.dialogSer.init(
             "Operation fail",
-            "Fail to update team with name: " + this.team.name + ".Unexpected error has occured",
+            MyMessage.dupplicatedTeamName,
             undefined,
-            () => this.closeModal()
+            undefined
+          );
+        } else if (error.status = 400) {
+          this.dialogSer.init(
+            "Operation fail",
+            MyMessage.error400Message,
+            undefined,
+            undefined
           );
         }
         this.requestStatus = 0;

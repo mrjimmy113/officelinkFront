@@ -5,6 +5,7 @@ import { DepartmentService } from '../service/department.service';
 import { Location } from '../model/location';
 import { LocationService } from '../service/location.service';
 import { DialogService } from '../service/dialog.service';
+import { MyMessage } from '../const/message';
 
 @Component({
   selector: 'app-department-save',
@@ -75,7 +76,7 @@ export class DepartmentSaveComponent implements OnInit {
         if (this.requestStatus == 201) {
           this.dialogSer.init(
             "Operation success",
-            "Successfully created department with name: " + this.department.name,
+            MyMessage.createDepartment,
             undefined,
             () => this.closeModal()
           );
@@ -86,19 +87,19 @@ export class DepartmentSaveComponent implements OnInit {
         if (error.status == 409) {
           this.dialogSer.init(
             "Operation fail",
-            "Fail to create department with name: " + this.department.name + ".Name cannot be dupplicated",
+            MyMessage.dupplicatedDepName,
             undefined,
-            () => this.closeModal()
+            undefined
           );
         } else if (error.status = 400) {
           this.dialogSer.init(
             "Operation fail",
-            "Fail to create department with name: " + this.department.name + ".Unexpected error has occured",
+            MyMessage.error400Message,
             undefined,
-            () => this.closeModal()
+            undefined
           );
         }
-        // this.closeModal();
+        this.requestStatus = 0;
         this.outputs();
       }
     );
@@ -111,7 +112,7 @@ export class DepartmentSaveComponent implements OnInit {
         if (this.requestStatus == 200) {
           this.dialogSer.init(
             "Operation success",
-            "Successfully updated the department.",
+            MyMessage.updateDepartment,
             undefined,
             () => this.closeModal()
           );
@@ -119,15 +120,23 @@ export class DepartmentSaveComponent implements OnInit {
         this.outputs();
       },
       error => {
-        if (this.requestStatus == 400) {
+        if (error.status == 409) {
           this.dialogSer.init(
             "Operation fail",
-            "Fail to update department with name: " + this.department.name + ".Unexpected error has occured",
+            MyMessage.dupplicatedDepName,
             undefined,
-            () => this.closeModal()
+            undefined
+          );
+        } else if (error.status = 400) {
+          this.dialogSer.init(
+            "Operation fail",
+            MyMessage.error400Message,
+            undefined,
+            undefined
           );
         }
         this.requestStatus = 0;
+        this.outputs();
       });
   }
 
