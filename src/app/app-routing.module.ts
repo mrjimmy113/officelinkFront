@@ -63,6 +63,8 @@ const authRoutes: Routes = [
   { path: "news/:id/edit", component: NewsEditComponent },
   { path: "news/create", component: NewsCreateComponent },
   { path: "news/:id/detail", component: NewsDetailComponent },
+  { path: "history", component: SurveyHistoryMainComponent },
+  { path: "history/detail", component: SurveyHistoryDetailComponent },
   { path: "q", component: SurveySaveComponent },
   { path: "memInvite", component: InvitationComponent },
   { path: "history", component: SurveyHistoryMainComponent },

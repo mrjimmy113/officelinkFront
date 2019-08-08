@@ -12,6 +12,8 @@ export class DialogService {
   private modalElementId = 'my-dialog';
   private overlayElementId = 'overlay';
 
+  componentRef;
+
   init(title : string, message : string, confirm : Function, cancel : Function) {
     let close = () => {
       if(cancel != undefined || cancel != null) cancel();
@@ -22,12 +24,12 @@ export class DialogService {
       outputs : [confirm,close],
     }
 
-    this.domService.appendComponentTo(this.modalElementId, DialogComponent, componentConfig);
+    this.componentRef = this.domService.appendComponentTo(this.modalElementId, DialogComponent, componentConfig);
     document.getElementById(this.modalElementId).className = 'show';
   }
 
   destroy() {
-    this.domService.removeComponent();
+    this.domService.removeByComponentRef(this.componentRef);
     document.getElementById(this.modalElementId).className = 'hidden';
   }
 }

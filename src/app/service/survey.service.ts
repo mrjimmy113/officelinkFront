@@ -10,6 +10,7 @@ import { PageSearch } from "../model/page-search";
 import { SurveyReport } from "../model/surveyReport";
 import { SurveyAnswerInfor } from '../model/surveyAnswerInfor';
 import { Answer } from '../model/answer';
+import { AnswerOption } from '../model/answerOption';
 
 @Injectable({
   providedIn: "root"
@@ -17,7 +18,7 @@ import { Answer } from '../model/answer';
 export class SurveyService {
   private api = environment.apiEndPoint + "/survey";
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   create(survey): Observable<Number> {
     return this.http.post<Number>(this.api, survey);
@@ -62,7 +63,7 @@ export class SurveyService {
   getAnswerForSurveyHistory(id): Observable<Array<Answer>> {
     return this.http.get<Array<Answer>>(this.api + `/history/answer?id=${id}`);
   }
-  getTemplate(term,page):Observable<PageSearch<Survey>> {
+  getTemplate(term, page): Observable<PageSearch<Survey>> {
     return this.http.get<PageSearch<Survey>>(this.api + `/template?term=${term}&page=${page}`)
   }
   updateActiveStatus(id, isActive): Observable<any> {

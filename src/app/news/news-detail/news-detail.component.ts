@@ -35,6 +35,7 @@ export class NewsDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.itemList = new Array;
     const itemId = +this.route.snapshot.params['id'];
     this.findById(itemId);
     this.findByDate();
@@ -52,7 +53,6 @@ export class NewsDetailComponent implements OnInit {
   findByDate() {
     this.service.searchByDate(this.datePipe.transform(this.startDate, 'yyyy-MM-dd'), this.datePipe.transform(this.endDate, 'yyyy-MM-dd')).subscribe(result => {
       this.itemList = result;
-
     })
   }
 

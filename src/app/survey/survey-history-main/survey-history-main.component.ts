@@ -49,10 +49,7 @@ export class SurveyHistoryMainComponent implements OnInit {
 
   loadPage(pageNumber) {
     this.currentPage = pageNumber;
-    this.service.getSurveyHistory(this.searchTerm, pageNumber).subscribe(result => {
-      this.maxPage = result.maxPage;
-      this.itemList = result.objList;
-    })
+    this.search();
   }
 
   sort(property) {

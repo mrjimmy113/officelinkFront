@@ -5,6 +5,7 @@ import { LocationService } from '../../service/location.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { MapsAPILoader } from '@agm/core';
+import { DialogService } from "src/app/service/dialog.service";
 
 @Component({
   selector: 'app-location-edit',
@@ -18,6 +19,8 @@ export class LocationEditComponent implements OnInit {
   zoom: number;
   geoCoder;
   address: string;
+  countName = 20;
+  isName = false;
 
   @ViewChild('search')
   public searchElementRef: ElementRef;
@@ -28,7 +31,8 @@ export class LocationEditComponent implements OnInit {
     private ngZone: NgZone,
     private router: Router,
     private route: ActivatedRoute,
-    private modalSer:ModalService
+    private modalSer: ModalService,
+    private dialogSer: DialogService,
   ) { }
 
   ngOnInit() {
@@ -77,16 +81,16 @@ export class LocationEditComponent implements OnInit {
     this.service.update(this.location).subscribe(result => {
       this.requestStatus = result;
       if (this.requestStatus == 200) {
-        alert('Successfully updated');
+        this.dialogSer.init("Update Location", "Successfull updated", undefined, undefined);
         this.router.navigateByUrl('/location')
       }
     },
       error => {
         if (error.status == 409) {
-          alert('Name or Address is existed!');
+          this.dialogSer.init("Update Location", "Name or Address is existed!", undefined, undefined);
           this.requestStatus = 0;
         } else if ((error.status = 404)) {
-          alert('Bad request');
+          this.dialogSer.init("Update Location", "Fail to update", undefined, undefined);
           this.requestStatus = 0;
         }
       }
@@ -108,9 +112,17 @@ export class LocationEditComponent implements OnInit {
 
     });
   }
+
   back() {
-    if(confirm('Do you want to go back')) {
-      this.router.navigateByUrl("/location");
+    this.router.navigateByUrl("/location");
+  }
+
+  wordCountName(event) {
+    this.isName = false;
+    var key_length = event.split(' ').length;
+    this.countName = 21 - key_length;
+    if (key_length > 21) {
+      this.isName = true;
     }
   }
 }

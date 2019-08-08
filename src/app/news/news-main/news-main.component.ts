@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalService } from 'src/app/service/modal.service';
 import { NewsService } from 'src/app/service/news.service';
-import { NewsCreateComponent } from '../news-create/news-create.component';
 import { DomSanitizer } from '@angular/platform-browser';
-import { NewsEditComponent } from '../news-edit/news-edit.component';
 import { DatePipe } from '@angular/common';
+import { UltisService } from "src/app/service/ultis.service";
+import { DialogService } from "src/app/service/dialog.service";
 
 @Component({
   selector: 'app-news-main',
@@ -18,56 +17,71 @@ export class NewsMainComponent implements OnInit {
   maxPage;
   searchTerm = "";
   requestStatus: Number;
+  isSort = "";
 
   constructor(
-    private modalService: ModalService,
     private service: NewsService,
     private dom: DomSanitizer,
     private datePipe: DatePipe,
+    private ultisSer: UltisService,
+    private dialogSer: DialogService,
     ) { }
 
   ngOnInit() {
-    this.searchByTitle("");
+    this.itemList = new Array;
+    this.search();
   }
 
-  searchByTitle(value) {
-    this.service.searchByTitle(value).subscribe(result => {
+  search() {
+    this.service.searchGetPage(this.searchTerm, this.currentPage - 1).subscribe(result => {
       this.maxPage = result.maxPage;
       this.itemList = result.objList;
     })
+  }
+
+  loadPage(pageNumber) {
+    this.currentPage = pageNumber;
+    this.search();
   }
 
   filter() {
     let newSearchTerm = this.searchTerm;
     setTimeout(() => {
       if (newSearchTerm == this.searchTerm) {
-        this.searchByTitle(this.searchTerm);
+        this.search();
       }
     }, 300);
   }
 
   delete(id) {
-    if (confirm("Are you sure to detele?")) {
+    this.dialogSer.init("Delete News", "Do you want to delete this news?", () => {
       this.service.delete(id).subscribe(result => {
         this.requestStatus = result;
         if (this.requestStatus == 200) {
-          this.searchByTitle("");
+          this.dialogSer.init("Delete News", "Successfully Deleted", () => {
+            this.search();
+          }, undefined);
         }
-      });
-    }
-
+      }, err => {
+        this.dialogSer.init("Delete News", "Fail to delete", () => {
+        }, undefined);
+      })
+    }, undefined);
   }
 
   doms(s) {
     return this.dom.bypassSecurityTrustUrl(s);
   }
 
-  loadPage(page) {
-
-  }
-
   sort(property) {
-
+    if (this.isSort == property) {
+      this.itemList.sort(this.ultisSer.sortByPropertyNameDSC(property));
+      this.isSort = "";
+    } else {
+      this.itemList.sort(this.ultisSer.sortByPropertyNameASC(property));
+      this.isSort = property;
+    }
   }
+
 }
 
