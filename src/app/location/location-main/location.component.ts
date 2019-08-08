@@ -55,9 +55,8 @@ export class LocationComponent implements OnInit {
       this.service.delete(id).subscribe(result => {
         this.requestStatus = result;
         if (this.requestStatus == 200) {
-          this.dialogSer.init("Delete Location", "Successfully Deleted", () => {
-            this.search();
-          }, undefined);
+          this.dialogSer.init("Delete Location", "Successfully Deleted", undefined, undefined);
+          this.search();
         }
       }, err => {
         this.dialogSer.init("Delete Location", "Fail to delete", undefined, undefined);

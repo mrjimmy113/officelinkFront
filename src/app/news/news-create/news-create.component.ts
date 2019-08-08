@@ -48,9 +48,8 @@ export class NewsCreateComponent implements OnInit {
     this.newsSer.create(fd).subscribe(result => {
       this.requestStatus = result;
       if (this.requestStatus == 201) {
-        this.dialogSer.init("Create News", "Successfully created", () => {
-          this.router.navigateByUrl('/news')
-        }, undefined);
+        this.dialogSer.init("Create News", "Successfully created", undefined, undefined);
+        this.router.navigateByUrl('/news')
       }
     },
       error => {

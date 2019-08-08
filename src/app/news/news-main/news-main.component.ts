@@ -58,13 +58,11 @@ export class NewsMainComponent implements OnInit {
       this.service.delete(id).subscribe(result => {
         this.requestStatus = result;
         if (this.requestStatus == 200) {
-          this.dialogSer.init("Delete News", "Successfully Deleted", () => {
-            this.search();
-          }, undefined);
+          this.dialogSer.init("Delete News", "Successfully Deleted", undefined, undefined);
+          this.search();
         }
       }, err => {
-        this.dialogSer.init("Delete News", "Fail to delete", () => {
-        }, undefined);
+        this.dialogSer.init("Delete News", "Fail to delete", undefined, undefined);
       })
     }, undefined);
   }
