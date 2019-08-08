@@ -63,7 +63,8 @@ export class NewsMainComponent implements OnInit {
           }, undefined);
         }
       }, err => {
-        alert('Something wrong');
+        this.dialogSer.init("Delete News", "Fail to delete", () => {
+        }, undefined);
       })
     }, undefined);
   }

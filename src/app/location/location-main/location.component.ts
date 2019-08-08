@@ -60,7 +60,7 @@ export class LocationComponent implements OnInit {
           }, undefined);
         }
       }, err => {
-        alert('Something wrong');
+        this.dialogSer.init("Delete Location", "Fail to delete", undefined, undefined);
       })
     }, undefined);
   }

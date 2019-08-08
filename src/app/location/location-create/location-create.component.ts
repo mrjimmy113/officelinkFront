@@ -12,6 +12,7 @@ import { LocationService } from "../../service/location.service";
 import { NgForm } from "@angular/forms";
 import { MapsAPILoader } from "@agm/core";
 import { PlatformLocation } from "@angular/common";
+import { DialogService } from "src/app/service/dialog.service";
 
 @Component({
   selector: "app-location-create",
@@ -35,8 +36,9 @@ export class LocationCreateComponent implements OnInit {
     private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone,
     private modalSer: ModalService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private dialogSer: DialogService,
+  ) { }
 
   ngOnInit() {
     this.location = new Location();
@@ -77,15 +79,17 @@ export class LocationCreateComponent implements OnInit {
     this.requestStatus = 1;
     this.service.create(this.location).subscribe(
       result => {
-        alert('Create Successful');
-        this.router.navigateByUrl('/location')
+        if (result == 201) {
+          this.dialogSer.init("Create Location", "Create Successfull", undefined, undefined);
+          this.router.navigateByUrl('/location');
+        }
       },
       error => {
         if (error.status == 409) {
-          alert('Name or Address is existed!');
+          this.dialogSer.init("Create Location", "Name or Address is existed!", undefined, undefined);
           this.requestStatus = 0;
         } else if ((error.status = 404)) {
-          alert('Bad request');
+          this.dialogSer.init("Create Location", "Fail to create", undefined, undefined);
           this.requestStatus = 0;
         }
       }
@@ -120,11 +124,9 @@ export class LocationCreateComponent implements OnInit {
       }
     );
   }
-  
+
   back() {
-    if(confirm('Do you want to go back')) {
-      this.router.navigateByUrl("/location");
-    }
+    this.router.navigateByUrl("/location");
   }
 
   wordCountName(event) {

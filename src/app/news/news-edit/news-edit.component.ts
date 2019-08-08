@@ -5,6 +5,7 @@ import { NewsService } from 'src/app/service/news.service';
 import { NgForm } from '@angular/forms';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { DomSanitizer } from '@angular/platform-browser';
+import { DialogService } from "src/app/service/dialog.service";
 
 @Component({
   selector: 'app-news-edit',
@@ -32,6 +33,7 @@ export class NewsEditComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private dom: DomSanitizer,
+    private dialogSer: DialogService,
   ) { }
 
   ngOnInit() {
@@ -78,15 +80,15 @@ export class NewsEditComponent implements OnInit {
       this.newsSer.update(fd).subscribe(result => {
         this.requestStatus = result;
         if (this.requestStatus == 200) {
-          alert("Successfully updated");
+          this.dialogSer.init("Update News", "Successfully updated", undefined, undefined);
         }
       },
         error => {
           if (error.status == 409) {
-            alert("Something wrong");
+            this.dialogSer.init("Update News", "Fail to update", undefined, undefined);
             this.requestStatus = 0;
           } else if (error.status = 404) {
-            alert("Bad request");
+            this.dialogSer.init("Update News", "Something wrong", undefined, undefined);
             this.requestStatus = 0;
           }
         }
@@ -96,15 +98,15 @@ export class NewsEditComponent implements OnInit {
       this.newsSer.updateNotHasFile(fd).subscribe(result => {
         this.requestStatus = result;
         if (this.requestStatus == 200) {
-          alert("Successfully updated");
+          this.dialogSer.init("Update News", "Successfully updated", undefined, undefined);
         }
       },
         error => {
           if (error.status == 409) {
-            alert("Something wrong");
+            this.dialogSer.init("Update News", "Fail to update", undefined, undefined);
             this.requestStatus = 0;
           } else if (error.status = 404) {
-            alert("Bad request");
+            this.dialogSer.init("Update News", "Something wrong", undefined, undefined);
             this.requestStatus = 0;
           }
         }

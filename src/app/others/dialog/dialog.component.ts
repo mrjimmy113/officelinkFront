@@ -18,7 +18,9 @@ export class DialogComponent implements OnInit {
   ngOnInit() {
     this.title = this.inputs[0];
     this.message = this.inputs[1];
+    console.log(this.outputs[0]);
     if(this.outputs[0] != undefined || this.outputs[0] != null) this.isConfirm = true;
+    console.log("OOOO")
   }
 
   confirm() {

@@ -4,6 +4,7 @@ import { NewsService } from 'src/app/service/news.service';
 import { NgForm } from '@angular/forms';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Router } from "@angular/router";
+import { DialogService } from "src/app/service/dialog.service";
 
 @Component({
   selector: 'app-news-create',
@@ -29,6 +30,7 @@ export class NewsCreateComponent implements OnInit {
   constructor(
     private newsSer: NewsService,
     private router: Router,
+    private dialogSer: DialogService,
   ) { }
 
   ngOnInit() {
@@ -46,16 +48,17 @@ export class NewsCreateComponent implements OnInit {
     this.newsSer.create(fd).subscribe(result => {
       this.requestStatus = result;
       if (this.requestStatus == 201) {
-        alert("Successfully created");
-        this.router.navigateByUrl('/news')
+        this.dialogSer.init("Create News", "Successfully created", () => {
+          this.router.navigateByUrl('/news')
+        }, undefined);
       }
     },
       error => {
         if (error.status == 409) {
-          alert("Something wrong");
+          this.dialogSer.init("Create News", "Fail to create", undefined, undefined);
           this.requestStatus = 0;
         } else if (error.status = 404) {
-          alert("Bad request");
+          this.dialogSer.init("Create News", "Something wrong", undefined, undefined);
           this.requestStatus = 0;
         }
       }
