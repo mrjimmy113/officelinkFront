@@ -7,10 +7,11 @@ import {AccountService} from '../../service/account.service';
 import { AccountDeleteComponent } from '../account-delete/account-delete.component';
 import { InvitationComponent } from '../invitation/invitation.component';
 import { AssignAccountComponent } from '../assign-account/assign-account.component';
+import { DialogService } from "src/app/service/dialog.service";
 @Component({
   selector: 'app-account-list',
   templateUrl: './account-list.component.html',
-  styleUrls: ['./account-list.component.css']
+  styleUrls: ['./account-list.component.css'],
 })
 export class AccountListComponent implements OnInit {
   itemList;
@@ -20,12 +21,12 @@ export class AccountListComponent implements OnInit {
   searchTerm = ""
 
 
-  constructor(private modalSer : ModalService, private accountSer : AccountService) {}
+  constructor(private modalSer : ModalService, private accountSer : AccountService , private dialogSerive : DialogService ) {}
 
   ngOnInit() {
     this.itemList = new Array();
     this.search("");
-
+    
   }
 
   search(value) {
@@ -52,9 +53,16 @@ export class AccountListComponent implements OnInit {
   }
 
   delete(id){
+    //this.modalSer.init(AccountDeleteComponent, id ,() => this.loadPage(this.currentPage));
+    this.dialogSerive.init("Delete Account", "Do you want to delete this account", () => {
+      this.accountSer.delete(id).subscribe(result => {
+          this.loadPage(this.currentPage);
+      }, err => {
+        alert('Error');
+      })
+    },undefined);
 
-    this.modalSer.init(AccountDeleteComponent, id ,() => this.loadPage(this.currentPage));
-
+    this.modalSer.destroy();
 
   }
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AccountService} from '../../service/account.service';
 import { from } from 'rxjs';
+import { DialogService } from "src/app/service/dialog.service";
 
 @Component({
   selector: 'app-forget-password',
@@ -11,7 +12,7 @@ export class ForgetPasswordComponent implements OnInit {
   emailReset : String;
 
 
-  constructor(private accountService : AccountService) { }
+  constructor(private accountService : AccountService , private dialogService : DialogService) { }
 
   ngOnInit() {
   }
@@ -20,13 +21,13 @@ export class ForgetPasswordComponent implements OnInit {
     
      this.accountService.sendMailReset(this.emailReset).subscribe(result => {
        if(result == 200){
-         alert("Please check your email to reset password");
-        
+         this.dialogService.init("Office Link", "Please check your email to reset password", undefined,undefined);        
        }
      },
      error => {
-       if(error.status == 409){
-         alert("Email not exist, try again")
+       if(error.status == 204){
+         //alert("Email not exist, try again")
+         this.dialogService.init("Office Link", "Email not exist, try again", undefined,undefined);  
        }
      }
      )

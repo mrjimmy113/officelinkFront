@@ -57,7 +57,8 @@
             {{item.email}}
           </div>
           <div *ngIf="item.activated == true" class="col-sm-3 d-flex align-items-center">
-           {{item.dateCreated}}
+           
+           {{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}
           </div>
           
         </div>

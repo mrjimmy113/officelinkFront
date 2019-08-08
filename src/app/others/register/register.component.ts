@@ -7,6 +7,7 @@ import { Account } from "../../model/account";
 import { Location } from "../../model/location";
 import { Workplace } from "../../model/workplace";
 import { DisplayService } from "src/app/service/display.service";
+import { DialogService } from "src/app/service/dialog.service";
 
 @Component({
   selector: "app-register",
@@ -25,7 +26,8 @@ export class RegisterComponent implements OnInit {
     private accoutSer: AccountService,
     private displaySer: DisplayService,
     private route: Router,
-    private modalSer: ModalService
+    private modalSer: ModalService, 
+    private dialogService : DialogService
   ) {}
 
   ngOnInit() {
@@ -48,7 +50,8 @@ export class RegisterComponent implements OnInit {
       this.account.password == null ||
       this.confirmPassText == null
     ) {
-      alert('Please complete your register form');
+      this.dialogService.init("Office Link", "Please complete your register form", undefined,undefined);
+      
       return;
     }
     if (this.account.password != this.confirmPassText) {
@@ -59,17 +62,25 @@ export class RegisterComponent implements OnInit {
       this.accoutSer.sendMail(this.account).subscribe(
         res => {
           this.accoutSer.createAccount(this.account).subscribe(res => {});
-          alert('Successful registration of account information, please check your mail to complete the registration');
-          this.displaySer.hideLoader();
-          this.route.navigateByUrl('/');
+          this.dialogService.init("Office Link", "Successful registration of account information, please check your mail to complete the registration", () => {
+            this.displaySer.hideLoader();
+            this.route.navigateByUrl('/');
+          },() => {
+            this.displaySer.hideLoader();
+            this.route.navigateByUrl('/');
+          });
+         // alert('Successful registration of account information, please check your mail to complete the registration');
+         
         },
         error => {
           this.errorStatus = error.status;
           if (this.errorStatus == 409) {
-            alert('Sorry, email or workplace already exists, please check again');
+            this.dialogService.init("Office Link", "Sorry, email or workplace already exists, please check again", undefined,undefined);
+           // alert('Sorry, email or workplace already exists, please check again');
           }
           if (error.status == 400) {
-            alert('The system has failed, please try again');
+            this.dialogService.init("Office Link", "The system has failed, please try again", undefined,undefined);
+            //alert('The system has failed, please try again');
           }
           this.displaySer.hideLoader();
         }
