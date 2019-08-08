@@ -36,13 +36,13 @@ export class QuestionSaveComponent implements OnInit {
   }
   addOption() {
     if (this.quest.options.length >= 8) {
-      alert("The maximum number of option is 8");
+      this.dialogSer.init("Question Create", "The maximum number of option is 8", undefined,undefined);
     } else {
       this.quest.options.push(new AnswerOption());
     }
   }
   closeModal() {
-    this.modalSer.destroy();
+    this.dialogSer.init("Question Create", "Do want you to exit this dialog?", ()=>{this.modalSer.destroy();},undefined);
   }
   deleteOption(index) {
     this.quest.options.splice(index, 1);
@@ -64,7 +64,7 @@ export class QuestionSaveComponent implements OnInit {
         );
       },
       err => {
-        alert("Error");
+
       }
     );
   }
