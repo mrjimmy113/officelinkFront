@@ -1,3 +1,5 @@
+import { MyMessage } from "./../../const/message";
+import { DialogService } from "./../../service/dialog.service";
 import { UltisService } from "./../../service/ultis.service";
 import { WordCloudService } from "../../service/word-cloud.service";
 import { WordCloudSaveComponent } from "./../word-cloud-save/word-cloud-save.component";
@@ -18,7 +20,8 @@ export class WordCloudListComponent implements OnInit {
   constructor(
     private modalSer: ModalService,
     private ser: WordCloudService,
-    private ultisSer: UltisService
+    private ultisSer: UltisService,
+    private dialogSer: DialogService
   ) {}
 
   ngOnInit() {
@@ -27,10 +30,10 @@ export class WordCloudListComponent implements OnInit {
   }
 
   openCreate() {
-    this.modalSer.init(WordCloudSaveComponent, [], () => this.search());
+    this.modalSer.init(WordCloudSaveComponent, [], [() => this.search()]);
   }
   openEdit(item) {
-    this.modalSer.init(WordCloudSaveComponent, item, () => this.search());
+    this.modalSer.init(WordCloudSaveComponent, item, [() => this.search()]);
   }
   search() {
     this.ser.search(this.searchTerm).subscribe(result => {
@@ -44,14 +47,17 @@ export class WordCloudListComponent implements OnInit {
     });
   }
   delete(id) {
-    if (confirm("Do you want to delete this")) {
-      this.ser.delete(id).subscribe(result => {
-        if (result == 200) {
-          alert("Successfully Deleted");
+    this.dialogSer.init(
+      MyMessage.deleteFilterTitle,
+      MyMessage.deleteFilterMessage,
+      () => {
+        this.ser.delete(id).subscribe(result => {
           this.search();
-        }
-      });
-    }
+          this.dialogSer.init(MyMessage.deleteFilterTitle,MyMessage.deleteFilterSuccess,undefined,undefined);
+        });
+      },
+      undefined
+    );
   }
   filter() {
     let oldTerm = this.searchTerm;

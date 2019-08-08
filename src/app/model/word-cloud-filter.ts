@@ -4,4 +4,5 @@ export class WordCloudFilter {
   name:String;
   exclude: boolean = true;
   wordList:Array<Word>
+  dateCreated:Date
 }

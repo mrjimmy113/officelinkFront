@@ -1,4 +1,4 @@
-import { DialogComponent } from "./../../others/dialog/dialog.component";
+import { MyMessage } from './../../const/message';
 import { DialogService } from "./../../service/dialog.service";
 import { TypeEnum } from "./../../model/typeEnum";
 import { TypeQuestion } from "./../../model/typeQuestion";
@@ -35,27 +35,47 @@ export class QuestionSaveComponent implements OnInit {
     });
   }
   addOption() {
-    if (this.quest.options.length >= 8) {
-      this.dialogSer.init("Question Create", "The maximum number of option is 8", undefined,undefined);
+    if (this.quest.options.length >= 10) {
+      this.dialogSer.init(MyMessage.createQuestionTitle, MyMessage.createQuestionOption, undefined,undefined);
     } else {
       this.quest.options.push(new AnswerOption());
     }
   }
   closeModal() {
-    this.dialogSer.init("Question Create", "Do want you to exit this dialog?", ()=>{this.modalSer.destroy();},undefined);
+    this.dialogSer.init(MyMessage.createQuestionTitle, MyMessage.createQuestionExit, ()=>{this.modalSer.destroy();},undefined);
   }
   deleteOption(index) {
     this.quest.options.splice(index, 1);
   }
+  validate() :boolean{
+    if(this.quest.question == undefined || this.quest.question.length == 0) {
+      this.dialogSer.init(MyMessage.createQuestionTitle,MyMessage.createQuestionRequire,undefined,undefined);
+      return false;
+    }
+    if(this.quest.type == undefined) {
+      this.dialogSer.init(MyMessage.createQuestionTitle,MyMessage.createQuestionTypeRequire,undefined,undefined);
+      return false;
+    }
+    for (let index = 0; index < this.quest.options.length; index++) {
+      const element = this.quest.options[index];
+      if(element.answerText == undefined || element.answerText.length == 0) {
+        this.dialogSer.init(MyMessage.createQuestionTitle,MyMessage.createQuestionOptionRequire + (index + 1),undefined,undefined)
+        return false;
+      }
+    }
+    return true;
+  }
+
   save() {
+    if(!this.validate()) return;
     if (this.quest.type.type == "TEXT") {
       this.quest.options = new Array<AnswerOption>();
     }
     this.quesSer.create(this.quest).subscribe(
       result => {
         this.dialogSer.init(
-          "Create Question",
-          "Question is saved successfully",
+          MyMessage.createQuestionTitle,
+          MyMessage.createQuestionSuccess,
           undefined,
           () => {
             this.outputs();
@@ -64,7 +84,12 @@ export class QuestionSaveComponent implements OnInit {
         );
       },
       err => {
-
+        this.dialogSer.init(
+          MyMessage.errorTitle,
+          MyMessage.error400Message,
+          undefined,
+          undefined
+        );
       }
     );
   }

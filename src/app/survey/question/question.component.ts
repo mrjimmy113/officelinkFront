@@ -1,3 +1,5 @@
+import { MyMessage } from './../../const/message';
+import { DialogService } from 'src/app/service/dialog.service';
 import { TypeEnum } from "./../../model/typeEnum";
 import { QuestionService } from "./../../service/question.service";
 import { AnswerOption } from "./../../model/answerOption";
@@ -28,12 +30,11 @@ export class QuestionComponent implements OnInit {
   @Output() deleteQ = new EventEmitter();
   @Output() moveUpQ = new EventEmitter();
   @Output() moveDownQ = new EventEmitter();
-  @ViewChild("createForm") form: NgForm;
   isEditMode = false;
   isNew = true;
   typeList: TypeQuestion[];
   typeEnum = TypeEnum;
-  constructor(private questSer: QuestionService) {}
+  constructor(private questSer: QuestionService, private dialogSer:DialogService) {}
 
   ngOnInit() {
     this.quest.questionIndex = this.index;
@@ -54,10 +55,10 @@ export class QuestionComponent implements OnInit {
   }
 
   addOption() {
-    if (this.quest.options.length <= 8) {
+    if (this.quest.options.length <= 10) {
       this.quest.options.push(new AnswerOption());
     } else {
-      alert("The maximum number of option is 8");
+      this.dialogSer.init(MyMessage.createQuestionTitle, MyMessage.createQuestionOption, undefined,undefined);
     }
   }
 
@@ -97,5 +98,23 @@ export class QuestionComponent implements OnInit {
         this.quest.options.push(new AnswerOption());
       }
     }
+  }
+  validate() :boolean{
+    if(this.quest.question == undefined || this.quest.question.length == 0) {
+      this.dialogSer.init(MyMessage.createQuestionTitle,MyMessage.createQuestionRequire + " number " + this.index,undefined,undefined);
+      return false;
+    }
+    if(this.quest.type == undefined) {
+      this.dialogSer.init(MyMessage.createQuestionTitle,MyMessage.createQuestionTypeRequire,undefined,undefined);
+      return false;
+    }
+    for (let index = 0; index < this.quest.options.length; index++) {
+      const element = this.quest.options[index];
+      if(element.answerText == undefined || element.answerText.length == 0) {
+        this.dialogSer.init(MyMessage.createQuestionTitle,MyMessage.createQuestionOptionRequire + (index + 1) + " of question number " + this.index,undefined,undefined)
+        return false;
+      }
+    }
+    return true;
   }
 }
