@@ -5,6 +5,7 @@ import { TeamSaveComponent } from '../team-save/team-save.component';
 import { Team } from '../model/team';
 import { UltisService } from '../service/ultis.service';
 import { TeamDetailComponent } from './team-detail/team-detail.component';
+import { DialogService } from '../service/dialog.service';
 
 @Component({
   selector: 'app-team',
@@ -19,7 +20,12 @@ export class TeamComponent implements OnInit {
   requestStatus: Number;
   isSort = "";
 
-  constructor(private modalSer: ModalService, private ser: TeamService, private ultisSer: UltisService) { }
+  constructor(
+    private modalSer: ModalService, 
+    private ser: TeamService, 
+    private ultisSer: UltisService,
+    private dialogSer: DialogService
+    ) { }
 
   ngOnInit() {
     this.search("");
@@ -50,29 +56,29 @@ export class TeamComponent implements OnInit {
     }, 300);
   }
 
-  delete(id) {
-    if (confirm("Do you want to delete this")) {
-      this.ser.delete(id).subscribe(
+  delete(team: Team) {
+    this.dialogSer.init("Delete Team", "Do you want to delete team " + team.name, () =>
+      this.ser.delete(team.id).subscribe(
         result => {
-        this.requestStatus = result;
-        if (this.requestStatus == 200) {
-          alert("success");
-          if (this.itemList.length <= 1) {
-            this.loadPage(this.currentPage - 1);
+          this.requestStatus = result;
+          if (this.requestStatus == 200) {
+            this.dialogSer.init("Operation success", "Team has been deleted", undefined, undefined)
+            if (this.itemList.length <= 1) {
+              this.loadPage(this.currentPage - 1);
+            }
+            else {
+              this.loadPage(this.currentPage);
+            }
           }
-          else {
-            this.loadPage(this.currentPage);
+        },
+        error => {
+          if (error.status == 409) {
+            this.dialogSer.init("Operation fail", "This team contain employee(s) in it. Please remove all employee(s) in this team before delete it.", undefined, undefined)
+          } else if (error.status = 400) {
+            this.dialogSer.init("Operation fail", "Unexpected error has occured.", undefined, undefined)
           }
         }
-      },
-      error => {
-        if (error.status == 409) {
-          alert("This team contain employee(s) in it. Please unassigned all employee(s) in this team before delete it.");
-        } else if (error.status = 400) {
-          alert("Bad request");
-        }
-      });
-    }
+      ), undefined);
   }
 
   loadPage(pageNumber) {

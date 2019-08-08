@@ -3,6 +3,7 @@ import { ModalService } from '../service/modal.service';
 import { WorkplaceService } from '../service/workplace.service';
 import { WorkplaceSaveComponent } from '../workplace-save/workplace-save.component';
 import { Workplace } from '../model/workplace';
+import { DialogService } from '../service/dialog.service';
 
 @Component({
   selector: 'app-workplace',
@@ -16,7 +17,11 @@ export class WorkplaceComponent implements OnInit {
   searchTerm = "";
   requestStatus: Number;
 
-  constructor(private modalSer: ModalService, private ser: WorkplaceService) { }
+  constructor(
+    private modalSer: ModalService, 
+    private ser: WorkplaceService,
+    private dialogSer: DialogService
+    ) { }
 
   ngOnInit() {
     this.search("");
@@ -46,21 +51,29 @@ export class WorkplaceComponent implements OnInit {
     }, 300);
   }
 
-  delete(id) {
-    if (confirm("Do you want to delete this")) {
-      this.ser.delete(id).subscribe(result => {
-        this.requestStatus = result;
-        if (this.requestStatus == 200) {
-          alert("Success");
-          if (this.itemList.length <= 1) {
-            this.loadPage(this.currentPage - 1);
+  delete(wp: Workplace) {
+    this.dialogSer.init("Deactive Workplace", "Do you want to deactive workplace " + wp.name, () =>
+      this.ser.delete(wp.id).subscribe(
+        result => {
+          this.requestStatus = result;
+          if (this.requestStatus == 200) {
+            this.dialogSer.init("Operation success", "Workplace has been deactived", undefined, undefined)
+            if (this.itemList.length <= 1) {
+              this.loadPage(this.currentPage - 1);
+            }
+            else {
+              this.loadPage(this.currentPage);
+            }
           }
-          else {
-            this.loadPage(this.currentPage);
+        },
+        error => {
+          if (error.status == 409) {
+            this.dialogSer.init("Operation fail", "Unexpected error has occured.", undefined, undefined)
+          } else if (error.status = 400) {
+            this.dialogSer.init("Operation fail", "Unexpected error has occured.", undefined, undefined)
           }
         }
-      });
-    }
+      ), undefined);
   }
 
   loadPage(pageNumber) {
