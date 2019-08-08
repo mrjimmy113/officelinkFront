@@ -39,7 +39,7 @@ export const MyMessage = {
   surveySent: `Your survey has been sent`,
   //#endregion
   //#endregion
-};
+  
   //#region Question
   deleteQuestionTitle:"Delete Question",
   deleteQuestionMessage:`Do you want to delete this question`,
