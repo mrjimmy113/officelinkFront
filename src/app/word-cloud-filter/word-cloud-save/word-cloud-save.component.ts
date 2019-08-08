@@ -1,3 +1,4 @@
+import { MyMessage } from "./../../const/message";
 import { async } from "@angular/core/testing";
 import { ModalService } from "../../service/modal.service";
 import { WordCloudService } from "../../service/word-cloud.service";
@@ -5,6 +6,7 @@ import { WordCloudFilter } from "../../model/word-cloud-filter";
 import { Component, OnInit, Input, Output } from "@angular/core";
 import { Word } from "../../model/word";
 import { NgForm } from "@angular/forms";
+import { DialogService } from "src/app/service/dialog.service";
 
 @Component({
   selector: "app-word-cloud-save",
@@ -19,13 +21,15 @@ export class WordCloudSaveComponent implements OnInit {
   currentWord: Word;
   requestStatus: Number;
   isEdit = false;
-  lang = ["English", "Vietnamese"];
   isWordDuplicate = false;
   isExisted = false;
   currentName;
-  currentLanguage;
 
-  constructor(private ser: WordCloudService, private modalSer: ModalService) {}
+  constructor(
+    private ser: WordCloudService,
+    private modalSer: ModalService,
+    private dialogSer: DialogService
+  ) {}
 
   // Cái hàm này mỗi lần load component lên thì nó chạy
   ngOnInit() {
@@ -58,20 +62,31 @@ export class WordCloudSaveComponent implements OnInit {
   }
   add() {
     this.ser.create(this.filter).subscribe(result => {
-      alert("Successfully Create");
-      this.outputs[0]();
-      if(this.outputs[1] != undefined) {
-        this.outputs[1](result);
-      }
-      this.closeModal();
+      this.dialogSer.init(
+        MyMessage.wordCloudFilterTitle,
+        MyMessage.createFilterMessage,
+        undefined,
+        () => {
+          this.outputs[0]();
+          if (this.outputs[1] != undefined) {
+            this.outputs[1](result);
+          }
+          this.closeModal();
+        }
+      );
     });
   }
   update() {
     this.ser.update(this.filter).subscribe(result => {
-      this.requestStatus = result;
-      alert("Successfully Update");
-      this.outputs[0]();
-      this.closeModal();
+      this.dialogSer.init(
+        MyMessage.wordCloudFilterTitle,
+        MyMessage.updateFilterMessage,
+        undefined,
+        () => {
+          this.outputs[0]();
+          this.closeModal();
+        }
+      );
     });
   }
   save() {
@@ -81,14 +96,24 @@ export class WordCloudSaveComponent implements OnInit {
     else this.add();
   }
   removeWord(index) {
-    if (confirm("Do you want to delete this")) {
-      this.words.splice(index, 1);
-    }
+    this.dialogSer.init(
+      MyMessage.wordCloudFilterTitle,
+      MyMessage.deleteWordMessage,
+      () => {
+        this.words.splice(index, 1);
+      },
+      undefined
+    );
   }
   closeDialog() {
-    if (confirm("Do you want to exit this dialog ?")) {
-      this.closeModal();
-    }
+    this.dialogSer.init(
+      MyMessage.wordCloudFilterTitle,
+      MyMessage.filterDialogExit,
+      undefined,
+      () => {
+        this.closeModal();
+      }
+    );
   }
 
   checkDuplicateWord() {

@@ -23,8 +23,11 @@
         <div class="col-sm-7 d-flex align-items-center clickable" (click)="sort('question')">
           Question <i class="fas fa-sort icon"></i>
         </div>
-        <div class="col-sm-5 d-flex align-items-center">
+        <div class="col-sm-3 d-flex align-items-center">
           Type
+        </div>
+        <div class="col-sm-2 d-flex align-items-center clickable" (click)="sort('dateCreated')">
+          Date Created
         </div>
       </div>
 
@@ -43,9 +46,13 @@
           <div class="col-sm-7 d-flex align-items-center">
             {{item.question}}
           </div>
-          <div class="col-sm-5 d-flex align-items-center">
+          <div class="col-sm-3 d-flex align-items-center">
             {{typeEnum[item.type.type]}}
           </div>
+          <div class="col-sm-2 d-flex align-items-center">
+            {{item.dateCreated}}
+          </div>
+
 
         </div>
 

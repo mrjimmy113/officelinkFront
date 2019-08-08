@@ -20,11 +20,14 @@
     <div class="row">
       <div class="row col-sm-10">
 
-        <div class="col-sm-7 d-flex align-items-center clickable" (click)="sort('name')">
+        <div class="col-sm-6 d-flex align-items-center clickable" (click)="sort('name')">
           Filter Name <i class="fas fa-sort icon"></i>
         </div>
-        <div class="col-sm-5 d-flex align-items-center clickable" (click)="sort('stock')">
-          Language <i class="fas fa-sort icon"></i>
+        <div class="col-sm-2 d-flex align-items-center">
+          Exclude / Include
+        </div>
+        <div class="col-sm-4 d-flex align-items-center clickable" (click)="sort('dateCreated')">
+          Date Created <i class="fas fa-sort icon"></i>
         </div>
       </div>
 
@@ -43,11 +46,16 @@
       <div class="row">
         <div class="row col-sm-10">
 
-          <div class="col-sm-7 d-flex align-items-center">
+          <div class="col-sm-6 d-flex align-items-center">
             {{item.name}}
           </div>
-          <div class="col-sm-5 d-flex align-items-center">
-            {{item.language}}
+          <div class="col-sm-2 d-flex align-items-center">
+            <span *ngIf="item.exclude; else include">Exclude</span>
+            <ng-template #include>Include</ng-template>
+
+          </div>
+          <div class="col-sm-4 d-flex align-items-center">
+            {{item.dateCreated}}
           </div>
         </div>
 

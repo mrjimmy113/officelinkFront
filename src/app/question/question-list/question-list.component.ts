@@ -1,3 +1,4 @@
+import { MyMessage } from "./../../const/message";
 import { UltisService } from "src/app/service/ultis.service";
 import { Question } from "./../../model/question";
 import { TypeEnum } from "./../../model/typeEnum";
@@ -59,13 +60,26 @@ export class QuestionListComponent implements OnInit {
     }, 300);
   }
   delete(id) {
-    this.dialogSer.init("Delete Question", "Do you want to delete this question", () => {
-      this.quesSer.delete(id).subscribe(result => {
-          this.search();
-      }, err => {
-        alert('Error');
-      })
-    },undefined);
+    this.dialogSer.init(
+      MyMessage.deleteQuestionTitle,
+      MyMessage.deleteQuestionMessage,
+      () => {
+        this.quesSer.delete(id).subscribe(
+          result => {
+            this.search();
+          },
+          err => {
+            this.dialogSer.init(
+              MyMessage.errorTitle,
+              MyMessage.error400Message,
+              undefined,
+              undefined
+            );
+          }
+        );
+      },
+      undefined
+    );
   }
   detail(quest: Question) {
     this.modalSer.init(DetailComponent, quest, []);

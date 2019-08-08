@@ -5,49 +5,52 @@
   </span>
   <span class="text">Back to list</span>
 </button>
-<app-choose-template (newBlankSurvey)="closeTemplate()" (newWithTemplate)="getTemplate($event)" *ngIf="!isEdit && isChooseTemplate"></app-choose-template>
+<app-choose-template (newBlankSurvey)="closeTemplate()" (newWithTemplate)="getTemplate($event)" *ngIf="!isEdit && isChooseTemplate; else displayEdit"></app-choose-template>
 <!--Create Survey-->
-<div class="modal-lg modal-dialog" style="margin-top: 2px" *ngIf="!isChooseTemplate">
-  <div class="modal-content">
-    <div class="modal-header">
-      <div class="col-sm-10 noPadding">
-        <form #surveyForm="ngForm">
-          <input type="text" placeholder="Survey Title" class="form-control" name="title" #title="ngModel" [(ngModel)]="survey.name" required
-            [ngClass]="{'is-invalid': (title.invalid && (title.dirty || title.touched))}" maxlength="150" />
-            <div *ngIf="title.invalid && (title.dirty || title.touched)" class="text-danger">
-                <div *ngIf="title.errors.required">
-                  Please input your survey title
+<ng-template #displayEdit>
+  <div class="modal-lg modal-dialog" style="margin-top: 2px">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="col-sm-10 noPadding">
+          <form #surveyForm="ngForm">
+            <input type="text" placeholder="Survey Title" class="form-control" name="title" #title="ngModel" [(ngModel)]="survey.name" required
+              [ngClass]="{'is-invalid': (title.invalid && (title.dirty || title.touched))}" maxlength="150" />
+              <div *ngIf="title.invalid && (title.dirty || title.touched)" class="text-danger">
+                  <div *ngIf="title.errors.required">
+                    Please input your survey title
+                  </div>
+
                 </div>
-
-              </div>
-              <div *ngIf="(title.dirty || title.touched) && (survey.name != undefined)">
-                <div *ngIf="survey.name.length == 150" class="text-primary">
-                  Survey title can not exceed 150 characters
+                <div *ngIf="(title.dirty || title.touched) && (survey.name != undefined)">
+                  <div *ngIf="survey.name.length == 150" class="text-primary">
+                    Survey title can not exceed 150 characters
+                  </div>
                 </div>
-              </div>
-        </form>
+          </form>
+
+        </div>
+        <div class="col-sm-2 d-flex justify-content-end noPadding">
+          <button class="btn btn-success" (click)="save()" *ngIf="!isEdit">Create</button>
+          <button class="btn btn-success" (click)="save()" *ngIf="isEdit">Update</button>
+        </div>
+      </div>
+      <div class="">
+        <div *ngFor="let question of survey.questions; let i = index">
+          <app-question [quest]="question" [index]="i" [lastIndex]="survey.questions.length - 1"
+            (updateEditMode)="updateEditMode()" (giveClassToParent)="getChildInfor($event)" (copyQ)="copyQ($event)"
+            (deleteQ)="deleteQ($event)" (moveUpQ)="moveUpQ($event)" (moveDownQ)="moveDownQ($event)">
+          </app-question>
+          <hr>
+        </div>
 
       </div>
-      <div class="col-sm-2 d-flex justify-content-end noPadding">
-        <button class="btn btn-success" (click)="save()" *ngIf="!isEdit">Create</button>
-        <button class="btn btn-success" (click)="save()" *ngIf="isEdit">Update</button>
-      </div>
-    </div>
-    <div class="">
-      <div *ngFor="let question of survey.questions; let i = index">
-        <app-question [quest]="question" [index]="i" [lastIndex]="survey.questions.length - 1"
-          (updateEditMode)="updateEditMode()" (giveClassToParent)="getChildInfor($event)" (copyQ)="copyQ($event)"
-          (deleteQ)="deleteQ($event)" (moveUpQ)="moveUpQ($event)" (moveDownQ)="moveDownQ($event)">
-        </app-question>
-        <hr>
-      </div>
 
-    </div>
-
-    <div class="modal-footer">
-      <button class="btn btn-primary" (click)="addQuestion()">Add New Question</button>
-      <button class="btn btn-primary" (click)="openChooseQuestion()">Choose From Bank</button>
+      <div class="modal-footer">
+        <button class="btn btn-primary" (click)="addQuestion()">Add New Question</button>
+        <button class="btn btn-primary" (click)="openChooseQuestion()">Choose From Bank</button>
+      </div>
     </div>
   </div>
-</div>
+</ng-template>
+
 
