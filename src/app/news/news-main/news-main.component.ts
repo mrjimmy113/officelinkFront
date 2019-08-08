@@ -3,6 +3,7 @@ import { NewsService } from 'src/app/service/news.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { DatePipe } from '@angular/common';
 import { UltisService } from "src/app/service/ultis.service";
+import { DialogService } from "src/app/service/dialog.service";
 
 @Component({
   selector: 'app-news-main',
@@ -23,6 +24,7 @@ export class NewsMainComponent implements OnInit {
     private dom: DomSanitizer,
     private datePipe: DatePipe,
     private ultisSer: UltisService,
+    private dialogSer: DialogService,
     ) { }
 
   ngOnInit() {
@@ -52,16 +54,18 @@ export class NewsMainComponent implements OnInit {
   }
 
   delete(id) {
-    if (confirm("Are you sure to detele?")) {
+    this.dialogSer.init("Delete News", "Do you want to delete this news?", () => {
       this.service.delete(id).subscribe(result => {
         this.requestStatus = result;
         if (this.requestStatus == 200) {
-          alert("Successfully Deleted");
-          this.search();
+          this.dialogSer.init("Delete News", "Successfully Deleted", () => {
+            this.search();
+          }, undefined);
         }
-      });
-    }
-
+      }, err => {
+        alert('Something wrong');
+      })
+    }, undefined);
   }
 
   doms(s) {

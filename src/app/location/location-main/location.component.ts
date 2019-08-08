@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LocationService } from '../../service/location.service';
 import { DatePipe } from '@angular/common';
 import { UltisService } from "src/app/service/ultis.service";
+import { DialogService } from "src/app/service/dialog.service";
 
 @Component({
   selector: 'app-location',
@@ -20,6 +21,7 @@ export class LocationComponent implements OnInit {
     private service: LocationService,
     private ultisSer: UltisService,
     private datePipe: DatePipe,
+    private dialogSer: DialogService,
   ) { }
 
   ngOnInit() {
@@ -49,18 +51,18 @@ export class LocationComponent implements OnInit {
   }
 
   delete(id) {
-    if (confirm("Are you sure to detele?")) {
+    this.dialogSer.init("Delete Location", "Do you want to delete this location?", () => {
       this.service.delete(id).subscribe(result => {
         this.requestStatus = result;
         if (this.requestStatus == 200) {
-          alert("Successfully Deleted");
-          this.search();
-        } else {
-          alert("Something wrong");
-          this.search();
+          this.dialogSer.init("Delete Location", "Successfully Deleted", () => {
+            this.search();
+          }, undefined);
         }
-      });
-    }
+      }, err => {
+        alert('Something wrong');
+      })
+    }, undefined);
   }
 
   sort(property) {
