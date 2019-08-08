@@ -4,6 +4,7 @@ import { DepartmentService } from '../service/department.service';
 import { DepartmentSaveComponent } from '../department-save/department-save.component';
 import { Department } from '../model/department';
 import { UltisService } from '../service/ultis.service';
+import { DialogService } from '../service/dialog.service';
 
 @Component({
   selector: 'app-department',
@@ -18,7 +19,12 @@ export class DepartmentComponent implements OnInit {
   requestStatus: Number;
   isSort = "";
 
-  constructor(private modalSer: ModalService, private ser: DepartmentService, private ultisSer: UltisService) { }
+  constructor(
+    private modalSer: ModalService,
+    private ser: DepartmentService,
+    private ultisSer: UltisService,
+    private dialogSer: DialogService
+  ) { }
 
   ngOnInit() {
     this.init();
@@ -52,13 +58,13 @@ export class DepartmentComponent implements OnInit {
     }, 300);
   }
 
-  delete(id) {
-    if (confirm("Do you want to delete this")) {
-      this.ser.delete(id).subscribe(
+  delete(dep: Department) {
+    this.dialogSer.init("Delete Department", "Do you want to delete department " + dep.name, () =>
+      this.ser.delete(dep.id).subscribe(
         result => {
           this.requestStatus = result;
           if (this.requestStatus == 200) {
-            alert("Success");
+            this.dialogSer.init("Operation success", "Department has been deleted", undefined, undefined)
             if (this.itemList.length <= 1) {
               this.loadPage(this.currentPage - 1);
             }
@@ -69,12 +75,12 @@ export class DepartmentComponent implements OnInit {
         },
         error => {
           if (error.status == 409) {
-            alert("This department contain team(s) in it. Please remove all team(s) in this department before delete it.");
+            this.dialogSer.init("Operation fail", "This department contain team(s) in it. Please remove all team(s) in this department before delete it.", undefined, undefined)
           } else if (error.status = 400) {
-            alert("Bad request");
+            this.dialogSer.init("Operation fail", "Unexpected error has occured.", undefined, undefined)
           }
-        });
-    }
+        }
+      ), undefined);
   }
 
   loadPage(pageNumber) {

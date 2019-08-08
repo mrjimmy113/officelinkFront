@@ -4,6 +4,7 @@ import { ModalService } from '../service/modal.service';
 import { DepartmentService } from '../service/department.service';
 import { Location } from '../model/location';
 import { LocationService } from '../service/location.service';
+import { DialogService } from '../service/dialog.service';
 
 @Component({
   selector: 'app-department-save',
@@ -18,7 +19,12 @@ export class DepartmentSaveComponent implements OnInit {
   requestStatus: Number;
   isEdit = false;
 
-  constructor(private modalSer: ModalService, private depSer: DepartmentService, private locSer: LocationService) { }
+  constructor(
+    private modalSer: ModalService,
+    private depSer: DepartmentService,
+    private locSer: LocationService,
+    private dialogSer: DialogService
+  ) { }
 
   ngOnInit() {
     this.init();
@@ -49,7 +55,7 @@ export class DepartmentSaveComponent implements OnInit {
       //     console.log(this.notSelectedLocations);
 
       //     this.notSelectedLocations = this.ola(this.department.locations, this.notSelectedLocations);
-          
+
       //     console.log(this.notSelectedLocations);
       //   });
 
@@ -67,18 +73,32 @@ export class DepartmentSaveComponent implements OnInit {
       result => {
         this.requestStatus = result;
         if (this.requestStatus == 201) {
-          alert("Create Successful");
-          this.closeModal();
+          this.dialogSer.init(
+            "Operation success",
+            "Successfully created department with name: " + this.department.name,
+            undefined,
+            () => this.closeModal()
+          );
         }
         this.outputs();
       },
       error => {
         if (error.status == 409) {
-          alert("Name cannot be duplicated");
+          this.dialogSer.init(
+            "Operation fail",
+            "Fail to create department with name: " + this.department.name + '<br/>' + ".Name cannot be dupplicated",
+            undefined,
+            () => this.closeModal()
+          );
         } else if (error.status = 400) {
-          alert("Bad request");
+          this.dialogSer.init(
+            "Operation fail",
+            "Fail to create department with name: " + this.department.name + '<br/>' + "Unexpected error has occured",
+            undefined,
+            () => this.closeModal()
+          );
         }
-        this.closeModal();
+        // this.closeModal();
         this.outputs();
       }
     );
