@@ -66,7 +66,6 @@ export class SurveyListComponent implements OnInit {
       .subscribe(result => {
         this.maxPage = result.maxPage;
         this.itemList = result.objList;
-        console.log(this.itemList);
       });
   }
 

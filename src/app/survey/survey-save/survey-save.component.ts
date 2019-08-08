@@ -1,3 +1,5 @@
+import { MyMessage } from './../../const/message';
+import { DialogService } from 'src/app/service/dialog.service';
 import { NgForm } from '@angular/forms';
 import { UltisService } from './../../service/ultis.service';
 import {ViewChild} from '@angular/core';
@@ -29,7 +31,8 @@ export class SurveySaveComponent implements OnInit {
     private modalSer: ModalService,
     private surveySer: SurveyService,
     private dyLoadSer: DynamicLoadService,
-    private utliSer:UltisService
+    private utliSer:UltisService,
+    private dialogSer:DialogService
   ) {}
 
   ngOnInit() {
@@ -82,18 +85,17 @@ export class SurveySaveComponent implements OnInit {
 
   isValidForm() : boolean {
     if(this.form.invalid) {
-      alert("Please check your survey title")
+      this.dialogSer.init(MyMessage.surveyTitle,MyMessage.surveyTitleRequire,undefined,undefined);
       return false;
     }
     if(this.qComponentList.length == 0) {
-      alert("Survey must have more than one question");
+      this.dialogSer.init(MyMessage.surveyTitle,MyMessage.surveyQuestionLimit,undefined,undefined);
       return false;
     }
 
     for (let index = 0; index < this.qComponentList.length; index++) {
       const element = this.qComponentList[index];
-      if(element.form.invalid) {
-        alert("Question number " + (index + 1) + " is not valid");
+      if(element.validate()) {
         return false;
       }
     }
@@ -105,17 +107,18 @@ export class SurveySaveComponent implements OnInit {
     if(!this.isValidForm()) return;
     if (!this.isEdit) {
       this.surveySer.create(this.survey).subscribe(result => {
-        alert("Successfully Created");
-        this.close();
+        this.dialogSer.init(MyMessage.surveyTitle,MyMessage.createSurveySuccess,undefined,() => {this.close();});
+
       }, (err : HttpErrorResponse) => {
-        if(err.status == 409) alert("Your survey title is already existed");
+        if(err.status == 409) this.dialogSer.init(MyMessage.surveyTitle,MyMessage.surveyDuplicateName,undefined,undefined);
+        if(err.status == 400) this.dialogSer.init(MyMessage.errorTitle,MyMessage.error400Message,undefined,undefined);
       });
     } else {
       this.surveySer.update(this.survey).subscribe(result => {
-        alert("Successfully Updated");
-        this.close();
+        this.dialogSer.init(MyMessage.surveyTitle,MyMessage.updateSurveySuccess,undefined,() => {this.close();});
       }, (err : HttpErrorResponse) => {
-        if(err.status == 409) alert("Your survey title is already existed");
+        if(err.status == 409) this.dialogSer.init(MyMessage.surveyTitle,MyMessage.surveyDuplicateName,undefined,undefined);
+        if(err.status == 400) this.dialogSer.init(MyMessage.errorTitle,MyMessage.error400Message,undefined,undefined);
       });
     }
   }

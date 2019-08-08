@@ -8,4 +8,5 @@ export class Question {
   questionIdentity:Number;
   questionIndex: number;
   required: boolean = true;
+  dateCreated:Date
 }
