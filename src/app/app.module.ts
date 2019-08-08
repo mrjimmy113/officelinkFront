@@ -76,7 +76,8 @@ import { DetailComponent } from './question/detail/detail.component';
 import { ChooseTemplateComponent } from './survey/choose-template/choose-template.component';
 import { ApplyFilterComponent } from './survey/apply-filter/apply-filter.component';
 import { DialogComponent } from './others/dialog/dialog.component';
-import { TeamDetailComponent } from './team/team-detail/team-detail.component'
+import { TeamDetailComponent } from './team/team-detail/team-detail.component';
+import { DepartmentDetailComponent } from './department/department-detail/department-detail.component'
 
 @NgModule({
   declarations: [
@@ -137,6 +138,7 @@ import { TeamDetailComponent } from './team/team-detail/team-detail.component'
     ApplyFilterComponent,
     DialogComponent,
     TeamDetailComponent,
+    DepartmentDetailComponent,
 
   ],
   imports: [
@@ -167,7 +169,8 @@ import { TeamDetailComponent } from './team/team-detail/team-detail.component'
     DetailComponent,
     ApplyFilterComponent,
     DialogComponent,
-    TeamDetailComponent
+    TeamDetailComponent,
+    DepartmentDetailComponent
   ],
 
   providers: [

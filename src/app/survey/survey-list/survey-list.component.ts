@@ -69,8 +69,17 @@ export class SurveyListComponent implements OnInit {
         console.log(this.itemList);
       });
   }
-  loadPage(num) { }
+
+  loadPage(pageNumber) { 
+    this.currentPage = pageNumber;
+    this.surveySer.search(this.searchTerm, pageNumber - 1).subscribe(result => {
+      this.maxPage = result.maxPage;
+      this.itemList = result.objList;
+    })
+  }
+  
   filter() {
+    this.currentPage = 1;
     let newSearchTerm = this.searchTerm;
     setTimeout(() => {
       if (newSearchTerm == this.searchTerm) {

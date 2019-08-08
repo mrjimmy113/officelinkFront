@@ -29,5 +29,14 @@ export const MyMessage = {
   confirmDeactivateWorkplace: `Deactivate this workplace?`,
   actionError: `something went wrong`,
   //#endregion
+
+  //#region Send out survey
+  createSurveyRoutine: `You have scheduled this survey to be sent.`,
+  targetListEmpty: `You must choose at least one target to send this survey.`,
+  durationInvalid: `Duration cannot be 0 or negative.`,
+  updateSurveyRoutine: `This survey routine was successfully updated.`,
+  duplicatedTarget: `Duplicated target(s).`,
+  surveySent: `Your survey has been sent`,
+  //#endregion
   //#endregion
 };

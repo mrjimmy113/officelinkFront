@@ -6,6 +6,7 @@ import { Department } from '../model/department';
 import { UltisService } from '../service/ultis.service';
 import { DialogService } from '../service/dialog.service';
 import { MyMessage } from '../const/message';
+import { DepartmentDetailComponent } from './department-detail/department-detail.component';
 
 @Component({
   selector: 'app-department',
@@ -100,5 +101,9 @@ export class DepartmentComponent implements OnInit {
       this.itemList.sort(this.ultisSer.sortByPropertyNameASC(property));
       this.isSort = property;
     }
+  }
+
+  detail(dep: Department) {
+    this.modalSer.init(DepartmentDetailComponent, dep, []);
   }
 }

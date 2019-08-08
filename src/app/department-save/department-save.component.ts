@@ -137,7 +137,8 @@ export class DepartmentSaveComponent implements OnInit {
         }
         this.requestStatus = 0;
         this.outputs();
-      });
+      }
+    );
   }
 
   save() {

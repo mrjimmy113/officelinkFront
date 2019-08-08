@@ -21,7 +21,6 @@ export class TeamDetailComponent implements OnInit {
 
   ngOnInit() {
     this.team = this.inputs;
-    console.log(this.team);
   }
 
   closeModal() {

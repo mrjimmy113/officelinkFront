@@ -59,7 +59,7 @@
                 <p class="row">{{getMonthsFromCron(item.configuration.scheduleTime)}}</p>
               </div>
               <div class="col-sm-7 align-items-center"
-                *ngIf="item.configuration == null || item.configuration == undefined">
+                *ngIf="(item.configuration == null || item.configuration == undefined) && item.sent">
                 <b class="row">This survey was configured to be send only once.</b>
               </div>
             </div>
