@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalService } from '../../service/modal.service';
 import { LocationService } from '../../service/location.service';
 import { DatePipe } from '@angular/common';
 import { UltisService } from "src/app/service/ultis.service";
+import { DialogService } from "src/app/service/dialog.service";
 
 @Component({
   selector: 'app-location',
@@ -21,15 +21,16 @@ export class LocationComponent implements OnInit {
     private service: LocationService,
     private ultisSer: UltisService,
     private datePipe: DatePipe,
+    private dialogSer: DialogService,
   ) { }
 
   ngOnInit() {
     this.itemList = new Array<Location>();
-    this.searchByName("");
+    this.search();
   }
 
-  searchByName(value) {
-    this.service.searchByName(value).subscribe(result => {
+  search() {
+    this.service.searchGetPage(this.searchTerm, this.currentPage - 1).subscribe(result => {
       this.maxPage = result.maxPage;
       this.itemList = result.objList;
     })
@@ -39,20 +40,29 @@ export class LocationComponent implements OnInit {
     let newSearchTerm = this.searchTerm;
     setTimeout(() => {
       if (newSearchTerm == this.searchTerm) {
-        this.searchByName(this.searchTerm);
+        this.search();
       }
     }, 300);
   }
 
+  loadPage(pageNumber) {
+    this.currentPage = pageNumber;
+    this.search();
+  }
+
   delete(id) {
-    if (confirm("Are you sure to detele?")) {
+    this.dialogSer.init("Delete Location", "Do you want to delete this location?", () => {
       this.service.delete(id).subscribe(result => {
         this.requestStatus = result;
         if (this.requestStatus == 200) {
-          this.searchByName("");
+          this.dialogSer.init("Delete Location", "Successfully Deleted", () => {
+            this.search();
+          }, undefined);
         }
-      });
-    }
+      }, err => {
+        this.dialogSer.init("Delete Location", "Fail to delete", undefined, undefined);
+      })
+    }, undefined);
   }
 
   sort(property) {
@@ -64,4 +74,5 @@ export class LocationComponent implements OnInit {
       this.isSort = property;
     }
   }
+
 }

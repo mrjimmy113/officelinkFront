@@ -13,7 +13,6 @@
 
           <div class="form-group">
             <label>Answer:</label>
-
             <!--Free Text-->
             <textarea class="form-control" *ngIf="q.type.type == 'TEXT'" [(ngModel)]="answers[i].content" readonly></textarea>
             <!--Single Choice-->
@@ -29,7 +28,7 @@
                   </div>
 
                 </div>
-              </div>
+              </div>  
             </div>
             <!--Mutiple Choice-->
             <div *ngIf="q.type.type == 'MULTIPLE'">
