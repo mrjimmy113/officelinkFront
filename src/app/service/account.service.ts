@@ -111,6 +111,8 @@ export class AccountService {
     return this.httpClient.put<Number>(this.api + `/resetPassword` , resetPasswordInfo);
   }
 
-
+  unassigned(teamId, accountId):Observable<Number>{
+    return this.httpClient.get<Number>(this.api + `/unassignedFromTeam?teamId=${teamId}&accountId=${accountId}`);
+  }
 }
 
