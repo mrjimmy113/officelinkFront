@@ -4,6 +4,7 @@ import { TeamService } from '../service/team.service';
 import { TeamSaveComponent } from '../team-save/team-save.component';
 import { Team } from '../model/team';
 import { UltisService } from '../service/ultis.service';
+import { TeamDetailComponent } from './team-detail/team-detail.component';
 
 @Component({
   selector: 'app-team',
@@ -124,5 +125,9 @@ export class TeamComponent implements OnInit {
       }
       return 0;
     }
+  }
+
+  detail(team: Team) {
+    this.modalSer.init(TeamDetailComponent, team, []);
   }
 }
