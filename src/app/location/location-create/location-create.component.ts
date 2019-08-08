@@ -120,6 +120,7 @@ export class LocationCreateComponent implements OnInit {
       }
     );
   }
+  
   back() {
     if(confirm('Do you want to go back')) {
       this.router.navigateByUrl("/location");

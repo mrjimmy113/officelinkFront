@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalService } from '../../service/modal.service';
 import { LocationService } from '../../service/location.service';
 import { DatePipe } from '@angular/common';
 import { UltisService } from "src/app/service/ultis.service";
@@ -54,6 +53,10 @@ export class LocationComponent implements OnInit {
       this.service.delete(id).subscribe(result => {
         this.requestStatus = result;
         if (this.requestStatus == 200) {
+          alert("Successfully Deleted");
+          this.search();
+        } else {
+          alert("Something wrong");
           this.search();
         }
       });

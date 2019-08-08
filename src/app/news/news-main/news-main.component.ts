@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalService } from 'src/app/service/modal.service';
 import { NewsService } from 'src/app/service/news.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { DatePipe } from '@angular/common';
@@ -20,7 +19,6 @@ export class NewsMainComponent implements OnInit {
   isSort = "";
 
   constructor(
-    private modalService: ModalService,
     private service: NewsService,
     private dom: DomSanitizer,
     private datePipe: DatePipe,
@@ -58,6 +56,7 @@ export class NewsMainComponent implements OnInit {
       this.service.delete(id).subscribe(result => {
         this.requestStatus = result;
         if (this.requestStatus == 200) {
+          alert("Successfully Deleted");
           this.search();
         }
       });
