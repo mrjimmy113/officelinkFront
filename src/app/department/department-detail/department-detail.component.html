@@ -15,7 +15,7 @@
           <h6 class="font-weight-bold">Team(s):</h6>
           <p *ngIf="dep.teams == null || dep.teams == undefined || dep.teams.length <= 0">
             No team has been assigned to this department yet.
-            <a [routerLink]="['/account']" routerLinkActive="router-link-active"  (click)="redirectToTeam()">Go to team management</a>
+            <a [routerLink]="['/team']" routerLinkActive="router-link-active"  (click)="redirectToTeam()">Go to team management</a>
           </p>
           
           <table class="table" *ngIf="dep.teams != null && dep.teams != undefined && dep.teams.length > 0">

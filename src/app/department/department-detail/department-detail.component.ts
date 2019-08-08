@@ -27,6 +27,6 @@ export class DepartmentDetailComponent implements OnInit {
 
   redirectToTeam() {
     this.closeModal();
-    this.router.navigateByUrl("/account");
+    this.router.navigateByUrl("/team");
   }
 }
