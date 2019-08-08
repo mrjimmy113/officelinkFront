@@ -4,6 +4,8 @@ import { Department } from "../model/department";
 import { ModalService } from "../service/modal.service";
 import { TeamService } from "../service/team.service";
 import { DepartmentService } from "../service/department.service";
+import { DialogService } from '../service/dialog.service';
+import { MyMessage } from '../const/message';
 
 @Component({
   selector: "app-team-save",
@@ -22,7 +24,8 @@ export class TeamSaveComponent implements OnInit {
   constructor(
     private modalSer: ModalService,
     private teamSer: TeamService,
-    private depSer: DepartmentService
+    private depSer: DepartmentService,
+    private dialogSer: DialogService
   ) { }
 
   ngOnInit() {
@@ -50,28 +53,39 @@ export class TeamSaveComponent implements OnInit {
 
   // get list department and store in depList
   getListDepartment() {
-    console.log("aaaaaaa");
     this.depSer.getAll().subscribe(result => {
       this.depList = result;
-      console.log(result)
     });
   }
 
   add() {
     this.getDepartment();
-    console.log(this.team);
     this.teamSer.create(this.team).subscribe(
       result => {
         this.requestStatus = result;
-        alert("Create Successful");
-        this.closeModal();
+        this.dialogSer.init(
+          "Operation success",
+          MyMessage.createTeam,
+          undefined,
+          () => this.closeModal()
+        );
         this.outputs();
       },
       error => {
         if (error.status == 409) {
-          alert("Name cannot be duplicated");
-        } else if ((error.status = 404)) {
-          alert("Bad request");
+          this.dialogSer.init(
+            "Operation fail",
+            MyMessage.dupplicatedTeamName,
+            undefined,
+            undefined
+          );
+        } else if (error.status = 400) {
+          this.dialogSer.init(
+            "Operation fail",
+            MyMessage.error400Message,
+            undefined,
+            undefined
+          );
         }
         this.requestStatus = 0;
         this.outputs();
@@ -85,16 +99,30 @@ export class TeamSaveComponent implements OnInit {
       result => {
         this.requestStatus = result;
         if (this.requestStatus == 200) {
-          alert("Update Successful");
-          this.closeModal();
+          this.dialogSer.init(
+            "Operation success",
+            MyMessage.updateTeam,
+            undefined,
+            () => this.closeModal()
+          );
         }
         this.outputs();
       },
       error => {
         if (error.status == 409) {
-          alert("Name cannot be duplicated");
-        } else if ((error.status = 404)) {
-          alert("Bad request");
+          this.dialogSer.init(
+            "Operation fail",
+            MyMessage.dupplicatedTeamName,
+            undefined,
+            undefined
+          );
+        } else if (error.status = 400) {
+          this.dialogSer.init(
+            "Operation fail",
+            MyMessage.error400Message,
+            undefined,
+            undefined
+          );
         }
         this.requestStatus = 0;
         this.outputs();

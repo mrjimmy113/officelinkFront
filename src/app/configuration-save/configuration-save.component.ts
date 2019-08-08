@@ -14,6 +14,8 @@ import { SurveyService } from "../service/survey.service";
 import { SendOutInfor } from "../model/sendOutInfor";
 import { TeamService } from '../service/team.service';
 import { forEach } from '@angular/router/src/utils/collection';
+import { DialogService } from '../service/dialog.service';
+import { MyMessage } from '../const/message';
 
 @Component({
   selector: "app-configuration-save",
@@ -57,7 +59,8 @@ export class ConfigurationSaveComponent implements OnInit {
     private locationSer: LocationService,
     private departmentSer: DepartmentService,
     private teamSer: TeamService,
-    private displaySer:DisplayService
+    private displaySer: DisplayService,
+    private dialogSer: DialogService
   ) {}
 
   ngOnInit() {
@@ -125,6 +128,9 @@ export class ConfigurationSaveComponent implements OnInit {
       }
       //#endregion
     }
+    if (this.configuration.duration == undefined || this.configuration.duration == null){
+      this.configuration.duration = 1;
+    }
     this.requestStatus = 0;
 
 
@@ -153,22 +159,37 @@ export class ConfigurationSaveComponent implements OnInit {
     this.configuration.survey.id = this.selectedSurveyId;
     this.configuration.active = true;
     this.surveySer.updateActiveStatus(this.selectedSurveyId, true).subscribe();
+    
     this.configSer.create(this.configuration).subscribe(
       result => {
         this.requestStatus = result;
         if (this.requestStatus == 201) {
-          alert("Create Successful");
-          this.closeModal();
+          this.dialogSer.init(
+            "Operation success",
+            MyMessage.createSurveyRoutine,
+            undefined,
+            () => this.closeModal()
+          );
         }
         this.outputs();
       },
       error => {
         if (error.status == 409) {
-          alert("Something went wrong");
-        } else if ((error.status = 400)) {
-          alert("Bad request");
+          this.dialogSer.init(
+            "Operation fail",
+            MyMessage.error400Message,
+            undefined,
+            undefined
+          );
+        } else if (error.status = 400) {
+          this.dialogSer.init(
+            "Operation fail",
+            MyMessage.error400Message,
+            undefined,
+            undefined
+          );
         }
-        this.closeModal();
+        this.requestStatus = 0;
         this.outputs();
       }
     );
@@ -181,14 +202,33 @@ export class ConfigurationSaveComponent implements OnInit {
       result => {
         this.requestStatus = result;
         if (this.requestStatus == 200) {
-          alert("Update Successful");
-          this.closeModal();
+          this.dialogSer.init(
+            "Operation success",
+            MyMessage.updateSurveyRoutine,
+            undefined,
+            () => this.closeModal()
+          );
         }
         this.outputs();
       },
       error => {
-        if (this.requestStatus == 400) alert("Bad request");
+        if (error.status == 409) {
+          this.dialogSer.init(
+            "Operation fail",
+            MyMessage.error400Message,
+            undefined,
+            undefined
+          );
+        } else if (error.status = 400) {
+          this.dialogSer.init(
+            "Operation fail",
+            MyMessage.error400Message,
+            undefined,
+            undefined
+          );
+        }
         this.requestStatus = 0;
+        this.outputs();
       }
     );
   }
@@ -198,15 +238,30 @@ export class ConfigurationSaveComponent implements OnInit {
     let sendOutList = this.inforList;
     let sendSurvey = new SendSurvey();
     if (sendOutList.length <= 0){
-      alert("You must choose at least a target to send.")
+      this.dialogSer.init(
+        "Check your inputs",
+        MyMessage.targetListEmpty,
+        undefined,
+        undefined
+      );
       return;
     }
     if(this.configuration.duration == undefined) {
-      alert("Duration must be chosen.")
+      this.dialogSer.init(
+        "Check your inputs",
+        MyMessage.createDepartment,
+        undefined,
+        undefined
+      );
       return;
     }
     if(this.configuration.duration <= 0) {
-      alert("Duration cannot be zero or negative.")
+      this.dialogSer.init(
+        "Check your inputs",
+        MyMessage.durationInvalid,
+        undefined,
+        undefined
+      );
       return;
     }
     sendSurvey.surveyId = this.selectedSurveyId;
@@ -344,7 +399,12 @@ export class ConfigurationSaveComponent implements OnInit {
         sendOutInfor.departmentId == this.inforList[index].departmentId;
       let dupTeam = sendOutInfor.teamId == this.inforList[index].teamId;
       if ((dupLocation && dupDep) || dupTeam) {
-        alert("Duplicated Target");
+        this.dialogSer.init(
+          "Check your inputs",
+          MyMessage.duplicatedTarget,
+          undefined,
+          undefined
+        );
         return;
       };
     }
@@ -382,23 +442,40 @@ export class ConfigurationSaveComponent implements OnInit {
       }
     }
   }
+  
   removeInfor(index) {
     this.inforList.splice(index, 1);
     this.displayInforList.splice(index, 1);
   }
+
   send() {
     let sendOutList = this.inforList;
     let sendSurvey = new SendSurvey();
     if (sendOutList.length <= 0){
-      alert("You must choose at least a target to send.")
+      this.dialogSer.init(
+        "Check your inputs",
+        MyMessage.targetListEmpty,
+        undefined,
+        undefined
+      );
       return;
     }
     if(this.configuration.duration == undefined) {
-      alert("Duration must be chosen.")
+      this.dialogSer.init(
+        "Check your inputs",
+        MyMessage.createDepartment,
+        undefined,
+        undefined
+      );
       return;
     }
     if(this.configuration.duration <= 0) {
-      alert("Duration cannot be zero or negative.")
+      this.dialogSer.init(
+        "Check your inputs",
+        MyMessage.durationInvalid,
+        undefined,
+        undefined
+      );
       return;
     }
     sendSurvey.surveyId = this.inputs;
@@ -406,8 +483,12 @@ export class ConfigurationSaveComponent implements OnInit {
     sendSurvey.duration = this.configuration.duration;
     this.displaySer.showLoader();
     this.surveySer.sendOutSurvey(sendSurvey).subscribe(result => {
-      alert("Your survey has been sent");
-      this.modalSer.destroy();
+      this.dialogSer.init(
+        "Operation success",
+        MyMessage.surveySent,
+        undefined,
+        () => this.modalSer.destroy()
+      );
       this.displaySer.hideLoader();
       this.outputs();
     })

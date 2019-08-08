@@ -22,8 +22,11 @@
       <div class="row">
         <div class="row col-sm-10">
 
-          <div class="col-sm-7 d-flex align-items-center clickable" (click)="sort('name')">
+          <div class="col-sm-5 d-flex align-items-center clickable" (click)="sort('name')">
             Workplace Name <i class="fas fa-sort icon"></i>
+          </div>
+          <div class="col-sm-5 d-flex align-items-center clickable" (click)="sort('dateCreated')">
+            Join Date <i class="fas fa-sort icon"></i>
           </div>
         </div>
 
@@ -39,8 +42,11 @@
         <div class="row">
           <div class="row col-sm-10">
 
-            <div class="col-sm-7 d-flex align-items-center">
+            <div class="col-sm-5 d-flex align-items-center">
               {{item.name}}
+            </div>
+            <div class="col-sm-5 d-flex align-items-center">
+              {{item.dateCreated}}
             </div>
           </div>
 
@@ -48,8 +54,9 @@
             <div class="w3-dropdown-hover">
               <div class="d-flex align-items-center justify-content-center">
                 <button class="btn btn-info" (click)="openEdit(item)"><i class="fas fa-pen-alt"></i></button>
-                <span> | </span>
-                <button class="btn btn-danger" (click)="delete(item.id)"><i class="fas fa-trash-alt"></i></button>
+                <span *ngIf="!item.deleted"> | </span>
+                <button *ngIf="!item.deleted" class="btn btn-warning" (click)="deactive(item)">Deactivate</button>
+                <!-- <button *ngIf="!item.deleted" class="btn btn-warning" (click)="deactive(item)">Deactivate</button> -->
               </div>
             </div>
           </div>

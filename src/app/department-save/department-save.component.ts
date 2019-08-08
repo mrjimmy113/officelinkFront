@@ -4,6 +4,8 @@ import { ModalService } from '../service/modal.service';
 import { DepartmentService } from '../service/department.service';
 import { Location } from '../model/location';
 import { LocationService } from '../service/location.service';
+import { DialogService } from '../service/dialog.service';
+import { MyMessage } from '../const/message';
 
 @Component({
   selector: 'app-department-save',
@@ -18,7 +20,12 @@ export class DepartmentSaveComponent implements OnInit {
   requestStatus: Number;
   isEdit = false;
 
-  constructor(private modalSer: ModalService, private depSer: DepartmentService, private locSer: LocationService) { }
+  constructor(
+    private modalSer: ModalService,
+    private depSer: DepartmentService,
+    private locSer: LocationService,
+    private dialogSer: DialogService
+  ) { }
 
   ngOnInit() {
     this.init();
@@ -49,7 +56,7 @@ export class DepartmentSaveComponent implements OnInit {
       //     console.log(this.notSelectedLocations);
 
       //     this.notSelectedLocations = this.ola(this.department.locations, this.notSelectedLocations);
-          
+
       //     console.log(this.notSelectedLocations);
       //   });
 
@@ -67,18 +74,32 @@ export class DepartmentSaveComponent implements OnInit {
       result => {
         this.requestStatus = result;
         if (this.requestStatus == 201) {
-          alert("Create Successful");
-          this.closeModal();
+          this.dialogSer.init(
+            "Operation success",
+            MyMessage.createDepartment,
+            undefined,
+            () => this.closeModal()
+          );
         }
         this.outputs();
       },
       error => {
         if (error.status == 409) {
-          alert("Name cannot be duplicated");
+          this.dialogSer.init(
+            "Operation fail",
+            MyMessage.dupplicatedDepName,
+            undefined,
+            undefined
+          );
         } else if (error.status = 400) {
-          alert("Bad request");
+          this.dialogSer.init(
+            "Operation fail",
+            MyMessage.error400Message,
+            undefined,
+            undefined
+          );
         }
-        this.closeModal();
+        this.requestStatus = 0;
         this.outputs();
       }
     );
@@ -89,15 +110,35 @@ export class DepartmentSaveComponent implements OnInit {
       result => {
         this.requestStatus = result;
         if (this.requestStatus == 200) {
-          alert("Update Successful");
-          this.closeModal();
+          this.dialogSer.init(
+            "Operation success",
+            MyMessage.updateDepartment,
+            undefined,
+            () => this.closeModal()
+          );
         }
         this.outputs();
       },
       error => {
-        if (this.requestStatus == 400) alert("Bad request");
+        if (error.status == 409) {
+          this.dialogSer.init(
+            "Operation fail",
+            MyMessage.dupplicatedDepName,
+            undefined,
+            undefined
+          );
+        } else if (error.status = 400) {
+          this.dialogSer.init(
+            "Operation fail",
+            MyMessage.error400Message,
+            undefined,
+            undefined
+          );
+        }
         this.requestStatus = 0;
-      });
+        this.outputs();
+      }
+    );
   }
 
   save() {

@@ -75,7 +75,9 @@ import { ReadNewsComponent } from './others/read-news/read-news.component';
 import { DetailComponent } from './question/detail/detail.component';
 import { ChooseTemplateComponent } from './survey/choose-template/choose-template.component';
 import { ApplyFilterComponent } from './survey/apply-filter/apply-filter.component';
-import { DialogComponent } from './others/dialog/dialog.component'
+import { DialogComponent } from './others/dialog/dialog.component';
+import { TeamDetailComponent } from './team/team-detail/team-detail.component';
+import { DepartmentDetailComponent } from './department/department-detail/department-detail.component'
 
 @NgModule({
   declarations: [
@@ -135,6 +137,8 @@ import { DialogComponent } from './others/dialog/dialog.component'
     ChooseTemplateComponent,
     ApplyFilterComponent,
     DialogComponent,
+    TeamDetailComponent,
+    DepartmentDetailComponent,
 
   ],
   imports: [
@@ -164,7 +168,9 @@ import { DialogComponent } from './others/dialog/dialog.component'
     AssignAccountComponent,
     DetailComponent,
     ApplyFilterComponent,
-    DialogComponent
+    DialogComponent,
+    TeamDetailComponent,
+    DepartmentDetailComponent
   ],
 
   providers: [
