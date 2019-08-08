@@ -86,14 +86,14 @@ export class DepartmentSaveComponent implements OnInit {
         if (error.status == 409) {
           this.dialogSer.init(
             "Operation fail",
-            "Fail to create department with name: " + this.department.name + '<br/>' + ".Name cannot be dupplicated",
+            "Fail to create department with name: " + this.department.name + ".Name cannot be dupplicated",
             undefined,
             () => this.closeModal()
           );
         } else if (error.status = 400) {
           this.dialogSer.init(
             "Operation fail",
-            "Fail to create department with name: " + this.department.name + '<br/>' + "Unexpected error has occured",
+            "Fail to create department with name: " + this.department.name + ".Unexpected error has occured",
             undefined,
             () => this.closeModal()
           );
@@ -109,13 +109,24 @@ export class DepartmentSaveComponent implements OnInit {
       result => {
         this.requestStatus = result;
         if (this.requestStatus == 200) {
-          alert("Update Successful");
-          this.closeModal();
+          this.dialogSer.init(
+            "Operation success",
+            "Successfully updated the department.",
+            undefined,
+            () => this.closeModal()
+          );
         }
         this.outputs();
       },
       error => {
-        if (this.requestStatus == 400) alert("Bad request");
+        if (this.requestStatus == 400) {
+          this.dialogSer.init(
+            "Operation fail",
+            "Fail to update department with name: " + this.department.name + ".Unexpected error has occured",
+            undefined,
+            () => this.closeModal()
+          );
+        }
         this.requestStatus = 0;
       });
   }
