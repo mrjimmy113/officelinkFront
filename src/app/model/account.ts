@@ -14,7 +14,7 @@ export class Account {
     role_id : Number ;
     //workspacename : String;
     isActivated = false;
-
+    dateCreated : Date;
     location : Location;
     workplace: Workplace;
     teams : Array<Team>;

@@ -20,16 +20,19 @@
     <div class="row">
       <div class="row col-sm-8">
 
-        <div class="col-sm-3 d-flex align-items-center clickable" (click)="sort('name')">
+        <div class="col-sm-2 d-flex align-items-center clickable" (click)="sort('name')">
           First name <i class="fas fa-sort icon"></i>
         </div>
-        <div class="col-sm-3 d-flex align-items-center clickable" (click)="sort('name')">
+        <div class="col-sm-2 d-flex align-items-center clickable" (click)="sort('name')">
           Last name
         </div>
-        <div class="col-sm-6 d-flex align-items-center clickable" (click)="sort('name')">
+        <div class="col-sm-5 d-flex align-items-center clickable" (click)="sort('name')">
           Email
         </div>
-
+        <div class="col-sm-3 d-flex align-items-center clickable" (click)="sort('name')">
+          Join date
+        </div>
+        
       </div>
 
       <div class="col-sm-4 d-flex align-items-center justify-content-center">
@@ -40,27 +43,35 @@
   <!--Row-->
   <div class="card" *ngFor="let item of itemList; let i = index">
     <div class="list-group-item w3-hover-blue " [ngClass]="{'w3-light-grey': ((i % 2) == 1)}"
-      [ngClass]="{'w3-white': ((i % 2) == 0)}" style="border:none">
+      [ngClass]="{'w3-white': ((i % 2) == 0)}" style="border:none" >
       <div class="row">
         <div class="row col-sm-8">
 
-          <div class="col-sm-3 d-flex align-items-center">
+          <div class="col-sm-2 d-flex align-items-center">
             {{item.firstname}}
           </div>
-          <div class="col-sm-3 d-flex align-items-center">
+          <div class="col-sm-2 d-flex align-items-center">
             {{item.lastname}}
           </div>
-          <div class="col-sm-6 d-flex align-items-center">
+          <div class="col-sm-5 d-flex align-items-center">
             {{item.email}}
           </div>
-
+          <div *ngIf="item.activated == true" class="col-sm-3 d-flex align-items-center">
+           {{item.dateCreated}}
+          </div>
+          
         </div>
 
-        <div class="col-sm-4 d-flex justify-content-center">
-          <button class="btn btn-warning" (click)="openAssign(item.id)">Assign</button>
-          <button class="btn btn-info" (click)="openEdit(item)" style="margin-left: 6px; margin-right: 6px"><i
-              class="fas fa-pen-alt"></i></button>
-          <button class="btn btn-danger" (click)="delete(item.id)"><i class="fas fa-trash-alt"></i></button>
+        <div class="col-sm-4 d-flex align-items-center justify-content-center">
+          <div class="w3-dropdown-hover">
+
+            <div class="w3-dropdown-content w3-bar-block">            
+              <button  class="btn btn-warning" (click)="openAssign(item.id)" *ngIf="item.activated == true">Assign</button>
+              <button class="btn btn-info" (click)="openEdit(item)" style="margin-left: 6px; margin-right: 6px" *ngIf="item.activated == true"><i
+                  class="fas fa-pen-alt"></i></button>
+              <button class="btn btn-danger" (click)="delete(item.id)"><i class="fas fa-trash-alt"></i></button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -75,7 +86,8 @@
     <li class="page-item " [ngClass]="{'disabled': currentPage == 1}">
       <button class="page-link" (click)="loadPage(currentPage - 1)" style="font-size: 24px">&laquo;</button>
     </li>
-    <li class="page-item d-flex align-content-center" *ngFor="let dummy of ' '.repeat(maxPage).split(''), let x = index"
+    <li class="page-item d-flex align-content-center"
+      *ngFor="let dummy of ' '.repeat(maxPage).split(''), let x = index"
       [ngClass]="{'active': currentPage == (x+1), 'disabled': currentPage == (x+1)}">
       <button class="page-link" (click)="loadPage(x + 1)" style="font-size: 16px">{{x + 1}}</button>
     </li>

@@ -1,5 +1,5 @@
 import { NgForm } from '@angular/forms';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
 import { ModalService} from '../../service/modal.service';
 import { from } from 'rxjs';
 import {AccountService} from '../../service/account.service'
@@ -13,6 +13,7 @@ import { Form } from '@angular/forms';
   styleUrls: ['./invitation.component.css']
 })
 export class InvitationComponent implements OnInit {
+  @Output() outputs ;
   listAccount : Account[];
   listEmail: String[];
   newEmail:String;
@@ -43,7 +44,7 @@ export class InvitationComponent implements OnInit {
   
       if(this.newEmail != null ){
         this.listEmail.push(this.newEmail);
-      emailForm.resetForm();
+        emailForm.resetForm();
   
       }         
       }, 
@@ -79,8 +80,10 @@ export class InvitationComponent implements OnInit {
         this.accountSer.sendInvite(this.listEmail).subscribe(res => {
 
           alert("Send Mail Success")
-          this.displaySer.hideLoader();
-          this.modalSer.destroy();
+           this.displaySer.hideLoader();
+           this.modalSer.destroy();
+           this.outputs();
+
         },
         error => {
           if(error.status == 400){
@@ -92,6 +95,8 @@ export class InvitationComponent implements OnInit {
       }    
       )     
     }
+
+
   }
 
   closeModal(){
