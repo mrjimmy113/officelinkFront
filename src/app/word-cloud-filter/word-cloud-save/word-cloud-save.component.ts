@@ -109,10 +109,10 @@ export class WordCloudSaveComponent implements OnInit {
     this.dialogSer.init(
       MyMessage.wordCloudFilterTitle,
       MyMessage.filterDialogExit,
-      undefined,
       () => {
         this.closeModal();
-      }
+      },
+      undefined
     );
   }
 
