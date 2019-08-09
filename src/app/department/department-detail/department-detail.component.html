@@ -29,7 +29,7 @@
             <tbody>
               
               <tr *ngFor="let team of dep.teams; let i = index">
-                <th scope="row">{{i}}</th>
+                <th scope="row">{{i + 1}}</th>
                 <td>{{team.name}}</td>
                 <td>{{team.dateCreated}}</td>
                 <!-- <td><button class="btn btn-warning" (click)="unassigned(acc.id)">Unassigned from team</button></td> -->
