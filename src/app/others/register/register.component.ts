@@ -61,23 +61,33 @@ export class RegisterComponent implements OnInit {
 
       this.accoutSer.sendMail(this.account).subscribe(
         res => {
-          this.accoutSer.createAccount(this.account).subscribe(res => {});
-          this.dialogService.init("Office Link", "Successful registration of account information, please check your mail to complete the registration", () => {
+          this.accoutSer.createAccount(this.account).subscribe(res => {
+            this.dialogService.init("Office Link", "Successful registration of account information, please check your mail to complete the registration", () => {
+              this.displaySer.hideLoader();
+              this.route.navigateByUrl('/');
+            },() => {
+              this.displaySer.hideLoader();
+              this.route.navigateByUrl('/');
+            });
+
+          }, error => {
+            this.errorStatus = error.status;
+            if (this.errorStatus == 409) {
+              this.dialogService.init("Office Link", "Sorry, email or workplace already exists, please check again", undefined,undefined);
+             // alert('Sorry, email or workplace already exists, please check again');
+            }
             this.displaySer.hideLoader();
-            this.route.navigateByUrl('/');
-          },() => {
-            this.displaySer.hideLoader();
-            this.route.navigateByUrl('/');
+
           });
+         
          // alert('Successful registration of account information, please check your mail to complete the registration');
          
         },
         error => {
-          this.errorStatus = error.status;
-          if (this.errorStatus == 409) {
+          if(error.status == 409){
             this.dialogService.init("Office Link", "Sorry, email or workplace already exists, please check again", undefined,undefined);
-           // alert('Sorry, email or workplace already exists, please check again');
-          }
+             // alert('Sorry, email or workplace already exists, please check again');
+            }       
           if (error.status == 400) {
             this.dialogService.init("Office Link", "The system has failed, please try again", undefined,undefined);
             //alert('The system has failed, please try again');

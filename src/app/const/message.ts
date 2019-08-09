@@ -36,4 +36,25 @@ export const MyMessage = {
   surveyQuestionLimit:"Survey must have more than one question",
   surveyTitleRequire:"Please fill in survey title",
   //#region
+
+  //#region Account
+  deleteAccountTitle :"Delete Account",
+  deleteAccountMessage : "Do you want delete this account",
+  deleteAccountSuccess : "Account is delete successfully",
+  assignAccountTitle : "Assign Account",
+  assignAccountSuccess : "Assign account successfully",
+  assignLocationRequire : "Please choose Location",
+  assignTeamRequire : "The team list can not be empty",
+  //#endregion
+
+  //#region Register
+  registerTitle : "Register Account",
+  registerFillFormRequire : "Please complete your register form",
+  registerSuccess : "Successful registration of account information, please check your mail to complete the registration",
+  registerSystemError : "Sorry, email or workplace already exists, please check again", 
+  registerExisted : "Sorry, email or workplace already exists, please check again",
+  //#region
+
+  
+
 };
