@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { MapsAPILoader } from '@agm/core';
 import { DialogService } from "src/app/service/dialog.service";
+import { MyMessage } from 'src/app/const/message';
 
 @Component({
   selector: 'app-location-edit',
@@ -81,37 +82,37 @@ export class LocationEditComponent implements OnInit {
     this.service.update(this.location).subscribe(result => {
       this.requestStatus = result;
       if (this.requestStatus == 200) {
-        this.dialogSer.init("Update Location", "Successfull updated", undefined, undefined);
+        this.dialogSer.init("Update Location", MyMessage.updateLocation, undefined, undefined);
         this.router.navigateByUrl('/location')
       }
     },
       error => {
         if (error.status == 409) {
-          this.dialogSer.init("Update Location", "Name or Address is existed!", undefined, undefined);
+          this.dialogSer.init("Update Location", MyMessage.dupplicatedLocation, undefined, undefined);
           this.requestStatus = 0;
-        } else if ((error.status = 404)) {
-          this.dialogSer.init("Update Location", "Fail to update", undefined, undefined);
+        } else {
+          this.dialogSer.init("Update Location", MyMessage.error400Message, undefined, undefined);
           this.requestStatus = 0;
         }
       }
     );
   }
 
-  getAddress(latitude, longitude) {
-    this.geoCoder.geocode({ 'location': { lat: latitude, lng: longitude } }, (results, status) => {
-      if (status === 'OK') {
-        if (results[0]) {
-          this.zoom = 15;
-          this.address = results[0].formatted_address;
-        } else {
-          window.alert('No results found');
-        }
-      } else {
-        window.alert('Geocoder failed due to: ' + status);
-      }
+  // getAddress(latitude, longitude) {
+  //   this.geoCoder.geocode({ 'location': { lat: latitude, lng: longitude } }, (results, status) => {
+  //     if (status === 'OK') {
+  //       if (results[0]) {
+  //         this.zoom = 15;
+  //         this.address = results[0].formatted_address;
+  //       } else {
+  //         window.alert('No results found');
+  //       }
+  //     } else {
+  //       window.alert('Geocoder failed due to: ' + status);
+  //     }
 
-    });
-  }
+  //   });
+  // }
 
   back() {
     this.router.navigateByUrl("/location");

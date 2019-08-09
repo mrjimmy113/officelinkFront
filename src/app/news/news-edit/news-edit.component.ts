@@ -6,6 +6,7 @@ import { NgForm } from '@angular/forms';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { DomSanitizer } from '@angular/platform-browser';
 import { DialogService } from "src/app/service/dialog.service";
+import { MyMessage } from 'src/app/const/message';
 
 @Component({
   selector: 'app-news-edit',
@@ -80,17 +81,11 @@ export class NewsEditComponent implements OnInit {
       this.newsSer.update(fd).subscribe(result => {
         this.requestStatus = result;
         if (this.requestStatus == 200) {
-          this.dialogSer.init("Update News", "Successfully updated", undefined, undefined);
+          this.dialogSer.init("Update News", MyMessage.updateNews, undefined, undefined);
         }
       },
         error => {
-          if (error.status == 409) {
-            this.dialogSer.init("Update News", "Fail to update", undefined, undefined);
-            this.requestStatus = 0;
-          } else if (error.status = 404) {
-            this.dialogSer.init("Update News", "Something wrong", undefined, undefined);
-            this.requestStatus = 0;
-          }
+          this.dialogSer.init("Update News", MyMessage.error400Message, undefined, undefined);
         }
       );
     } else {
@@ -98,17 +93,11 @@ export class NewsEditComponent implements OnInit {
       this.newsSer.updateNotHasFile(fd).subscribe(result => {
         this.requestStatus = result;
         if (this.requestStatus == 200) {
-          this.dialogSer.init("Update News", "Successfully updated", undefined, undefined);
+          this.dialogSer.init("Update News", MyMessage.updateNews, undefined, undefined);
         }
       },
         error => {
-          if (error.status == 409) {
-            this.dialogSer.init("Update News", "Fail to update", undefined, undefined);
-            this.requestStatus = 0;
-          } else if (error.status = 404) {
-            this.dialogSer.init("Update News", "Something wrong", undefined, undefined);
-            this.requestStatus = 0;
-          }
+          this.dialogSer.init("Update News", MyMessage.error400Message, undefined, undefined);
         }
       );
     }

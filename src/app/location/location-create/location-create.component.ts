@@ -13,6 +13,7 @@ import { NgForm } from "@angular/forms";
 import { MapsAPILoader } from "@agm/core";
 import { PlatformLocation } from "@angular/common";
 import { DialogService } from "src/app/service/dialog.service";
+import { MyMessage } from 'src/app/const/message';
 
 @Component({
   selector: "app-location-create",
@@ -80,16 +81,16 @@ export class LocationCreateComponent implements OnInit {
     this.service.create(this.location).subscribe(
       result => {
         if (result == 201) {
-          this.dialogSer.init("Create Location", "Create Successfull", undefined, undefined);
+          this.dialogSer.init("Create Location", MyMessage.createLocation, undefined, undefined);
           this.router.navigateByUrl('/location');
         }
       },
       error => {
         if (error.status == 409) {
-          this.dialogSer.init("Create Location", "Name or Address is existed!", undefined, undefined);
+          this.dialogSer.init("Create Location", MyMessage.dupplicatedLocation, undefined, undefined);
           this.requestStatus = 0;
-        } else if ((error.status = 404)) {
-          this.dialogSer.init("Create Location", "Fail to create", undefined, undefined);
+        } else {
+          this.dialogSer.init("Create Location", MyMessage.error400Message, undefined, undefined);
           this.requestStatus = 0;
         }
       }
@@ -102,28 +103,26 @@ export class LocationCreateComponent implements OnInit {
         this.location.latitude = position.coords.latitude;
         this.location.longitude = position.coords.longitude;
         this.zoom = 15;
-        this.getAddress(this.location.latitude, this.location.longitude);
+        
       });
     }
   }
 
-  getAddress(latitude, longitude) {
-    this.geoCoder.geocode(
-      { location: { lat: latitude, lng: longitude } },
-      (results, status) => {
-        if (status === "OK") {
-          if (results[0]) {
-            this.zoom = 15;
-            this.address = results[0].formatted_address;
-          } else {
-            window.alert("No results found");
-          }
-        } else {
-          window.alert("Geocoder failed due to: " + status);
-        }
-      }
-    );
-  }
+  // getAddress(latitude, longitude) {
+  //   this.geoCoder.geocode({ 'location': { lat: latitude, lng: longitude } }, (results, status) => {
+  //     if (status === 'OK') {
+  //       if (results[0]) {
+  //         this.zoom = 15;
+  //         this.address = results[0].formatted_address;
+  //       } else {
+  //         window.alert('No results found');
+  //       }
+  //     } else {
+  //       window.alert('Geocoder failed due to: ' + status);
+  //     }
+
+  //   });
+  // }
 
   back() {
     this.router.navigateByUrl("/location");

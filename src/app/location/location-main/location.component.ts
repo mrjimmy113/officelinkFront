@@ -52,15 +52,15 @@ export class LocationComponent implements OnInit {
   }
 
   delete(id) {
-    this.dialogSer.init("Delete Location", "Do you want to delete this location?", () => {
+    this.dialogSer.init("Delete Location", MyMessage.confirmDeleteLocation, () => {
       this.service.delete(id).subscribe(result => {
         this.requestStatus = result;
         if (this.requestStatus == 200) {
-          this.dialogSer.init("Delete Location", "Successfully Deleted", undefined, undefined);
+          this.dialogSer.init("Delete Location", MyMessage.deleteLocation, undefined, undefined);
           this.search();
         }
       }, err => {
-        this.dialogSer.init("Delete Location", "Fail to delete", undefined, undefined);
+        this.dialogSer.init("Delete Location", MyMessage.error400Message, undefined, undefined);
       })
     }, undefined);
   }
