@@ -92,19 +92,19 @@ export class SurveySaveComponent implements OnInit {
       this.dialogSer.init(MyMessage.surveyTitle,MyMessage.surveyQuestionLimit,undefined,undefined);
       return false;
     }
-
     for (let index = 0; index < this.qComponentList.length; index++) {
       const element = this.qComponentList[index];
       if(element.validate()) {
-        return false;
+        return true;
       }
     }
-
     return true;
   }
 
   save() {
+    console.log("save");
     if(!this.isValidForm()) return;
+    console.log("Qua validate");
     if (!this.isEdit) {
       this.surveySer.create(this.survey).subscribe(result => {
         this.dialogSer.init(MyMessage.surveyTitle,MyMessage.createSurveySuccess,undefined,() => {this.close();});
