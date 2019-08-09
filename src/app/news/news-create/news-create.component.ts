@@ -106,4 +106,8 @@ export class NewsCreateComponent implements OnInit {
       this.isContent = true;
     }
   }
+
+  back() {
+    this.router.navigateByUrl("/news");
+  }
 }

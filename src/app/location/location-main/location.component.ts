@@ -3,6 +3,7 @@ import { LocationService } from '../../service/location.service';
 import { DatePipe } from '@angular/common';
 import { UltisService } from "src/app/service/ultis.service";
 import { DialogService } from "src/app/service/dialog.service";
+import { MyMessage } from "src/app/const/message";
 
 @Component({
   selector: 'app-location',
