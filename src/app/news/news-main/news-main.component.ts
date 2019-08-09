@@ -4,6 +4,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { DatePipe } from '@angular/common';
 import { UltisService } from "src/app/service/ultis.service";
 import { DialogService } from "src/app/service/dialog.service";
+import { MyMessage } from 'src/app/const/message';
 
 @Component({
   selector: 'app-news-main',
@@ -54,17 +55,15 @@ export class NewsMainComponent implements OnInit {
   }
 
   delete(id) {
-    this.dialogSer.init("Delete News", "Do you want to delete this news?", () => {
+    this.dialogSer.init("Delete News", MyMessage.confirmDeleteNews, () => {
       this.service.delete(id).subscribe(result => {
         this.requestStatus = result;
         if (this.requestStatus == 200) {
-          this.dialogSer.init("Delete News", "Successfully Deleted", () => {
-            this.search();
-          }, undefined);
+          this.dialogSer.init("Delete News", MyMessage.deleteNews, undefined, undefined);
+          this.search();
         }
       }, err => {
-        this.dialogSer.init("Delete News", "Fail to delete", () => {
-        }, undefined);
+        this.dialogSer.init("Delete News", MyMessage.error400Message, undefined, undefined);
       })
     }, undefined);
   }

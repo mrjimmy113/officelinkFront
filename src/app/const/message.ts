@@ -73,4 +73,18 @@ export const MyMessage = {
   surveyQuestionLimit:"Survey must have more than one question",
   surveyTitleRequire:"Please fill in survey title",
   //#region
+  //#region Location
+  createLocation: `Location has been created.`,
+  updateLocation: `Location has been updated.`,
+  dupplicatedLocation: `This name or address is already existed in your workplace. Please input again.`,
+  deleteLocation: `Location has been deleted.`,
+  confirmDeleteLocation: `This action will delete the chosen location. Do you want to continue?`,
+  //#endregion
+
+  //#region News
+  createNews: `News has been created.`,
+  updateNews: `News has been updated.`,
+  deleteNews: `News has been deleted.`,
+  confirmDeleteNews: `This action will delete the chosen news. Do you want to continue?`,
+  //#endregion
 };

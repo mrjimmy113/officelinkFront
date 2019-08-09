@@ -50,7 +50,7 @@
             {{item.address}}
           </div>
           <div class="col-sm-3 d-flex align-items-center">
-            {{datePipe.transform(this.item.dateCreated, 'yyyy-MM-dd')}}
+            {{datePipe.transform(this.item.dateModified, 'yyyy-MM-dd')}}
           </div>
         </div>
 
@@ -74,19 +74,19 @@
   <h2>No record found</h2>
 </div>
 <ng-template #noData>
-  <div class="d-flex justify-content-end">
+  <div class="d-flex justify-content-end" *ngIf="itemList.length != 0">
     <ul class="pagination ">
       <li class="page-item " [ngClass]="{'disabled': currentPage == 1}">
-        <button class="page-link" style="font-size: 24px">&laquo;</button>
+        <button class="page-link" (click)="loadPage(currentPage - 1)" style="font-size: 24px">&laquo;</button>
       </li>
-      <li class="page-item d-flex align-content-center"
-        *ngFor="let dummy of ' '.repeat(maxPage).split(''), let x = index"
+      <li class="page-item d-flex align-content-center" *ngFor="let dummy of ' '.repeat(maxPage).split(''), let x = index"
         [ngClass]="{'active': currentPage == (x+1), 'disabled': currentPage == (x+1)}">
-        <button class="page-link" style="font-size: 16px">{{x + 1}}</button>
+        <button class="page-link" (click)="loadPage(x + 1)" style="font-size: 16px">{{x + 1}}</button>
       </li>
       <li class="page-item" [ngClass]="{'disabled': maxPage == currentPage}">
-        <button class="page-link" style="font-size: 24px">&raquo;</button>
+        <button class="page-link" (click)="loadPage(currentPage + 1)" style="font-size: 24px">&raquo;</button>
       </li>
     </ul>
   </div>
+  
 </ng-template>
