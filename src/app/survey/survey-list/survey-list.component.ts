@@ -118,16 +118,18 @@ export class SurveyListComponent implements OnInit {
   getTimeFromCron(cronExpression: String) {
     let result = "";
     var list = cronExpression.split(" ");
-    result = list[2] + ":" + list[1];
+    result = (Number(list[2]) < 10 ? "0"+list[2] : list[2]) + ":" + (Number(list[1]) < 10 ? "0"+list[1] : list[1]);
     return result;
   }
 
   getWeekDaysFromCron(cronExpression: String) {
-    let result = "";
+    let result = "Every ";
     var list = cronExpression.split(" ");
-    result = list[5];
-    if (result == "*") {
-      result = "Every Day";
+
+    if(list[5] == "?") {
+      result = result + list[3] + "th of " + list[4];
+    }else {
+      result = result + list[5] + " of " + list[4];
     }
     return result;
   }

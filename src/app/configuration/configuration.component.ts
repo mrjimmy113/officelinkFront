@@ -36,7 +36,7 @@ export class ConfigurationComponent implements OnInit {
   getTimeFromCron(cronExpression: String) {
     let result = "";
     var list = cronExpression.split(" ");
-    result = list[2] + ":" + list[1];
+    result = (Number(list[2]) < 10 ? "0"+list[2] : list[2]) + ":" + (Number(list[1]) < 10 ? "0"+list[1] : list[1]);
     return result;
   }
 
