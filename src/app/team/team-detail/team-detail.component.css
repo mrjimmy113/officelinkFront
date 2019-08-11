@@ -1,0 +1,8 @@
+.accounts-table {
+    border: 1px solid black;
+}
+
+a.disabled {
+    pointer-events: painted;
+    cursor: pointer;
+}

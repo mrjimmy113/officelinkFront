@@ -1,3 +1,5 @@
+import { SurveyDetailComponent } from './../survey-detail/survey-detail.component';
+import { ModalService } from 'src/app/service/modal.service';
 import { EventEmitter } from '@angular/core';
 import { SurveyService } from 'src/app/service/survey.service';
 import { Component, OnInit, Output } from '@angular/core';
@@ -16,7 +18,7 @@ export class ChooseTemplateComponent implements OnInit {
   @Output() newBlankSurvey = new EventEmitter();
   @Output() newWithTemplate = new EventEmitter();
 
-  constructor(private surveySer:SurveyService) { }
+  constructor(private surveySer:SurveyService, private modalSer:ModalService) { }
 
   ngOnInit() {
     this.itemList = new Array<Survey>();
@@ -47,6 +49,9 @@ export class ChooseTemplateComponent implements OnInit {
   }
   newBlank() {
     this.newBlankSurvey.emit();
+  }
+  openDetail(survey) {
+    this.modalSer.init(SurveyDetailComponent,survey,() => {this.getTemplate(survey.id)});
   }
 
 }

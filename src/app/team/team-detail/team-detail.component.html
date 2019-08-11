@@ -1,0 +1,47 @@
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">Team Detail</h5>
+      <button type="button" class="close" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="border-bottom mb-lg-3 pb-lg-2">
+        <div><b>Name:</b> {{team.name}}</div>
+        <div><b>Date Created:</b> {{team.dateCreated}}</div>
+        <div><b>Department:</b> {{team.department.name}}</div>
+      </div>
+      <div class="banner">
+        <h6 class="font-weight-bold">Employee(s):</h6>
+        <p *ngIf="team.accounts == null || team.accounts == undefined || team.accounts.length <= 0">
+          No employee has been assigned to this team yet.
+          <a [routerLink]="['/account']" routerLinkActive="router-link-active"  (click)="redirectToAccount()">Assign employee here</a>
+        </p>
+        
+        <table class="table" *ngIf="team.accounts != null && team.accounts != undefined && team.accounts.length > 0">
+          <thead>
+            <tr>
+              <th>Index</th>
+              <th>Email</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+            <tr *ngFor="let acc of team.accounts; let i = index">
+              <th scope="row">{{i}}</th>
+              <td>{{acc.email}}</td>
+              <td>{{acc.firstname}}</td>
+              <td>{{acc.lastname}}</td>
+              <td><button class="btn btn-warning" (click)="unassigned(acc.id)">Unassigned from team</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>

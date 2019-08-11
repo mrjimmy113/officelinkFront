@@ -3,6 +3,7 @@ import { LocationService } from '../../service/location.service';
 import { DatePipe } from '@angular/common';
 import { UltisService } from "src/app/service/ultis.service";
 import { DialogService } from "src/app/service/dialog.service";
+import { MyMessage } from "src/app/const/message";
 
 @Component({
   selector: 'app-location',
@@ -51,16 +52,15 @@ export class LocationComponent implements OnInit {
   }
 
   delete(id) {
-    this.dialogSer.init("Delete Location", "Do you want to delete this location?", () => {
+    this.dialogSer.init("Delete Location", MyMessage.confirmDeleteLocation, () => {
       this.service.delete(id).subscribe(result => {
         this.requestStatus = result;
         if (this.requestStatus == 200) {
-          this.dialogSer.init("Delete Location", "Successfully Deleted", () => {
-            this.search();
-          }, undefined);
+          this.dialogSer.init("Delete Location", MyMessage.deleteLocation, undefined, undefined);
+          this.search();
         }
       }, err => {
-        this.dialogSer.init("Delete Location", "Fail to delete", undefined, undefined);
+        this.dialogSer.init("Delete Location", MyMessage.error400Message, undefined, undefined);
       })
     }, undefined);
   }

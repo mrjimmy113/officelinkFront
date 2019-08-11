@@ -1,0 +1,43 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Department Detail</h5>
+        <button type="button" class="close" (click)="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="border-bottom mb-lg-3 pb-lg-2">
+          <div><b>Name:</b> {{dep.name}}</div>
+          <div><b>Date Created:</b> {{dep.dateCreated}}</div>
+        </div>
+        <div class="banner">
+          <h6 class="font-weight-bold">Team(s):</h6>
+          <p *ngIf="dep.teams == null || dep.teams == undefined || dep.teams.length <= 0">
+            No team has been assigned to this department yet.
+            <a [routerLink]="['/team']" routerLinkActive="router-link-active"  (click)="redirectToTeam()">Go to team management</a>
+          </p>
+          
+          <table class="table" *ngIf="dep.teams != null && dep.teams != undefined && dep.teams.length > 0">
+            <thead>
+              <tr>
+                <th>Index</th>
+                <th>Team Name</th>
+                <th>Date Created</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+              <tr *ngFor="let team of dep.teams; let i = index">
+                <th scope="row">{{i}}</th>
+                <td>{{team.name}}</td>
+                <td>{{team.dateCreated}}</td>
+                <!-- <td><button class="btn btn-warning" (click)="unassigned(acc.id)">Unassigned from team</button></td> -->
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+  
+    </div>
+  </div>

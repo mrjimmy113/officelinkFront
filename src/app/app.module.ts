@@ -78,6 +78,9 @@ import { ApplyFilterComponent } from './survey/apply-filter/apply-filter.compone
 import { DialogComponent } from './others/dialog/dialog.component';
 import {MatCheckboxModule} from '@angular/material';
 
+import { TeamDetailComponent } from './team/team-detail/team-detail.component';
+import { DepartmentDetailComponent } from './department/department-detail/department-detail.component';
+import { SurveyDetailComponent } from './survey/survey-detail/survey-detail.component'
 
 @NgModule({
   declarations: [
@@ -137,6 +140,9 @@ import {MatCheckboxModule} from '@angular/material';
     ChooseTemplateComponent,
     ApplyFilterComponent,
     DialogComponent,
+    TeamDetailComponent,
+    DepartmentDetailComponent,
+    SurveyDetailComponent,
 
   ],
   imports: [
@@ -167,7 +173,10 @@ import {MatCheckboxModule} from '@angular/material';
     AssignAccountComponent,
     DetailComponent,
     ApplyFilterComponent,
-    DialogComponent
+    DialogComponent,
+    TeamDetailComponent,
+    DepartmentDetailComponent,
+    SurveyDetailComponent
   ],
 
   providers: [

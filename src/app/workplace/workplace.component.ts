@@ -3,6 +3,9 @@ import { ModalService } from '../service/modal.service';
 import { WorkplaceService } from '../service/workplace.service';
 import { WorkplaceSaveComponent } from '../workplace-save/workplace-save.component';
 import { Workplace } from '../model/workplace';
+import { DialogService } from '../service/dialog.service';
+import { MyMessage } from '../const/message';
+import { UltisService } from '../service/ultis.service';
 
 @Component({
   selector: 'app-workplace',
@@ -15,8 +18,14 @@ export class WorkplaceComponent implements OnInit {
   maxPage;
   searchTerm = "";
   requestStatus: Number;
+  isSort = "";
 
-  constructor(private modalSer: ModalService, private ser: WorkplaceService) { }
+  constructor(
+    private modalSer: ModalService, 
+    private ultisSer: UltisService,
+    private ser: WorkplaceService,
+    private dialogSer: DialogService
+    ) { }
 
   ngOnInit() {
     this.search("");
@@ -26,6 +35,7 @@ export class WorkplaceComponent implements OnInit {
     this.ser.searchGetPage(value, 1).subscribe(result => {
       this.maxPage = result.maxPage;
       this.itemList = result.objList;
+      console.log(this.itemList);
     })
   }
 
@@ -46,21 +56,27 @@ export class WorkplaceComponent implements OnInit {
     }, 300);
   }
 
-  delete(id) {
-    if (confirm("Do you want to delete this")) {
-      this.ser.delete(id).subscribe(result => {
-        this.requestStatus = result;
-        if (this.requestStatus == 200) {
-          alert("Success");
-          if (this.itemList.length <= 1) {
-            this.loadPage(this.currentPage - 1);
+  deactive(wp: Workplace) {
+    this.dialogSer.init("Deactive Workplace", MyMessage.confirmDeactivateWorkplace, () =>
+      this.ser.delete(wp.id).subscribe(
+        result => {
+          this.requestStatus = result;
+          if (this.requestStatus == 200) {
+            this.dialogSer.init("Operation success", MyMessage.deactiveWorkplace, undefined, undefined)
+            if (this.itemList.length <= 1) {
+              this.loadPage(this.currentPage - 1);
+            }
+            else {
+              this.loadPage(this.currentPage);
+            }
           }
-          else {
-            this.loadPage(this.currentPage);
+        },
+        error => {
+          if (error.status = 400) {
+            this.dialogSer.init("Operation fail", MyMessage.actionError, undefined, undefined)
           }
         }
-      });
-    }
+      ), undefined);
   }
 
   loadPage(pageNumber) {
@@ -71,6 +87,12 @@ export class WorkplaceComponent implements OnInit {
     })
   }
   sort(property) {
-
+    if (this.isSort == property) {
+      this.itemList.sort(this.ultisSer.sortByPropertyNameDSC(property));
+      this.isSort = "";
+    } else {
+      this.itemList.sort(this.ultisSer.sortByPropertyNameASC(property));
+      this.isSort = property;
+    }
   }
 }

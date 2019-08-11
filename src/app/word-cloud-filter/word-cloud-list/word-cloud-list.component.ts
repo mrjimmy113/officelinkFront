@@ -63,8 +63,8 @@ export class WordCloudListComponent implements OnInit {
     let oldTerm = this.searchTerm;
     setTimeout(() => {
       if (oldTerm == this.searchTerm) {
+        this.currentPage = 1;
         this.search();
-        console.log(this.searchTerm);
       }
     }, 300);
   }

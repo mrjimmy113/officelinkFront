@@ -1,5 +1,5 @@
 import { DialogService } from './../../service/dialog.service';
-import { Component, OnInit , Input, Output} from '@angular/core';
+import { Component, OnInit, Input, Output, ViewChild, ElementRef } from '@angular/core';
 
 
 @Component({
@@ -10,12 +10,14 @@ import { Component, OnInit , Input, Output} from '@angular/core';
 export class DialogComponent implements OnInit {
   @Input() inputs;
   @Output() outputs;
+  @ViewChild("cancelButton") cancelBtn : ElementRef;
   title : string;
   message : string;
   isConfirm = false;
   constructor() { }
 
   ngOnInit() {
+    this.cancelBtn.nativeElement.focus();
     this.title = this.inputs[0];
     this.message = this.inputs[1];
     if(this.outputs[0] != undefined || this.outputs[0] != null) this.isConfirm = true;

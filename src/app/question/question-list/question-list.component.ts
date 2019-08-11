@@ -55,6 +55,7 @@ export class QuestionListComponent implements OnInit {
     let newSearchTerm = this.searchTerm;
     setTimeout(() => {
       if (newSearchTerm == this.searchTerm) {
+        this.currentPage = 1;
         this.search();
       }
     }, 300);
