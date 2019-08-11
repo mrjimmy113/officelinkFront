@@ -10,7 +10,7 @@
       <div class="modal-body">
         <form #depForm="ngForm">
           <div class="form-group">
-            <label>Workplace Name</label>
+            <label>Workplace Name(*)</label>
             <input class="form-control" name="name" #name="ngModel" [(ngModel)]="workplace.name"
               [ngClass]="{'is-invalid' : (name.invalid && (name.dirty || name.touched))}" required
               minlength="2" maxlength="50" />
