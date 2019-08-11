@@ -4,6 +4,7 @@ import { DatePipe } from '@angular/common';
 import { UltisService } from "src/app/service/ultis.service";
 import { DialogService } from "src/app/service/dialog.service";
 import { MyMessage } from "src/app/const/message";
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-location',
@@ -55,12 +56,17 @@ export class LocationComponent implements OnInit {
     this.dialogSer.init("Delete Location", MyMessage.confirmDeleteLocation, () => {
       this.service.delete(id).subscribe(result => {
         this.requestStatus = result;
+        console.log("haha ", this.requestStatus);
         if (this.requestStatus == 200) {
           this.dialogSer.init("Delete Location", MyMessage.deleteLocation, undefined, undefined);
           this.search();
         }
-      }, err => {
-        this.dialogSer.init("Delete Location", MyMessage.error400Message, undefined, undefined);
+      }, (err: HttpErrorResponse) => {
+        if (err.status == 409) {
+          this.dialogSer.init("Delete Location", MyMessage.deleteLocationConflict, undefined, undefined);
+        } else {
+          this.dialogSer.init("Delete Location", MyMessage.error400Message, undefined, undefined);
+        }
       })
     }, undefined);
   }
