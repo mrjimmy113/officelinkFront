@@ -110,9 +110,7 @@ export class AssignAccountComponent implements OnInit {
     assignInfor.teamIdList = this.choosenTeamList;
     this.accountSer.assign(assignInfor).subscribe(result => {
       //alert("Assigned Successfully");
-      this.dialogService.init("Assign Account", MyMessage.assignAccountSuccess , () => {
-        this.modalSer.destroy();
-      },() => {
+      this.dialogService.init("Assign Account", MyMessage.assignAccountSuccess , undefined ,() => {
         this.modalSer.destroy();
       });
       
