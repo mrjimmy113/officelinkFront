@@ -6,6 +6,8 @@ import { Account } from '../../model/account';
 import {Location} from '../../model/location';
 import {Workplace} from '../../model/workplace';
 import {PasswordInfo} from "../../model/passwordInfo"
+import {MyMessage} from "../../const/message"
+import { DialogService } from "src/app/service/dialog.service";
 
 import { from } from 'rxjs';
 
@@ -28,7 +30,7 @@ export class AccountProfileComponent implements OnInit {
 
   
 
-  constructor(private accountService : AccountService) { };
+  constructor(private accountService : AccountService, private dialogSerive : DialogService) { };
 
   ngOnInit() {
     
@@ -58,10 +60,17 @@ export class AccountProfileComponent implements OnInit {
 
   changeProfile(){
     this.accountService.changeProfile(this.account).subscribe(res => {
-       if(res == 200){
-          alert("Update Info Success")
+       if(this.account.firstname == "" || this.account.lastname == ""){
+        this.dialogSerive.init("Form Require" , MyMessage.profileFillFormRequire , undefined , undefined);
+       }
+       else if (res == 200){
+        this.dialogSerive.init("Change Profile" , MyMessage.profileSuccess , undefined , undefined);
        }
 
+    } , error => {
+      if(error.status == 400){
+        this.dialogSerive.init("400" , MyMessage.error400Message , undefined , undefined);
+      }
     })
   }
 
@@ -70,22 +79,20 @@ export class AccountProfileComponent implements OnInit {
         this.passwordInfo.email = this.account.email;
         this.passwordInfo.newPassword = this.newPasswordText;
         if(this.currentPasswordText == null || this.newPasswordText == null || this.confrimPasswordText == null ){
-          alert("Input not empty, try again");
+          this.dialogSerive.init("Form Require" , MyMessage.profileFillFormRequire , undefined , undefined);
         }
-        if(this.newPasswordText != this.confrimPasswordText){
-          alert("New password And Confirm new password not match");
-        }else{
+      else{
          
             this.accountService.changePassword(this.passwordInfo).subscribe(res => {
              
               if(res == 200){
-                  alert("Change password sucess");
+                this.dialogSerive.init("Change Profile" , MyMessage.profileSuccess , undefined , undefined);
               }
             },
             error => {
-              if(error.status == 400){
-                alert("Current password wrong, try again")
-              }
+             
+                this.dialogSerive.init("Operation fail" , MyMessage.currentPasswordError , undefined , undefined);
+              
             }
             
             )

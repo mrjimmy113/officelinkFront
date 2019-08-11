@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 
 import { Router } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
@@ -7,6 +8,8 @@ import { Account } from "../../model/account";
 import { Location } from "../../model/location";
 import { Workplace } from "../../model/workplace";
 import { DisplayService } from "src/app/service/display.service";
+import { DialogService } from "src/app/service/dialog.service";
+import {MyMessage} from "../../const/message";
 
 @Component({
   selector: "app-register",
@@ -25,7 +28,8 @@ export class RegisterComponent implements OnInit {
     private accoutSer: AccountService,
     private displaySer: DisplayService,
     private route: Router,
-    private modalSer: ModalService
+    private modalSer: ModalService, 
+    private dialogService : DialogService
   ) {}
 
   ngOnInit() {
@@ -48,7 +52,8 @@ export class RegisterComponent implements OnInit {
       this.account.password == null ||
       this.confirmPassText == null
     ) {
-      alert('Please complete your register form');
+      this.dialogService.init("Form Require", MyMessage.registerFillFormRequire, undefined,undefined);
+      
       return;
     }
     if (this.account.password != this.confirmPassText) {
@@ -58,18 +63,36 @@ export class RegisterComponent implements OnInit {
 
       this.accoutSer.sendMail(this.account).subscribe(
         res => {
-          this.accoutSer.createAccount(this.account).subscribe(res => {});
-          alert('Successful registration of account information, please check your mail to complete the registration');
-          this.displaySer.hideLoader();
-          this.route.navigateByUrl('/');
+          this.accoutSer.createAccount(this.account).subscribe(res => {
+            this.dialogService.init("Register", MyMessage.registerSuccess , () => {
+              this.displaySer.hideLoader();
+              this.route.navigateByUrl('/');
+            },() => {
+              this.displaySer.hideLoader();
+              this.route.navigateByUrl('/');
+            });
+
+          }, error => {
+            this.errorStatus = error.status;
+            if (this.errorStatus == 409) {
+              this.dialogService.init("Operation fail",MyMessage.registerExisted, undefined,undefined);
+             // alert('Sorry, email or workplace already exists, please check again');
+            }
+            this.displaySer.hideLoader();
+
+          });
+         
+         // alert('Successful registration of account information, please check your mail to complete the registration');
+         
         },
-        error => {
-          this.errorStatus = error.status;
-          if (this.errorStatus == 409) {
-            alert('Sorry, email or workplace already exists, please check again');
-          }
+        (error  ) => {
+          if(error.status == 409){
+            this.dialogService.init("Operation fail", MyMessage.registerExisted, undefined,undefined);
+             // alert('Sorry, email or workplace already exists, please check again');
+            }       
           if (error.status == 400) {
-            alert('The system has failed, please try again');
+            this.dialogService.init("400", MyMessage.error400Message, undefined,undefined);
+            //alert('The system has failed, please try again');
           }
           this.displaySer.hideLoader();
         }

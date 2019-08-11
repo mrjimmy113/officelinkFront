@@ -67,10 +67,12 @@
                   <input type="password" class="form-control form-control-user" id="exampleLastName"
                     placeholder="Confirm" name="confirmPass" #confirmPass="ngModel" [(ngModel)]="confirmPassText"
                     [ngClass]="{'is-invalid' : (confirmPass.invalid && (confirmPass.dirty || confirmPass.touched))}"
-                    required minlength="6" maxlength="15" />
-                  <div *ngIf="confirmPass.invalid && (confirmPass.dirty || confirmPass.touched)" class="text-danger">
-                    <div *ngIf="confirmPass.errors.required">
-                      Confirm password required
+                    required minlength="6" maxlength="15" pattern="{{account.password}}" />
+                  <div *ngIf="confirmPass.invalid && (confirmPass.dirty || confirmPass.touched)" class="text-danger">                   
+                    <div *ngIf="confirmPass.invalid && (confirmPass.dirty || confirmPass.touched)" class="text-danger">
+                      <div *ngIf="confirmPass.errors.pattern">
+                        Confirm passsword is different from password
+                      </div>
                     </div>
 
 

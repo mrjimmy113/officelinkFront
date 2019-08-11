@@ -18,30 +18,22 @@
                   <label>First name</label>
                   <input type="text" class="form-control form-control-user" name = "firstname" #firstname = "ngModel" placeholder="First Name" [(ngModel)] = account.firstname 
                   [ngClass]="{'is-invalid' : (firstname.invalid && (firstname.dirty || firstname.touched))}" required
-                  pattern="^[a-zA-Z0-9._-\s]*$"
+                  
                   />
                   <div *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)" class="text-danger">
                     <div *ngIf="firstname.errors.required">
                       First name required
                     </div>
-                    <div *ngIf="firstname.errors.pattern">
-                      First name can't contain special character except "_-."
-                    </div>
-                    
+                           
                   </div>
                   <label>Last name</label>
                   <input type="text" class="form-control form-control-user" name="lastname" #lastname = "ngModel" placeholder="Last Name" [(ngModel)] = account.lastname
                           [ngClass]="{'is-invalid' : (lastname.invalid && (lastname.dirty || lastname.touched))}" required
-                          pattern="^[a-zA-Z0-9._-\s]*$"
                           />
                           <div *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)" class="text-danger">
                             <div *ngIf="lastname.errors.required">
                               Last name required
-                            </div>
-                            <div *ngIf="lastname.errors.pattern">
-                              Last name can't contain special character except "_-."
-                            </div>
-                            
+                            </div>                        
                           </div>
                 
                   
@@ -93,13 +85,15 @@
                   <label>Confirm new password</label>
                   <input type="password" class="form-control form-control-user" name = "confirmpassword" #confirmpassword = "ngModel" placeholder="Confirm new password" [(ngModel)] = "confrimPasswordText"
                           [ngClass]="{'is-invalid' : (confirmpassword.invalid && (confirmpassword.dirty || confirmpassword.touched))}" required
-                          
+                          pattern="{{newPasswordText}}"
                           />
                           <div *ngIf="confirmpassword.invalid && (newpassword.dirty || confirmpassword.touched)" class="text-danger">
-                            <div *ngIf="confirmpassword.errors.required">
-                              Confirm password required
+                            
+                            <div *ngIf="confirmpassword.invalid && (confirmpassword.dirty || confirmpassword.touched)" class="text-danger">
+                              <div *ngIf="confirmpassword.errors.pattern">
+                                Confirm password is different from new password
+                              </div>
                             </div>
-        
               
         
                           </div>

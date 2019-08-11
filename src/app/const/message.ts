@@ -74,6 +74,62 @@ export const MyMessage = {
   surveyQuestionLimit:"Survey must have more than one question",
   surveyTitleRequire:"Please fill in survey title",
   //#region
+
+  //#region Account
+  deleteAccountTitle :"Delete Account",
+  deleteAccountMessage : "This action will delete the chosen account. Do you want to continue?",
+  deleteAccountSuccess : "Account has been deleted.",
+  deleteAccountError : "Delete Account Fail. Try again",
+  assignAccountTitle : "Assign Account",
+  assignAccountSuccess : "Assign account successfully",
+  assignLocationRequire : "Please choose Location",
+  assignTeamRequire : "The team list can not be empty",
+  addTeamToTeamListError : "This team has already on the list",
+  //#endregion
+
+  //#region Register
+  registerTitle : "Register Account",
+  registerFillFormRequire : "Please complete your register form",
+  registerSuccess : "Successful registration of account information, please check your mail to complete the registration",
+  registerSystemError : "Sorry, email or workplace already exists, please check again", 
+  registerExisted : "Sorry, email or workplace already exists, please check again",
+  systemError : "System Fail. Try again",
+  //#region
+
+
+  //#region Join
+  joinFillFormRequire : "Please complete your register form",
+  welcomeMessage : "Welcome to Office Link",
+
+  //#region
+
+  //#region Invite
+  inviteFillFormRequire : "Please complete your register form",
+  inviteEmailExisted : "Email already exists in the email list. Try again",
+  inviteEmailExistedonSystem : "Email already exists in the system. Try again",
+  addMoreEmail : "Please add more Email",
+  inviteSuccess : "Send Mail Success",
+  //#region
+
+  //#region Profile
+  changeProfileTitle : "Change Profile",
+  profileFillFormRequire : "Please complete your form",
+  profileSuccess : "Change profile successfully",
+  currentPasswordError : "Current password wrong. Try again",
+
+  //region
+
+  //#region Forgot password
+  resetPasswordTitle : "Forgot password",
+  inputEmailSuccess : "Please check your email to reset password",
+  inputEmailError : "Email not existed. Try again",
+  resetPasswordFillFormRequire : "Plese complete your form",  
+  resetPasswordSuccess : "Change password successfully",
+
+  //#region
+
+  
+
   //#region Location
   createLocation: `Location has been created.`,
   updateLocation: `Location has been updated.`,
