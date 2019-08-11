@@ -12,7 +12,7 @@
           <form #configForm="ngForm" [ngClass]="{false: 'disabledbutton'}[isRoutine]">
             <div class="form-group">
               <label>Schedule Time</label>
-              <table class="table table-hover table-sm table-bordered text-center">
+              <table class="table table-sm table-bordered text-center">
                 <thead>
                   <tr>
                     <th>Hour</th>
@@ -37,9 +37,9 @@
                         <option *ngFor="let m of arrayOfMinutes" [value]="m">{{m}}</option>
                       </select>
                     </td>
-                    <td>
-                      <div class="checkbox" *ngFor="let wDay of arrayOfWeekDays">
-                        <label>
+                    <td class="justify-content-start">
+                      <div class="checkbox justify-content-start" *ngFor="let wDay of arrayOfWeekDays">
+                        <label class="align-self-start">
                           <input type="checkbox" [attr.checked]="getWeekDaysIndex(wDay) >= 0 ? 'checked': null"
                             (click)="changeWeekDays(wDay)">
                           {{wDay}}
@@ -47,7 +47,7 @@
                       </div>
                     </td>
                     <td>
-                      <div class="checkbox" *ngFor="let month of arrayOfMonths">
+                      <div class="checkbox justify-content-start" *ngFor="let month of arrayOfMonths">
                         <label>
                           <input type="checkbox" [attr.checked]="getMonthsIndex(month) >= 0 ? 'checked': null"
                             (click)="changeMonths(month)">

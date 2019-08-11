@@ -16,6 +16,7 @@ import { TeamService } from '../service/team.service';
 import { forEach } from '@angular/router/src/utils/collection';
 import { DialogService } from '../service/dialog.service';
 import { MyMessage } from '../const/message';
+import { Alert } from 'selenium-webdriver';
 
 @Component({
   selector: "app-configuration-save",
@@ -41,6 +42,7 @@ export class ConfigurationSaveComponent implements OnInit {
   arrayOfMonths;
   dayOfWeeks = new Array();
   arrayOfWeekDays;
+  confirmMessage = "";
 
   //Send out infor
   locationList: Array<Location>;
@@ -155,7 +157,31 @@ export class ConfigurationSaveComponent implements OnInit {
   }
 
   add() {
+    console.log(this.months.length, " ", this.dayOfWeeks.length)
+    if (this.months.length <= 0 && this.dayOfWeeks.length <= 0) {
+      this.dialogSer.init(
+        "Check your inputs",
+        MyMessage.invalidScheduleTime,
+        undefined,
+        undefined
+      );
+      this.requestStatus = 0;
+      return;
+    }
+
+
     this.configuration.scheduleTime = this.constructCronExpression();
+    this.dialogSer.init(
+      "Confirm your schedule",
+      this.confirmMessage,
+      () => this.sendCreateRequest(),
+      () => {return}
+    );
+
+    this.requestStatus = 0;
+  }
+
+  sendCreateRequest() {
     this.configuration.survey.id = this.selectedSurveyId;
     this.configuration.active = true;
     this.surveySer.updateActiveStatus(this.selectedSurveyId, true).subscribe();
@@ -195,43 +221,43 @@ export class ConfigurationSaveComponent implements OnInit {
     );
   }
 
-  update() {
-    this.configuration.scheduleTime = this.constructCronExpression();
-    this.configuration.survey.id = this.selectedSurveyId;
-    this.configSer.update(this.configuration).subscribe(
-      result => {
-        this.requestStatus = result;
-        if (this.requestStatus == 200) {
-          this.dialogSer.init(
-            "Operation success",
-            MyMessage.updateSurveyRoutine,
-            undefined,
-            () => this.closeModal()
-          );
-        }
-        this.outputs();
-      },
-      error => {
-        if (error.status == 409) {
-          this.dialogSer.init(
-            "Operation fail",
-            MyMessage.error400Message,
-            undefined,
-            undefined
-          );
-        } else if (error.status = 400) {
-          this.dialogSer.init(
-            "Operation fail",
-            MyMessage.error400Message,
-            undefined,
-            undefined
-          );
-        }
-        this.requestStatus = 0;
-        this.outputs();
-      }
-    );
-  }
+  // update() {
+  //   this.configuration.scheduleTime = this.constructCronExpression();
+  //   this.configuration.survey.id = this.selectedSurveyId;
+  //   this.configSer.update(this.configuration).subscribe(
+  //     result => {
+  //       this.requestStatus = result;
+  //       if (this.requestStatus == 200) {
+  //         this.dialogSer.init(
+  //           "Operation success",
+  //           MyMessage.updateSurveyRoutine,
+  //           undefined,
+  //           () => this.closeModal()
+  //         );
+  //       }
+  //       this.outputs();
+  //     },
+  //     error => {
+  //       if (error.status == 409) {
+  //         this.dialogSer.init(
+  //           "Operation fail",
+  //           MyMessage.error400Message,
+  //           undefined,
+  //           undefined
+  //         );
+  //       } else if (error.status = 400) {
+  //         this.dialogSer.init(
+  //           "Operation fail",
+  //           MyMessage.error400Message,
+  //           undefined,
+  //           undefined
+  //         );
+  //       }
+  //       this.requestStatus = 0;
+  //       this.outputs();
+  //     }
+  //   );
+  // }
 
   save() {
     //#region Send out infor
@@ -270,8 +296,9 @@ export class ConfigurationSaveComponent implements OnInit {
 
     //#endregion
     this.requestStatus = 1;
-    if (this.isEdit) this.update();
-    else this.add();
+    this.add();
+    // if (this.isEdit) this.update();
+    // else this.add();
   }
 
   // get value of second, minute, hour,... in cron expression and store them in corresponding variables
@@ -314,12 +341,30 @@ export class ConfigurationSaveComponent implements OnInit {
   }
 
   constructCronExpression() {
+    this.confirmMessage = "Your survey will be sent on ";
+
     this.second = this.second == null ? "0" : this.second;
     this.minute = this.minute == null ? "0" : this.minute;
     this.hour = this.hour == null ? "0" : this.hour;
-    this.dayOfMonth = this.dayOfMonth == null ? "*" : this.dayOfMonth;
-    let months = this.months.length <= 0 ? "*" : this.months;
-    let dayOfWeeks = this.dayOfWeeks.length <= 0 ? "*" : this.dayOfWeeks;
+    this.dayOfMonth = this.dayOfMonth == null ? "?" : this.dayOfMonth;
+    let months = this.months.length;
+    let dayOfWeeks = this.dayOfWeeks.length <= 0 ? "?" : this.dayOfWeeks;
+
+    if (this.months.length <= 0) {
+      alert("Stop");
+      return;
+    }
+
+    if (this.dayOfWeeks.length <= 0) {
+      this.dayOfMonth = "1";
+      this.confirmMessage = this.confirmMessage + "the " + this.dayOfMonth + "th of every " + this.months + " at " + (Number(this.hour) < 10 ? "0"+this.hour: this.hour)  + ":" + (Number(this.minute) < 10 ? "0"+this.minute : this.minute);
+    } else {
+      this.dayOfMonth = "?";
+    }
+
+    if (this.dayOfWeeks.length > 0 && this.months.length > 0) {
+      this.confirmMessage = this.confirmMessage + "every " + this.dayOfWeeks + " of every " + this.months + " at " + (Number(this.hour) < 10 ? "0"+this.hour: this.hour)  + ":" + (Number(this.minute) < 10 ? "0"+this.minute : this.minute);
+    }
 
     let result =
       this.second +
