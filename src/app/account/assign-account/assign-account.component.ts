@@ -12,6 +12,7 @@ import { TeamService } from "../../service/team.service";
 import { Team } from "../../model/team";
 import { Account } from "src/app/model/account";
 import { DialogService } from "src/app/service/dialog.service";
+import {MyMessage} from "../../const/message"
 
 @Component({
   selector: "app-assign-account",
@@ -77,13 +78,13 @@ export class AssignAccountComponent implements OnInit {
   assignTeam() {
     if (this.teamId == undefined || this.teamId == 0) {
       //alert("Please choose a Team");
-      this.dialogService.init("Office Link", "Please choose a Team", undefined,undefined);
+      this.dialogService.init("Choose Require", MyMessage.assignTeamRequire, undefined,undefined);
       return;
     }
 
     if (this.choosenTeamList.includes(Number.parseInt(this.teamId))) {
       //alert("This team has already on the list");
-      this.dialogService.init("Office Link", "This team has already on the list", undefined,undefined);
+      this.dialogService.init("Operation fail", MyMessage.addTeamToTeamListError, undefined,undefined);
       this.teamName = "";
       this.teamId = 0;
       return;
@@ -109,7 +110,7 @@ export class AssignAccountComponent implements OnInit {
     assignInfor.teamIdList = this.choosenTeamList;
     this.accountSer.assign(assignInfor).subscribe(result => {
       //alert("Assigned Successfully");
-      this.dialogService.init("Office Link", "Assigned Successfully", () => {
+      this.dialogService.init("Assign Account", MyMessage.assignAccountSuccess , () => {
         this.modalSer.destroy();
       },() => {
         this.modalSer.destroy();
@@ -122,12 +123,12 @@ export class AssignAccountComponent implements OnInit {
   validate() {
     if (this.locationId == undefined || this.locationId == 0) {
       //alert("Please choose Location");
-      this.dialogService.init("Office Link", "Please choose Location", undefined,undefined);
+      this.dialogService.init("Choose Require", MyMessage.assignLocationRequire, undefined,undefined);
       return false;
     }
     if (this.choosenTeamList == undefined || this.choosenTeamList.length == 0) {
       //alert("The team list can not be empty");
-      this.dialogService.init("Office Link", "The team list can not be empty", undefined,undefined);
+      this.dialogService.init("Form Require", MyMessage.assignTeamRequire, undefined,undefined);
       return false;
     }
     return true;

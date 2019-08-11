@@ -8,6 +8,7 @@ import { Location } from "../../model/location";
 import { Workplace } from "../../model/workplace";
 import { DisplayService } from "src/app/service/display.service";
 import { DialogService } from "src/app/service/dialog.service";
+import {MyMessage} from "../../const/message";
 
 @Component({
   selector: "app-register",
@@ -50,7 +51,7 @@ export class RegisterComponent implements OnInit {
       this.account.password == null ||
       this.confirmPassText == null
     ) {
-      this.dialogService.init("Office Link", "Please complete your register form", undefined,undefined);
+      this.dialogService.init("Form Require", MyMessage.registerFillFormRequire, undefined,undefined);
       
       return;
     }
@@ -62,7 +63,7 @@ export class RegisterComponent implements OnInit {
       this.accoutSer.sendMail(this.account).subscribe(
         res => {
           this.accoutSer.createAccount(this.account).subscribe(res => {
-            this.dialogService.init("Office Link", "Successful registration of account information, please check your mail to complete the registration", () => {
+            this.dialogService.init("Register", MyMessage.registerSuccess , () => {
               this.displaySer.hideLoader();
               this.route.navigateByUrl('/');
             },() => {
@@ -73,7 +74,7 @@ export class RegisterComponent implements OnInit {
           }, error => {
             this.errorStatus = error.status;
             if (this.errorStatus == 409) {
-              this.dialogService.init("Office Link", "Sorry, email or workplace already exists, please check again", undefined,undefined);
+              this.dialogService.init("Operation fail",MyMessage.registerExisted, undefined,undefined);
              // alert('Sorry, email or workplace already exists, please check again');
             }
             this.displaySer.hideLoader();
@@ -85,11 +86,11 @@ export class RegisterComponent implements OnInit {
         },
         error => {
           if(error.status == 409){
-            this.dialogService.init("Office Link", "Sorry, email or workplace already exists, please check again", undefined,undefined);
+            this.dialogService.init("Operation fail", MyMessage.registerExisted, undefined,undefined);
              // alert('Sorry, email or workplace already exists, please check again');
             }       
           if (error.status == 400) {
-            this.dialogService.init("Office Link", "The system has failed, please try again", undefined,undefined);
+            this.dialogService.init("Operation fail", MyMessage.systemError, undefined,undefined);
             //alert('The system has failed, please try again');
           }
           this.displaySer.hideLoader();

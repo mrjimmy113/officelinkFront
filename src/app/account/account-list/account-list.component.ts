@@ -9,6 +9,7 @@ import { AccountDeleteComponent } from '../account-delete/account-delete.compone
 import { InvitationComponent } from '../invitation/invitation.component';
 import { AssignAccountComponent } from '../assign-account/assign-account.component';
 import { DialogService } from "src/app/service/dialog.service";
+import { MyMessage } from '../../const/message';
 @Component({
   selector: 'app-account-list',
   templateUrl: './account-list.component.html',
@@ -73,11 +74,12 @@ export class AccountListComponent implements OnInit {
 
   delete(id){
     //this.modalSer.init(AccountDeleteComponent, id ,() => this.loadPage(this.currentPage));
-    this.dialogSerive.init("Delete Account", "Do you want to delete this account", () => {
-      this.accountSer.delete(id).subscribe(result => {
+    this.dialogSerive.init("Delete Account", MyMessage.deleteAccountMessage, () => {
+      this.accountSer.delete(id).subscribe(result => {  
+          this.dialogSerive.init("Delete Account" , MyMessage.deleteAccountSuccess , undefined , undefined);
           this.loadPage(this.currentPage);
       }, err => {
-        alert('Error');
+        this.dialogSerive.init("Operation fail" , MyMessage.deleteAccountError , undefined , undefined);
       })
     },undefined);
 

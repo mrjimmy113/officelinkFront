@@ -7,6 +7,7 @@ import {Account} from '../../model/account'
 import { DisplayService } from 'src/app/service/display.service';
 import { Form } from '@angular/forms';
 import { DialogService } from "src/app/service/dialog.service";
+import {MyMessage} from "../../const/message"
 @Component({
   selector: 'app-invitation',
   templateUrl: './invitation.component.html',
@@ -32,12 +33,12 @@ export class InvitationComponent implements OnInit {
   }
   addNewEmail(emailForm : NgForm) {
     if(this.newEmail == "" || this.newEmail == null){
-      this.dialogService.init("Office Link", "Input not empty. Try again", undefined,undefined);
+      this.dialogService.init("Form Require", MyMessage.inviteFillFormRequire, undefined,undefined);
     }else{
       this.accountSer.checkEmailExisted(this.newEmail).subscribe(res => {
         this.listEmail.forEach(email => {
           if(this.newEmail == email){
-            this.dialogService.init("Office Link", "Email already exists in the email list. Try again", undefined,undefined);
+            this.dialogService.init("Operation fail", MyMessage.inviteEmailExisted, undefined,undefined);
             emailForm.resetForm();
           }       
       });
@@ -52,7 +53,7 @@ export class InvitationComponent implements OnInit {
         if(error.status == 409){
           emailForm.resetForm();
           //alert("Email existed on System. Try again")
-          this.dialogService.init("Office Link", "Email existed on System. Try again", undefined,undefined)
+          this.dialogService.init("Operation fail", MyMessage.inviteEmailExistedonSystem, undefined,undefined)
           
         }           
       })

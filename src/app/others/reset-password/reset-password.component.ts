@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import {Router , ActivatedRoute} from '@angular/router';
 import {resetpassworkInfo} from '../../model/resetpasswordInfo'
 import { from } from 'rxjs';
+import { MyMessage} from "../../const/message";
+import { DialogService } from "src/app/service/dialog.service";
 
 
 @Component({
@@ -17,7 +19,7 @@ export class ResetPasswordComponent implements OnInit {
   confirmNewPass : String;
   resetPasswordInfo : resetpassworkInfo;
 
-  constructor(private _route : ActivatedRoute ,private accountService : AccountService) { }
+  constructor(private _route : ActivatedRoute ,private accountService : AccountService , private dialogService : DialogService) { }
 
   ngOnInit() {
    
@@ -33,14 +35,12 @@ export class ResetPasswordComponent implements OnInit {
     this.resetPasswordInfo.emailToken = this.token;
     this.resetPasswordInfo.newPassword = this.newPass;
       if(this.newPass == null || this.confirmNewPass == null){
-        alert("Input not empty, try again")
+        this.dialogService.init("Form Require",MyMessage.resetPasswordFillFormRequire, undefined,undefined);
       }
-      if(this.newPass != this.confirmNewPass){
-        alert("New password and Confirm password not match");
-      }else{
+     else{
         
         this.accountService.resetPassword(this.resetPasswordInfo).subscribe(res => {
-          alert("Change password success");
+          this.dialogService.init("Reset password",MyMessage.resetPasswordSuccess, undefined,undefined);
         })
       }
       

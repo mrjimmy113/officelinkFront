@@ -4,6 +4,9 @@ import { Account } from 'src/app/model/account';
 import {Router , ActivatedRoute} from '@angular/router'
 import {Location} from '../../model/location';
 import {Workplace} from '../../model/workplace'
+import { DialogService } from "src/app/service/dialog.service";
+import {MyMessage} from "../../const/message"
+
 
 
 import { from } from 'rxjs';
@@ -25,7 +28,7 @@ export class JoinComponent implements OnInit {
   workplace : Workplace;
   location : Location;
 
-  constructor(private accountSer : AccountService , private route : ActivatedRoute, private _route:Router) { }
+  constructor(private accountSer : AccountService , private route : ActivatedRoute, private _route:Router , private dialogService : DialogService) { }
 
   ngOnInit() {
       this.account = new Account();
@@ -48,18 +51,18 @@ export class JoinComponent implements OnInit {
     this.account.role_id = 2;
     if(this.account.firstname == null || this.account.lastname == null || this.account.email == null || this.account.password == null
       ){
-          alert("Input not empty. Try again")
+          // alert("Input not empty. Try again")
+          this.dialogService.init("Form Require", MyMessage.joinFillFormRequire, undefined,undefined); 
       }
-      if(this.account.password != this.confirmPassText ){
-         alert("Password and Confirm password not match. Try again");
-      }else{
+     else{
 
         this.accountSer.updateEmployee(this.account).subscribe(res =>
           {
 
             this.requestStatus = res;
             if(this.requestStatus == 200){
-                alert("Welcome to office link")
+                //alert("Welcome to office link")
+                this.dialogService.init("Sign-Up", MyMessage.welcomeMessage, undefined,undefined); 
                 this._route.navigateByUrl("/login")
             }
 
@@ -67,10 +70,11 @@ export class JoinComponent implements OnInit {
           error => {
             this.errorStatus = error.status;
             if(this.errorStatus == 409){
-               alert("Sorry, email already exists, please check again")
+               //alert("Sorry, email already exists, please check again")
             }
             if(error.status == 400){
-              alert("The system has failed, please try again")
+              //alert("The system has failed, please try again")
+              this.dialogService.init("Operation fail", MyMessage.systemError, undefined,undefined); 
             }
             
           }
