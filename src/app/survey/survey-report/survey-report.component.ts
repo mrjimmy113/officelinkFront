@@ -287,8 +287,12 @@ export class SurveyReportComponent implements OnInit {
     let found = this.filters.filter(e => {
       return e.id == id;
     })
+    if(found.length > 0) {
+      return found[0].template;
+    }else {
+      return false;
+    }
 
-    return found[0].template;
   }
 }
 interface NgxChartParam {

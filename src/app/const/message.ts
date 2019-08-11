@@ -40,7 +40,7 @@ export const MyMessage = {
   invalidScheduleTime: `Month cannot be left empty. You must specify at least one to create a routine.`,
   //#endregion
   //#endregion
-  
+
   //#region Question
   deleteQuestionTitle:"Delete Question",
   deleteQuestionMessage:`Do you want to delete this question`,
@@ -91,7 +91,7 @@ export const MyMessage = {
   registerTitle : "Register Account",
   registerFillFormRequire : "Please complete your register form",
   registerSuccess : "Successful registration of account information, please check your mail to complete the registration",
-  registerSystemError : "Sorry, email or workplace already exists, please check again", 
+  registerSystemError : "Sorry, email or workplace already exists, please check again",
   registerExisted : "Sorry, email or workplace already exists, please check again",
   systemError : "System Fail. Try again",
   //#region
@@ -123,12 +123,12 @@ export const MyMessage = {
   resetPasswordTitle : "Forgot password",
   inputEmailSuccess : "Please check your email to reset password",
   inputEmailError : "Email not existed. Try again",
-  resetPasswordFillFormRequire : "Plese complete your form",  
+  resetPasswordFillFormRequire : "Plese complete your form",
   resetPasswordSuccess : "Change password successfully",
 
   //#region
 
-  
+
 
   //#region Location
   createLocation: `Location has been created.`,
@@ -144,5 +144,12 @@ export const MyMessage = {
   updateNews: `News has been updated.`,
   deleteNews: `News has been deleted.`,
   confirmDeleteNews: `This action will delete the chosen news. Do you want to continue?`,
+  //#endregion
+
+  //#region Take Survey
+  takeSurveyTitle: "Do Survey",
+  doneTakeSurvey : 'Thank you for taking out this survey',
+  noPermissionToTake: 'You have no permission to take this survey anymore',
+  takeSurveyLogin: "Please login to do the survey",
   //#endregion
 };

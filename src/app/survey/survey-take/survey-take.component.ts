@@ -1,3 +1,4 @@
+import { MyMessage } from 'src/app/const/message';
 import { SurveyAnswerInfor } from "./../../model/surveyAnswerInfor";
 import { AuthenticationService } from "./../../service/authentication.service";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -7,6 +8,7 @@ import { Question } from "./../../model/question";
 import { Component, OnInit } from "@angular/core";
 import { Survey } from "src/app/model/survey";
 import { HttpErrorResponse } from "@angular/common/http";
+import { DialogService } from 'src/app/service/dialog.service';
 
 @Component({
   selector: "app-survey-take",
@@ -22,7 +24,8 @@ export class SurveyTakeComponent implements OnInit {
     private surveySer: SurveyService,
     private route: ActivatedRoute,
     private authSer: AuthenticationService,
-    private router: Router
+    private router: Router,
+    private dialogSer : DialogService
   ) {}
 
   ngOnInit() {
@@ -39,6 +42,7 @@ export class SurveyTakeComponent implements OnInit {
     }
     if (answer.includes(option)) {
       answer = answer.replace(option, "");
+      answer = answer.replace(/,/g,"");
     } else {
       if (answer.trim().length == 0) {
         answer = option;
@@ -57,13 +61,19 @@ export class SurveyTakeComponent implements OnInit {
       surveyAnswerInfor.surveyId = this.survey.id;
       this.surveySer.sendAnswer(surveyAnswerInfor).subscribe(
         () => {
-          alert("Thank you for taking out this survey");
-          this.router.navigate(["/"]);
+          this.dialogSer.init(MyMessage.takeSurveyTitle,MyMessage.doneTakeSurvey,undefined,() => {
+            this.router.navigate(["/"]);
+          })
+
         },
         (err: HttpErrorResponse) => {
           if (err.status == 409) {
-            alert("You have taken this survey");
-            this.router.navigate(["/"]);
+            this.dialogSer.init(MyMessage.takeSurveyTitle, MyMessage.noPermissionToTake,undefined,() => {
+              this.router.navigate(["/"]);
+            })
+          }
+          if(err.status == 400) {
+            this.dialogSer.init(MyMessage.errorTitle, MyMessage.error400Message,undefined,undefined);
           }
         }
       );
@@ -87,14 +97,15 @@ export class SurveyTakeComponent implements OnInit {
           },
           (err: HttpErrorResponse) => {
             if (err.status == 409) {
-              alert("You have taken this survey");
-              this.router.navigate(["/"]);
+              this.dialogSer.init(MyMessage.takeSurveyTitle, MyMessage.noPermissionToTake,undefined,() => {
+                this.router.navigate(["/"]);
+              })
             }
           });
         }
       );
     } else {
-      alert("Please login to do the survey");
+      this.dialogSer.init(MyMessage.takeSurveyTitle, MyMessage.takeSurveyLogin,undefined,undefined);
     }
   }
 
@@ -104,7 +115,7 @@ export class SurveyTakeComponent implements OnInit {
       if (element.required) {
         let answer: String = this.answers[index].content;
         if (answer == undefined || answer.toString().trim() == "") {
-          alert("Question number " + (index + 1) + " is required");
+          this.dialogSer.init(MyMessage.takeSurveyTitle, "Question number " + (index + 1) + " is required",undefined,undefined);
           return false;
         }
       }
