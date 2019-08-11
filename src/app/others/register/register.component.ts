@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 
 import { Router } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
@@ -84,13 +85,13 @@ export class RegisterComponent implements OnInit {
          // alert('Successful registration of account information, please check your mail to complete the registration');
          
         },
-        error => {
+        (error  ) => {
           if(error.status == 409){
             this.dialogService.init("Operation fail", MyMessage.registerExisted, undefined,undefined);
              // alert('Sorry, email or workplace already exists, please check again');
             }       
           if (error.status == 400) {
-            this.dialogService.init("Operation fail", MyMessage.systemError, undefined,undefined);
+            this.dialogService.init("400", MyMessage.error400Message, undefined,undefined);
             //alert('The system has failed, please try again');
           }
           this.displaySer.hideLoader();

@@ -116,7 +116,13 @@ export class AssignAccountComponent implements OnInit {
         this.modalSer.destroy();
       });
       
-    });
+    }, 
+      error => {
+        if(error.status == 400){
+          this.dialogService.init("400", MyMessage.error400Message, undefined,undefined);
+        }
+      }
+    );
     this.modalSer.destroy();
   }
 

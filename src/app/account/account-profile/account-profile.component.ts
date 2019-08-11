@@ -60,10 +60,17 @@ export class AccountProfileComponent implements OnInit {
 
   changeProfile(){
     this.accountService.changeProfile(this.account).subscribe(res => {
-       if(res == 200){
+       if(this.account.firstname == "" || this.account.lastname == ""){
+        this.dialogSerive.init("Form Require" , MyMessage.profileFillFormRequire , undefined , undefined);
+       }
+       else if (res == 200){
         this.dialogSerive.init("Change Profile" , MyMessage.profileSuccess , undefined , undefined);
        }
 
+    } , error => {
+      if(error.status == 400){
+        this.dialogSerive.init("400" , MyMessage.error400Message , undefined , undefined);
+      }
     })
   }
 
@@ -83,9 +90,9 @@ export class AccountProfileComponent implements OnInit {
               }
             },
             error => {
-              if(error.status == 400){
-                this.dialogSerive.init("Operation Fail" , MyMessage.currentPasswordError , undefined , undefined);
-              }
+             
+                this.dialogSerive.init("Operation fail" , MyMessage.currentPasswordError , undefined , undefined);
+              
             }
             
             )

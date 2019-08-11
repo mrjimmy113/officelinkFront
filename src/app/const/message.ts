@@ -107,6 +107,8 @@ export const MyMessage = {
   inviteFillFormRequire : "Please complete your register form",
   inviteEmailExisted : "Email already exists in the email list. Try again",
   inviteEmailExistedonSystem : "Email already exists in the system. Try again",
+  addMoreEmail : "Please add more Email",
+  inviteSuccess : "Send Mail Success",
   //#region
 
   //#region Profile

@@ -63,7 +63,6 @@ export class InvitationComponent implements OnInit {
 
     this.listEmail.splice(index , 1);
 
-
   }
 
 
@@ -74,13 +73,13 @@ export class InvitationComponent implements OnInit {
 
     if(this.listEmail.length == 0){
       //alert("Please add more email")
-      this.dialogService.init("Office Link", "Please add more email", undefined,undefined)
+      this.dialogService.init("Form Require", MyMessage.addMoreEmail , undefined,undefined)
     }else{
 
       this.displaySer.showLoader();
       this.accountSer.acceptInvite(this.listEmail).subscribe(result => {
         this.accountSer.sendInvite(this.listEmail).subscribe(res => {
-          this.dialogService.init("Office Link", "Send Mail Success", () => {
+          this.dialogService.init("Invite", MyMessage.inviteSuccess, () => {
             this.displaySer.hideLoader();
             this.modalSer.destroy();
             this.outputs();
@@ -93,7 +92,7 @@ export class InvitationComponent implements OnInit {
         },
         error => {
           if(error.status == 400){
-            this.dialogService.init("Office Link", "Error , try again", undefined,undefined)
+            this.dialogService.init("400", MyMessage.error400Message , undefined,undefined)
             //alert("Error , try again")
           }
           this.displaySer.hideLoader();

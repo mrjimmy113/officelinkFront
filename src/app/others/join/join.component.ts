@@ -74,7 +74,7 @@ export class JoinComponent implements OnInit {
             }
             if(error.status == 400){
               //alert("The system has failed, please try again")
-              this.dialogService.init("Operation fail", MyMessage.systemError, undefined,undefined); 
+              this.dialogService.init("400", MyMessage.error400Message, undefined,undefined); 
             }
             
           }

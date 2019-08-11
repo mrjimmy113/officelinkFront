@@ -41,7 +41,13 @@ export class ResetPasswordComponent implements OnInit {
         
         this.accountService.resetPassword(this.resetPasswordInfo).subscribe(res => {
           this.dialogService.init("Reset password",MyMessage.resetPasswordSuccess, undefined,undefined);
-        })
+        }, 
+        error => {
+          if(error.status == 400){
+            this.dialogService.init("400",MyMessage.error400Message, undefined,undefined);
+          }
+        }
+        )
       }
       
   }

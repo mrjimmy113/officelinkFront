@@ -28,6 +28,9 @@ export class ForgetPasswordComponent implements OnInit {
        if(error.status == 404){
         this.dialogService.init("Operation fail", MyMessage.inputEmailError, undefined,undefined); 
        }
+       if(error.status == 400){
+        this.dialogService.init("400", MyMessage.error400Message, undefined,undefined); 
+       }
 
      }
      )
