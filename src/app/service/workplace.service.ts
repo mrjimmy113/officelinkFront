@@ -32,4 +32,8 @@ export class WorkplaceService {
   delete(id):Observable<Number> {
     return this.http.delete<Number>(this.api + `?id=${id}`);
   }
+
+  changeActiveStatus(id, active):Observable<Number> {
+    return this.http.get<Number>(this.api + `/status?id=${id}&active=${active}`);
+  }
 }

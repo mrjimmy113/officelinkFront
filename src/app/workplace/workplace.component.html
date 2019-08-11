@@ -55,7 +55,9 @@
               <div class="d-flex align-items-center justify-content-center">
                 <button class="btn btn-info" (click)="openEdit(item)"><i class="fas fa-pen-alt"></i></button>
                 <span *ngIf="!item.deleted"> | </span>
-                <button *ngIf="!item.deleted" class="btn btn-warning" (click)="deactive(item)">Deactivate</button>
+                <button *ngIf="!item.deleted" class="btn btn-warning" (click)="changeActiveStatus(item)">Deactivate</button>
+                <span *ngIf="item.deleted"> | </span>
+                <button *ngIf="item.deleted" class="btn btn-warning" (click)="changeActiveStatus(item)">Activate</button>
                 <!-- <button *ngIf="!item.deleted" class="btn btn-warning" (click)="deactive(item)">Deactivate</button> -->
               </div>
             </div>
