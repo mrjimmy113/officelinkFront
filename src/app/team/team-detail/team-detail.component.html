@@ -13,12 +13,22 @@
         <div><b>Department:</b> {{team.department.name}}</div>
       </div>
       <div class="banner">
-        <h6 class="font-weight-bold">Employee(s):</h6>
-        <p *ngIf="team.accounts == null || team.accounts == undefined || team.accounts.length <= 0">
+        <h6 class="font-weight-bold" *ngIf="emps != undefined && emps.length > 0">Employee(s): {{emps.length}}</h6>
+        <p *ngIf="emps == undefined || emps.length <= 0">
           No employee has been assigned to this team yet.
           <a [routerLink]="['/account']" routerLinkActive="router-link-active"  (click)="redirectToAccount()">Assign employee here</a>
         </p>
-        
+        <div [hidden]="emps.length <= 0">
+          <div class="d-flex justify-content-end">
+            <div class="row align-content-center" style="padding-bottom: 0px; margin-right: 12px">
+              Page: {{currentPage}} of {{maxPage}}
+            </div>
+            <button class="btn btn-light" style="border-radius: 0px" [disabled]="currentPage == 1"
+              (click)="loadPage(currentPage - 1)"><i class="fas fa-chevron-left"></i></button>
+            <button class="btn btn-light" style="border-radius: 0px" [disabled]="currentPage == maxPage"
+              (click)="loadPage(currentPage + 1)"><i class="fas fa-chevron-right"></i></button>
+          </div>
+        </div>
         <table class="table" *ngIf="team.accounts != null && team.accounts != undefined && team.accounts.length > 0">
           <thead>
             <tr>
@@ -31,12 +41,12 @@
           </thead>
           <tbody>
             
-            <tr *ngFor="let acc of team.accounts; let i = index">
-              <th scope="row">{{i}}</th>
+            <tr *ngFor="let acc of pagedEmps; let i = index">
+              <th scope="row">{{i + 1}}</th>
               <td>{{acc.email}}</td>
               <td>{{acc.firstname}}</td>
               <td>{{acc.lastname}}</td>
-              <td><button class="btn btn-warning" (click)="unassigned(acc.id)">Unassigned from team</button></td>
+              <td><button class="btn btn-warning" (click)="unassigned(acc.id)">Unassign from team</button></td>
             </tr>
           </tbody>
         </table>
