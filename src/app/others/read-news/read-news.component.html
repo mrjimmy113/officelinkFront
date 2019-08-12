@@ -2,7 +2,7 @@
 <div class="row" *ngFor="let news of listNews" style="height: 150px">
   <div class="col-sm-2">
   </div>
-  <div class="col-sm-5 card border-left-primary shadow h-100 py-2" style="text-overflow:ellipsis;">
+  <div class="col-sm-5 card border-left-primary shadow h-100 py-2" style="text-overflow:ellipsis">
     <a [routerLink]="['/news/'+ news.id +'/detail']" routerLinkActive="router-link-active" title="{{news.title}}">
       <h4 class="text-over-flow">{{news.title}}</h4>
     </a>
@@ -10,7 +10,7 @@
     <p>{{news.dateCreated | date}}</p>
   </div>
   <div class="col-sm-3">
-    <img [src]="'data:image/jpeg;base64,' + news.byte_image" style='height: 150px; object-fit: contain'
+    <img [src]="'data:image/jpeg;base64,' + news.byte_image" style='height: 150px; width: 300px'
       class="border border-primary" [routerLink]="['/news/'+ news.id +'/detail']" routerLinkActive="router-link-active"  />
   </div>
   <div class="col-sm-2">

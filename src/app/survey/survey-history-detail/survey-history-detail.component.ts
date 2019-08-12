@@ -4,6 +4,8 @@ import { SurveyService } from 'src/app/service/survey.service';
 import { ModalService } from 'src/app/service/modal.service';
 import { Answer } from "./../../model/answer";
 import { SurveyAnswerInfor } from 'src/app/model/surveyAnswerInfor';
+import { MyMessage } from 'src/app/const/message';
+import { DialogService } from "src/app/service/dialog.service";
 
 @Component({
   selector: 'app-survey-history-detail',
@@ -20,7 +22,8 @@ export class SurveyHistoryDetailComponent implements OnInit {
 
   constructor(
     private modalSer: ModalService,
-    private surveySer: SurveyService
+    private surveySer: SurveyService,
+    private dialogSer: DialogService,
   ) { }
 
   ngOnInit() {
@@ -32,7 +35,9 @@ export class SurveyHistoryDetailComponent implements OnInit {
     this.survey = this.inputs;
     this.surveySer.getAnswerForSurveyHistory(this.survey.id).subscribe(result => {
       this.answers = result;
-    });
+    }, err => {
+      this.dialogSer.init("Survey History", MyMessage.error400Message, undefined, undefined);
+    })
     this.survey.questions.forEach(element => {
       let answer = new Answer();
       this.answers.push(answer);
@@ -55,8 +60,4 @@ export class SurveyHistoryDetailComponent implements OnInit {
     }
   }
 
-}
-export class MultipleA {
-  index:number;
-  array:string[];
 }

@@ -4,6 +4,8 @@ import { UltisService } from "src/app/service/ultis.service";
 import { ModalService } from 'src/app/service/modal.service';
 import { SurveyService } from "./../../service/survey.service";
 import { SurveyHistoryDetailComponent } from '../survey-history-detail/survey-history-detail.component';
+import { MyMessage } from 'src/app/const/message';
+import { DialogService } from "src/app/service/dialog.service";
 
 @Component({
   selector: 'app-survey-history-main',
@@ -24,6 +26,7 @@ export class SurveyHistoryMainComponent implements OnInit {
     private service: SurveyService,
     private datePipe: DatePipe,
     private ultisSer: UltisService,
+    private dialogSer: DialogService,
   ) { }
 
   ngOnInit() {
@@ -35,6 +38,8 @@ export class SurveyHistoryMainComponent implements OnInit {
     this.service.getSurveyHistory(this.searchTerm, this.currentPage - 1).subscribe(result => {
       this.maxPage = result.maxPage;
       this.itemList = result.objList;
+    }, err => {
+      this.dialogSer.init("List Survey History", MyMessage.error400Message, undefined, undefined);
     })
   }
 

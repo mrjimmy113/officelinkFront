@@ -74,7 +74,11 @@ export class LocationEditComponent implements OnInit {
     this.location = new Location();
     this.service.searchById(itemId).subscribe(result => {
       this.location = result;
-    })
+    },
+    error => {
+      this.dialogSer.init("Update Location", MyMessage.error400Message, undefined, undefined);
+    }
+  );
   }
 
   update(locationForm: NgForm) {
