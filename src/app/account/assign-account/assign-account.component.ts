@@ -4,7 +4,7 @@ import { Workplace } from "./../../model/workplace";
 import { AccountService } from "./../../service/account.service";
 import { AssignInfor } from "./../../model/assignInfor";
 import { ModalService } from "src/app/service/modal.service";
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input , Output } from "@angular/core";
 import { LocationService } from "../../service/location.service";
 import { from } from "rxjs";
 import { Location } from "../../model/location";
@@ -21,22 +21,26 @@ import {MyMessage} from "../../const/message"
 })
 export class AssignAccountComponent implements OnInit {
   @Input() inputs;
+  @Output() outputs;
   locationId;
   teamId;
   teamName;
-  listmTeamId;
+  
   locationList: Array<Location>;
   teamList: Array<Team>;
   requestStatus: Number;
-  newTeamIndex: Number;
-  newTeam: Team;
+  
   choosenTeamList: Array<number>;
   displayTeam: Array<String>;
   account: Account;
-  location: Location;
-  workplace: Workplace;
+ 
   departmentList: Array<Department>;
   choosenDep = 0;
+  
+  itemList;
+  maxPage;
+  currentPage = 1;
+  
 
   test: String;
   testListName;
@@ -51,6 +55,7 @@ export class AssignAccountComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+   
     this.account = new Account();
     this.account.location = new Location();
     this.account.teams = new Array<Team>();
@@ -64,6 +69,7 @@ export class AssignAccountComponent implements OnInit {
     this.getDepartmentByWorkplace();
   }
 
+  
   getLocationByWorkplace() {
     this.locationSer.getByWorkplace().subscribe(res => {
       this.locationList = res;
@@ -82,13 +88,22 @@ export class AssignAccountComponent implements OnInit {
       return;
     }
 
-    if (this.choosenTeamList.includes(Number.parseInt(this.teamId))) {
-      //alert("This team has already on the list");
-      this.dialogService.init("Operation fail", MyMessage.addTeamToTeamListError, undefined,undefined);
-      this.teamName = "";
-      this.teamId = 0;
-      return;
-    }
+    // if (this.choosenTeamList.includes(Number.parseInt(this.teamId))) {
+    //   //alert("This team has already on the list");
+    //   this.dialogService.init("Operation fail", MyMessage.addTeamToTeamListError, undefined,undefined);
+    //   this.teamName = "";
+    //   this.teamId = 0;
+    //   return;
+    // }
+
+    this.displayTeam.forEach(team => {
+        if(team ==  this.teamName){
+          this.dialogService.init("Operation fail", MyMessage.addTeamToTeamListError, undefined,undefined);
+          this.assignRemove(this.teamName);
+          return;
+        }
+    })
+
     this.displayTeam.push(this.teamName);
     this.choosenTeamList.push(this.teamId);
     this.teamName = "";
@@ -102,6 +117,15 @@ export class AssignAccountComponent implements OnInit {
     this.modalSer.destroy();
   }
 
+
+  searchAccountNotAssign(value) {
+    this.accountSer.searchAccountNotAssign(value, 1).subscribe(result => {
+      this.maxPage = result.maxPage;
+      this.itemList = result.objList;
+      console.log(this.itemList)
+    })
+  }
+  
   assign() {
     let assignInfor = new AssignInfor();
     if (!this.validate()) return;
@@ -110,11 +134,14 @@ export class AssignAccountComponent implements OnInit {
     assignInfor.teamIdList = this.choosenTeamList;
     this.accountSer.assign(assignInfor).subscribe(result => {
       //alert("Assigned Successfully");
-      this.dialogService.init("Assign Account", MyMessage.assignAccountSuccess , () => {
-        this.modalSer.destroy();
-      },() => {
-        this.modalSer.destroy();
+     
+      this.dialogService.init("Assign Account", MyMessage.assignAccountSuccess , undefined ,() => {    
+        //this.modalSer.destroy();
+        this.searchAccountNotAssign("");
+        this.outputs(); 
       });
+
+     
       
     }, 
       error => {
@@ -123,7 +150,12 @@ export class AssignAccountComponent implements OnInit {
         }
       }
     );
+
+    
+    
     this.modalSer.destroy();
+    
+   
   }
 
   validate() {

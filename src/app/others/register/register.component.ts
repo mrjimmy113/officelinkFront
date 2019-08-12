@@ -64,10 +64,7 @@ export class RegisterComponent implements OnInit {
       this.accoutSer.sendMail(this.account).subscribe(
         res => {
           this.accoutSer.createAccount(this.account).subscribe(res => {
-            this.dialogService.init("Register", MyMessage.registerSuccess , () => {
-              this.displaySer.hideLoader();
-              this.route.navigateByUrl('/');
-            },() => {
+            this.dialogService.init("Register", MyMessage.registerSuccess , undefined ,() => {
               this.displaySer.hideLoader();
               this.route.navigateByUrl('/');
             });

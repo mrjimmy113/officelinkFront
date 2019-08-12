@@ -79,11 +79,7 @@ export class InvitationComponent implements OnInit {
       this.displaySer.showLoader();
       this.accountSer.acceptInvite(this.listEmail).subscribe(result => {
         this.accountSer.sendInvite(this.listEmail).subscribe(res => {
-          this.dialogService.init("Invite", MyMessage.inviteSuccess, () => {
-            this.displaySer.hideLoader();
-            this.modalSer.destroy();
-            this.outputs();
-          },() => {
+          this.dialogService.init("Invite", MyMessage.inviteSuccess,undefined,() => {
             this.displaySer.hideLoader();
             this.modalSer.destroy();
             this.outputs();

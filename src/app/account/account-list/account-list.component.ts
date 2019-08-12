@@ -76,8 +76,15 @@ export class AccountListComponent implements OnInit {
     //this.modalSer.init(AccountDeleteComponent, id ,() => this.loadPage(this.currentPage));
     this.dialogSerive.init("Delete Account", MyMessage.deleteAccountMessage, () => {
       this.accountSer.delete(id).subscribe(result => {  
+        if(this.notAssign){
+          
+          this.dialogSerive.init("Delete Account" , MyMessage.deleteAccountSuccess , undefined , undefined);
+          this.searchAccountNotAssign("");
+        }else{
           this.dialogSerive.init("Delete Account" , MyMessage.deleteAccountSuccess , undefined , undefined);
           this.loadPage(this.currentPage);
+        }
+          
       }, err => {
         this.dialogSerive.init("Operation fail" , MyMessage.deleteAccountError , undefined , undefined);
       })
@@ -96,7 +103,13 @@ export class AccountListComponent implements OnInit {
   }
 
   openAssign(id){
-    this.modalSer.init(AssignAccountComponent,  id, () => this.loadPage(this.currentPage));
+    this.modalSer.init(AssignAccountComponent,  id, () => {
+        if(this.notAssign){
+          this.searchAccountNotAssign("");
+        }else{
+          this.loadPage(this.currentPage);
+        }
+    });
   }
 
   sort(property) {
