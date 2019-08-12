@@ -183,6 +183,7 @@ export class ConfigurationSaveComponent implements OnInit {
 
   sendCreateRequest() {
     this.configuration.survey.id = this.selectedSurveyId;
+    console.log(this.selectedSurveyId);
     this.configuration.active = true;
     this.surveySer.updateActiveStatus(this.selectedSurveyId, true).subscribe();
     
@@ -347,7 +348,7 @@ export class ConfigurationSaveComponent implements OnInit {
     this.minute = this.minute == null ? "0" : this.minute;
     this.hour = this.hour == null ? "0" : this.hour;
     this.dayOfMonth = this.dayOfMonth == null ? "?" : this.dayOfMonth;
-    let months = this.months.length;
+    let months = this.months;
     let dayOfWeeks = this.dayOfWeeks.length <= 0 ? "?" : this.dayOfWeeks;
 
     if (this.months.length <= 0) {

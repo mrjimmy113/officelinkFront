@@ -26,8 +26,10 @@ export const MyMessage = {
   createWorkplace: `Workplace has been created.`,
   updateWorkplace: `Workplace has been updated.`,
   deactiveWorkplace: `Workplace has been deactivated.`,
+  activateWokrplace: `Workplace has been activated.`,
   confirmDeactivateWorkplace: `Deactivate this workplace?`,
-  actionError: `something went wrong`,
+  confirmActivateWorkplace: `Activate this workplace?`,
+  actionError: `Something went wrong.`,
   //#endregion
 
   //#region Send out survey
