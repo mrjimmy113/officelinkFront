@@ -37,6 +37,8 @@ export class NewsMainComponent implements OnInit {
     this.service.searchGetPage(this.searchTerm, this.currentPage - 1).subscribe(result => {
       this.maxPage = result.maxPage;
       this.itemList = result.objList;
+    }, err => {
+      this.dialogSer.init("List News", MyMessage.error400Message, undefined, undefined);
     })
   }
 

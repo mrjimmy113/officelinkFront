@@ -35,6 +35,8 @@ export class LocationComponent implements OnInit {
     this.service.searchGetPage(this.searchTerm, this.currentPage - 1).subscribe(result => {
       this.maxPage = result.maxPage;
       this.itemList = result.objList;
+    }, (err: HttpErrorResponse) => {
+        this.dialogSer.init("List Location", MyMessage.error400Message, undefined, undefined);
     })
   }
 

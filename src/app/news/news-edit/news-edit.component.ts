@@ -48,12 +48,15 @@ export class NewsEditComponent implements OnInit {
     this.newsSer.searchById(itemId).subscribe(result => {
       this.news = result;
       this.news.byte_image = this.doms('data:image/jpeg;charset=utf-8;base64,' + this.news.byte_image);
-    })
+    },
+      error => {
+        this.dialogSer.init("Update News", MyMessage.error400Message, undefined, undefined);
+      }
+    );
   }
 
   onFileChange(event) {
     var text = event.target.value.split('.')[1];
-    console.log("haha ", text);
     if (text != "jpg" && text != "png" && text != "gif") {
       this.isImage = true;
     } else {

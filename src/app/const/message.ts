@@ -138,7 +138,7 @@ export const MyMessage = {
   dupplicatedLocation: `This name or address is already existed in your workplace. Please input again.`,
   deleteLocation: `Location has been deleted.`,
   confirmDeleteLocation: `This action will delete the chosen location. Do you want to continue?`,
-  deleteLocationConflict: `This location has employer. Please remove all employer in this location before deleting`,
+  deleteLocationConflict: `This location has employer. Please remove all employers in this location before deleting`,
   //#endregion
 
   //#region News

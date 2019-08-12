@@ -5,6 +5,8 @@ import { NewsService } from 'src/app/service/news.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { DateRangePickerComponent } from '@syncfusion/ej2-angular-calendars';
 import { DatePipe } from '@angular/common';
+import { DialogService } from "src/app/service/dialog.service";
+import { MyMessage } from 'src/app/const/message';
 
 @Component({
   selector: 'app-news-detail',
@@ -32,6 +34,7 @@ export class NewsDetailComponent implements OnInit {
     private router: Router,
     private dom: DomSanitizer,
     private datePipe: DatePipe,
+    private dialogSer: DialogService,
   ) { }
 
   ngOnInit() {
@@ -47,12 +50,16 @@ export class NewsDetailComponent implements OnInit {
       this.news = result;
       this.news.byte_image = this.doms('data:image/jpeg;charset=utf-8;base64,' + this.news.byte_image);
       this.news.dateCreated = this.datePipe.transform(this.news.dateCreated, 'yyyy-MM-dd');
+    }, err => {
+      this.dialogSer.init("News Detail", MyMessage.error400Message, undefined, undefined);
     })
   }
 
   findByDate() {
     this.service.searchByDate(this.datePipe.transform(this.startDate, 'yyyy-MM-dd'), this.datePipe.transform(this.endDate, 'yyyy-MM-dd')).subscribe(result => {
       this.itemList = result;
+    }, err => {
+      this.dialogSer.init("News Detail", MyMessage.error400Message, undefined, undefined);
     })
   }
 

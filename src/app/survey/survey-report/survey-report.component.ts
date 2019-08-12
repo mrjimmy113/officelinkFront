@@ -23,6 +23,9 @@ import { CloudOptions, CloudData } from "angular-tag-cloud-module";
 import { AnswerReport } from "src/app/model/answerReport";
 import { WordCloudService } from "src/app/service/word-cloud.service";
 import { filter } from "rxjs/operators";
+import { DialogService } from "src/app/service/dialog.service";
+import { MyMessage } from 'src/app/const/message';
+
 
 @Component({
   selector: "app-survey-report",
@@ -63,8 +66,9 @@ export class SurveyReportComponent implements OnInit {
     private reportSer: ReportService,
     private utltis: UltisService,
     private filterSer: WordCloudService,
-    private authSer:AuthenticationService,
-  ) {}
+    private authSer: AuthenticationService,
+    private dialogSer: DialogService,
+  ) { }
 
   ngOnInit() {
     this.locationId = 0;
@@ -173,14 +177,16 @@ export class SurveyReportComponent implements OnInit {
   getDownloadToken(id) {
     this.reportSer.getDownloadToken(this.surveyId, id).subscribe(result => {
       window.open(this.reportSer.getDownloadLink(result));
-    });
+    }, err => {
+      this.dialogSer.init("Download Answers", MyMessage.error400Message, undefined, undefined);
+    })
   }
   filterWordCloud(event: Event, dataIndex) {
     let options: HTMLOptionsCollection = event.target["options"];
     let filterId = options[options.selectedIndex].value;
-    if(this.isFilterTemplate(filterId)) {
+    if (this.isFilterTemplate(filterId)) {
       this.disableTemplate = true;
-    }else {
+    } else {
       this.disableTemplate = false;
     }
     this.getNewWordCloud(filterId, dataIndex);
@@ -234,9 +240,9 @@ export class SurveyReportComponent implements OnInit {
       ) {
         this.textOfSendOutInfor.push(
           "Location: " +
-            element.locationName +
-            " - Department: " +
-            element.departmentName
+          element.locationName +
+          " - Department: " +
+          element.departmentName
         );
       } else if (
         element.departmentName != "" &&
@@ -283,7 +289,7 @@ export class SurveyReportComponent implements OnInit {
     }
   }
 
-  isFilterTemplate(id) :boolean {
+  isFilterTemplate(id): boolean {
     let found = this.filters.filter(e => {
       return e.id == id;
     })
