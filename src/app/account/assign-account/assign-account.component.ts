@@ -4,7 +4,7 @@ import { Workplace } from "./../../model/workplace";
 import { AccountService } from "./../../service/account.service";
 import { AssignInfor } from "./../../model/assignInfor";
 import { ModalService } from "src/app/service/modal.service";
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input , Output } from "@angular/core";
 import { LocationService } from "../../service/location.service";
 import { from } from "rxjs";
 import { Location } from "../../model/location";
@@ -21,6 +21,7 @@ import {MyMessage} from "../../const/message"
 })
 export class AssignAccountComponent implements OnInit {
   @Input() inputs;
+  @Output() outputs;
   locationId;
   teamId;
   teamName;
@@ -35,9 +36,10 @@ export class AssignAccountComponent implements OnInit {
  
   departmentList: Array<Department>;
   choosenDep = 0;
-  currentPage = 1;
+  
   itemList;
   maxPage;
+  currentPage = 1;
   
 
   test: String;
@@ -53,6 +55,7 @@ export class AssignAccountComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+   
     this.account = new Account();
     this.account.location = new Location();
     this.account.teams = new Array<Team>();
@@ -66,6 +69,7 @@ export class AssignAccountComponent implements OnInit {
     this.getDepartmentByWorkplace();
   }
 
+  
   getLocationByWorkplace() {
     this.locationSer.getByWorkplace().subscribe(res => {
       this.locationList = res;
@@ -113,7 +117,7 @@ export class AssignAccountComponent implements OnInit {
     this.modalSer.destroy();
   }
 
- 
+
   searchAccountNotAssign(value) {
     this.accountSer.searchAccountNotAssign(value, 1).subscribe(result => {
       this.maxPage = result.maxPage;
@@ -121,7 +125,7 @@ export class AssignAccountComponent implements OnInit {
       console.log(this.itemList)
     })
   }
-
+  
   assign() {
     let assignInfor = new AssignInfor();
     if (!this.validate()) return;
@@ -130,10 +134,11 @@ export class AssignAccountComponent implements OnInit {
     assignInfor.teamIdList = this.choosenTeamList;
     this.accountSer.assign(assignInfor).subscribe(result => {
       //alert("Assigned Successfully");
-      this.searchAccountNotAssign("");
-      this.dialogService.init("Assign Account", MyMessage.assignAccountSuccess , undefined ,() => {
-        
-        this.modalSer.destroy();
+     
+      this.dialogService.init("Assign Account", MyMessage.assignAccountSuccess , undefined ,() => {    
+        //this.modalSer.destroy();
+        this.searchAccountNotAssign("");
+        this.outputs(); 
       });
 
      
@@ -145,7 +150,11 @@ export class AssignAccountComponent implements OnInit {
         }
       }
     );
+
+    
+    
     this.modalSer.destroy();
+    
    
   }
 
