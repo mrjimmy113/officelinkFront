@@ -80,12 +80,13 @@ export class SurveyCompareComponent implements OnInit {
           this.question.question.id,this.locationId,this.departmentId,this.teamId
         )
         .subscribe(result => {
+          console.log(result);
           chartData.answers = result;
           this.dataList.push(chartData);
           this.createData(result);
         });
 
-      this.surveys.splice(this.surveyIndex, 1);
+
     }
   }
   removeSurvey(index, survey) {
@@ -117,8 +118,8 @@ export class SurveyCompareComponent implements OnInit {
     this.compareData = new Array();
     this.question.question.options.forEach(e => {
       let series = new Array();
-      let isFound = false;
       this.dataList.forEach(d => {
+        let isFound = false;
         for (let index = 0; index < d.answers.length; index++) {
           const element = d.answers[index];
           if (element.term == e.id.toString()) {
@@ -128,18 +129,18 @@ export class SurveyCompareComponent implements OnInit {
             };
             series.push(serie);
             isFound = true;
+            break;
           }
         }
-      });
-      if (!isFound) {
-        this.dataList.forEach(d => {
+        if (!isFound) {
           let serie: Serie = {
             name: d.surveyName,
             value: 0
           };
           series.push(serie);
-        });
-      }
+        }
+      });
+
 
       let data: NormalizedChartData = {
         name: e.answerText.toString(),
@@ -147,7 +148,7 @@ export class SurveyCompareComponent implements OnInit {
       };
       this.compareData.push(data);
     });
-    this.compareData.sort(this.sortBySerieValue);
+    console.log(this.compareData);
   }
 
   createWordCloudData() {

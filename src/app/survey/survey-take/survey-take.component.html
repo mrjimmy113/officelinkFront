@@ -12,7 +12,7 @@
         <div class="form-group">
           <label>Answer:</label>
           <!--Free Text-->
-          <textarea rows="4" maxlength="300" [required]="q.required" class="form-control" *ngIf="q.type.type == 'TEXT'" [(ngModel)]="answers[i].content" ></textarea>
+          <textarea rows="4" maxlength="500" [required]="q.required" class="form-control" *ngIf="q.type.type == 'TEXT'" [(ngModel)]="answers[i].content" ></textarea>
           <!--Single Choice-->
           <div *ngIf="q.type.type == 'SINGLE'">
             <div class="form-check" *ngFor="let option of q.options">

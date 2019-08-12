@@ -56,9 +56,10 @@ export class WorkplaceComponent implements OnInit {
     }, 300);
   }
 
-  deactive(wp: Workplace) {
-    this.dialogSer.init("Deactive Workplace", MyMessage.confirmDeactivateWorkplace, () =>
-      this.ser.delete(wp.id).subscribe(
+  changeActiveStatus(wp: Workplace) {
+    if(!wp.deleted) {
+      this.dialogSer.init("Deactivate Workplace", MyMessage.confirmDeactivateWorkplace, () =>
+      this.ser.changeActiveStatus(wp.id, !wp.deleted).subscribe(
         result => {
           this.requestStatus = result;
           if (this.requestStatus == 200) {
@@ -77,6 +78,29 @@ export class WorkplaceComponent implements OnInit {
           }
         }
       ), undefined);
+    } else {
+      this.dialogSer.init("Activate Workplace", MyMessage.confirmActivateWorkplace, () =>
+      this.ser.changeActiveStatus(wp.id, !wp.deleted).subscribe(
+        result => {
+          this.requestStatus = result;
+          if (this.requestStatus == 200) {
+            this.dialogSer.init("Operation success", MyMessage.activateWokrplace, undefined, undefined)
+            if (this.itemList.length <= 1) {
+              this.loadPage(this.currentPage - 1);
+            }
+            else {
+              this.loadPage(this.currentPage);
+            }
+          }
+        },
+        error => {
+          if (error.status = 400) {
+            this.dialogSer.init("Operation fail", MyMessage.actionError, undefined, undefined)
+          }
+        }
+      ), undefined);
+    }
+    
   }
 
   loadPage(pageNumber) {
