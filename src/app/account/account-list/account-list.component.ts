@@ -96,7 +96,7 @@ export class AccountListComponent implements OnInit {
   }
 
   openAssign(id){
-    this.modalSer.init(AssignAccountComponent,  id, () => this.loadPage(this.currentPage));
+    this.modalSer.init(AssignAccountComponent,  id, () => this.searchAccountNotAssign(""));
   }
 
   sort(property) {

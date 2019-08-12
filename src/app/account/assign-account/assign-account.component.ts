@@ -24,19 +24,21 @@ export class AssignAccountComponent implements OnInit {
   locationId;
   teamId;
   teamName;
-  listmTeamId;
+  
   locationList: Array<Location>;
   teamList: Array<Team>;
   requestStatus: Number;
-  newTeamIndex: Number;
-  newTeam: Team;
+  
   choosenTeamList: Array<number>;
   displayTeam: Array<String>;
   account: Account;
-  location: Location;
-  workplace: Workplace;
+ 
   departmentList: Array<Department>;
   choosenDep = 0;
+  currentPage = 1;
+  itemList;
+  maxPage;
+  
 
   test: String;
   testListName;
@@ -82,13 +84,22 @@ export class AssignAccountComponent implements OnInit {
       return;
     }
 
-    if (this.choosenTeamList.includes(Number.parseInt(this.teamId))) {
-      //alert("This team has already on the list");
-      this.dialogService.init("Operation fail", MyMessage.addTeamToTeamListError, undefined,undefined);
-      this.teamName = "";
-      this.teamId = 0;
-      return;
-    }
+    // if (this.choosenTeamList.includes(Number.parseInt(this.teamId))) {
+    //   //alert("This team has already on the list");
+    //   this.dialogService.init("Operation fail", MyMessage.addTeamToTeamListError, undefined,undefined);
+    //   this.teamName = "";
+    //   this.teamId = 0;
+    //   return;
+    // }
+
+    this.displayTeam.forEach(team => {
+        if(team ==  this.teamName){
+          this.dialogService.init("Operation fail", MyMessage.addTeamToTeamListError, undefined,undefined);
+          this.assignRemove(this.teamName);
+          return;
+        }
+    })
+
     this.displayTeam.push(this.teamName);
     this.choosenTeamList.push(this.teamId);
     this.teamName = "";
@@ -102,6 +113,15 @@ export class AssignAccountComponent implements OnInit {
     this.modalSer.destroy();
   }
 
+ 
+  searchAccountNotAssign(value) {
+    this.accountSer.searchAccountNotAssign(value, 1).subscribe(result => {
+      this.maxPage = result.maxPage;
+      this.itemList = result.objList;
+      console.log(this.itemList)
+    })
+  }
+
   assign() {
     let assignInfor = new AssignInfor();
     if (!this.validate()) return;
@@ -110,9 +130,13 @@ export class AssignAccountComponent implements OnInit {
     assignInfor.teamIdList = this.choosenTeamList;
     this.accountSer.assign(assignInfor).subscribe(result => {
       //alert("Assigned Successfully");
+      this.searchAccountNotAssign("");
       this.dialogService.init("Assign Account", MyMessage.assignAccountSuccess , undefined ,() => {
+        
         this.modalSer.destroy();
       });
+
+     
       
     }, 
       error => {
@@ -122,6 +146,7 @@ export class AssignAccountComponent implements OnInit {
       }
     );
     this.modalSer.destroy();
+   
   }
 
   validate() {
