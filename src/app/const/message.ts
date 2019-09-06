@@ -39,6 +39,7 @@ export const MyMessage = {
   updateSurveyRoutine: `This survey routine was successfully updated.`,
   duplicatedTarget: `Duplicated target(s).`,
   surveySent: `Your survey has been sent`,
+  targetEmpty:`There is no employee in choosen target`,
   invalidScheduleTime: `Month cannot be left empty. You must specify at least one to create a routine.`,
   //#endregion
   //#endregion

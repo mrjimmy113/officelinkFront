@@ -186,7 +186,7 @@ export class ConfigurationSaveComponent implements OnInit {
     console.log(this.selectedSurveyId);
     this.configuration.active = true;
     this.surveySer.updateActiveStatus(this.selectedSurveyId, true).subscribe();
-    
+
     this.configSer.create(this.configuration).subscribe(
       result => {
         this.requestStatus = result;
@@ -488,7 +488,7 @@ export class ConfigurationSaveComponent implements OnInit {
       }
     }
   }
-  
+
   removeInfor(index) {
     this.inforList.splice(index, 1);
     this.displayInforList.splice(index, 1);
@@ -529,14 +529,26 @@ export class ConfigurationSaveComponent implements OnInit {
     sendSurvey.duration = this.configuration.duration;
     this.displaySer.showLoader();
     this.surveySer.sendOutSurvey(sendSurvey).subscribe(result => {
-      this.dialogSer.init(
-        "Operation success",
-        MyMessage.surveySent,
-        undefined,
-        () => this.modalSer.destroy()
-      );
-      this.displaySer.hideLoader();
-      this.outputs();
+      if(result == 200) {
+        this.dialogSer.init(
+          "Operation success",
+          MyMessage.surveySent,
+          undefined,
+          () => this.modalSer.destroy()
+        );
+        this.displaySer.hideLoader();
+        this.outputs();
+      }
+      if(result == 202) {
+        this.dialogSer.init(
+          "Operation fail",
+          MyMessage.targetEmpty,
+          undefined,
+          () => this.modalSer.destroy()
+        );
+        this.displaySer.hideLoader();
+        this.outputs();
+      }
     })
   }
   //#endregion

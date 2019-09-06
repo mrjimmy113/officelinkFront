@@ -9,8 +9,22 @@
     <div class="modal-body">
       <form #createForm="ngForm">
         <!--Question + Types-->
+        <div class="row form-group">
+          <div class="col-sm-6">
+            <select class="form-control" [(ngModel)]="quest.category" name="category">
+              <option [ngValue]="undefined">-Choose Question Category-</option>
+              <option *ngFor="let category of categoryList" [ngValue]="category">{{category.name}}</option>
+            </select>
+          </div>
+          <div class="col-sm-6">
+            <select class="form-control" [(ngModel)]="quest.type" name="type" (change)="updateType()">
+              <option [ngValue]="undefined">-Choose Question Type-</option>
+              <option *ngFor="let type of typeList" [ngValue]="type">{{typeEnum[type.type]}}</option>
+            </select>
+          </div>
+        </div>
         <div class="row row-padding-bot">
-          <div class="col-sm-9">
+          <div class="col-sm-12">
             <input class="form-control" placeholder="Question(*)" name="question" #question="ngModel"
               [(ngModel)]="quest.question" required maxlength="150"
               [ngClass]="{'is-invalid': (question.invalid && (question.dirty || question.touched))}" />
@@ -25,12 +39,7 @@
               </div>
             </div>
           </div>
-          <div class="col-sm-3">
-            <select class="form-control" [(ngModel)]="quest.type" name="type" (change)="updateType()">
-              <option [ngValue]="undefined">-Choose Question Type-</option>
-              <option *ngFor="let type of typeList" [ngValue]="type">{{typeEnum[type.type]}}</option>
-            </select>
-          </div>
+
         </div>
         <!--Answer-->
         <div *ngIf="quest.type != undefined">

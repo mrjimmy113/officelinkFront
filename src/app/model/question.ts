@@ -1,3 +1,4 @@
+import { Category } from './category';
 import { TypeQuestion } from './typeQuestion';
 import { AnswerOption } from './answerOption';
 export class Question {
@@ -8,5 +9,6 @@ export class Question {
   questionIdentity:Number;
   questionIndex: number;
   required: boolean = true;
-  dateCreated:Date
+  dateCreated:Date;
+  category: Category;
 }

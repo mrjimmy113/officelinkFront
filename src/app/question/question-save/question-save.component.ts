@@ -1,3 +1,4 @@
+import { Category } from './../../model/category';
 import { MyMessage } from './../../const/message';
 import { DialogService } from "./../../service/dialog.service";
 import { TypeEnum } from "./../../model/typeEnum";
@@ -17,6 +18,7 @@ export class QuestionSaveComponent implements OnInit {
   @Output() outputs;
   quest: Question;
   typeList: TypeQuestion[];
+  categoryList : Category[];
   requestStatus = 0;
   typeEnum = TypeEnum;
   constructor(
@@ -33,6 +35,9 @@ export class QuestionSaveComponent implements OnInit {
     this.quesSer.getAllType().subscribe(result => {
       this.typeList = result;
     });
+    this.quesSer.getAllCategory().subscribe(result => {
+      this.categoryList = result;
+    })
   }
   addOption() {
     if (this.quest.options.length >= 10) {
@@ -67,6 +72,7 @@ export class QuestionSaveComponent implements OnInit {
   }
 
   save() {
+    console.log(this.quest);
     if(!this.validate()) return;
     if (this.quest.type.type == "TEXT") {
       this.quest.options = new Array<AnswerOption>();

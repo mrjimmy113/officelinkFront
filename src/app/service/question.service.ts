@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { Injectable } from '@angular/core';
 import { TypeQuestion } from '../model/typeQuestion';
 import { PageSearch } from '../model/page-search';
+import { Category } from '../model/category';
 
 @Injectable({
   providedIn: 'root'
@@ -31,5 +32,8 @@ export class QuestionService {
   }
   getChooseList(term,page) : Observable<PageSearch<Question>> {
     return this.http.get<PageSearch<Question>>(this.api + `/chooseList?term=${term}&page=${page}`);
+  }
+  getAllCategory(): Observable<Category[]> {
+    return this.http.get<Category[]>(this.api + `/category`);
   }
 }
