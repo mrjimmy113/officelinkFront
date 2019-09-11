@@ -1,0 +1,10 @@
+<label>From 1 to 10 please specify your idea</label>
+<div id="rating_container" style="display: flex">
+  <button *ngFor="let option of options; let i = index" class="btn btn-outline-primary btn-rate" (click)="choose(i + 1)"
+    [ngClass]="{'active': (i + 1) == choosen}"
+    style="width: 200px"
+    >
+    <b style="font-size: 16px">{{i + 1}}</b>
+  </button>
+
+</div>

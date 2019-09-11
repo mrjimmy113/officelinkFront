@@ -4,4 +4,5 @@ export class Answer {
   accountId:Number;
   questionType:String;
   questionIdentity:Number;
+  point : number;
 }

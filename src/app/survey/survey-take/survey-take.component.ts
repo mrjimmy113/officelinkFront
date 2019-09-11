@@ -122,4 +122,8 @@ export class SurveyTakeComponent implements OnInit {
     }
     return true;
   }
+
+  setAnswer(value,index) {
+    console.log(value + ' - ' + index);
+  }
 }

@@ -2,7 +2,41 @@
   <form>
     <!--Question + Types-->
     <div class="row row-padding-bot">
-      <div class="col-sm-9">
+      <div class="col-sm-6 form-group">
+        <div *ngIf="isEditMode && isNew; else showCategory">
+          <select class="form-control" [(ngModel)]="quest.category" name="category">
+            <option [ngValue]="undefined">-Choose Question Category-</option>
+            <option *ngFor="let category of categoryList" [ngValue]="category">{{category.name}}</option>
+          </select>
+        </div>
+        <ng-template #showCategory>
+          <div *ngIf="(quest.category != undefined); else noCategory">
+            <b>{{quest.category.name}}</b>
+          </div>
+          <ng-template #noCategory>
+            <b>Category is not choosen</b>
+          </ng-template>
+
+        </ng-template>
+      </div>
+      <div class="col-sm-6 form-group">
+        <div *ngIf="isEditMode && isNew; else showType">
+          <select class="form-control" [(ngModel)]="quest.type" name="type" (change)="updateType()">
+            <option [ngValue]="undefined">-Choose Question Type-</option>
+            <option *ngFor="let type of typeList" [ngValue]="type">
+              {{typeEnum[type.type]}}</option>
+          </select>
+        </div>
+        <ng-template #showType>
+          <div *ngIf="(quest.type != undefined); else noType">
+            <b>{{typeEnum[quest.type.type]}}</b>
+          </div>
+          <ng-template #noType>
+            <b>Type is not choosen</b>
+          </ng-template>
+        </ng-template>
+      </div>
+      <div class="col-sm-12">
         <div [hidden]="!(isEditMode && isNew)">
           <input class="form-control" placeholder="Question" name="question" #question="ngModel"
             [(ngModel)]="quest.question" required maxlength="150"
@@ -28,22 +62,19 @@
           </ng-template>
         </div>
       </div>
-      <div class="col-sm-3">
-        <div *ngIf="isEditMode && isNew; else showType">
-          <select class="form-control" [(ngModel)]="quest.type" name="type" (change)="updateType()">
-            <option *ngFor="let type of typeList" [ngValue]="type">
-              {{typeEnum[type.type]}}</option>
-          </select>
-        </div>
-        <ng-template #showType>
-          <div *ngIf="(quest.type != undefined)">
-            <b>{{typeEnum[quest.type.type]}}</b>
-          </div>
-        </ng-template>
-      </div>
+
     </div>
     <!--Answer-->
     <div *ngIf="quest.type != undefined">
+      <!--RATING-->
+      <div *ngIf="quest.type.type == 'RATE'">
+        <app-rating></app-rating>
+      </div>
+
+      <!--VAS-->
+      <div *ngIf="quest.type.type == 'VAS'">
+        <app-vas></app-vas>
+      </div>
       <!--Multiple Choice-->
       <div *ngIf="quest.type.type == 'MULTIPLE' || quest.type.type == 'SINGLE'">
         <div class="form-check" *ngFor="let option of quest.options; let i = index">
@@ -55,7 +86,7 @@
             <div class="col-sm-10 option">
               <div [hidden]="!(isEditMode && isNew)">
                 <input type="text" class="form-control" placeholder="Option {{i + 1}}" maxlength="50"
-                  [(ngModel)]="quest.options[i].answerText" required [ngModelOptions]="{standalone: true}"/>
+                  [(ngModel)]="quest.options[i].answerText" required [ngModelOptions]="{standalone: true}" />
               </div>
               <div [hidden]="isEditMode && isNew">
                 <div

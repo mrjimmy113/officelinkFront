@@ -37,6 +37,7 @@ export class SurveySaveComponent implements OnInit {
 
   ngOnInit() {
     this.survey = this.inputs;
+    console.log(this.survey);
     this.qComponentList = new Array<QuestionComponent>();
     if (this.survey.id != undefined) this.isEdit = true;
   }
@@ -102,9 +103,9 @@ export class SurveySaveComponent implements OnInit {
   }
 
   save() {
-    console.log("save");
+    console.log(this.survey);
     if(!this.isValidForm()) return;
-    console.log("Qua validate");
+    
     if (!this.isEdit) {
       this.surveySer.create(this.survey).subscribe(result => {
         this.dialogSer.init(MyMessage.surveyTitle,MyMessage.createSurveySuccess,undefined,() => {this.close();});

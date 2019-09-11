@@ -8,18 +8,28 @@
     </div>
     <div class="modal-body" style="padding-left: 24px">
       <div *ngFor="let q of survey.questions; let i = index">
-        <b><i class="far fa-question-circle"></i> {{(i+1)+ ". " + q.question}} <span class="text-danger" *ngIf="q.required">(*)</span></b>
+        <b><i class="far fa-question-circle"></i> {{(i+1)+ ". " + q.question}} <span class="text-danger"
+            *ngIf="q.required">(*)</span></b>
         <div class="form-group">
           <label>Answer:</label>
           <!--Free Text-->
-          <textarea rows="4" maxlength="500" [required]="q.required" class="form-control" *ngIf="q.type.type == 'TEXT'" [(ngModel)]="answers[i].content" ></textarea>
+          <textarea rows="4" maxlength="500" [required]="q.required" class="form-control" *ngIf="q.type.type == 'TEXT'"
+            [(ngModel)]="answers[i].content"></textarea>
+          <!--Rating-->
+          <div *ngIf="q.type.type == 'RATE'">
+            <app-rating [answer]="answers[i]"></app-rating>
+          </div>
+          <!--VAS-->
+          <div *ngIf="q.type.type == 'VAS'">
+            <app-vas [answer]="answers[i]"></app-vas>
+          </div>
           <!--Single Choice-->
           <div *ngIf="q.type.type == 'SINGLE'">
             <div class="form-check" *ngFor="let option of q.options">
               <div class="row row-padding-bot">
                 <div class="col-sm-1 row align-content-center d-flex justify-content-center">
                   <input type="radio" class="radio-big" name="{{q.id}}" [value]="option.id +''"
-                    [(ngModel)]="answers[i].content" [required]="q.required"/>
+                    [(ngModel)]="answers[i].content" [required]="q.required" />
                 </div>
                 <div class="col-sm-10 option">
                   {{option.answerText}}
@@ -33,7 +43,8 @@
             <div class="form-check" *ngFor="let option of q.options">
               <div class="row row-padding-bot">
                 <div class="col-sm-1 row align-content-center d-flex justify-content-center">
-                  <input type="checkbox"[required]="q.required" class="radio-big" [value]="option.id + ''" (click)="multipleAnswer(option.id,i)" />
+                  <input type="checkbox" [required]="q.required" class="radio-big" [value]="option.id + ''"
+                    (click)="multipleAnswer(option.id,i)" />
                 </div>
                 <div class="col-sm-10 option">
                   {{option.answerText}}

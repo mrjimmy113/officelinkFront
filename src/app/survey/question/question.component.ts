@@ -1,5 +1,6 @@
-import { MyMessage } from './../../const/message';
-import { DialogService } from 'src/app/service/dialog.service';
+import { Category } from "./../../model/category";
+import { MyMessage } from "./../../const/message";
+import { DialogService } from "src/app/service/dialog.service";
 import { TypeEnum } from "./../../model/typeEnum";
 import { QuestionService } from "./../../service/question.service";
 import { AnswerOption } from "./../../model/answerOption";
@@ -33,23 +34,25 @@ export class QuestionComponent implements OnInit {
   isEditMode = false;
   isNew = true;
   typeList: TypeQuestion[];
+  categoryList: Category[];
   typeEnum = TypeEnum;
-  constructor(private questSer: QuestionService, private dialogSer:DialogService) {}
+  constructor(
+    private questSer: QuestionService,
+    private dialogSer: DialogService
+  ) {}
 
   ngOnInit() {
     this.quest.questionIndex = this.index;
     if (this.quest.id != undefined) this.isNew = false;
     let sub = this.questSer.getAllType().subscribe(result => {
       this.typeList = result;
-      if (this.isNew && this.typeList.length > 0) {
-        this.quest.type = this.typeList[0];
-      }
       sub.unsubscribe();
     });
-    if (this.isNew) {
+    this.questSer.getAllCategory().subscribe(result => {
+      this.categoryList = result;
+    });
+    if(this.isNew) {
       this.quest.options = new Array<AnswerOption>();
-      this.quest.options.push(new AnswerOption());
-      this.quest.options.push(new AnswerOption());
     }
     this.classToParent();
   }
@@ -58,7 +61,12 @@ export class QuestionComponent implements OnInit {
     if (this.quest.options.length <= 10) {
       this.quest.options.push(new AnswerOption());
     } else {
-      this.dialogSer.init(MyMessage.createQuestionTitle, MyMessage.createQuestionOption, undefined,undefined);
+      this.dialogSer.init(
+        MyMessage.createQuestionTitle,
+        MyMessage.createQuestionOption,
+        undefined,
+        undefined
+      );
     }
   }
 
@@ -90,28 +98,49 @@ export class QuestionComponent implements OnInit {
   }
 
   updateType() {
-    if (this.quest.type.type == 'TEXT') {
-      this.quest.options = new Array<AnswerOption>();
-    } else {
+    if (
+      this.quest.type.type == "SINGLE" ||
+      this.quest.type.type == "MULTIPLE"
+    ) {
       if (this.quest.options.length == 0) {
         this.quest.options.push(new AnswerOption());
         this.quest.options.push(new AnswerOption());
       }
+    } else {
+      this.quest.options = new Array<AnswerOption>();
     }
   }
-  validate() :boolean{
-    if(this.quest.question == undefined || this.quest.question.length == 0) {
-      this.dialogSer.init(MyMessage.createQuestionTitle,MyMessage.createQuestionRequire + " number " + this.index,undefined,undefined);
+  validate(): boolean {
+    if (this.quest.question == undefined || this.quest.question.length == 0) {
+      this.dialogSer.init(
+        MyMessage.createQuestionTitle,
+        MyMessage.createQuestionRequire + " number " + this.index,
+        undefined,
+        undefined
+      );
       return false;
     }
-    if(this.quest.type == undefined) {
-      this.dialogSer.init(MyMessage.createQuestionTitle,MyMessage.createQuestionTypeRequire,undefined,undefined);
+    if (this.quest.type == undefined) {
+      this.dialogSer.init(
+        MyMessage.createQuestionTitle,
+        MyMessage.createQuestionTypeRequire,
+        undefined,
+        undefined
+      );
       return false;
     }
     for (let index = 0; index < this.quest.options.length; index++) {
       const element = this.quest.options[index];
-      if(element.answerText == undefined || element.answerText.length == 0) {
-        this.dialogSer.init(MyMessage.createQuestionTitle,MyMessage.createQuestionOptionRequire + (index + 1) + " of question number " + this.index,undefined,undefined)
+      if (element.answerText == undefined || element.answerText.length == 0) {
+        this.dialogSer.init(
+          MyMessage.createQuestionTitle,
+          MyMessage.createQuestionOptionRequire +
+            (index + 1) +
+            " of question number " +
+            this.index,
+          undefined,
+          undefined
+        );
         return false;
       }
     }

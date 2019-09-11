@@ -80,7 +80,9 @@ import {MatCheckboxModule} from '@angular/material';
 
 import { TeamDetailComponent } from './team/team-detail/team-detail.component';
 import { DepartmentDetailComponent } from './department/department-detail/department-detail.component';
-import { SurveyDetailComponent } from './survey/survey-detail/survey-detail.component'
+import { SurveyDetailComponent } from './survey/survey-detail/survey-detail.component';
+import { RatingComponent } from './question/rating/rating.component';
+import { VasComponent } from './question/vas/vas.component'
 
 @NgModule({
   declarations: [
@@ -143,6 +145,8 @@ import { SurveyDetailComponent } from './survey/survey-detail/survey-detail.comp
     TeamDetailComponent,
     DepartmentDetailComponent,
     SurveyDetailComponent,
+    RatingComponent,
+    VasComponent,
 
   ],
   imports: [
