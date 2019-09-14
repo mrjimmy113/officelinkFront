@@ -1,0 +1,50 @@
+<div class="row" *ngIf="question != undefined">
+  <div class="col-sm-3 d-flex align-items-center clickable">
+    {{question.question.category.name}}
+  </div>
+  <div class="col-sm-6 d-flex align-items-center clickable">
+    {{question.question.question}}
+  </div>
+  <div class="col-sm-1 d-flex align-items-center">
+    {{question.avgPoint}}
+  </div>
+  <div class="col-sm-2 btn btn-info" *ngIf="!isOpen" (click)="openDetail()">
+    View detail <i class="fas fa-angle-down" style="margin-left: 6px"></i>
+  </div>
+</div>
+
+<div *ngIf="isOpen">
+  <hr>
+  <div>
+    <div class="modal-body row" *ngIf="question.question.type.type == 'RATE' || question.question.type.type =='VAS'">
+      <div class="col-sm-4">
+        <b><i class="far fa-question-circle"></i>Question Type: {{typeEnum[question.question.type.type]}}</b>
+        <div *ngIf="question.question.type.type == 'RATE'">
+          Rating is from 1 to 10
+        </div>
+      </div>
+      <div class="col-sm-7">
+        <div *ngIf="question.reportData == undefined || question.reportData.length == 0; else noData"
+          style="text-align: center; height: 100%" class="row align-content-center">
+          <i class="fas fa-search fa-3x" style="width: 100%"></i>
+          <h4 style="width: 100%">No Data</h4>
+
+        </div>
+
+        <ng-template #noData>
+          <ngx-charts-bar-horizontal [results]="question.reportData" [xAxis]="true" [yAxis]="true" [animations]="false"
+            *ngIf="question.question.type.type == 'RATE' || question.question.type.type =='VAS'">
+          </ngx-charts-bar-horizontal>
+        </ng-template>
+
+
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="d-flex justify-content-end">
+    <div class="btn btn-info" (click)="closeDetail()">
+      Close detail <i class="fas fa-angle-up" style="margin-left: 6px"></i>
+    </div>
+  </div>
+</div>

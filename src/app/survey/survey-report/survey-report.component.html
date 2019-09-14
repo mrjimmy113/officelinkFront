@@ -84,7 +84,7 @@
   </div>
 </div>
 <div class="d-flex justify-content-center form-group">
-  <h5>Question Report</h5>
+  <h5>Survey Report</h5>
 </div>
 <div class="row form-group d-flex justify-content-end">
   <div class="col-sm-4 row align-content-center d-flex justify-content-end" style="margin: 0px; padding-right: 24px">
@@ -106,10 +106,76 @@
     <button class="btn btn-success" (click)="applyFilter()">Apply</button>
   </div>
 </div>
-<div *ngIf="surveyReport.questions == undefined || surveyReport.questions.length == 0"
+<!-- <div *ngIf="surveyReport.questions == undefined || surveyReport.questions.length == 0"
   class="d-flex justify-content-center">
   <h4>Please choose and click apply to generate question report</h4>
+</div> -->
+<!--Metric Overview-->
+<div class="card shadow mb-4">
+  <!-- Card Header - Dropdown -->
+  <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+    <h6 class="m-0 font-weight-bold text-primary">Metric Calculation</h6>
+  </div>
+  <!-- Card Body -->
+  <div class="card-body">
+    <div class="row no-gutters align-items-center">
+      <div class="col mr-2">
+        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Overall Engagement Score</div>
+        <div class=" mb-0">
+          <span class="h1 font-weight-bold">{{surveyReport.point}} </span>
+          / 10
+        </div>
+      </div>
+
+    </div>
+    <hr>
+    <div class="row">
+      <!--Good metric-->
+      <div class="col-sm-4 text-xs font-weight-bold text-success text-uppercase mb-1">
+        Your organization is good at
+      </div>
+      <div class="col-sm-8 form" *ngIf="surveyReport.goodCate != undefined">
+        <div *ngIf="surveyReport.goodCate.length == 0 ">No Metric Found</div>
+        <div class="col-sm-6" *ngFor="let cate of surveyReport.goodCate">
+          <div class="card border-left-success py-2">
+            <div class="card-body">
+              <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                  <div class="text-xs font-weight-bold text-success text-uppercase mb-1">{{cate.name}}
+
+                    <i class="far fa-question-circle" title="{{cate.description}}"></i>
+                  </div>
+                </div>
+                <div class="col-auto">
+                  <span class="h5 font-weight-bold text-success">{{cate.point}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12">
+          <hr>
+      </div>
+      <!--Bad metric-->
+      <div class="col-sm-4 text-xs font-weight-bold text-danger text-uppercase mb-1">
+        Your organization is bad at
+      </div>
+      <div class="col-sm-8" *ngIf="surveyReport.badCate != undefined">
+        <div *ngIf="surveyReport.badCate.length == 0 " class="d-flex justify-content-center">
+          <h3>No Metric Found</h3>
+        </div>
+        <div class="col-sm-6" *ngFor="let cate of surveyReport.badCate">
+
+        </div>
+
+      </div>
+    </div>
+  </div>
 </div>
+<app-question-report-list [itemList]="surveyReport.categories" [surveyId]="surveyId" [locationId]="locationId" [departmentId]="departmentId" [teamId]="teamId"></app-question-report-list>
+
+
 <div class="modal-content form-group" *ngFor="let q of surveyReport.questions; let i = index">
   <div class="modal-body row" *ngIf="q.question.type.type == 'MULTIPLE' || q.question.type.type =='SINGLE'">
     <div class="col-sm-4">
@@ -136,7 +202,7 @@
 
       <ng-template #noData>
         <ngx-charts-advanced-pie-chart [results]="q.reportData" *ngIf="q.question.type.type =='SINGLE'"
-          [animations]="false" >
+          [animations]="false">
         </ngx-charts-advanced-pie-chart>
         <ngx-charts-bar-horizontal [results]="q.reportData" [xAxis]="true" [yAxis]="true" [animations]="false"
           *ngIf="q.question.type.type =='MULTIPLE'">
@@ -145,7 +211,8 @@
 
 
     </div>
-    <div class="col-sm-1 d-flex justify-content-center" *ngIf="!(q.reportData == undefined || q.reportData.length == 0)">
+    <div class="col-sm-1 d-flex justify-content-center"
+      *ngIf="!(q.reportData == undefined || q.reportData.length == 0)">
 
       <button class="btn-circle btn-primary" title="Compare with other survey"
         (click)="openCompare(q,surveyReport.questions[i].answers)">
@@ -168,7 +235,8 @@
 
                 </button>
               </div>
-              <select class="form-control d-flex align-content-end" (change)="filterWordCloud($event,i)" [(ngModel)]="choosenFilter">
+              <select class="form-control d-flex align-content-end" (change)="filterWordCloud($event,i)"
+                [(ngModel)]="choosenFilter">
                 <option [value]="0">No Filter is applied</option>
                 <option *ngFor="let filter of filters" [value]="filter.id">{{filter.name}}</option>
               </select>
@@ -178,7 +246,7 @@
 
       </div>
       <div class="col-sm-7">
-          <div *ngIf="q.reportData == undefined || q.reportData.length == 0; else textHaveData"
+        <div *ngIf="q.reportData == undefined || q.reportData.length == 0; else textHaveData"
           style="text-align: center; height: 100%" class="row align-content-center">
           <i class="fas fa-search fa-3x" style="width: 100%"></i>
           <h4 style="width: 100%">No Data</h4>

@@ -25,6 +25,7 @@ import { WordCloudService } from "src/app/service/word-cloud.service";
 import { filter } from "rxjs/operators";
 import { DialogService } from "src/app/service/dialog.service";
 import { MyMessage } from 'src/app/const/message';
+import { all } from 'q';
 
 
 @Component({
@@ -87,7 +88,9 @@ export class SurveyReportComponent implements OnInit {
         });
       this.reportSer.getReport(this.surveyId).subscribe(result => {
         this.surveyReport = result;
-        this.surveyReport.questions = undefined;
+        this.surveyReport.goodCate = new Array();
+        this.surveyReport.badCate = new Array();
+        this.calculateCurrentSurveyPoint();
         this.getTextFromSendOutInfor(this.surveyReport.sendTargets);
       });
     });
@@ -107,31 +110,7 @@ export class SurveyReportComponent implements OnInit {
     return dataList;
   }
 
-  getChartParam(
-    answers: AnswerReport[],
-    answerTexts: AnswerOption[]
-  ): NgxChartParam[] {
-    let dataList = new Array<NgxChartParam>();
-    answerTexts.forEach(element => {
-      let data: NgxChartParam = {
-        name: element.answerText.toString(),
-        value: this.getOptionValue(element.id.valueOf(), answers)
-      };
-      dataList.push(data);
-    });
-    dataList.sort(this.utltis.sortByPropertyNameDSC("value"));
-    return dataList;
-  }
 
-  getOptionValue(id: number, answers: AnswerReport[]): number {
-    for (let index = 0; index < answers.length; index++) {
-      if (Number(answers[index].term).valueOf() == id) {
-        return answers[index].weight.valueOf();
-      }
-    }
-
-    return 0;
-  }
 
   applyFilter() {
     this.reportSer
@@ -142,21 +121,8 @@ export class SurveyReportComponent implements OnInit {
         this.teamId
       )
       .subscribe(result => {
-        this.surveyReport.questions = result;
-        result.forEach(element => {
-          if (element.question.type.type == "TEXT") {
-            if (element.answers.length > 0) {
-              element.reportData = this.getWordCloud(element.answers);
-            }
-          } else {
-            if (element.answers.length > 0) {
-              element.reportData = this.getChartParam(
-                element.answers,
-                element.question.options
-              );
-            }
-          }
-        });
+        // this.surveyReport.questions = result;
+
       });
   }
   openCompare(q) {
@@ -193,20 +159,20 @@ export class SurveyReportComponent implements OnInit {
   }
 
   getNewWordCloud(filterId, dataIndex) {
-    if (Number(filterId) == 0) {
-      this.surveyReport.questions[dataIndex].reportData = this.getWordCloud(
-        this.surveyReport.questions[dataIndex].answers
-      );
-    } else {
-      let applyFilter = new ApplyFilter();
-      applyFilter.filterId = Number(filterId);
-      applyFilter.answers = this.surveyReport.questions[dataIndex].answers;
-      this.reportSer.getFilterdWordCloud(applyFilter).subscribe(result => {
-        this.surveyReport.questions[dataIndex].reportData = this.getWordCloud(
-          result
-        );
-      });
-    }
+    // if (Number(filterId) == 0) {
+    //   this.surveyReport.questions[dataIndex].reportData = this.getWordCloud(
+    //     this.surveyReport.questions[dataIndex].answers
+    //   );
+    // } else {
+    //   let applyFilter = new ApplyFilter();
+    //   applyFilter.filterId = Number(filterId);
+    //   applyFilter.answers = this.surveyReport.questions[dataIndex].answers;
+    //   this.reportSer.getFilterdWordCloud(applyFilter).subscribe(result => {
+    //     this.surveyReport.questions[dataIndex].reportData = this.getWordCloud(
+    //       result
+    //     );
+    //   });
+    // }
   }
 
   getTextFromSendOutInfor(infors: SendOutInfor[]) {
@@ -300,8 +266,31 @@ export class SurveyReportComponent implements OnInit {
     }
 
   }
+
+  //#region New Content
+  calculateCurrentSurveyPoint() {
+    this.surveyReport.categories.forEach(element => {
+        let point = 0;
+        element.questions.forEach(element => {
+          point += element.avgPoint;
+        });
+        point = point / element.questions.length;
+        element.point = point;
+    });
+    let allPoint = 0;
+    this.surveyReport.categories.forEach(element => {
+      allPoint += element.point;
+      if(element.point > 6) {
+        this.surveyReport.goodCate.push(element);
+      }else {
+        this.surveyReport.badCate.push(element);
+      }
+    })
+    allPoint = allPoint / this.surveyReport.categories.length;
+    this.surveyReport.point = allPoint;
+    console.log(this.surveyReport);
+  }
+
+  //#endregion
 }
-interface NgxChartParam {
-  name: string;
-  value: number;
-}
+

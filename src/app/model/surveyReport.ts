@@ -1,5 +1,5 @@
+import { CategoryReport } from './categoryReport';
 import { SendOutInfor } from './sendOutInfor';
-import { QuestionReport } from './questionReport';
 export class SurveyReport {
   id:Number;
   name : String;
@@ -7,6 +7,9 @@ export class SurveyReport {
 	dateStop : Date;
 	receivedAnswer : number;
 	sentOut : number;
-  questions : QuestionReport[];
+  categories : CategoryReport[];
   sendTargets: SendOutInfor[];
+  point: number;
+  goodCate: CategoryReport[];
+  badCate:CategoryReport[];
 }

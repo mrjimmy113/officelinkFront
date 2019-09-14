@@ -82,7 +82,9 @@ import { TeamDetailComponent } from './team/team-detail/team-detail.component';
 import { DepartmentDetailComponent } from './department/department-detail/department-detail.component';
 import { SurveyDetailComponent } from './survey/survey-detail/survey-detail.component';
 import { RatingComponent } from './question/rating/rating.component';
-import { VasComponent } from './question/vas/vas.component'
+import { VasComponent } from './question/vas/vas.component';
+import { QuestionReportListComponent } from './survey/question-report-list/question-report-list.component';
+import { QuestionReportComponent } from './survey/question-report/question-report.component'
 
 @NgModule({
   declarations: [
@@ -147,6 +149,8 @@ import { VasComponent } from './question/vas/vas.component'
     SurveyDetailComponent,
     RatingComponent,
     VasComponent,
+    QuestionReportListComponent,
+    QuestionReportComponent,
 
   ],
   imports: [
