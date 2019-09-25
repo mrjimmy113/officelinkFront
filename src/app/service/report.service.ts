@@ -9,6 +9,7 @@ import { SurveySendTargetDetail } from "../model/surveySendTargetDetail";
 import { QuestionReport } from "../model/questionReport";
 import { AnswerReport } from "../model/answerReport";
 import { DashBoard } from "../model/dashBoard";
+import { CategoryReport } from '../model/categoryReport';
 
 @Injectable({
   providedIn: "root"
@@ -27,8 +28,8 @@ export class ReportService {
     locationId,
     depId,
     teamId
-  ): Observable<QuestionReport[]> {
-    return this.http.get<QuestionReport[]>(
+  ): Observable<CategoryReport[]> {
+    return this.http.get<CategoryReport[]>(
       this.api +
         `?surveyId=${id}&locationId=${locationId}&departmentId=${depId}&teamId=${teamId}`
     );

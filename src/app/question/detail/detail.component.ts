@@ -1,3 +1,4 @@
+import { TypeEnum } from './../../model/typeEnum';
 import { Question } from './../../model/question';
 import { ModalService } from 'src/app/service/modal.service';
 import { Component, OnInit, Input } from '@angular/core';
@@ -11,6 +12,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class DetailComponent implements OnInit {
   @Input() inputs;
   q:Question;
+  typeEnum = TypeEnum;
   constructor(private modalSer:ModalService) { }
 
   ngOnInit() {

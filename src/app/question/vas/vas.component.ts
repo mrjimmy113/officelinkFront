@@ -1,3 +1,4 @@
+import { VASOPTION } from './../../const/vasOption';
 import { Answer } from './../../model/answer';
 
 import { Component, OnInit, Output, EventEmitter,Input } from "@angular/core";
@@ -8,10 +9,9 @@ import { Component, OnInit, Output, EventEmitter,Input } from "@angular/core";
   styleUrls: ["./vas.component.css"]
 })
 export class VasComponent implements OnInit {
-  options = new Array(5);
-  text = ['Extremely Unsatisfied', 'Unsatisfied', 'Neutral', 'Satisfied','Extremely Satisfied'];
+  options = VASOPTION;
   emo = ['far fa-angry','far fa-frown','far fa-meh','far fa-smile-beam','far fa-grin-hearts']
-  choosen = 0;
+  choosen ;
   @Input() answer :Answer;
   constructor() {}
 

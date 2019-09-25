@@ -24,12 +24,9 @@
         </div>
       </div>
       <!--Row-->
-      <div class="card" *ngFor="let item of itemList; let i = index">
-        <div class="list-group-item w3-hover-blue " [ngClass]="{'w3-light-grey': ((i % 2) == 1)}"
-          [ngClass]="{'w3-white': ((i % 2) == 0)}" style="border:none; padding-top: 0; padding-bottom: 0; padding-right: 10px">
-          <app-question-report *ngFor="let question of item.questions" [question]="question" [surveyId]="surveyId" [locationId]="locationId" [departmentId]="departmentId" [teamId]="teamId"></app-question-report>
-        </div>
-
+      <div *ngFor="let item of itemList; let i = index">
+        <app-question-report *ngFor="let question of item.questions" [question]="question" [surveyId]="surveyId"
+          [locationId]="locationId" [departmentId]="departmentId" [teamId]="teamId"></app-question-report>
       </div>
 
     </div>

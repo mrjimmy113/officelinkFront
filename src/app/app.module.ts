@@ -84,7 +84,9 @@ import { SurveyDetailComponent } from './survey/survey-detail/survey-detail.comp
 import { RatingComponent } from './question/rating/rating.component';
 import { VasComponent } from './question/vas/vas.component';
 import { QuestionReportListComponent } from './survey/question-report-list/question-report-list.component';
-import { QuestionReportComponent } from './survey/question-report/question-report.component'
+import { QuestionReportComponent } from './survey/question-report/question-report.component';
+import { CategoryListComponent } from './category/category-list/category-list.component';
+import { CategorySaveComponent } from './category/category-save/category-save.component'
 
 @NgModule({
   declarations: [
@@ -151,6 +153,8 @@ import { QuestionReportComponent } from './survey/question-report/question-repor
     VasComponent,
     QuestionReportListComponent,
     QuestionReportComponent,
+    CategoryListComponent,
+    CategorySaveComponent,
 
   ],
   imports: [
@@ -184,7 +188,8 @@ import { QuestionReportComponent } from './survey/question-report/question-repor
     DialogComponent,
     TeamDetailComponent,
     DepartmentDetailComponent,
-    SurveyDetailComponent
+    SurveyDetailComponent,
+    CategorySaveComponent
   ],
 
   providers: [

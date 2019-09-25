@@ -1,4 +1,4 @@
-<div class="modal-dialog">
+<div class="modal-dialog modal-lg">
   <div class="modal-content">
     <div class="modal-header">
       <h5 class="modal-title">Question Detail</h5>
@@ -9,6 +9,10 @@
     <div class="modal-body">
       <div>
         <b><i class="far fa-question-circle"></i> {{q.question}}</b>
+        <br>
+        <span><b>Metric: </b>{{q.category.name}}</span>
+        <br>
+        <span><b>Type: </b>{{typeEnum[q.type.type]}}</span>
         <div class="form-group">
           <label>Answer:</label>
           <!--Free Text-->
@@ -42,6 +46,12 @@
 
               </div>
             </div>
+          </div>
+          <div *ngIf="q.type.type == 'RATE'">
+            <app-rating></app-rating>
+          </div>
+          <div *ngIf="q.type.type == 'VAS'">
+            <app-vas></app-vas>
           </div>
         </div>
 

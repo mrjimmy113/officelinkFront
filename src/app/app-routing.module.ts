@@ -1,3 +1,4 @@
+import { CategoryListComponent } from './category/category-list/category-list.component';
 import { ReadNewsComponent } from './others/read-news/read-news.component';
 import { ResetPasswordComponent } from './others/reset-password/reset-password.component';
 import { AccountProfileComponent } from './account/account-profile/account-profile.component';
@@ -65,7 +66,7 @@ const authRoutes: Routes = [
   { path: "news/:id/detail", component: NewsDetailComponent },
   { path: "history", component: SurveyHistoryMainComponent },
   { path: "history/detail", component: SurveyHistoryDetailComponent },
-  { path: "q", component: SurveySaveComponent },
+  { path: "category", component: CategoryListComponent },
   { path: "memInvite", component: InvitationComponent },
   { path: "history", component: SurveyHistoryMainComponent },
   { path: "history/detail", component: SurveyHistoryDetailComponent },

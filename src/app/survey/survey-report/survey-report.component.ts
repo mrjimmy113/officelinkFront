@@ -1,4 +1,4 @@
-import { AuthenticationService } from './../../service/authentication.service';
+import { AuthenticationService } from "./../../service/authentication.service";
 import { WordCloudSaveComponent } from "./../../word-cloud-filter/word-cloud-save/word-cloud-save.component";
 import { ApplyFilterComponent } from "./../apply-filter/apply-filter.component";
 import { QuestionReport } from "./../../model/questionReport";
@@ -24,9 +24,8 @@ import { AnswerReport } from "src/app/model/answerReport";
 import { WordCloudService } from "src/app/service/word-cloud.service";
 import { filter } from "rxjs/operators";
 import { DialogService } from "src/app/service/dialog.service";
-import { MyMessage } from 'src/app/const/message';
-import { all } from 'q';
-
+import { MyMessage } from "src/app/const/message";
+import { all } from "q";
 
 @Component({
   selector: "app-survey-report",
@@ -48,28 +47,11 @@ export class SurveyReportComponent implements OnInit {
   surveyReport: SurveyReport;
   textOfSendOutInfor: string[];
 
-  colorScheme = {
-    domain: ["#5AA454", "#A10A28", "#C7B42C", "#AAAAAA"]
-  };
-  options: CloudOptions = {
-    width: 1,
-    height: 200,
-    overflow: false
-  };
-
-  noDataFlag = false;
-  choosenFilter = 0;
-  role = this.authSer.getRole();
-  disableTemplate = false;
   constructor(
     private modalSer: ModalService,
     private route: ActivatedRoute,
-    private reportSer: ReportService,
-    private utltis: UltisService,
-    private filterSer: WordCloudService,
-    private authSer: AuthenticationService,
-    private dialogSer: DialogService,
-  ) { }
+    private reportSer: ReportService
+  ) {}
 
   ngOnInit() {
     this.locationId = 0;
@@ -88,29 +70,12 @@ export class SurveyReportComponent implements OnInit {
         });
       this.reportSer.getReport(this.surveyId).subscribe(result => {
         this.surveyReport = result;
-        this.surveyReport.goodCate = new Array();
-        this.surveyReport.badCate = new Array();
         this.calculateCurrentSurveyPoint();
         this.getTextFromSendOutInfor(this.surveyReport.sendTargets);
       });
     });
-    this.getFilterList();
+    // this.getFilterList();
   }
-
-  getWordCloud(answers: Array<AnswerReport>): CloudData[] {
-    let dataList = new Array<CloudData>();
-    answers.forEach(element => {
-      let data: CloudData = {
-        text: element.term.toString(),
-        weight: element.weight.valueOf(),
-        color: "#" + (((1 << 24) * Math.random()) | 0).toString(16)
-      };
-      dataList.push(data);
-    });
-    return dataList;
-  }
-
-
 
   applyFilter() {
     this.reportSer
@@ -121,8 +86,9 @@ export class SurveyReportComponent implements OnInit {
         this.teamId
       )
       .subscribe(result => {
-        // this.surveyReport.questions = result;
-
+        this.surveyReport.categories = result;
+        this.calculateCurrentSurveyPoint();
+        console.log(this.surveyReport.categories);
       });
   }
   openCompare(q) {
@@ -138,41 +104,6 @@ export class SurveyReportComponent implements OnInit {
       ],
       []
     );
-  }
-
-  getDownloadToken(id) {
-    this.reportSer.getDownloadToken(this.surveyId, id).subscribe(result => {
-      window.open(this.reportSer.getDownloadLink(result));
-    }, err => {
-      this.dialogSer.init("Download Answers", MyMessage.error400Message, undefined, undefined);
-    })
-  }
-  filterWordCloud(event: Event, dataIndex) {
-    let options: HTMLOptionsCollection = event.target["options"];
-    let filterId = options[options.selectedIndex].value;
-    if (this.isFilterTemplate(filterId)) {
-      this.disableTemplate = true;
-    } else {
-      this.disableTemplate = false;
-    }
-    this.getNewWordCloud(filterId, dataIndex);
-  }
-
-  getNewWordCloud(filterId, dataIndex) {
-    // if (Number(filterId) == 0) {
-    //   this.surveyReport.questions[dataIndex].reportData = this.getWordCloud(
-    //     this.surveyReport.questions[dataIndex].answers
-    //   );
-    // } else {
-    //   let applyFilter = new ApplyFilter();
-    //   applyFilter.filterId = Number(filterId);
-    //   applyFilter.answers = this.surveyReport.questions[dataIndex].answers;
-    //   this.reportSer.getFilterdWordCloud(applyFilter).subscribe(result => {
-    //     this.surveyReport.questions[dataIndex].reportData = this.getWordCloud(
-    //       result
-    //     );
-    //   });
-    // }
   }
 
   getTextFromSendOutInfor(infors: SendOutInfor[]) {
@@ -206,9 +137,9 @@ export class SurveyReportComponent implements OnInit {
       ) {
         this.textOfSendOutInfor.push(
           "Location: " +
-          element.locationName +
-          " - Department: " +
-          element.departmentName
+            element.locationName +
+            " - Department: " +
+            element.departmentName
         );
       } else if (
         element.departmentName != "" &&
@@ -220,77 +151,51 @@ export class SurveyReportComponent implements OnInit {
     });
   }
 
-  openApplyFilter(q: QuestionReport) {
-    this.modalSer.init(ApplyFilterComponent, q, []);
-  }
-
-  getFilterList() {
-    this.filterSer.getAll().subscribe(result => {
-      this.filters = result;
-    });
-  }
-
-  addFilter(dataIndex) {
-    if (this.choosenFilter == 0) {
-      this.modalSer.init(
-        WordCloudSaveComponent,
-        [],
-        [
-          () => {
-            this.getFilterList();
-          },
-          newFilter => {
-            this.getNewWordCloud(newFilter, dataIndex);
-            this.choosenFilter = newFilter;
-          }
-        ]
-      );
-    } else {
-      this.filterSer.getOne(this.choosenFilter).subscribe(result => {
-        this.modalSer.init(WordCloudSaveComponent, result, () => {
-          this.getFilterList();
-          this.getNewWordCloud(this.choosenFilter, dataIndex);
-        });
-      });
-    }
-  }
-
-  isFilterTemplate(id): boolean {
-    let found = this.filters.filter(e => {
-      return e.id == id;
-    })
-    if(found.length > 0) {
-      return found[0].template;
-    }else {
-      return false;
-    }
-
-  }
-
   //#region New Content
   calculateCurrentSurveyPoint() {
+    this.surveyReport.goodCate = new Array();
+    this.surveyReport.badCate = new Array();
     this.surveyReport.categories.forEach(element => {
-        let point = 0;
-        element.questions.forEach(element => {
-          point += element.avgPoint;
-        });
+      let point = 0;
+      let numberOfQuestion = 0;
+      for (let index = 0; index < element.questions.length; index++) {
+        let currentPoint = element.questions[index].avgPoint;
+        if (currentPoint < 0) {
+          continue;
+        }
+        point += currentPoint;
+        numberOfQuestion++;
+      }
+      if (numberOfQuestion > 0) {
         point = point / element.questions.length;
         element.point = point;
+      }else {
+        element.point = -1;
+      }
     });
     let allPoint = 0;
-    this.surveyReport.categories.forEach(element => {
-      allPoint += element.point;
-      if(element.point > 6) {
-        this.surveyReport.goodCate.push(element);
-      }else {
-        this.surveyReport.badCate.push(element);
+    let numberOfCategory = 0;
+    for (let index = 0; index < this.surveyReport.categories.length; index++) {
+      let currentPoint = this.surveyReport.categories[index];
+      if(currentPoint.point < 0) {
+        continue;
       }
-    })
-    allPoint = allPoint / this.surveyReport.categories.length;
-    this.surveyReport.point = allPoint;
-    console.log(this.surveyReport);
+      allPoint += currentPoint.point;
+      numberOfCategory++;
+      if (currentPoint.point > 6) {
+        this.surveyReport.goodCate.push(currentPoint);
+      } else {
+        this.surveyReport.badCate.push(currentPoint);
+      }
+    }
+
+    if (numberOfCategory > 0) {
+      allPoint = allPoint / this.surveyReport.categories.length;
+      this.surveyReport.point = allPoint;
+    } else {
+      this.surveyReport.point = -1;
+    }
   }
 
   //#endregion
 }
-

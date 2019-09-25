@@ -155,4 +155,16 @@ export const MyMessage = {
   noPermissionToTake: 'You have no permission to take this survey anymore',
   takeSurveyLogin: "Please login to do the survey",
   //#endregion
+
+  //#region Category (Metric)
+  categoryTitle : "Metric",
+  categoryCreate : "Metric has been created",
+  categoryUpdate : "Metric has been updated",
+  //#endregion
+
+  //#region Account Register
+  accountRegisterTitle : "Account Register",
+  accountRegisterExpire : "Your link is expired",
+  accountRegisterActive : "Your account has already been activated"
+  //#endregion
 };

@@ -1,3 +1,5 @@
+import { HttpResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import {AccountService} from '../../service/account.service'
 import { Account } from 'src/app/model/account';
@@ -36,7 +38,23 @@ export class JoinComponent implements OnInit {
         this.token = params["token"];
         this.accountSer.getInvitationInfor(this.token).subscribe(result => {
           this.account = result;
-          console.log(this.account);
+
+        },(err: HttpErrorResponse) => {
+          if (err.status == 409) {
+            this.dialogService.init(
+              MyMessage.accountRegisterTitle,
+              MyMessage.accountRegisterActive,
+              undefined,
+              () => {this._route.navigateByUrl("")}
+            );
+          } else if (err.status == 410) {
+            this.dialogService.init(
+              MyMessage.accountRegisterTitle,
+              MyMessage.accountRegisterExpire,
+              undefined,
+              () => {this._route.navigateByUrl("")}
+            );
+          }
         })
       })
   }
@@ -47,12 +65,12 @@ export class JoinComponent implements OnInit {
 
   register(){
 
-   
+
     this.account.role_id = 2;
     if(this.account.firstname == null || this.account.lastname == null || this.account.email == null || this.account.password == null
       ){
           // alert("Input not empty. Try again")
-          this.dialogService.init("Form Require", MyMessage.joinFillFormRequire, undefined,undefined); 
+          this.dialogService.init("Form Require", MyMessage.joinFillFormRequire, undefined,undefined);
       }
      else{
 
@@ -62,7 +80,7 @@ export class JoinComponent implements OnInit {
             this.requestStatus = res;
             if(this.requestStatus == 200){
                 //alert("Welcome to office link")
-                this.dialogService.init("Sign-Up", MyMessage.welcomeMessage, undefined,undefined); 
+                this.dialogService.init("Sign-Up", MyMessage.welcomeMessage, undefined,undefined);
                 this._route.navigateByUrl("/login")
             }
 
@@ -74,9 +92,9 @@ export class JoinComponent implements OnInit {
             }
             if(error.status == 400){
               //alert("The system has failed, please try again")
-              this.dialogService.init("400", MyMessage.error400Message, undefined,undefined); 
+              this.dialogService.init("400", MyMessage.error400Message, undefined,undefined);
             }
-            
+
           }
           )
 

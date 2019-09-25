@@ -13,8 +13,11 @@
         <div class="form-group">
           <label>Answer:</label>
           <!--Free Text-->
-          <textarea rows="4" maxlength="500" [required]="q.required" class="form-control" *ngIf="q.type.type == 'TEXT'"
-            [(ngModel)]="answers[i].content"></textarea>
+          <div *ngIf="q.type.type == 'TEXT'">
+            <textarea rows="4" maxlength="500" [required]="q.required" class="form-control"
+              [(ngModel)]="answers[i].content"></textarea>
+          </div>
+
           <!--Rating-->
           <div *ngIf="q.type.type == 'RATE'">
             <app-rating [answer]="answers[i]"></app-rating>
@@ -59,7 +62,15 @@
       </div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-success" (click)="saveAnswer()">Done</button>
+      <button class="btn btn-success" (click)="saveAnswer()" [disabled]="isSaved">
+        <span *ngIf="!isSaved; else saving">Done</span>
+        <ng-template #saving>
+          <div class="spinner-border text-light" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </ng-template>
+
+      </button>
     </div>
   </div>
 </div>

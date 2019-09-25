@@ -1,14 +1,14 @@
 <label>What do you think ?</label>
 <div id="rating_container" style="display: flex">
-  <button *ngFor="let option of options; let i = index" class="btn btn-outline-primary btn-rate" (click)="choose(i + 1)"
-    [ngClass]="{'active': (i + 1) == choosen}"
+  <button *ngFor="let option of options; let i = index" class="btn btn-outline-primary btn-rate" (click)="choose(option.id)"
+    [ngClass]="{'active': option.id == choosen}"
     style="width: 200px; border-width: 0px"
     >
     <div>
       <i class="{{emo[i]}} fa-5x"></i>
     </div>
     <div style="height: 50px" class="d-flex align-items-center justify-content-center">
-      {{text[i]}}
+      {{option.answerText}}
     </div>
   </button>
 

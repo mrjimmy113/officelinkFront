@@ -20,6 +20,7 @@ export class SurveyTakeComponent implements OnInit {
   answers: Array<Answer>;
   isLogin = this.authSer.isLogin();
   token;
+  isSaved = false;
   constructor(
     private surveySer: SurveyService,
     private route: ActivatedRoute,
@@ -59,6 +60,7 @@ export class SurveyTakeComponent implements OnInit {
       let surveyAnswerInfor = new SurveyAnswerInfor();
       surveyAnswerInfor.answers = this.answers;
       surveyAnswerInfor.surveyId = this.survey.id;
+      this.isSaved = true;
       this.surveySer.sendAnswer(surveyAnswerInfor).subscribe(
         () => {
           this.dialogSer.init(MyMessage.takeSurveyTitle,MyMessage.doneTakeSurvey,undefined,() => {
@@ -121,9 +123,5 @@ export class SurveyTakeComponent implements OnInit {
       }
     }
     return true;
-  }
-
-  setAnswer(value,index) {
-    console.log(value + ' - ' + index);
   }
 }

@@ -27,7 +27,7 @@
           Type
         </div>
         <div class="col-sm-2 d-flex align-items-center clickable" (click)="sort('dateCreated')">
-          Date Created
+          Metric
         </div>
       </div>
 
@@ -50,7 +50,7 @@
             {{typeEnum[item.type.type]}}
           </div>
           <div class="col-sm-2 d-flex align-items-center">
-            {{item.dateCreated}}
+            {{item.category.name}}
           </div>
 
 

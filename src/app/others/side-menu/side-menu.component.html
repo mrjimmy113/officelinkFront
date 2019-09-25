@@ -98,6 +98,12 @@
           <span>Workplace</span>
         </a>
       </li>
+      <li class="nav-item" *ngIf="role == 'system_admin'">
+        <a class="nav-link" [routerLink]="['/category']" routerLinkActive="router-link-active">
+          <i class="fas fa-tachometer-alt"></i>
+          <span>Metric</span>
+        </a>
+      </li>
       <li class="nav-item">
         <a class="nav-link" [routerLink]="['/question']" routerLinkActive="router-link-active">
           <i class="far fa-question-circle"></i>

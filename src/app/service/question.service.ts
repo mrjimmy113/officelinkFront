@@ -30,8 +30,8 @@ export class QuestionService {
   searchWithType(term,type,page) : Observable<PageSearch<Question>> {
     return this.http.get<PageSearch<Question>>(this.api + `/search?term=${term}&type=${type}&page=${page}`);
   }
-  getChooseList(term,page) : Observable<PageSearch<Question>> {
-    return this.http.get<PageSearch<Question>>(this.api + `/chooseList?term=${term}&page=${page}`);
+  getChooseList(term,typeId,categoryId,page) : Observable<PageSearch<Question>> {
+    return this.http.get<PageSearch<Question>>(this.api + `/chooseList?term=${term}&type=${typeId}&cate=${categoryId}&page=${page}`);
   }
   getAllCategory(): Observable<Category[]> {
     return this.http.get<Category[]>(this.api + `/category`);

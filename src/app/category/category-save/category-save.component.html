@@ -1,0 +1,58 @@
+<div class="">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Metric</h5>
+        <button type="button" class="close" (click)="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #depForm="ngForm">
+          <div class="form-group">
+            <label>Name(*)</label>
+            <input class="form-control" name="name" #name="ngModel" [(ngModel)]="category.name"
+              [ngClass]="{'is-invalid' : (name.invalid && (name.dirty || name.touched))}" required
+              minlength="2" maxlength="50" />
+            <div *ngIf="name.invalid && (name.dirty || name.touched)" class="text-danger">
+              <div *ngIf="name.errors.required">
+                Name required
+              </div>
+              <div *ngIf="name.errors.minlength || name.errors.maxlength">
+                Name must be 2-50 characters
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Description(*)</label>
+            <textarea class="form-control" name="description" #description="ngModel" [(ngModel)]="category.description"
+              [ngClass]="{'is-invalid' : (description.invalid && (description.dirty || description.touched))}" required
+              minlength="2" maxlength="300" ></textarea>
+            <div *ngIf="description.invalid && (description.dirty || description.touched)" class="text-danger">
+              <div *ngIf="description.errors.required">
+                Name required
+              </div>
+              <div *ngIf="description.errors.minlength || description.errors.maxlength">
+                Name must be 2-300 characters
+              </div>
+            </div>
+
+          </div>
+        </form>
+
+
+      </div>
+      <div class="modal-footer">
+        <div class="col-sm-6 d-flex justify-content-end" style="padding: 0px">
+          <button type="button" class="btn btn-success" (click)="save()"
+            [disabled]="(requestStatus==1) || depForm.invalid">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
+              *ngIf="requestStatus == 1"></span>
+            <span *ngIf="isEdit == false && requestStatus != 1">Create</span>
+            <span *ngIf="isEdit == true && requestStatus != 1">Save</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
