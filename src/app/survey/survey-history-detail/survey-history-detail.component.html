@@ -1,5 +1,5 @@
 <div class="">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">{{ survey.name }}</h5>
@@ -7,43 +7,21 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body" style="padding-left: 24px">
+      <div class="modal-body" style="padding-left: 24px" *ngIf="ready">
         <div *ngFor="let q of survey.questions; let i = index">
           <b><i class="far fa-question-circle"></i> {{q.question}}</b>
 
           <div class="form-group">
             <label>Answer:</label>
             <!--Free Text-->
-            <textarea class="form-control" *ngIf="q.type.type == 'TEXT'" [(ngModel)]="answers[i].content" readonly></textarea>
+            <textarea class="form-control" *ngIf="q.type.type == 'TEXT'" [(ngModel)]="q.answer.content" readonly></textarea>
             <!--Single Choice-->
-            <div *ngIf="q.type.type == 'SINGLE'">
-              <div class="form-check" *ngFor="let option of q.options">
-                <div class="row row-padding-bot">
-                  <div class="col-sm-1 row align-content-center d-flex justify-content-center">
-                    <input type="radio" class="radio-big" name="{{q.id}}" [value]="option.id +''"
-                      [(ngModel)]="answers[i].content" disabled/>
-                  </div>
-                  <div class="col-sm-10 option">
-                    {{option.answerText}}
-                  </div>
-
-                </div>
-              </div>  
+            <div *ngIf="q.type.type == 'RATE'">
+              <app-rating [answer]="q.answer"></app-rating>
             </div>
             <!--Mutiple Choice-->
-            <div *ngIf="q.type.type == 'MULTIPLE'">
-              <div class="form-check" *ngFor="let option of q.options; let j = index">
-                <div class="row row-padding-bot" >
-                  <div class="col-sm-1 row align-content-center d-flex justify-content-center" >
-                    {{multipleAnswer(option.id,i,j)}}
-                    <input id="{{'multipleChoice' + j}}" type="checkbox" class="radio-big"  disabled/>
-                  </div>
-                  <div class="col-sm-10 option">
-                    {{option.answerText}}
-                  </div>
-
-                </div>
-              </div>
+            <div *ngIf="q.type.type == 'VAS'">
+              <app-vas [answer]="q.answer"></app-vas>
             </div>
           </div>
 

@@ -1,4 +1,7 @@
 <h2>Workplace News</h2>
+<div *ngIf="listNews.length == 0 || listNews == undefined" class="d-flex justify-content-center">
+  <h2>No news available</h2>
+</div>
 <div class="row" *ngFor="let news of listNews" style="height: 150px">
   <div class="col-sm-2">
   </div>

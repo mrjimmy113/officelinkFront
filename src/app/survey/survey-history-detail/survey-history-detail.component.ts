@@ -19,6 +19,7 @@ export class SurveyHistoryDetailComponent implements OnInit {
   survey: Survey;
   answers: Array<Answer>;
   surveyAnswerInfor: SurveyAnswerInfor;
+  ready = false;
 
   constructor(
     private modalSer: ModalService,
@@ -35,13 +36,21 @@ export class SurveyHistoryDetailComponent implements OnInit {
     this.survey = this.inputs;
     this.surveySer.getAnswerForSurveyHistory(this.survey.id).subscribe(result => {
       this.answers = result;
+      this.survey.questions.forEach(element => {
+        for (let index = 0; index < this.answers.length; index++) {
+          const answer = this.answers[index];
+          if(element.questionIdentity == answer.questionIdentity) {
+            element.answer = answer;
+          }
+        }
+      });
+      this.ready = true;
     }, err => {
       this.dialogSer.init("Survey History", MyMessage.error400Message, undefined, undefined);
     })
-    this.survey.questions.forEach(element => {
-      let answer = new Answer();
-      this.answers.push(answer);
-    });
+
+
+;
   }
 
   closeModal() {

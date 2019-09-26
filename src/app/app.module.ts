@@ -86,7 +86,8 @@ import { VasComponent } from './question/vas/vas.component';
 import { QuestionReportListComponent } from './survey/question-report-list/question-report-list.component';
 import { QuestionReportComponent } from './survey/question-report/question-report.component';
 import { CategoryListComponent } from './category/category-list/category-list.component';
-import { CategorySaveComponent } from './category/category-save/category-save.component'
+import { CategorySaveComponent } from './category/category-save/category-save.component';
+import { ResendAccountConfirmComponent } from './others/resend-account-confirm/resend-account-confirm.component'
 
 @NgModule({
   declarations: [
@@ -155,6 +156,7 @@ import { CategorySaveComponent } from './category/category-save/category-save.co
     QuestionReportComponent,
     CategoryListComponent,
     CategorySaveComponent,
+    ResendAccountConfirmComponent,
 
   ],
   imports: [

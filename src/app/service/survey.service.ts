@@ -69,4 +69,8 @@ export class SurveyService {
   updateActiveStatus(id, isActive): Observable<any> {
     return this.http.get<any>(this.api + `/status?id=${id}&isActive=${isActive}`);
   }
+
+  resend(surveyId) : Observable<void> {
+    return this.http.get<void>(this.api + `/resend?id=${surveyId}`);
+  }
 }

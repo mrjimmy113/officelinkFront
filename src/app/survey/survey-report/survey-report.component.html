@@ -106,12 +106,9 @@
     <button class="btn btn-success" (click)="applyFilter()">Apply</button>
   </div>
 </div>
-<!-- <div *ngIf="surveyReport.questions == undefined || surveyReport.questions.length == 0"
-  class="d-flex justify-content-center">
-  <h4>Please choose and click apply to generate question report</h4>
-</div> -->
+
 <!--Metric Overview-->
-<div class="card shadow mb-4">
+<div class="card shadow mb-4" *ngIf="surveyReport.categories != null">
   <!-- Card Header - Dropdown -->
   <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
     <h6 class="m-0 font-weight-bold text-primary">Metric Calculation</h6>
@@ -195,4 +192,4 @@
   </div>
 </div>
 <app-question-report-list [itemList]="surveyReport.categories" [surveyId]="surveyId" [locationId]="locationId"
-  [departmentId]="departmentId" [teamId]="teamId"></app-question-report-list>
+  [departmentId]="departmentId" [teamId]="teamId" *ngIf="surveyReport.categories != null"></app-question-report-list>

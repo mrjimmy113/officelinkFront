@@ -1,3 +1,4 @@
+import { ResendAccountConfirmComponent } from './others/resend-account-confirm/resend-account-confirm.component';
 import { CategoryListComponent } from './category/category-list/category-list.component';
 import { ReadNewsComponent } from './others/read-news/read-news.component';
 import { ResetPasswordComponent } from './others/reset-password/reset-password.component';
@@ -98,6 +99,7 @@ const routes: Routes = [
   { path: "join/:token", component: JoinComponent },
   { path: "take/:token", component: SurveyTakeComponent },
   { path: "confirm/:accountToken", component: RegisterConfirmComponent },
+  { path: "resend", component: ResendAccountConfirmComponent},
   {
     path: "",
     component: AuthHomeComponent,

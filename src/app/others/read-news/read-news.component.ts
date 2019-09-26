@@ -20,6 +20,7 @@ export class ReadNewsComponent implements OnInit {
     ) { }
 
   ngOnInit() {
+    this.listNews = new Array();
     this.newsSer.getLastest(this.currentPage).subscribe(result => {
       this.listNews = result.objList;
       this.maxPage = result.maxPage.valueOf();

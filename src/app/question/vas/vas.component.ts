@@ -15,7 +15,12 @@ export class VasComponent implements OnInit {
   @Input() answer :Answer;
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    if(this.answer.content != undefined) {
+      this.choosen = this.answer.point.valueOf();
+    }
+
+  }
 
   choose(value) {
     this.choosen = value;

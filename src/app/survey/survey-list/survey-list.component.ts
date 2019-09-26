@@ -1,3 +1,6 @@
+import { MyMessage } from './../../const/message';
+import { HttpErrorResponse } from '@angular/common/http';
+import { DialogService } from 'src/app/service/dialog.service';
 import { ConfigurationSaveComponent } from './../../configuration-save/configuration-save.component';
 import { SendOutSurveyComponent } from './../send-out-survey/send-out-survey.component';
 import { ModalService } from './../../service/modal.service';
@@ -29,7 +32,8 @@ export class SurveyListComponent implements OnInit {
     private configSer: ConfigurationService,
     private dyLoadSer: DynamicLoadService,
     private ultisSer: UltisService,
-    private modalSer: ModalService
+    private modalSer: ModalService,
+    private dialogSer : DialogService
   ) { }
 
   ngOnInit() {
@@ -69,14 +73,14 @@ export class SurveyListComponent implements OnInit {
       });
   }
 
-  loadPage(pageNumber) { 
+  loadPage(pageNumber) {
     this.currentPage = pageNumber;
     this.surveySer.search(this.searchTerm, pageNumber - 1).subscribe(result => {
       this.maxPage = result.maxPage;
       this.itemList = result.objList;
     })
   }
-  
+
   filter() {
     this.currentPage = 1;
     let newSearchTerm = this.searchTerm;
@@ -160,5 +164,17 @@ export class SurveyListComponent implements OnInit {
         }
       );
     }
+  }
+
+  resend(id) {
+    this.surveySer.resend(id).subscribe(() => {
+      this.dialogSer.init(MyMessage.surveyTitle, "Your survey has been resent",undefined,undefined)
+    },(err : HttpErrorResponse) => {
+      if(err.status == 400) {
+        this.dialogSer.init(MyMessage.errorTitle,MyMessage.error400Message,undefined,undefined);
+      }else if(err.status == 409) {
+        this.dialogSer.init(MyMessage.surveyTitle,"Your survey can not be resent",undefined,undefined);
+      }
+    })
   }
 }

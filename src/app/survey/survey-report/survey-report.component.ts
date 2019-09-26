@@ -50,7 +50,8 @@ export class SurveyReportComponent implements OnInit {
   constructor(
     private modalSer: ModalService,
     private route: ActivatedRoute,
-    private reportSer: ReportService
+    private reportSer: ReportService,
+    private dialogSer:DialogService
   ) {}
 
   ngOnInit() {
@@ -70,7 +71,11 @@ export class SurveyReportComponent implements OnInit {
         });
       this.reportSer.getReport(this.surveyId).subscribe(result => {
         this.surveyReport = result;
-        this.calculateCurrentSurveyPoint();
+        if(this.surveyReport.categories != null) {
+          this.calculateCurrentSurveyPoint();
+        }else {
+          this.noCategoryReport();
+        }
         this.getTextFromSendOutInfor(this.surveyReport.sendTargets);
       });
     });
@@ -87,8 +92,11 @@ export class SurveyReportComponent implements OnInit {
       )
       .subscribe(result => {
         this.surveyReport.categories = result;
-        this.calculateCurrentSurveyPoint();
-        console.log(this.surveyReport.categories);
+        if(this.surveyReport.categories != null) {
+          this.calculateCurrentSurveyPoint();
+        }else {
+          this.noCategoryReport();
+        }
       });
   }
   openCompare(q) {
@@ -196,6 +204,13 @@ export class SurveyReportComponent implements OnInit {
       this.surveyReport.point = -1;
     }
   }
+
+  noCategoryReport() {
+    this.dialogSer.init("Survey Report", "The current filter has less than 5 people that received the survey. Therefore, you can not view the detail report",undefined,() => {
+      this.dialogSer.destroy();
+    })
+  }
+
 
   //#endregion
 }

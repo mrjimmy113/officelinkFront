@@ -118,5 +118,8 @@ export class AccountService {
   unassigned(teamId, accountId):Observable<Number>{
     return this.httpClient.get<Number>(this.api + `/unassignedFromTeam?teamId=${teamId}&accountId=${accountId}`);
   }
+  resendConfirm(email) : Observable<void> {
+    return this.httpClient.get<void>(this.api + `/resendConfirm?email=${email}`);
+  }
 }
 

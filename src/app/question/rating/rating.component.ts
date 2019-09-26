@@ -1,3 +1,4 @@
+import { Answer } from './../../model/answer';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
 
@@ -9,13 +10,15 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 export class RatingComponent implements OnInit {
   options = new Array(10);
   choosen = 0;
-  @Input() answer
+  @Input() answer : Answer
   constructor() {
 
   }
 
   ngOnInit() {
-
+    if(this.answer.content != undefined) {
+      this.choosen = this.answer.point.valueOf();
+    }
 
   }
 
