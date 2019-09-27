@@ -69,16 +69,16 @@
           <div class="col-sm-2 d-flex align-items-center justify-content-center">
             <div class="w3-dropdown-hover">
               <!-- Rounded switch -->
-              <div *ngIf="item.sent && !item.active">
+              <div *ngIf="item.sent && !item.active && item.dateStop != null">
                 Expired Survey
               </div>
-              <div class="text-center" *ngIf="item.sent && item.active">
+              <div class="text-center" *ngIf="item.sent && (item.active || (item.dateStop == null))">
                 <label class="switch">
                   <input type="checkbox" [(ngModel)]="item.active" [attr.checked]="item.active ? 'checked': null"
                     (change)="changeActive(item)">
                   <span class="slider round"></span>
                 </label>
-                <div>
+                <div *ngIf="item.dateStop != null">
                   <button class="btn btn-primary" (click)="resend(item.id)" ><i
                     class="fas fa-paper-plane"></i></button>
                 </div>

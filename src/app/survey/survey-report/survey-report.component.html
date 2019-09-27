@@ -106,7 +106,9 @@
     <button class="btn btn-success" (click)="applyFilter()">Apply</button>
   </div>
 </div>
-
+<label>
+  <span class="m-0 font-weight-bold text-primary">Currently Filtered By: </span><b>{{filterText}}</b>
+</label>
 <!--Metric Overview-->
 <div class="card shadow mb-4" *ngIf="surveyReport.categories != null">
   <!-- Card Header - Dropdown -->
@@ -191,5 +193,15 @@
     </div>
   </div>
 </div>
-<app-question-report-list [itemList]="surveyReport.categories" [surveyId]="surveyId" [locationId]="locationId"
+<div class="row form-group d-flex justify-content-end">
+  <div class="col-sm-4 row align-content-center d-flex justify-content-end" style="margin: 0px; padding-right: 24px">
+    <b class="row ">Metric:</b>
+  </div>
+  <select class="form-control col-sm-2" [(ngModel)]="currentMetric" (change)="changeMetric()">
+    <option [ngValue]="undefined">All Metric</option>
+    <option *ngFor="let metric of surveyReport.categories" [ngValue]="metric">{{metric.name}}</option>
+  </select>
+
+</div>
+<app-question-report-list [itemList]="currentMetricList" [surveyId]="surveyId" [locationId]="locationId"
   [departmentId]="departmentId" [teamId]="teamId" *ngIf="surveyReport.categories != null"></app-question-report-list>

@@ -46,6 +46,10 @@ export class SurveyReportComponent implements OnInit {
 
   surveyReport: SurveyReport;
   textOfSendOutInfor: string[];
+  currentMetric = undefined;
+  currentMetricList = new Array();
+
+  filterText = "All Company";
 
   constructor(
     private modalSer: ModalService,
@@ -73,6 +77,7 @@ export class SurveyReportComponent implements OnInit {
         this.surveyReport = result;
         if(this.surveyReport.categories != null) {
           this.calculateCurrentSurveyPoint();
+          this.changeMetric();
         }else {
           this.noCategoryReport();
         }
@@ -92,6 +97,7 @@ export class SurveyReportComponent implements OnInit {
       )
       .subscribe(result => {
         this.surveyReport.categories = result;
+        this.filterText = this.getFilterText(this.locationId,this.departmentId,this.teamId);
         if(this.surveyReport.categories != null) {
           this.calculateCurrentSurveyPoint();
         }else {
@@ -209,6 +215,59 @@ export class SurveyReportComponent implements OnInit {
     this.dialogSer.init("Survey Report", "The current filter has less than 5 people that received the survey. Therefore, you can not view the detail report",undefined,() => {
       this.dialogSer.destroy();
     })
+  }
+
+  getFilterText(locationId, departmentId, teamId) : string {
+    if(locationId == 0 && departmentId == 0 && teamId == 0) {
+      return 'All Company';
+    }else if(locationId != 0 && departmentId == 0 && teamId == 0) {
+      for (let index = 0; index < this.locations.length; index++) {
+        const element = this.locations[index];
+        if(element.id == locationId) {
+          return element.name.valueOf();
+        }
+      }
+    }else if(locationId == 0 && departmentId != 0 && teamId == 0) {
+      for (let index = 0; index < this.departments.length; index++) {
+        const element = this.departments[index];
+        if(element.id == departmentId) {
+          return element.name.valueOf();
+        }
+      }
+    }else if(locationId != 0 && departmentId != 0 && teamId == 0) {
+      let text = "";
+
+      for (let index = 0; index < this.locations.length; index++) {
+        const element = this.locations[index];
+        if(element.id == locationId) {
+          text += element.name.valueOf() + " - ";
+          break;
+        }
+      }
+
+      for (let index = 0; index < this.departments.length; index++) {
+        const element = this.departments[index];
+        if(element.id == departmentId) {
+          text += element.name.valueOf();
+          break;
+        }
+      }
+
+      return text;
+    }else if(teamId != 0) {
+      for (let index = 0; index < this.teams.length; index++) {
+        const element = this.teams[index];
+        if(element.id == teamId) {
+          return element.name.valueOf();
+        }
+      }
+    }
+  }
+
+  changeMetric() {
+    this.currentMetricList = new Array();
+    if(this.currentMetric == undefined) this.currentMetricList = this.surveyReport.categories;
+    else this.currentMetricList.push(this.currentMetric);
   }
 
 

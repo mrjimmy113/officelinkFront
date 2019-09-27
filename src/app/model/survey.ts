@@ -11,4 +11,5 @@ export class Survey {
   sent : boolean;
   configuration: Configuration;
   dateTaken: Date;
+  dateStop : Date;
 }
