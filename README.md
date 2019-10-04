@@ -1,27 +1,21 @@
-# OfficelinkFront
+# Employee Engagement Tool - Officelink
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.6.
+## Description
 
-## Development server
+The system consist of 2 sub system:
+- Employee management system: provide the ability to manage your team, department, location (brand) and employee`s accounts
+- Survey system: provide a tool to create and publish survey to your employees and collect their opinion. Depend on the survey result, the report will be generated to help you evaluate your employees `s engagement
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Link for the project
 
-## Code scaffolding
+- Front-end repository (Angular): https://github.com/mrjimmy113/officelinkFront
+- Back-end repository (Spring-boot):https://github.com/mrjimmy113/officelinkAPI
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Installation Guide
 
-## Build
+Please follow the this link:https://drive.google.com/open?id=1DqSTU5VXImckyX0Hc97i-HBAxmN_-8Q4
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+## Preview screenshot
 
-## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
