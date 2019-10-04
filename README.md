@@ -17,5 +17,6 @@ Please follow the this link:https://drive.google.com/open?id=1DqSTU5VXImckyX0Hc9
 
 ## Preview screenshot
 
+![Survey Report](https://user-images.githubusercontent.com/25839683/66180323-c4a2d780-e696-11e9-9cec-748c9f115d70.png)
 
 
