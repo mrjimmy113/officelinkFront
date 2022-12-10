@@ -31,7 +31,7 @@
     "angular-tag-cloud-module": "^3.8.1",
     "chart.js": "^2.8.0",
     "core-js": "^2.5.4",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "ng2-charts": "^2.2.3",
     "path": "^0.12.7",
     "rxjs": "~6.3.3",
